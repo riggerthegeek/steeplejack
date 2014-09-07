@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+    - '0.11'
+    - '0.10'
+    - '0.8'
+matrix:
+    fast_finish: true
+before_install:
+    - npm install -g grunt-cli
+script:
+    - grunt ci
+deploy:
+    provider: npm
+    email: simon@simonemms.com
+    api_key:
+        secure: DrrhOER4vrxAl2EIX6xg3qXjY/Qp6CUtp0Sok8LUgeYJJMWtzlygmaRxU/TRaAUdMVgHHZgq6XTZK4MdVYYevNjN5s9jrkPykGfJ5NZ8CKal0JDy17yZI3ZXHxQi1vyq1fTQK/Nta9nJPJH2n49Rfdgf815YEMwcfxE1GUunRtA=
+    on:
+        tags: true
+        repo: riggerthegeek/steeplejack

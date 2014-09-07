@@ -1,0 +1,51 @@
+{
+  "name": "steeplejack",
+  "version": "0.0.0",
+  "description": "A NodeJS scaffolding framework",
+  "preferGlobal": true,
+  "bin": {
+    "steeplejack": "./bin/app.js"
+  },
+  "main": "./src/Main",
+  "dependencies": {
+    "async": "~0.9.0",
+    "commander": "~1.3.2",
+    "datautils": "~1.1.4",
+    "lodash": "~2.4.1",
+    "node-uuid": "~1.4.1",
+    "reportback": "~0.1.8",
+    "stack-trace": "~0.0.9"
+  },
+  "devDependencies": {
+      "chai": "~1.9.1",
+      "grunt": "~0.4.5",
+      "grunt-contrib-clean": "~0.6.0",
+      "grunt-contrib-jshint": "~0.10.0",
+      "grunt-jscs": "~0.6.2",
+      "grunt-jsonlint": "^1.0.4",
+      "grunt-mocha-istanbul": "~2.0.0",
+      "grunt-mocha-test": "~0.11.0",
+      "grunt-timer": "~0.5.6",
+      "load-grunt-tasks": "~0.6.0",
+      "sinon": "~1.10.3",
+      "sinon-chai": "~2.5.0"
+  },
+  "author": "Simon Emms <simon@simonemms.com>",
+  "contributors": [
+    {
+      "name": "Simon Emms",
+      "email": "simon@simonemms.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/riggerthegeek/steeplejack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/riggerthegeek/steeplejack/issues"
+  },
+  "licence": "MIT",
+  "scripts": {
+    "test": "grunt test"
+  }
+}
