@@ -1,6 +1,11 @@
-var expect = require("chai").expect;
+var chai = require("chai");
+var expect = chai.expect;
 var Exception = require("../../../../src/Main").Exceptions.Exception;
 var util = require("util");
+var proxyquire = require("proxyquire");
+var sinon = require("sinon");
+
+chai.use(require("sinon-chai"));
 
 
 describe("Exception test", function () {
@@ -23,6 +28,85 @@ describe("Exception test", function () {
             expect(fail).to.be.true;
 
             done();
+
+        });
+
+        describe("building the error string", function () {
+
+            it("should", function () {
+                var stackTrace = {
+                    parse: function () {
+                        return [{}, {}, {
+                            fileName: '/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js',
+                            lineNumber: 40,
+                            functionName: 'Context.it.type',
+                            typeName: 'Context',
+                            methodName: 'it.type',
+                            columnNumber: 23,
+                            native: false,
+                            getFileName: function () {
+                                return this.fileName;
+                            },
+                            getLineNumber: function () {
+                                return this.lineNumber;
+                            }
+                        }, {
+                            fileName: '/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js',
+                            lineNumber: 50,
+                            functionName: '',
+                            typeName: 'Context',
+                            methodName: 'type',
+                            columnNumber: 23,
+                            native: false,
+                            getFileName: function () {
+                                return this.fileName;
+                            },
+                            getLineNumber: function () {
+                                return this.lineNumber;
+                            }
+                        }, {
+                            fileName: '/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js',
+                            lineNumber: 60,
+                            functionName: '',
+                            typeName: null,
+                            methodName: 'type',
+                            columnNumber: 23,
+                            native: false,
+                            getFileName: function () {
+                                return this.fileName;
+                            },
+                            getLineNumber: function () {
+                                return this.lineNumber;
+                            }
+                        }];
+                    }
+                };
+
+                var Exception2 = proxyquire("../../../../src/error/Exception", {
+                    "stack-trace": stackTrace
+                });
+
+                function Child() {
+
+                    this.type = "Child";
+
+                    Exception2.apply(this, arguments);
+
+                    return this;
+
+                }
+
+                util.inherits(Child, Exception2);
+
+                var obj = new Child("message");
+
+                expect(obj).to.be.instanceof(Child)
+                    .to.be.instanceof(Exception2)
+                    .to.be.not.instanceof(Exception);
+
+                expect(obj.stack).to.be.equal("Error\n    at Context.it.type (/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js:40:23)\n    at Context.type (/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js:50:23)\n    at /opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js:60:23");
+
+            });
 
         });
 
@@ -174,7 +258,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Exception);
                 expect(obj).to.be.instanceof(Child);
 
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(171);
+                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(255);
 
             });
 
@@ -188,7 +272,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Exception);
                 expect(obj).to.be.instanceof(Child);
 
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(183);
+                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(267);
 
             });
 
