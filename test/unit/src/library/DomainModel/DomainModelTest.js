@@ -1,6 +1,7 @@
 var expect = require("chai").expect;
 
 /* Called "model" so I can copy the modelTest from datautils */
+var _ = require("lodash");
 var Main = require("../../../../../src/Main");
 var Base = Main.Base;
 var datautils = Base.datatypes;
@@ -1167,14 +1168,15 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.setName("Kevin")).to.be.undefined;
                 expect(obj.getName()).to.be.equal("Kevin");
 
+                expect(_.has(obj, "nonExistentFunction")).to.be.false;
+
                 var fail = false;
                 try {
                     obj.nonExistentFunction();
                 } catch (err) {
                     fail = true;
 
-                    expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("Object #<Base> has no method 'nonExistentFunction'");
+                    expect(err).to.be.instanceof(Error);
                 }
 
                 expect(fail).to.be.true;
@@ -2051,6 +2053,8 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.setName("Kevin")).to.be.undefined;
                 expect(obj.getName()).to.be.equal("Kevin");
 
+                expect(_.has(obj, "nonExistentFunction")).to.be.false;
+
                 var fail = false;
                 try {
                     obj.nonExistentFunction();
@@ -2058,7 +2062,6 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("Object #<Base> has no method 'nonExistentFunction'");
                 }
 
                 expect(fail).to.be.true;
