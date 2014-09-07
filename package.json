@@ -22,7 +22,7 @@
       "grunt-contrib-clean": "~0.6.0",
       "grunt-contrib-jshint": "~0.10.0",
       "grunt-jscs": "~0.6.2",
-      "grunt-jsonlint": "^1.0.4",
+      "grunt-jsonlint": "~1.0.4",
       "grunt-mocha-istanbul": "~2.0.0",
       "grunt-mocha-test": "~0.11.0",
       "grunt-timer": "~0.5.6",
