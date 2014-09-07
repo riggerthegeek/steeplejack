@@ -7,6 +7,7 @@ matrix:
     fast_finish: true
 before_install:
     - npm update -g npm
+    - npm --version
     - npm install -g grunt-cli
 script:
     - grunt ci
