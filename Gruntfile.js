@@ -167,6 +167,9 @@ module.exports = function (grunt) {
             }
         },
         shell: {
+            gitPush: {
+                command: "git push"
+            },
             gitPushTags: {
                 command: "git push origin --tags"
             },
@@ -218,6 +221,7 @@ module.exports = function (grunt) {
     grunt.registerTask("publish", "Publish a new version to npm", [
         "prompt:npmVersion",
         "shell:npmVersion",
+        "shell:gitPush",
         "shell:gitPushTags"
     ]);
 
