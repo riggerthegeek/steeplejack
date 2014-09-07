@@ -12,6 +12,9 @@ script:
 - grunt ci
 deploy:
   provider: npm
-  api_key: cmlnZ2VydGhlZ2VlazpkdWV0b2U4Mg==
+  email: simon@simonemms.com
+  api_key:
+    secure: o7bMFhskhkrDX1cgpPvBttcO+C0HcsJob8h3O0T2/1jfxdxnIl+AZ5I31qVyzSC3QGq01TnzC77sgp03Mo74r3fBeHKzSgxofiyJQ2ePeMajxet7icXa66oVB2EyYJSHgdF4yy/AeIQVz3NdGQj4TVruI3HcPrTCJzHYnr39Z6s=
   on:
     tags: true
+    repo: riggerthegeek/steeplejack
