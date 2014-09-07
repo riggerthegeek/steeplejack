@@ -14,7 +14,7 @@ deploy:
     provider: npm
     email: simon@simonemms.com
     api_key:
-        secure: DrrhOER4vrxAl2EIX6xg3qXjY/Qp6CUtp0Sok8LUgeYJJMWtzlygmaRxU/TRaAUdMVgHHZgq6XTZK4MdVYYevNjN5s9jrkPykGfJ5NZ8CKal0JDy17yZI3ZXHxQi1vyq1fTQK/Nta9nJPJH2n49Rfdgf815YEMwcfxE1GUunRtA=
+        secure: HEz47xK7iFQ7GGJL56MZoJcCYEttDLpzq9tTbU1KtG9NwxakKOZ+jK21A5QNRfssAyoKq+nh2sHlUCmyUZ2U7jnz0QNzm5OTGZ9I8eyCcB+M5xIni95gegLG2+AYtfa2pLu/D9L4eao+tlsyh5B2fIfzK10AhEjZbtoCt5yvTPg=
     on:
         tags: true
         repo: riggerthegeek/steeplejack
