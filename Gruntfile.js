@@ -7,6 +7,7 @@
  */
 
 /* Node modules */
+var semver = require("semver");
 
 
 module.exports = function (grunt) {
@@ -17,13 +18,15 @@ module.exports = function (grunt) {
     require("load-grunt-tasks")(grunt);
     require("grunt-timer").init(grunt);
 
+    var pkg = grunt.file.readJSON("package.json");
+
     grunt.initConfig({
         config: {
             build: "build",
             src: "src",
             test: "test"
         },
-        pkg: grunt.file.readJSON("package.json"),
+        pkg: pkg,
         clean: {
             all: [
                 "./<%= config.build %>"
@@ -122,6 +125,67 @@ module.exports = function (grunt) {
                     "./<%= config.test %>/**/*.js"
                 ]
             }
+        },
+        prompt: {
+            npmVersion: {
+                options: {
+                    questions: [{
+                        choices: [{
+                            value: "build",
+                            name:  "Build:  " + (pkg.version + "-?").yellow + " Unstable, betas, and release candidates."
+                            }, {
+                                value: "patch",
+                                name:  "Patch:  " + semver.inc(pkg.version, "patch").yellow + "   Backwards-compatible bug fixes."
+                            }, {
+                                value: "minor",
+                                name:  "Minor:  " + semver.inc(pkg.version, "minor").yellow + "   Add functionality in a backwards-compatible manner."
+                            }, {
+                                value: "major",
+                                name:  "Major:  " + semver.inc(pkg.version, "major").yellow + "   Incompatible API changes."
+                            }, {
+                                value: "custom",
+                                name:  "Custom: " + "?.?.?".yellow + "   Specify version..."
+                            }
+                        ],
+                        config: "bump.increment",
+                        message: "What sort of increment would you like?",
+                        type: "list"
+                    }, {
+                        config: "bump.version",
+                        message: "What specific version would you like",
+                        type: "input",
+                        when: function (answers) {
+                            return answers["bump.increment"] === "custom";
+                        },
+                        validate: function (value) {
+                            var valid = semver.valid(value) && true;
+                            return valid || "Must be a valid semver, such as 1.2.3-rc1. See " +
+                                "http://semver.org/".blue.underline + " for more details.";
+                        }
+                    }]
+                }
+            }
+        },
+        shell: {
+            gitPushTags: {
+                command: "git push --tags"
+            },
+            npmVersion: {
+                command: function () {
+                    var bump = {
+                        increment: grunt.config.get("bump.increment"),
+                        version: grunt.config.get("bump.version")
+                    };
+
+                    var script = bump.increment;
+
+                    if (script === "custom") {
+                        script = bump.version;
+                    }
+
+                    return "npm version " + script;
+                }
+            }
         }
     });
 
@@ -149,6 +213,12 @@ module.exports = function (grunt) {
         "jsonlint:src",
         "jscs:src",
         "jscs:test" /* Run JSCS on tests to ensure readability */
+    ]);
+
+    grunt.registerTask("publish", "Publish a new version to npm", [
+        "prompt:npmVersion",
+        "shell:npmVersion",
+        "shell:gitPushTags"
     ]);
 
     grunt.registerTask("test", "Perform tests on the codebase", [
