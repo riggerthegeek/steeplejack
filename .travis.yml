@@ -10,7 +10,6 @@ matrix:
         - node_js: '0.6'
 before_install:
     - npm update -g npm
-    - npm --version
     - npm install -g grunt-cli
 script:
     - grunt ci
