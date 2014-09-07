@@ -168,7 +168,7 @@ module.exports = function (grunt) {
         },
         shell: {
             gitPushTags: {
-                command: "git push --tags"
+                command: "git push origin --tags"
             },
             npmVersion: {
                 command: function () {
