@@ -218,7 +218,7 @@ module.exports = function (grunt) {
         "jscs:test" /* Run JSCS on tests to ensure readability */
     ]);
 
-    grunt.registerTask("publish", "Publish a new version to npm", [
+    grunt.registerTask("tag", "Tag a new release", [
         "prompt:npmVersion",
         "shell:npmVersion",
         "shell:gitPush",
