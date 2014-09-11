@@ -23,6 +23,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         config: {
             build: "build",
+            coverage: "coverage",
             src: "src",
             test: "test"
         },
@@ -38,6 +39,11 @@ module.exports = function (grunt) {
                 dest: "./<%= config.build %>/",
                 expand: true,
                 src: "**/*.js"
+            }
+        },
+        coveralls: {
+            push: {
+                src: "./<%= config.coverage %>/lcov.info"
             }
         },
         jscs: {
