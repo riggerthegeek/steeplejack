@@ -1,5 +1,11 @@
 # steeplejack
 
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![Node.js Version][node-version-image]][node-version-url]
+[![Build Status][travis-image]][travis-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
+
 [![Build Status](https://travis-ci.org/riggerthegeek/steeplejack.svg?branch=master)](https://travis-ci.org/riggerthegeek/steeplejack)
 
 ![By 'eck, that were grand](https://github.com/riggerthegeek/steeplejack/raw/master/steeplejack-small.png)
