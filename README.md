@@ -18,7 +18,7 @@ You need NodeJS and NPM installed to install this.  It's tested on NodeJS 0.8 an
 
 
 [npm-image]: https://img.shields.io/npm/v/steeplejack.svg?style=flat
-[downloads-image]: https://img.shields.io/npm/dm/mysql.svg?style=flat
+[downloads-image]: https://img.shields.io/npm/dm/steeplejack.svg?style=flat
 [node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.8-brightgreen.svg?style=flat
 [travis-image]: https://img.shields.io/travis/riggerthegeek/steeplejack.svg?style=flat
 [coveralls-image]: https://img.shields.io/coveralls/riggerthegeek/steeplejack.svg?style=flat
