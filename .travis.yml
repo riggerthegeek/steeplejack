@@ -6,7 +6,7 @@ node_js:
 matrix:
   fast_finish: true
 before_install:
-- npm update -g npm
+- npm install -g npm@1.4.28
 - npm install -g grunt-cli
 script:
 - grunt ci
