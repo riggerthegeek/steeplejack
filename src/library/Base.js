@@ -16,7 +16,9 @@ var util = require("util");
 
 /* Third-party modules */
 var _ = require("lodash");
-var datatypes = require("datautils").data;
+var datautils = require("datautils");
+
+var datatypes = datautils.data;
 
 
 /* Files */
@@ -256,7 +258,10 @@ _.extend(Base, {
 
         });
 
-    }
+    },
+
+
+    validation: datautils.validation
 
 
 });

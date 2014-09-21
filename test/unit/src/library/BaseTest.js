@@ -8,6 +8,16 @@ var _ = require("lodash");
 
 describe("Base library", function () {
 
+    describe("datatypes", function () {
+
+        it("should have the datautils.datatype library", function () {
+
+            expect(Base.datatypes).to.be.equal(require("datautils").data);
+
+        });
+
+    });
+
     describe("#extend", function () {
 
         it("should extend the Base object with no properties", function (done) {
@@ -924,6 +934,16 @@ describe("Base library", function () {
                 }
 
             });
+
+        });
+
+    });
+
+    describe("validation", function () {
+
+        it("should have the datautils.validation library", function () {
+
+            expect(Base.validation).to.be.equal(require("datautils").validation);
 
         });
 
