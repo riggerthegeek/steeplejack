@@ -52,47 +52,7 @@ function Exception (message) {
 
     this.fileName = this.getStackTrace(0).getFileName();
     this.lineNumber = this.getStackTrace(0).getLineNumber();
-
-    var stack = ["Error"];
-    for (var i = 0; i < this.stackTrace.length; i++) {
-        var objTrace = this.getStackTrace(i);
-
-        var tmp = "";
-        for (var x = 0; x < 4; x++) {
-            tmp += " ";
-        }
-        tmp += "at ";
-
-        /* Build the error string */
-        var hasFunction = false;
-        if (objTrace.functionName !== null && objTrace.functionName !== "") {
-            hasFunction = true;
-            tmp += objTrace.functionName;
-        } else if (objTrace.typeName !== null) {
-            hasFunction = true;
-            tmp += objTrace.typeName;
-            tmp += ".";
-            tmp += objTrace.methodName || "<anonymous>";
-        }
-
-
-        if (hasFunction) {
-            tmp += " (";
-        }
-        tmp += objTrace.fileName;
-        tmp += ":";
-        tmp += objTrace.lineNumber;
-        tmp += ":";
-        tmp += objTrace.columnNumber;
-        if (hasFunction) {
-            tmp += ")";
-        }
-
-        stack.push(tmp);
-
-    }
-
-    this.stack = stack.join("\n");
+    this.stack = this._buildStackTrace();
 
     if (this.type === undefined) {
         throw new SyntaxError("Exception type must be set");
@@ -107,6 +67,61 @@ Exception.prototype = new Error();
 
 
 _.extend(Exception.prototype, {
+
+
+    /**
+     * Build Stack Trace
+     *
+     * Builds the stack trace string.  It mimics the
+     * one in the Error class.
+     *
+     * @returns {string}
+     * @private
+     */
+    _buildStackTrace: function () {
+
+        var stack = ["Error"];
+        for (var i = 0; i < this.stackTrace.length; i++) {
+            var objTrace = this.getStackTrace(i);
+
+            var tmp = "";
+            for (var x = 0; x < 4; x++) {
+                tmp += " ";
+            }
+            tmp += "at ";
+
+            /* Build the error string */
+            var hasFunction = false;
+            if (objTrace.functionName !== null && objTrace.functionName !== "") {
+                hasFunction = true;
+                tmp += objTrace.functionName;
+            } else if (objTrace.typeName !== null) {
+                hasFunction = true;
+                tmp += objTrace.typeName;
+                tmp += ".";
+                tmp += objTrace.methodName || "<anonymous>";
+            }
+
+
+            if (hasFunction) {
+                tmp += " (";
+            }
+            tmp += objTrace.fileName;
+            tmp += ":";
+            tmp += objTrace.lineNumber;
+            tmp += ":";
+            tmp += objTrace.columnNumber;
+            if (hasFunction) {
+                tmp += ")";
+            }
+
+            stack.push(tmp);
+
+        }
+
+        return stack.join("\n");
+
+    },
 
 
     /**
