@@ -5,6 +5,7 @@
 [![Node.js Version][node-version-image]][node-version-url]
 [![Build Status][travis-image]][travis-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
+[![Code Quality][quality-image]][quality-url]
 
 ![By 'eck, that were grand](https://github.com/riggerthegeek/steeplejack/raw/master/steeplejack-small.png)
 
@@ -24,9 +25,11 @@ You need NodeJS and NPM installed to install this.  It's tested on NodeJS 0.8 an
 [node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.8-brightgreen.svg?style=flat
 [travis-image]: https://img.shields.io/travis/riggerthegeek/steeplejack.svg?style=flat
 [coveralls-image]: https://img.shields.io/coveralls/riggerthegeek/steeplejack.svg?style=flat
+[quality-image]: http://img.shields.io/codeclimate/github/riggerthegeek/steeplejack.svg?style=flat
 
 [npm-url]: https://npmjs.org/package/steeplejack
 [node-version-url]: http://nodejs.org/download/
 [travis-url]: https://travis-ci.org/riggerthegeek/steeplejack 
 [downloads-url]: https://npmjs.org/package/steeplejack
 [coveralls-url]: https://coveralls.io/r/riggerthegeek/steeplejack
+[quality-url]: https://codeclimate.com/github/riggerthegeek/steeplejack
