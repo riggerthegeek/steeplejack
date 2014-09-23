@@ -18,7 +18,6 @@
 
 
 /* Third-party modules */
-var _ = require("lodash");
 
 
 /* Files */

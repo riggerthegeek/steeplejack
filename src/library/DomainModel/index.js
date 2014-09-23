@@ -12,7 +12,6 @@
 
 
 /* Node modules */
-var util = require("util");
 
 
 /* Third-party modules */

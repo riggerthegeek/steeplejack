@@ -46,12 +46,6 @@ _.extend(Detail.prototype, {
      */
     toDTO: function () {
 
-        var keys = [
-            "message",
-            "value",
-            "additional"
-        ];
-
         var obj = _.pick(this, [
             "message",
             "value"

@@ -161,9 +161,6 @@ module.exports = Base.extend({
      */
     process: function (target) {
         var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
-        var FN_ARG_SPLIT = /,/;
-        var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
-        var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 
         /* Get the constructor text */
         var text;

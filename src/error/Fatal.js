@@ -18,7 +18,6 @@ var util = require("util");
 
 /* Third-party modules */
 var _ = require("lodash");
-var datatypes = require("datautils").data;
 
 
 /* Files */

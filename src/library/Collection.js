@@ -21,7 +21,6 @@ var uuid = require("node-uuid");
 /* Files */
 var Base = require("./Base");
 var datatypes = Base.datatypes;
-var Model = Base.Model;
 
 
 /**
@@ -614,7 +613,7 @@ module.exports = Base.extend({
      */
     where: function (props) {
 
-        _.each(this.getAll(), function (model, id, all) {
+        _.each(this.getAll(), function (model, id) {
             if (model.where(props) === false) {
                 /* Remove this from the collection */
                 this.remove(id);
