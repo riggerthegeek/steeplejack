@@ -518,13 +518,26 @@ var DomainModel = Base.extend({
 
         _.forEach(props, function (value, key) {
             this.set(key, value);
-            props[key] = this.get(key);
+
+            value = this.get(key);
+
+            if (_.isObject(value)) {
+                /* Set objects to strings */
+                value = value.toString();
+            }
+            props[key] = value;
         }, tmp);
 
         /* What properties are set? */
         var obj = {};
         _.forEach(props, function (value, key) {
-            obj[key] = this.get(key);
+            value = this.get(key);
+
+            if (_.isObject(value)) {
+                /* Set objects to strings */
+                value = value.toString();
+            }
+            obj[key] = value;
         }, this);
 
         return _.isEqual(props, obj);
