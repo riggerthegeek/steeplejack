@@ -153,6 +153,44 @@ describe("Run script test", function () {
 
         });
 
+        it("should listen for the kill event", function (done) {
+
+            var config = sinon.stub(Run, "loadFile");
+            var Target = sinon.stub(Run, "loadTargetFilePath");
+
+            config.returns({
+                key: "value",
+                bool: false,
+                number: 2
+            });
+            Target.returns(Main.Base.extend({
+                _construct: function (config, cli) {
+                    this.config = config;
+                    this.cli = cli;
+                }
+            }));
+
+            var obj = Run({
+                params: {
+                    bool: true,
+                    param: "key"
+                },
+                configFile: "path/to/config",
+                filePath: "path/to/target"
+            }, fnOut);
+
+            obj.on("close", function () {
+                done();
+            });
+
+            obj.emit("kill");
+
+            config.restore();
+            Target.restore();
+
+
+        });
+
     });
 
     describe("#loadConfigFilePath", function () {

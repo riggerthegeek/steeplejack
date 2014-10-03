@@ -43,7 +43,7 @@ function Run (options, cli) {
     var Target = Run.loadTargetFilePath(options.filePath);
 
     /* Execute the target and listen for config */
-    return Target
+    var inst = Target
         .create(config, cli)
         .on("config", function (config) {
 
@@ -60,8 +60,12 @@ function Run (options, cli) {
             /* Write to the STDOUT */
             console.log(out.join("\n"));
 
-        }
-    );
+        })
+        .on("kill", function () {
+            inst.emit("close");
+        });
+
+    return inst;
 
 }
 
