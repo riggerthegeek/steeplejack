@@ -20,7 +20,6 @@ var cliOutput = require("../src/helper/cliOutput");
 var cliParameters = require("../src/helper/cliParameters");
 var program = require("../src/library/Commander");
 var steeplejack = require("../");
-//var script = require("../src/script");
 
 
 /* Define the cmd variable - our commands are put in here */
