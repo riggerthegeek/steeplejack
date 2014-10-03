@@ -19,7 +19,8 @@
 var cliOutput = require("../src/helper/cliOutput");
 var cliParameters = require("../src/helper/cliParameters");
 var program = require("../src/library/Commander");
-var script = require("../src/script");
+var steeplejack = require("../");
+//var script = require("../src/script");
 
 
 /* Define the cmd variable - our commands are put in here */
@@ -51,7 +52,7 @@ cmd.action(function () {
     var args = cliParameters.apply(this, arguments);
     var stdout = cliOutput();
     try {
-        script.run({
+        steeplejack({
             params: args.params,
             configFile: args.commander.configFile,
             filePath: args.commander.main

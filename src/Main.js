@@ -15,12 +15,27 @@
 
 
 /* Third-party modules */
+var _ = require("lodash");
 
 
 /* Files */
+var Run = require("./script/run");
 
 
-module.exports = {
+/**
+ * steeplejack
+ *
+ * This wraps the run function, so it can be
+ * used programmatically.
+ *
+ * @returns {object}
+ */
+function steeplejack () {
+    return Run.apply(null, arguments);
+}
+
+
+_.extend(steeplejack, {
 
 
     /**
@@ -89,4 +104,7 @@ module.exports = {
     Router: require("./library/Router")
 
 
-};
+});
+
+
+module.exports = steeplejack;

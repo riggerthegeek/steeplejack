@@ -17,7 +17,7 @@ var _ = require("lodash");
 
 
 /* Files */
-var datatypes = require("../../").Base.datatypes;
+var datatypes = require("../library/Base").datatypes;
 
 
 /**
