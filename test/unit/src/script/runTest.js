@@ -202,7 +202,7 @@ describe("Run script test", function () {
                 process.env.ENV_VALUE = "465";
                 process.env.ENV_VAL = 7890;
 
-                loadFile.withArgs("path/to/envvars").returns({
+                loadFile.withArgs(path.resolve(process.cwd(), "path/to/envvars")).returns({
                     bool: "ENV_BOOL",
                     obj: {
                         value: "ENV_VALUE",

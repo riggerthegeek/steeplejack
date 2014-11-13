@@ -71,7 +71,7 @@ function Run (options, cli) {
     /* Get the environment variables to config mapper file - optional */
     var envars = datatypes.setString(options.envvars, null);
     if (envars !== null) {
-        var envarsConfig = Run.loadFile(envars);
+        var envarsConfig = Run.loadFile(Run.resolveFilePath(envars));
 
         /* Load up the environment variables */
         config = _.merge(config, replaceWithEnvVars(envarsConfig));
