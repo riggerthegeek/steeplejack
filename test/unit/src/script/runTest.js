@@ -191,6 +191,81 @@ describe("Run script test", function () {
 
         });
 
+        describe("env vars", function () {
+
+            it("should load with an override file", function (done) {
+
+                var loadFile = sinon.stub(Run, "loadFile");
+                var Target = sinon.stub(Run, "loadTargetFilePath");
+
+                process.env.ENV_BOOL = true;
+                process.env.ENV_VALUE = "465";
+                process.env.ENV_VAL = 7890;
+
+                loadFile.withArgs("path/to/envvars").returns({
+                    bool: "ENV_BOOL",
+                    obj: {
+                        value: "ENV_VALUE",
+                        obj: {
+                            val: "ENV_VAL",
+                            notfound: "ENV_NOTFOUND"
+                        }
+                    }
+                });
+
+                loadFile.returns({
+                    key: "value",
+                    bool: false,
+                    number: 2,
+                    obj: {
+                        value: "2",
+                        obj: {
+                            val: 3,
+                            notfound: "ooops"
+                        }
+                    }
+                });
+
+                Target.returns(Main.Base.extend({
+                    _construct: function (config, cli) {
+                        this.config = config;
+                        this.cli = cli;
+                    }
+                }));
+
+                var obj = Run({
+                    params: {
+                    },
+                    configFile: "path/to/config",
+                    filePath: "path/to/target",
+                    envvars: "path/to/envvars"
+                }, fnOut);
+
+                expect(obj).to.be.instanceof(Main.Base);
+
+                expect(obj.config).to.be.eql({
+                    key: "value",
+                    bool: "true",
+                    number: 2,
+                    obj: {
+                        value: "465",
+                        obj: {
+                            val: "7890",
+                            notfound: "ooops"
+                        }
+                    }
+                });
+                expect(obj.cli).to.be.equal(fnOut);
+
+                loadFile.restore();
+                Target.restore();
+
+                done();
+
+            });
+
+        });
+
     });
 
     describe("#loadConfigFilePath", function () {

@@ -46,6 +46,7 @@ cmd = program.command("run");
 cmd.unknownOption = NOOP;
 cmd.option("-C, --config-file [path/to/file]", "Specify the config file - a JS/JSON file containing the configuration parameters", String, null);
 cmd.option("-M, --main [path/to/file]", "Specify the main file", String, null);
+cmd.option("-E, --env [path/to/file]", "Specify the environment variables mapper", String, null);
 cmd.description("run the application");
 cmd.action(function () {
     var args = cliParameters.apply(this, arguments);
@@ -54,6 +55,7 @@ cmd.action(function () {
         steeplejack({
             params: args.params,
             configFile: args.commander.configFile,
+            envvars: args.commander.env,
             filePath: args.commander.main
         }, stdout);
     } catch (err) {

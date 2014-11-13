@@ -21,6 +21,35 @@ var datatypes = require("../library/Base").datatypes;
 
 
 /**
+ * Replace With Env Vars
+ *
+ * Looks for a matching environment variable and
+ * puts it into the object
+ *
+ * @param {object} obj
+ * @returns {object}
+ */
+function replaceWithEnvVars(obj) {
+
+    for (var k in obj) {
+        var envvar = obj[k];
+        if (typeof envvar === "object" && envvar !== null) {
+            replaceWithEnvVars(envvar);
+        } else {
+            if (_.has(process.env, envvar)) {
+                /* Replace the value */
+                obj[k] = process.env[envvar];
+            } else {
+                delete obj[k];
+            }
+        }
+    }
+
+    return obj;
+}
+
+
+/**
  * Run
  *
  * Loads up and runs the main file
@@ -38,6 +67,15 @@ function Run (options, cli) {
 
     /* Get the config file */
     var config = Run.loadConfigFilePath(options.configFile, params);
+
+    /* Get the environment variables to config mapper file - optional */
+    var envars = datatypes.setString(options.envvars, null);
+    if (envars !== null) {
+        var envarsConfig = Run.loadFile(envars);
+
+        /* Load up the environment variables */
+        config = _.merge(config, replaceWithEnvVars(envarsConfig));
+    }
 
     /* Get the target file */
     var Target = Run.loadTargetFilePath(options.filePath);
