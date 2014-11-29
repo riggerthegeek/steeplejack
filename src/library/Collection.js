@@ -111,24 +111,26 @@ module.exports = Base.extend({
             if (data !== null) {
 
                 /* Don't create anything if an empty object is given */
-                if (_.isEmpty(data)) {
-                    return;
-                }
+                if (_.isEmpty(data) === false) {
 
-                /* Put it to the model */
-                var obj;
-                if (data instanceof this.model) {
-                    /* Already instance of the model */
-                    obj = data;
-                } else {
-                    obj = this.model.create(data);
-                }
+                    /* Put it to the model */
+                    var obj;
+                    if (data instanceof this.model) {
+                        /* Already instance of the model */
+                        obj = data;
+                    } else {
+                        obj = this.model.create(data);
+                    }
 
-                var key = uuid.v4();
-                this.data[key] = obj;
+                    var key = uuid.v4();
+                    this.data[key] = obj;
+
+                }
 
             }
         }
+
+        return this;
 
     },
 

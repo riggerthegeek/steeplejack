@@ -224,19 +224,31 @@ describe("Collection tests", function () {
 
         });
 
+        it("should add nothing, but still return this", function () {
+
+            var obj = new Collection();
+
+            expect(obj.getCount()).to.be.equal(0);
+
+            expect(obj.add({})).to.be.equal(obj);
+
+            expect(obj.getCount()).to.be.equal(0);
+
+        });
+
         it("should create models from an object in the add method", function (done) {
 
             var obj = new Collection();
 
             expect(obj.getCount()).to.be.equal(0);
 
-            obj.add({
+            expect(obj.add({
                 boolean: "true",
                 date: "2010-02-07",
                 float: "2.3",
                 integer: "2",
                 string: "string"
-            });
+            })).to.be.equal(obj);
 
             expect(obj.getCount()).to.be.equal(1);
             expect(obj.get(0)).to.be.instanceof(Model);
@@ -260,7 +272,7 @@ describe("Collection tests", function () {
 
             expect(obj.getCount()).to.be.equal(0);
 
-            obj.add([
+            expect(obj.add([
                 {
                     boolean: "true",
                     date: "2010-02-07",
@@ -268,7 +280,7 @@ describe("Collection tests", function () {
                     integer: "2",
                     string: "string"
                 }
-            ]);
+            ])).to.be.equal(obj);
 
             expect(obj.getCount()).to.be.equal(1);
             expect(obj.get(0)).to.be.instanceof(Model);
@@ -292,7 +304,7 @@ describe("Collection tests", function () {
 
             expect(obj.getCount()).to.be.equal(0);
 
-            obj.add([
+            expect(obj.add([
                 {
                     boolean: "true",
                     date: "2010-02-07",
@@ -307,7 +319,7 @@ describe("Collection tests", function () {
                     integer: "2",
                     string: "string"
                 }
-            ]);
+            ])).to.be.equal(obj);
 
             expect(obj.getCount()).to.be.equal(2);
             expect(obj.get(0)).to.be.instanceof(Model);
@@ -340,13 +352,13 @@ describe("Collection tests", function () {
 
             expect(obj.getCount()).to.be.equal(0);
 
-            obj.add(new Model({
+            expect(obj.add(new Model({
                 boolean: "true",
                 date: "2010-02-07",
                 float: "2.3",
                 integer: "2",
                 string: "string"
-            }));
+            }))).to.be.equal(obj);
 
             expect(obj.getCount()).to.be.equal(1);
             expect(obj.get(0)).to.be.instanceof(Model);
@@ -371,7 +383,7 @@ describe("Collection tests", function () {
 
             expect(obj.getCount()).to.be.equal(0);
 
-            obj.add([
+            expect(obj.add([
                 new Model({
                     boolean: "true",
                     date: "2010-02-07",
@@ -393,7 +405,7 @@ describe("Collection tests", function () {
                     integer: 2,
                     string: "string"
                 })
-            ]);
+            ])).to.be.equal(obj);
 
             expect(obj.getCount()).to.be.equal(3);
             expect(obj.get(0)).to.be.instanceof(Model);
