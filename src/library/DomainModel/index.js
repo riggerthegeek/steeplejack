@@ -278,9 +278,16 @@ var DomainModel = Base.extend({
                     if (Base.extendsContructor(definition.type, DomainModel, Collection)) {
                         /* Instanceof DomainModel or Collection */
                         if (value instanceof definition.type === false) {
-                            value = datatypes.setObject(value, defaults);
+                            var createCollection = false;
 
-                            if (value !== defaults) {
+                            if (value instanceof Array) {
+                                createCollection = true;
+                            } else {
+                                value = datatypes.setObject(value, defaults);
+                                createCollection = value !== defaults;
+                            }
+
+                            if (createCollection) {
                                 value = definition.type.create(value);
                             }
                         }

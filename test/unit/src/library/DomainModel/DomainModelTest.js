@@ -740,6 +740,51 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
+                it("should allow an array to be added to a Collection", function () {
+
+                    var Collection = collection.extend({
+                        model: model.extend({
+                            definition: {
+                                string: {
+                                    type: "string",
+                                    value: null
+                                }
+                            }
+                        })
+                    });
+
+                    var Model = model.extend({
+                        definition: {
+                            str: {
+                                type: "string",
+                                value: null
+                            },
+                            collection: {
+                                type: Collection,
+                                value: null
+                            }
+                        }
+                    });
+
+                    var obj = new Model({
+                        str: "hello",
+                        collection: [{
+                            string: "world"
+                        }]
+                    });
+
+                    expect(obj.get("str")).to.be.equal("hello");
+                    expect(obj.get("collection")).to.be.instanceof(Collection);
+
+                    expect(obj.toObject()).to.be.eql({
+                        str: "hello",
+                        collection: [{
+                            string: "world"
+                        }]
+                    });
+
+                });
+
             });
 
         });
