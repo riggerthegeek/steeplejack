@@ -23,7 +23,7 @@ describe("DomainModel tests - using new", function () {
             expect(obj).to.be.instanceof(Model);
             expect(obj.toData()).to.be.eql({});
             expect(obj.toObject()).to.be.eql({});
-            expect(obj.set("invalid", "a string")).to.be.undefined;
+            expect(obj.set("invalid", "a string")).to.be.equal(obj);
             expect(obj.get("invalid")).to.be.undefined;
 
             done();
@@ -113,10 +113,10 @@ describe("DomainModel tests - using new", function () {
                     },
                     string: "some string"
                 });
-                expect(obj1.set("invalid", "a string")).to.be.undefined;
+                expect(obj1.set("invalid", "a string")).to.be.equal(obj1);
                 expect(obj1.get("invalid")).to.be.undefined;
 
-                expect(obj1.set("integer", 12345)).to.be.undefined;
+                expect(obj1.set("integer", 12345)).to.be.equal(obj1);
                 expect(obj1.get("integer")).to.be.equal(12345);
 
                 done();
@@ -323,10 +323,10 @@ describe("DomainModel tests - using new", function () {
 
                 expect(obj.get('simple')).to.be.equal('hello');
 
-                expect(obj.set('simple', 'test')).to.be.undefined;
+                expect(obj.set('simple', 'test')).to.be.equal(obj);
                 expect(obj.get('simple')).to.be.equal('test');
 
-                expect(obj.set('simple')).to.be.undefined;
+                expect(obj.set('simple')).to.be.equal(obj);
                 expect(obj.get('simple')).to.be.null;
 
                 done();
@@ -977,7 +977,7 @@ describe("DomainModel tests - using new", function () {
 
                 arrTypes.forEach(function (value) {
 
-                    expect(obj.set("mixed", value)).to.be.undefined;
+                    expect(obj.set("mixed", value)).to.be.equal(obj);
                     expect(obj.get("mixed")).to.be.equal(value);
 
                 });
@@ -988,12 +988,12 @@ describe("DomainModel tests - using new", function () {
 
                 arrObjTypes.forEach(function (value) {
 
-                    expect(obj.set("mixed", value)).to.be.undefined;
+                    expect(obj.set("mixed", value)).to.be.equal(obj);
                     expect(obj.get("mixed")).to.be.eql(value);
 
                 });
 
-                expect(obj.set("mixed", undefined)).to.be.undefined;
+                expect(obj.set("mixed", undefined)).to.be.equal(obj);
                 expect(obj.get("mixed")).to.be.equal(null);
 
                 done();
@@ -1279,7 +1279,7 @@ describe("DomainModel tests - using new", function () {
             expect(obj).to.be.instanceof(Model);
             expect(obj.toData()).to.be.eql({});
             expect(obj.toObject()).to.be.eql({});
-            expect(obj.set("invalid", "a string")).to.be.undefined;
+            expect(obj.set("invalid", "a string")).to.be.equal(obj);
             expect(obj.get("invalid")).to.be.undefined;
 
             done();
@@ -1369,10 +1369,10 @@ describe("DomainModel tests - using new", function () {
                     },
                     string: "some string"
                 });
-                expect(obj1.set("invalid", "a string")).to.be.undefined;
+                expect(obj1.set("invalid", "a string")).to.be.equal(obj1);
                 expect(obj1.get("invalid")).to.be.undefined;
 
-                expect(obj1.set("integer", 12345)).to.be.undefined;
+                expect(obj1.set("integer", 12345)).to.be.equal(obj1);
                 expect(obj1.get("integer")).to.be.equal(12345);
 
                 done();
@@ -1515,10 +1515,10 @@ describe("DomainModel tests - using new", function () {
 
                 expect(obj.get('simple')).to.be.equal('hello');
 
-                expect(obj.set('simple', 'test')).to.be.undefined;
+                expect(obj.set('simple', 'test')).to.be.equal(obj);
                 expect(obj.get('simple')).to.be.equal('test');
 
-                expect(obj.set('simple')).to.be.undefined;
+                expect(obj.set('simple')).to.be.equal(obj);
                 expect(obj.get('simple')).to.be.null;
 
                 done();
@@ -1862,7 +1862,7 @@ describe("DomainModel tests - using new", function () {
 
                 arrTypes.forEach(function (value) {
 
-                    expect(obj.set("mixed", value)).to.be.undefined;
+                    expect(obj.set("mixed", value)).to.be.equal(obj);
                     expect(obj.get("mixed")).to.be.equal(value);
 
                 });
@@ -1873,12 +1873,12 @@ describe("DomainModel tests - using new", function () {
 
                 arrObjTypes.forEach(function (value) {
 
-                    expect(obj.set("mixed", value)).to.be.undefined;
+                    expect(obj.set("mixed", value)).to.be.equal(obj);
                     expect(obj.get("mixed")).to.be.eql(value);
 
                 });
 
-                expect(obj.set("mixed", undefined)).to.be.undefined;
+                expect(obj.set("mixed", undefined)).to.be.equal(obj);
                 expect(obj.get("mixed")).to.be.equal(null);
 
                 done();

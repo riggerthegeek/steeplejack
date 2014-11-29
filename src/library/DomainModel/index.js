@@ -379,6 +379,8 @@ var DomainModel = Base.extend({
 
         }
 
+        return this;
+
     },
 
 
