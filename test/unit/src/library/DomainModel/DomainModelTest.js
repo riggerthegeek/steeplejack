@@ -67,6 +67,108 @@ describe("DomainModel tests - using new", function () {
 
             });
 
+            it("should convert a submodel to it's data representation", function () {
+
+                var SubModel = model.extend({
+
+                    definition: {
+
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        }
+
+                    }
+
+                });
+
+                var OtherModel = model.extend({
+
+                    definition: {
+
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        },
+
+                        model: {
+                            type: SubModel
+                        }
+
+                    }
+
+                });
+
+                var obj = new OtherModel({
+                    id: "1234",
+                    model: {
+                        id: "2468"
+                    }
+                });
+
+                expect(obj.toData()).to.be.eql({
+                    _id: "1234",
+                    model: {
+                        _id: "2468"
+                    }
+                });
+
+            });
+
+            it("should convert a collection to it's data representation", function () {
+
+                var SubModel = model.extend({
+
+                    definition: {
+
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        }
+
+                    }
+
+                });
+
+                var SubCollection = collection.extend({
+
+                    model: SubModel
+
+                });
+
+                var OtherModel = model.extend({
+
+                    definition: {
+
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        },
+
+                        model: {
+                            type: SubCollection
+                        }
+
+                    }
+
+                });
+
+                var obj = new OtherModel({
+                    id: "1234",
+                    model: [{
+                        id: "2468"
+                    }]
+                });
+
+                expect(obj.toData()).to.be.eql({
+                    _id: "1234",
+                    model: [{
+                        _id: "2468"
+                    }]
+                });
+
+            });
+
             it("should define a model with definitions", function (done) {
 
                 var obj1 = new Model({

@@ -404,7 +404,14 @@ var DomainModel = Base.extend({
             /* Get the column name */
             var column = this.definition[key].column;
 
-            obj[column] = this.get(key);
+            var data = this.get(key);
+
+            /* Search fr  */
+            if (_.has(data, "toData") && _.isFunction(data.toData)) {
+                data = data.toData();
+            }
+
+            obj[column] = data;
 
         }
 

@@ -77,6 +77,39 @@ describe("Collection tests", function () {
 
         });
 
+        it("should convert a collection to it's data representation", function () {
+
+            var Model1 = DomainModel.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    }
+                }
+
+            });
+
+            var Collection1 = collection.extend({
+
+                model: Model1
+
+            });
+
+            var obj = new Collection1([{
+                id: "12345"
+            }, {
+                id: "23456"
+            }]);
+
+            expect(obj.toData()).to.be.eql([{
+                _id: "12345"
+            }, {
+                _id: "23456"
+            }]);
+
+        });
+
         it("should create a collection of models from an object", function (done) {
 
             var obj = new Collection({

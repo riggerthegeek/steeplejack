@@ -589,6 +589,21 @@ module.exports = Base.extend({
 
 
     /**
+     * To Data
+     *
+     * Converts the whole collection into array of objects
+     * that are the data version of the object
+     *
+     * @returns {array}
+     */
+    toData: function () {
+        return _.map(this.getAll(), function (model) {
+            return model.toData();
+        }, this);
+    },
+
+
+    /**
      * To JSON
      *
      * Converts the whole collection into a JSON
