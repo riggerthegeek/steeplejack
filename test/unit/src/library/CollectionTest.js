@@ -4181,14 +4181,6 @@ describe("Collection tests", function () {
 
         });
 
-        describe("Submodel", function () {
-
-            it("should validate a submodel with no errors");
-
-            it("should validate a submodel with errors");
-
-        });
-
     });
 
 });
