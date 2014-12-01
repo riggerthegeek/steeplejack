@@ -9,6 +9,7 @@ chai.use(sinonChai);
 var Main = require("../../../../src/Main");
 var collection = Main.Collection;
 var DomainModel = Main.Model;
+var ValidationErr = Main.Exceptions.Validation;
 var _ = require("lodash");
 
 
@@ -4013,6 +4014,178 @@ describe("Collection tests", function () {
                     });
 
             });
+
+        });
+
+    });
+
+    describe("#validate", function () {
+
+        var SubModel,
+            SubCollection;
+        beforeEach(function () {
+
+            SubModel = DomainModel.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        validation: [{
+                            rule: "required"
+                        }]
+                    },
+                    name: {
+                        type: "string",
+                        validation: [{
+                            rule: "minLength",
+                            param: 2
+                        }, {
+                            rule: function (objModel, value) {
+                                return value === "Bob";
+                            }
+                        }]
+                    }
+                }
+
+            });
+
+            SubCollection = Collection.extend({
+
+                model: SubModel
+
+            });
+
+        });
+
+        describe("Collection", function () {
+
+            it("should validate a collection with no erroring models", function () {
+
+                var obj = new SubCollection([{
+                    id: "someid",
+                    name: "Bob"
+                }]);
+
+                expect(obj.validate()).to.be.true;
+
+            });
+
+            it("should validate a collection with one erroring models", function () {
+
+                var obj = new SubCollection([{
+                    id: "someid",
+                    name: "Bob"
+                }, {
+                    name: "K"
+                }]);
+
+                var fail = false;
+
+                try {
+                    obj.validate();
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Error);
+                    expect(err.message).to.be.equal("COLLECTION_ERROR");
+
+                    expect(_.size(err.errors)).to.be.equal(1);
+
+                    expect(err.errors[1]).to.be.instanceof(ValidationErr);
+
+                    expect(err.errors[1].getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        name: [{
+                            message: "VALUE_LESS_THAN_MIN_LENGTH",
+                            value: "K",
+                            additional: [
+                                2
+                            ]
+                        }, {
+                            message: "CUSTOM_VALIDATION_FAILED",
+                            value: "K"
+                        }]
+                    });
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should validate a collection with multiple erroring models", function () {
+
+                var obj = new SubCollection([{
+                    name: "B"
+                }, {
+                    name: "K"
+                }]);
+
+                var fail = false;
+
+                try {
+                    obj.validate();
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Error);
+                    expect(err.message).to.be.equal("COLLECTION_ERROR");
+
+                    expect(_.size(err.errors)).to.be.equal(2);
+
+                    expect(err.errors[0]).to.be.instanceof(ValidationErr);
+                    expect(err.errors[1]).to.be.instanceof(ValidationErr);
+
+                    expect(err.errors[0].getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        name: [{
+                            message: "VALUE_LESS_THAN_MIN_LENGTH",
+                            value: "B",
+                            additional: [
+                                2
+                            ]
+                        }, {
+                            message: "CUSTOM_VALIDATION_FAILED",
+                            value: "B"
+                        }]
+                    });
+
+                    expect(err.errors[1].getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        name: [{
+                            message: "VALUE_LESS_THAN_MIN_LENGTH",
+                            value: "K",
+                            additional: [
+                                2
+                            ]
+                        }, {
+                            message: "CUSTOM_VALIDATION_FAILED",
+                            value: "K"
+                        }]
+                    });
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+        });
+
+        describe("Submodel", function () {
+
+            it("should validate a submodel with no errors");
+
+            it("should validate a submodel with errors");
 
         });
 

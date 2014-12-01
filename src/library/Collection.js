@@ -619,6 +619,44 @@ module.exports = Base.extend({
 
 
     /**
+     * Validate
+     *
+     * Validates all the models in the collection.  The
+     * object throw is an object literal of
+     *
+     * @returns {boolean}
+     */
+    validate: function () {
+        var i = 0;
+
+        var validate = _.reduce(this.getAll(), function (result, model) {
+
+            try {
+                model.validate();
+            } catch (err) {
+                if (result === null) {
+                    result = new Error("COLLECTION_ERROR");
+                    result.errors = {};
+                }
+
+                result.errors[i] = err;
+            }
+            i++;
+
+            return result;
+
+        }, null, this);
+
+        if (validate !== null) {
+            throw validate;
+        }
+
+        return true;
+
+    },
+
+
+    /**
      * Where
      *
      * Performs a where query on the collection.  Removes
