@@ -140,6 +140,55 @@ var DomainModel = Base.extend({
 
 
     /**
+     * Validate Collection
+     *
+     * This is a convenience method that validates
+     * every collection in a child collection, then
+     * puts the errors into the Validation Exception
+     * in a way that can be read.
+     *
+     * The keys are in the format key_0_childKey
+     *
+     * @param {Exception} objValidationError
+     * @param {Collection} collection
+     * @param {string} key
+     * @private
+     */
+     _validateCollection: function (objValidationError, collection, key) {
+
+        try {
+            collection.validate();
+        } catch (validate) {
+
+            /* Run on each of the collections */
+            _.each(validate.errors, function (collection, num) {
+
+                /* Run on each of the elements */
+                _.each(collection.getErrors(), function (element, elementName) {
+
+                    /* Run on each of the errors */
+                    _.each(element, function (errDetail) {
+
+                        var name = [
+                            key,
+                            num,
+                            elementName
+                        ].join("_");
+
+                        objValidationError.addError(name, errDetail.value, errDetail.message, errDetail.additional);
+
+                    });
+
+                });
+
+            });
+
+        }
+
+    },
+
+
+    /**
      * Get Column Keys
      *
      * Gets the keys and the column name
@@ -460,7 +509,7 @@ var DomainModel = Base.extend({
      * violation of the rules.  If it's fine, it
      * continues without any problems.
      *
-     * @returns true
+     * @returns {boolean}
      * @throws {Error}
      */
     validate: function () {
@@ -469,6 +518,15 @@ var DomainModel = Base.extend({
 
         /* Run through each of the definitions for the validation rules */
         for (var key in this.definition) {
+
+            var value = this.get(key);
+
+            if (value instanceof Collection) {
+
+                /* Collection */
+                this._validateCollection(objValidationError, value, key);
+
+            }
 
             var arrValidate = this.getDefinition(key).validation;
 
@@ -479,8 +537,6 @@ var DomainModel = Base.extend({
 
                 /* This will be a function - run it */
                 var rule = arrValidate[i];
-
-                var value = this.get(key);
 
                 try {
                     /* By default, we expect this to throw an error */
@@ -588,7 +644,7 @@ var DomainModel = Base.extend({
 
         objData = datatypes.setObject(objData, {});
 
-        /* Create instance of model - this doesn't feel right, but it works */
+        /* Create instance of model */
         var obj = this.create();
 
         /* Get the definition */

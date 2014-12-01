@@ -3726,6 +3726,209 @@ describe("DomainModel tests - using new", function () {
 
         });
 
+        describe("Collection", function () {
+
+            var MyModel,
+                SubModel,
+                SubCollection;
+            beforeEach(function () {
+
+                SubModel = model.extend({
+
+                    definition: {
+                        id: {
+                            type: "string",
+                            validation: [{
+                                rule: "required"
+                            }]
+                        },
+                        name: {
+                            type: "string",
+                            validation: [{
+                                rule: "minLength",
+                                param: 2
+                            }, {
+                                rule: function (objModel, value) {
+                                    return value === "Bob";
+                                }
+                            }]
+                        }
+                    }
+
+                });
+
+                SubCollection = collection.extend({
+
+                    model: SubModel
+
+                });
+
+                MyModel = model.extend({
+
+                    definition: {
+                        id: {
+                            type: "string",
+                            validation: [{
+                                rule: "required"
+                            }]
+                        },
+                        collection: {
+                            type: SubCollection,
+                            validation: [{
+                                rule: "required"
+                            }, {
+                                rule: "minLength",
+                                param: 1
+                            }]
+                        }
+                    }
+
+                });
+
+            });
+
+            it("should validate a collection with no erroring models", function () {
+
+                var obj = new MyModel({
+                    id: "12345",
+                    collection: [{
+                        id: "3333",
+                        name: "Bob"
+                    }]
+                });
+
+                expect(obj.validate()).to.be.true;
+
+            });
+
+            it("should validate a collection error", function () {
+
+                var obj = new MyModel();
+
+                var fail = false;
+
+                try {
+                    obj.validate();
+                } catch (err) {
+                    fail = true;
+
+                    expect(err.getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        collection: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }]
+                    });
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should validate a collection with one erroring models", function () {
+
+                var obj = new MyModel({
+                    collection: [{
+                        id: "3333",
+                        name: ""
+                    }]
+                });
+
+                var fail = false;
+
+                try {
+                    obj.validate();
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Main.Exceptions.Validation);
+                    expect(err.message).to.be.equal("DOMAINMODEL_ERROR");
+
+                    expect(err.getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        collection_0_name: [{
+                            message: "VALUE_LESS_THAN_MIN_LENGTH",
+                            value: "",
+                            additional: [
+                                2
+                            ]
+                        }, {
+                            message: "CUSTOM_VALIDATION_FAILED",
+                            value: ""
+                        }]
+                    })
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should validate a collection with multiple erroring models", function () {
+
+                var obj = new MyModel({
+                    collection: [{
+                        id: "3333",
+                        name: ""
+                    }, {
+                        id: "4444",
+                        name: "2s"
+                    }]
+                });
+
+                var fail = false;
+
+                try {
+                    obj.validate();
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Main.Exceptions.Validation);
+                    expect(err.message).to.be.equal("DOMAINMODEL_ERROR");
+
+                    expect(err.getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        collection_0_name: [{
+                            message: "VALUE_LESS_THAN_MIN_LENGTH",
+                            value: "",
+                            additional: [
+                                2
+                            ]
+                        }, {
+                            message: "CUSTOM_VALIDATION_FAILED",
+                            value: ""
+                        }],
+                        collection_1_name: [{
+                            message: "CUSTOM_VALIDATION_FAILED",
+                            value: "2s"
+                        }]
+                    })
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+        });
+
+        describe("SubModels", function () {
+
+            it("should validate a submodel with no errors");
+
+            it("should validate a submodel with errors");
+
+        });
+
     });
 
     describe("Miscellaneous tests", function () {
