@@ -195,6 +195,39 @@ module.exports = function (grunt) {
                     return "npm version " + script;
                 }
             }
+        },
+        watch: {
+            options: {
+                atBegin: true,
+                dateFormat: function (time) {
+                    grunt.log.writeln("The task finished in " + time + "ms");
+                    grunt.log.writeln("Waiting for more changes…");
+                }
+            },
+            coverage: {
+                files: [
+                    "Gruntfile.js",
+                    "src/**/*.js",
+                    "src/**/*.json",
+                    "test/**/*.js",
+                    "test/**/*.json"
+                ],
+                tasks: [
+                    "mocha_istanbul"
+                ]
+            },
+            test: {
+                files: [
+                    "Gruntfile.js",
+                    "src/**/*.js",
+                    "src/**/*.json",
+                    "test/**/*.js",
+                    "test/**/*.json"
+                ],
+                tasks: [
+                    "test"
+                ]
+            }
         }
     });
 
@@ -206,6 +239,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask("ci", "Runs the continuous integration tests", [
         "test",
+        "coverage"
+    ]);
+
+    grunt.registerTask("coverage", "Runs the coverage tests", [
         "mocha_istanbul:checkCoverage"
     ]);
 
@@ -238,6 +275,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask("unittest", "Run the unit tests", [
         "mochaTest:test"
+    ]);
+
+    grunt.registerTask("watchtest", "Perform tests on the codebase and watch for changes", [
+        "watch:test"
     ]);
 
 };
