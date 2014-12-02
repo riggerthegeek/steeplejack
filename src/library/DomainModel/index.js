@@ -189,6 +189,44 @@ var DomainModel = Base.extend({
 
 
     /**
+     * Validate Model
+     *
+     * Similar to the validate collection method, but this
+     * performs it on the sub models
+     *
+     * @param {Exception} objValidationError
+     * @param {DomainModel} model
+     * @param {string} key
+     * @private
+     */
+    _validateModel: function (objValidationError, model, key) {
+
+        try {
+            model.validate();
+        } catch (err) {
+
+            _.each(err.getErrors(), function (element, elementName) {
+
+                /* Run on each of the errors */
+                _.each(element, function (errDetail) {
+
+                    var name = [
+                        key,
+                        elementName
+                    ].join("_");
+
+                    objValidationError.addError(name, errDetail.value, errDetail.message, errDetail.additional);
+
+                });
+
+            });
+
+        }
+
+    },
+
+
+    /**
      * Get Column Keys
      *
      * Gets the keys and the column name
@@ -522,10 +560,13 @@ var DomainModel = Base.extend({
             var value = this.get(key);
 
             if (value instanceof Collection) {
-
                 /* Collection */
                 this._validateCollection(objValidationError, value, key);
+            }
 
+            if (value instanceof DomainModel) {
+                /* Model */
+                this._validateModel(objValidationError, value, key);
             }
 
             var arrValidate = this.getDefinition(key).validation;

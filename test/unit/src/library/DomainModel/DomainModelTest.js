@@ -3923,9 +3923,138 @@ describe("DomainModel tests - using new", function () {
 
         describe("SubModels", function () {
 
-            it("should validate a submodel with no errors");
+            var SubModel,
+                MyModel;
+            beforeEach(function () {
 
-            it("should validate a submodel with errors");
+                SubModel = model.extend({
+
+                    definition: {
+                        id: {
+                            type: "string",
+                            validation: [{
+                                rule: "required"
+                            }]
+                        },
+                        name: {
+                            type: "string",
+                            validation: [{
+                                rule: "minLength",
+                                param: 2
+                            }, {
+                                rule: function (objModel, value) {
+                                    return value === "Bob";
+                                }
+                            }]
+                        }
+                    }
+
+                });
+
+                MyModel = model.extend({
+
+                    definition: {
+                        id: {
+                            type: "string",
+                            validation: [{
+                                rule: "required"
+                            }]
+                        },
+                        model: {
+                            type: SubModel,
+                            validation: [{
+                                rule: "required"
+                            }]
+                        }
+                    }
+
+                });
+            });
+
+            it("should validate a submodel with no errors", function () {
+
+                var obj = new MyModel({
+                    id: "2468",
+                    model: {
+                        id: "12345",
+                        name: "Bob"
+                    }
+                });
+
+                expect(obj.validate()).to.be.true;
+
+            });
+
+            it("should validate a model with required submodel", function () {
+
+                var obj = new MyModel({
+                });
+
+                var fail = false;
+
+                try {
+                    obj.validate();
+                } catch (err) {
+                    fail = true;
+
+                    expect(err.getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        model: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }]
+                    });
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should validate a submodel with errors", function () {
+
+                var obj = new MyModel({
+                    model: {
+                        name: "B"
+                    }
+                });
+
+                var fail = false;
+
+                try {
+                    obj.validate();
+                } catch (err) {
+                    fail = true;
+
+                    expect(err.getErrors()).to.be.eql({
+                        id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        model_id: [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        model_name: [{
+                            message: "VALUE_LESS_THAN_MIN_LENGTH",
+                            value: "B",
+                            additional: [
+                                2
+                            ]
+                        }, {
+                            message: "CUSTOM_VALIDATION_FAILED",
+                            value: "B"
+                        }]
+                    });
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
 
         });
 
