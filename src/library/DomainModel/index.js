@@ -154,7 +154,7 @@ var DomainModel = Base.extend({
      * @param {string} key
      * @private
      */
-     _validateCollection: function (objValidationError, collection, key) {
+    _validateCollection: function (objValidationError, collection, key) {
 
         try {
             collection.validate();
@@ -695,6 +695,11 @@ var DomainModel = Base.extend({
         for (var i = 0; i < def.length; i++) {
             var key = def[i].key;
             var value = objData[def[i].column];
+            var type = obj.getDefinition(key).type;
+
+            if (Base.extendsContructor(type, Collection)) {
+                value = type.toModels(value).toJSON();
+            }
 
             obj.set(key, value);
         }

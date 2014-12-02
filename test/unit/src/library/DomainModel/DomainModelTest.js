@@ -4120,4 +4120,56 @@ describe("DomainModel tests - using new", function () {
 
     });
 
+    describe("#toModel", function () {
+
+        it("should convert a collection who's model column name are different", function () {
+
+            var SubModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    }
+                }
+
+            });
+
+            var Collect = collection.extend({
+
+                model: SubModel
+
+            });
+
+            var ParentModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    },
+                    collect: {
+                        type: Collect,
+                        column: "_collect"
+                    }
+                }
+
+            });
+
+            expect(ParentModel.toModel({
+                _id: "12345",
+                _collect: [{
+                    _id: "246"
+                }]
+            }).toObject()).to.be.eql({
+                    id: "12345",
+                    collect: [{
+                        id: "246"
+                    }]
+                });
+
+        });
+
+    });
+
 });
