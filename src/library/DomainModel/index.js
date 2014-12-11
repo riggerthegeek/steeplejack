@@ -697,10 +697,12 @@ var DomainModel = Base.extend({
             var value = objData[def[i].column];
             var type = obj.getDefinition(key).type;
 
-            if (Base.extendsContructor(type, Collection)) {
-                value = type.toModels(value).toJSON();
-            } else if (Base.extendsContructor(type, DomainModel)) {
-                value = type.toModel(value);
+            if (value !== obj.getDefinition(key).value && value !== undefined) {
+                if (Base.extendsContructor(type, Collection)) {
+                    value = type.toModels(value).toJSON();
+                } else if (Base.extendsContructor(type, DomainModel)) {
+                    value = type.toModel(value);
+                }
             }
 
             obj.set(key, value);

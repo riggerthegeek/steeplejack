@@ -4122,6 +4122,91 @@ describe("DomainModel tests - using new", function () {
 
     describe("#toModel", function () {
 
+        it("should not set a child model as default value", function () {
+
+            var SubModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    }
+                }
+
+            });
+
+            var ParentModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    },
+                    submodel: {
+                        type: SubModel,
+                        column: "_sub_model"
+                    }
+                }
+
+            });
+
+            var obj = ParentModel.toModel({
+                _id: "str",
+                _sub_model: null
+            });
+
+            expect(obj).to.be.instanceof(ParentModel);
+            expect(obj.get("submodel")).to.be.null;
+
+            expect(obj.toObject()).to.be.eql({
+                id: "str",
+                submodel: null
+            });
+
+        });
+
+        it("should not set a child model as undefined", function () {
+
+            var SubModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    }
+                }
+
+            });
+
+            var ParentModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    },
+                    submodel: {
+                        type: SubModel,
+                        column: "_sub_model"
+                    }
+                }
+
+            });
+
+            var obj = ParentModel.toModel({
+                _id: "str"
+            });
+
+            expect(obj).to.be.instanceof(ParentModel);
+            expect(obj.get("submodel")).to.be.null;
+
+            expect(obj.toObject()).to.be.eql({
+                id: "str",
+                submodel: null
+            });
+
+        });
+
         it("should convert a child model to a model", function () {
 
             var SubModel = model.extend({
