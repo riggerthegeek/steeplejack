@@ -4122,6 +4122,53 @@ describe("DomainModel tests - using new", function () {
 
     describe("#toModel", function () {
 
+        it("should convert a child model to a model", function () {
+
+            var SubModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    }
+                }
+
+            });
+
+            var ParentModel = model.extend({
+
+                definition: {
+                    id: {
+                        type: "string",
+                        column: "_id"
+                    },
+                    submodel: {
+                        type: SubModel,
+                        column: "_sub_model"
+                    }
+                }
+
+            });
+
+            var obj = ParentModel.toModel({
+                _id: "str",
+                _sub_model: {
+                    _id: "yay"
+                }
+            });
+
+            expect(obj).to.be.instanceof(ParentModel);
+            expect(obj.get("submodel")).to.be.instanceof(SubModel);
+
+            expect(obj.toObject()).to.be.eql({
+                id: "str",
+                submodel: {
+                    id: "yay"
+                }
+            });
+
+        });
+
         it("should convert a collection who's model column name are different", function () {
 
             var SubModel = model.extend({

@@ -699,6 +699,8 @@ var DomainModel = Base.extend({
 
             if (Base.extendsContructor(type, Collection)) {
                 value = type.toModels(value).toJSON();
+            } else if (Base.extendsContructor(type, DomainModel)) {
+                value = type.toModel(value);
             }
 
             obj.set(key, value);
