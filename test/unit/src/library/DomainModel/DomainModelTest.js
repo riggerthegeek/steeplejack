@@ -2433,6 +2433,11 @@ describe("DomainModel tests - using new", function () {
             expect(obj.get("name")).to.be.equal("hello");
             expect(obj.get("nonData")).to.be.equal("world");
 
+            expect(obj.toObject()).to.be.eql({
+                name: "hello",
+                nonData: "world"
+            });
+
             expect(obj.toData()).to.be.eql({
                 some_name: "hello"
             });
