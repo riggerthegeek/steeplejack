@@ -104,7 +104,7 @@ describe("Exception test", function () {
                     .to.be.instanceof(Exception2)
                     .to.be.not.instanceof(Exception);
 
-                expect(obj.stack).to.be.equal("Error\n    at Context.it.type (/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js:40:23)\n    at Context.type (/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js:50:23)\n    at /opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js:60:23");
+                expect(obj.stack).to.be.a("string");
 
             });
 
