@@ -18,6 +18,7 @@
 
 
 /* Third-party modules */
+var _ = require("lodash");
 
 
 /* Files */
@@ -39,7 +40,7 @@ var Definition = Base.extend({
         }
 
         this.type = type;
-        this.value = options.value !== undefined ? options.value : null;
+        this.value = options.value !== undefined ?  _.cloneDeep(options.value) : null;
         /* Default to null */
         this.column = datatypes.setString(options.column, null);
         this.primaryKey = datatypes.setBool(options.primaryKey, false);

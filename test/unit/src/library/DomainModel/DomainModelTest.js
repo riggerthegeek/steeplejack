@@ -1366,6 +1366,27 @@ describe("DomainModel tests - using new", function () {
 
         });
 
+        it("should clone a defaulted array value", function () {
+
+            var array = [];
+
+            var Model = model.extend({
+                definition: {
+                    array: {
+                        type: "array",
+                        value: array
+                    }
+                }
+            });
+
+            var obj = new Model();
+
+            expect(obj.get("array")).to.be.an("array")
+                .to.be.eql([])
+                .to.not.be.equal(array);
+
+        });
+
     });
 
     describe("Instantiation with create tests", function () {
