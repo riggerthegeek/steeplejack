@@ -135,7 +135,7 @@ var Definition = Base.extend({
         return Definition.create({
             type: definition.type,
             value: definition.value,
-            column: definition.column || name,
+            column: definition.column === null ? null : definition.column || name,
             primaryKey: definition.primaryKey,
             validation: definition.validation,
             enum: definition.enum,

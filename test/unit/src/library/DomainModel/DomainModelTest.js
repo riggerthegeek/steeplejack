@@ -2409,6 +2409,36 @@ describe("DomainModel tests - using new", function () {
 
         });
 
+        it("should ignore any columns that are set as null", function () {
+
+            /* Define the model */
+            var Model = model.extend({
+                definition: {
+                    name: {
+                        type: "string",
+                        column: "some_name"
+                    },
+                    nonData: {
+                        type: "string",
+                        column: null
+                    }
+                }
+            });
+
+            var obj = new Model({
+                name: "hello",
+                nonData: "world"
+            });
+
+            expect(obj.get("name")).to.be.equal("hello");
+            expect(obj.get("nonData")).to.be.equal("world");
+
+            expect(obj.toData()).to.be.eql({
+                some_name: "hello"
+            });
+
+        });
+
     });
 
     describe("Validation check", function () {
@@ -4299,6 +4329,34 @@ describe("DomainModel tests - using new", function () {
                         id: "246"
                     }]
                 });
+
+        });
+
+        it("should ignore any columns that are set as null", function () {
+
+            /* Define the model */
+            var Model = model.extend({
+                definition: {
+                    name: {
+                        type: "string",
+                        column: "some_name"
+                    },
+                    nonData: {
+                        type: "string",
+                        column: null
+                    }
+                }
+            });
+
+            var obj = Model.toModel({
+                some_name: "yay",
+                nonData: "spank"
+            });
+
+            expect(obj).to.be.instanceof(Model);
+
+            expect(obj.get("name")).to.be.equal("yay");
+            expect(obj.get("nonData")).to.be.null;
 
         });
 

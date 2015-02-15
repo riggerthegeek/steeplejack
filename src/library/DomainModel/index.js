@@ -491,14 +491,19 @@ var DomainModel = Base.extend({
             /* Get the column name */
             var column = this.definition[key].column;
 
-            var data = this.get(key);
+            /* Ignore null columns */
+            if (column !== null) {
 
-            /* Search fr  */
-            if (_.has(data, "toData") && _.isFunction(data.toData)) {
-                data = data.toData();
+                var data = this.get(key);
+
+                /* Search fr  */
+                if (_.has(data, "toData") && _.isFunction(data.toData)) {
+                    data = data.toData();
+                }
+
+                obj[column] = data;
+
             }
-
-            obj[column] = data;
 
         }
 
