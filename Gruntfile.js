@@ -53,7 +53,6 @@ module.exports = function (grunt) {
             src: {
                 files: {
                     src: [
-                        "Gruntfile.js",
                         "./<%= config.src %>/**/*.js"
                     ]
                 }
@@ -76,7 +75,6 @@ module.exports = function (grunt) {
                 globals: {
                 },
                 immed: true,
-                indent: 4,
                 latedef: true,
                 noarg: true,
                 node: true,

@@ -27,5 +27,6 @@
   "requireSpacesInFunctionExpression": {
     "beforeOpeningRoundBrace": true,
     "beforeOpeningCurlyBrace": true
-  }
+  },
+  "validateIndentation": 4
 }

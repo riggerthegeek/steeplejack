@@ -676,23 +676,23 @@ describe("DomainModel tests - using new", function () {
                         undefined
                     ].forEach(function (input) {
 
-                            var fail = false;
+                        var fail = false;
 
-                            try {
-                                obj.where(input);
-                            } catch (err) {
+                        try {
+                            obj.where(input);
+                        } catch (err) {
 
-                                fail = true;
-                                expect(err).to.be.instanceof(SyntaxError);
-                                expect(err.message).to.be.equal("where.props must be an object");
+                            fail = true;
+                            expect(err).to.be.instanceof(SyntaxError);
+                            expect(err.message).to.be.equal("where.props must be an object");
 
-                            } finally {
+                        } finally {
 
-                                expect(fail).to.be.true;
+                            expect(fail).to.be.true;
 
-                            }
+                        }
 
-                        });
+                    });
 
                 });
 
@@ -4350,11 +4350,11 @@ describe("DomainModel tests - using new", function () {
                     _id: "246"
                 }]
             }).toObject()).to.be.eql({
-                    id: "12345",
-                    collect: [{
-                        id: "246"
-                    }]
-                });
+                id: "12345",
+                collect: [{
+                    id: "246"
+                }]
+            });
 
         });
 

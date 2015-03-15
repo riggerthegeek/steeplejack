@@ -796,17 +796,17 @@ describe("Collection tests", function () {
                         keys[0],
                         keys[2]
                     ])).to.be.eql([
-                            models[keys[0]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[2]]
+                    ]);
 
                     expect(obj.get([
                         keys[0],
                         keys[2]
                     ], false)).to.be.eql([
-                            models[keys[0]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[2]]
+                    ]);
 
                     done();
 
@@ -820,9 +820,9 @@ describe("Collection tests", function () {
                         keys[0],
                         keys[2]
                     ], true)).to.be.eql([
-                            keys[0],
-                            keys[2]
-                        ]);
+                        keys[0],
+                        keys[2]
+                    ]);
 
                     done();
 
@@ -837,33 +837,33 @@ describe("Collection tests", function () {
                         keys[0],
                         keys[3]
                     ])).to.be.eql([
-                            models[keys[0]],
-                            null
-                        ]);
+                        models[keys[0]],
+                        null
+                    ]);
 
                     expect(obj.get([
                         keys[3],
                         keys[2]
                     ], false)).to.be.eql([
-                            null,
-                            models[keys[2]]
-                        ]);
+                        null,
+                        models[keys[2]]
+                    ]);
 
                     expect(obj.get([
                         keys[3],
                         keys[23]
                     ], false)).to.be.eql([
-                            null,
-                            null
-                        ]);
+                        null,
+                        null
+                    ]);
 
                     expect(obj.get([
                         keys[23],
                         keys[2]
                     ], true)).to.be.eql([
-                            null,
-                            keys[2]
-                        ]);
+                        null,
+                        keys[2]
+                    ]);
 
                     done();
 
@@ -882,17 +882,17 @@ describe("Collection tests", function () {
                         0,
                         2
                     ])).to.be.eql([
-                            models[keys[0]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[2]]
+                    ]);
 
                     expect(obj.get([
                         0,
                         2
                     ], false)).to.be.eql([
-                            models[keys[0]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[2]]
+                    ]);
 
                     done();
 
@@ -906,9 +906,9 @@ describe("Collection tests", function () {
                         0,
                         2
                     ], true)).to.be.eql([
-                            keys[0],
-                            keys[2]
-                        ]);
+                        keys[0],
+                        keys[2]
+                    ]);
 
                     done();
 
@@ -923,33 +923,33 @@ describe("Collection tests", function () {
                         0,
                         3
                     ])).to.be.eql([
-                            models[keys[0]],
-                            null
-                        ]);
+                        models[keys[0]],
+                        null
+                    ]);
 
                     expect(obj.get([
                         3,
                         2
                     ], false)).to.be.eql([
-                            null,
-                            models[keys[2]]
-                        ]);
+                        null,
+                        models[keys[2]]
+                    ]);
 
                     expect(obj.get([
                         3,
                         23
                     ], false)).to.be.eql([
-                            null,
-                            null
-                        ]);
+                        null,
+                        null
+                    ]);
 
                     expect(obj.get([
                         23,
                         2
                     ], true)).to.be.eql([
-                            null,
-                            keys[2]
-                        ]);
+                        null,
+                        keys[2]
+                    ]);
 
                     done();
 
@@ -968,17 +968,17 @@ describe("Collection tests", function () {
                         models[keys[0]],
                         models[keys[2]]
                     ])).to.be.eql([
-                            models[keys[0]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[2]]
+                    ]);
 
                     expect(obj.get([
                         models[keys[0]],
                         models[keys[2]]
                     ], false)).to.be.eql([
-                            models[keys[0]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[2]]
+                    ]);
 
                     done();
 
@@ -993,9 +993,9 @@ describe("Collection tests", function () {
                         models[keys[0]],
                         models[keys[2]]
                     ], true)).to.be.eql([
-                            keys[0],
-                            keys[2]
-                        ]);
+                        keys[0],
+                        keys[2]
+                    ]);
 
                     done();
 
@@ -1010,33 +1010,33 @@ describe("Collection tests", function () {
                         models[keys[0]],
                         models[keys[3]]
                     ])).to.be.eql([
-                            models[keys[0]],
-                            null
-                        ]);
+                        models[keys[0]],
+                        null
+                    ]);
 
                     expect(obj.get([
                         models[keys[3]],
                         models[keys[2]]
                     ], false)).to.be.eql([
-                            null,
-                            models[keys[2]]
-                        ]);
+                        null,
+                        models[keys[2]]
+                    ]);
 
                     expect(obj.get([
                         models[keys[3]],
                         models[keys[23]]
                     ], false)).to.be.eql([
-                            null,
-                            null
-                        ]);
+                        null,
+                        null
+                    ]);
 
                     expect(obj.get([
                         models[keys[23]],
                         models[keys[2]]
                     ], true)).to.be.eql([
-                            null,
-                            keys[2]
-                        ]);
+                        null,
+                        keys[2]
+                    ]);
 
                     done();
 
@@ -1056,20 +1056,20 @@ describe("Collection tests", function () {
                         keys[1],
                         2
                     ])).to.be.eql([
-                            models[keys[0]],
-                            models[keys[1]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[1]],
+                        models[keys[2]]
+                    ]);
 
                     expect(obj.get([
                         models[keys[0]],
                         keys[1],
                         2
                     ], false)).to.be.eql([
-                            models[keys[0]],
-                            models[keys[1]],
-                            models[keys[2]]
-                        ]);
+                        models[keys[0]],
+                        models[keys[1]],
+                        models[keys[2]]
+                    ]);
 
                     done();
 
@@ -2926,20 +2926,20 @@ describe("Collection tests", function () {
                             4
                         ].forEach(function (input) {
 
-                                var fail = false;
+                            var fail = false;
 
-                                try {
-                                    champs.sort(input);
-                                } catch (err) {
-                                    fail = true;
+                            try {
+                                champs.sort(input);
+                            } catch (err) {
+                                fail = true;
 
-                                    expect(err).to.be.instanceof(SyntaxError);
-                                    expect(err.message).to.be.equal("Collection.sort must receive a function");
-                                } finally {
-                                    expect(fail).to.be.true;
-                                }
+                                expect(err).to.be.instanceof(SyntaxError);
+                                expect(err.message).to.be.equal("Collection.sort must receive a function");
+                            } finally {
+                                expect(fail).to.be.true;
+                            }
 
-                            });
+                        });
 
                     });
 
@@ -3575,20 +3575,20 @@ describe("Collection tests", function () {
                                 null
                             ].forEach(function (input) {
 
-                                    var fail = false;
+                                var fail = false;
 
-                                    try {
-                                        var result = champs.sortBy(input);
-                                    } catch (err) {
-                                        fail = true;
+                                try {
+                                    var result = champs.sortBy(input);
+                                } catch (err) {
+                                    fail = true;
 
-                                        expect(err).to.be.instanceof(SyntaxError);
-                                        expect(err.message).to.be.equal("Collection.sortBy must receive string, object or array");
-                                    } finally {
-                                        expect(fail).to.be.true;
-                                    }
+                                    expect(err).to.be.instanceof(SyntaxError);
+                                    expect(err.message).to.be.equal("Collection.sortBy must receive string, object or array");
+                                } finally {
+                                    expect(fail).to.be.true;
+                                }
 
-                                });
+                            });
 
                         });
 
@@ -4005,13 +4005,13 @@ describe("Collection tests", function () {
                     NaN
                 ].forEach(function (input) {
 
-                        var obj = Collection.toModels(input);
+                    var obj = Collection.toModels(input);
 
-                        expect(obj).to.be.instanceof(Collection);
+                    expect(obj).to.be.instanceof(Collection);
 
-                        expect(obj.getCount()).to.be.equal(0);
+                    expect(obj.getCount()).to.be.equal(0);
 
-                    });
+                });
 
             });
 

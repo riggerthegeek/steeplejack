@@ -452,21 +452,21 @@ describe("Injector test", function () {
                         [],
                         new Date()
                     ].forEach(function (prefix) {
-                            var obj = Injector.Parser({
-                                key1: func,
-                                key2: {
-                                    inner1: func,
-                                    inner2: func
-                                }
-                            }, prefix);
+                        var obj = Injector.Parser({
+                            key1: func,
+                            key2: {
+                                inner1: func,
+                                inner2: func
+                            }
+                        }, prefix);
 
-                            expect(obj).to.be.eql({
-                                key1: func,
-                                key2Inner1: func,
-                                key2Inner2: func
-                            });
-
+                        expect(obj).to.be.eql({
+                            key1: func,
+                            key2Inner1: func,
+                            key2Inner2: func
                         });
+
+                    });
 
                 });
 
@@ -515,21 +515,21 @@ describe("Injector test", function () {
                         [],
                         new Date()
                     ].forEach(function (suffix) {
-                            var obj = Injector.Parser({
-                                key1: func,
-                                key2: {
-                                    inner1: func,
-                                    inner2: func
-                                }
-                            }, null, suffix);
+                        var obj = Injector.Parser({
+                            key1: func,
+                            key2: {
+                                inner1: func,
+                                inner2: func
+                            }
+                        }, null, suffix);
 
-                            expect(obj).to.be.eql({
-                                key1: func,
-                                key2Inner1: func,
-                                key2Inner2: func
-                            });
-
+                        expect(obj).to.be.eql({
+                            key1: func,
+                            key2Inner1: func,
+                            key2Inner2: func
                         });
+
+                    });
 
                 });
 
