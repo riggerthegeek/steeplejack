@@ -101,7 +101,17 @@ _.extend(steeplejack, {
      *
      * This allows us to route our application
      */
-    Router: require("./library/Router")
+    Router: require("./library/Router"),
+
+
+    /**
+     * Server
+     *
+     * A parent method that we can extend to create
+     * server implementations using, for example,
+     * Express, Restify or the Node HTTP module.
+     */
+    Server: require("./library/Server")
 
 
 });
