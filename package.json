@@ -36,7 +36,7 @@
     "sinon": "~1.10.3",
     "sinon-chai": "~2.5.0"
   },
-  "author": "Simon Emms <simon@simonemms.com>",
+  "author": "SlashDevSlashNull",
   "contributors": [
     {
       "name": "Simon Emms",
@@ -45,10 +45,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/riggerthegeek/steeplejack.git"
+    "url": "https://github.com/slash-dev-slash-null/steeplejack.git"
   },
   "bugs": {
-    "url": "https://github.com/riggerthegeek/steeplejack/issues"
+    "url": "https://github.com/slash-dev-slash-null/steeplejack/issues"
   },
   "licence": "MIT",
   "scripts": {
