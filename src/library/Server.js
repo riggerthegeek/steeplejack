@@ -354,7 +354,7 @@ module.exports = Base.extend({
      */
     pre: function (fn) {
         if (_.isFunction(fn) === false) {
-                throw new TypeError("Server.pre must receive a function");
+            throw new TypeError("Server.pre must receive a function");
         }
         this._pre(fn);
         return this;
