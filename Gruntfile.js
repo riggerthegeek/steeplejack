@@ -275,6 +275,10 @@ module.exports = function (grunt) {
         "mochaTest:test"
     ]);
 
+    grunt.registerTask("watchcoverage", "Performs the coverage checks and watch for changes", [
+        "watch:coverage"
+    ]);
+
     grunt.registerTask("watchtest", "Perform tests on the codebase and watch for changes", [
         "watch:test"
     ]);
