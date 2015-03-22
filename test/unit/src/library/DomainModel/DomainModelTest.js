@@ -46,8 +46,11 @@ describe("DomainModel tests - using new", function () {
                             type: "boolean",
                             value: false
                         },
-                        date: {
-                            type: "date"
+                        //date: {
+                        //    type: "date"
+                        //},
+                        datetime: {
+                            type: "datetime"
                         },
                         float: {
                             type: "float"
@@ -176,7 +179,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: "2013-02-07 10:11:12",
+                    datetime: "2013-02-07 10:11:12",
                     float: "2.3",
                     integer: 89034,
                     object: {
@@ -194,7 +197,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date("2013-02-07 10:11:12"),
+                    datetime: new Date("2013-02-07 10:11:12"),
                     float: 2.3,
                     int: 89034,
                     object: {
@@ -207,7 +210,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date("2013-02-07 10:11:12"),
+                    datetime: new Date("2013-02-07 10:11:12"),
                     float: 2.3,
                     integer: 89034,
                     object: {
@@ -234,7 +237,7 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: false,
-                    date: null,
+                    datetime: null,
                     float: null,
                     integer: null,
                     object: null,
@@ -256,7 +259,7 @@ describe("DomainModel tests - using new", function () {
 
                 var obj = Model.toModel({
                     boolean: "1",
-                    date: "2013-02-07 10:20:30",
+                    datetime: "2013-02-07 10:20:30",
                     float: "3",
                     int: 4,
                     string: "hello this is a string"
@@ -267,7 +270,7 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: true,
-                    date: new Date("2013-02-07 10:20:30"),
+                    datetime: new Date("2013-02-07 10:20:30"),
                     float: 3,
                     integer: 4,
                     object: null,
@@ -297,7 +300,7 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: false,
-                    date: null,
+                    datetime: null,
                     float: null,
                     integer: null,
                     object: null,
@@ -357,7 +360,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: 0,
-                    date: "2013-02-07 10:11:12",
+                    datetime: "2013-02-07 10:11:12",
                     float: "2.3",
                     integer: 89034,
                     object: {
@@ -387,7 +390,7 @@ describe("DomainModel tests - using new", function () {
                             ]
                         ],
                         "boolean": false,
-                        "date": new Date("2013-02-07T10:11:12.000Z"),
+                        "datetime": new Date("2013-02-07T10:11:12.000Z"),
                         "float": 2.3,
                         "integer": 89034,
                         "object": {
@@ -592,8 +595,8 @@ describe("DomainModel tests - using new", function () {
                                 type: "boolean",
                                 value: false
                             },
-                            date: {
-                                type: "date"
+                            datetime: {
+                                type: "datetime"
                             },
                             float: {
                                 type: "float"
@@ -1425,8 +1428,11 @@ describe("DomainModel tests - using new", function () {
                             type: "boolean",
                             value: false
                         },
-                        date: {
-                            type: "date"
+                        //date: {
+                        //    type: "date"
+                        //},
+                        datetime: {
+                            type: "datetime"
                         },
                         float: {
                             type: "float"
@@ -1453,7 +1459,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: "2013-02-07 10:11:12",
+                    datetime: "2013-02-07 10:11:12",
                     float: "2.3",
                     integer: 89034,
                     object: {
@@ -1471,7 +1477,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date("2013-02-07 10:11:12"),
+                    datetime: new Date("2013-02-07 10:11:12"),
                     float: 2.3,
                     int: 89034,
                     object: {
@@ -1484,7 +1490,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date("2013-02-07 10:11:12"),
+                    datetime: new Date("2013-02-07 10:11:12"),
                     float: 2.3,
                     integer: 89034,
                     object: {
@@ -1511,7 +1517,7 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: false,
-                    date: null,
+                    datetime: null,
                     float: null,
                     integer: null,
                     object: null,
@@ -1533,7 +1539,8 @@ describe("DomainModel tests - using new", function () {
 
                 var obj = Model.toModel({
                     boolean: "1",
-                    date: "2013-02-07 10:20:30",
+                    //date: "2013-02-07 10:20:30.1",
+                    datetime: "2013-02-07 10:20:30.1",
                     float: "3",
                     int: 4,
                     string: "hello this is a string"
@@ -1544,7 +1551,8 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: true,
-                    date: new Date("2013-02-07 10:20:30"),
+                    //date: new Date("2013-02-07"),
+                    datetime: new Date("2013-02-07 10:20:30.1"),
                     float: 3,
                     integer: 4,
                     object: null,
@@ -1574,7 +1582,7 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: false,
-                    date: null,
+                    datetime: null,
                     float: null,
                     integer: null,
                     object: null,
@@ -3716,8 +3724,8 @@ describe("DomainModel tests - using new", function () {
                             type: "integer",
                             value: null
                         },
-                        date: {
-                            type: "date",
+                        datetime: {
+                            type: "datetime",
                             value: new Date()
                         },
                         postCode: {

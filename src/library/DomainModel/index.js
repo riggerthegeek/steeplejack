@@ -399,9 +399,18 @@ var DomainModel = Base.extend({
                             break;
                         }
 
-                        case "date":
+                        //case "date":
+                        case "datetime":
                         {
                             value = datatypes.setDate(value, defaults);
+
+                            if (definition.type === "date" && value instanceof Date) {
+                                /* Time not specified - set time to midnight */
+                                value.setHours(0);
+                                value.setMinutes(0);
+                                value.setSeconds(0);
+                                value.setMilliseconds(0);
+                            }
                             break;
                         }
 

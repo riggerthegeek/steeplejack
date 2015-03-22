@@ -24,8 +24,8 @@ describe("Collection tests", function () {
                     type: "boolean",
                     value: false
                 },
-                date: {
-                    type: "date"
+                datetime: {
+                    type: "datetime"
                 },
                 float: {
                     type: "float"
@@ -54,7 +54,7 @@ describe("Collection tests", function () {
 
             var obj = new Collection({
                 boolean: "true",
-                date: "2010-02-07",
+                datetime: "2010-02-07",
                 float: "2.3",
                 integer: "2",
                 string: "string"
@@ -67,7 +67,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -115,7 +115,7 @@ describe("Collection tests", function () {
 
             var obj = new Collection({
                 boolean: "true",
-                date: "2010-02-07",
+                datetime: "2010-02-07",
                 float: "2.3",
                 integer: "2",
                 string: "string"
@@ -128,7 +128,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -144,7 +144,7 @@ describe("Collection tests", function () {
             var obj = Collection.create([
                 {
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
@@ -156,7 +156,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -172,14 +172,14 @@ describe("Collection tests", function () {
             var obj = new Collection([
                 {
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 },
                 {
                     boolean: "true",
-                    date: "2010-02-08",
+                    datetime: "2010-02-08",
                     float: "2.3",
                     integer: "2",
                     string: "string"
@@ -193,14 +193,14 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -239,7 +239,7 @@ describe("Collection tests", function () {
 
             var obj = new Collection([
                 {
-                    date: "2013-02-02"
+                    datetime: "2013-02-02"
                 }
             ]);
 
@@ -247,7 +247,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: false,
-                    date: new Date("2013-02-02"),
+                    datetime: new Date("2013-02-02"),
                     float: null,
                     integer: null,
                     string: null
@@ -278,7 +278,7 @@ describe("Collection tests", function () {
 
             expect(obj.add({
                 boolean: "true",
-                date: "2010-02-07",
+                datetime: "2010-02-07",
                 float: "2.3",
                 integer: "2",
                 string: "string"
@@ -289,7 +289,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -309,7 +309,7 @@ describe("Collection tests", function () {
             expect(obj.add([
                 {
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
@@ -321,7 +321,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -341,14 +341,14 @@ describe("Collection tests", function () {
             expect(obj.add([
                 {
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 },
                 {
                     boolean: "true",
-                    date: "2010-02-08",
+                    datetime: "2010-02-08",
                     float: "2.3",
                     integer: "2",
                     string: "string"
@@ -362,14 +362,14 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -388,7 +388,7 @@ describe("Collection tests", function () {
 
             expect(obj.add(new Model({
                 boolean: "true",
-                date: "2010-02-07",
+                datetime: "2010-02-07",
                 float: "2.3",
                 integer: "2",
                 string: "string"
@@ -400,7 +400,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -420,21 +420,21 @@ describe("Collection tests", function () {
             expect(obj.add([
                 new Model({
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 }),
                 new Model({
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 }),
                 new Model({
                     boolean: true,
-                    date: new Date("2010-02-09"),
+                    datetime: new Date("2010-02-09"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -449,21 +449,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-09"),
+                    datetime: new Date("2010-02-09"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -478,7 +478,7 @@ describe("Collection tests", function () {
 
             var obj = new Collection(new Model({
                 boolean: "true",
-                date: "2010-02-07",
+                datetime: "2010-02-07",
                 float: "2.3",
                 integer: "2",
                 string: "string"
@@ -490,7 +490,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -506,21 +506,21 @@ describe("Collection tests", function () {
             var obj = new Collection([
                 new Model({
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 }),
                 new Model({
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 }),
                 new Model({
                     boolean: true,
-                    date: new Date("2010-02-09"),
+                    datetime: new Date("2010-02-09"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -535,21 +535,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-09"),
+                    datetime: new Date("2010-02-09"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -571,21 +571,21 @@ describe("Collection tests", function () {
                 var obj = new Collection([
                     {
                         boolean: "true",
-                        date: "2010-02-07",
+                        datetime: "2010-02-07",
                         float: "2.3",
                         integer: "2",
                         string: "string"
                     },
                     {
                         boolean: "true",
-                        date: "2010-02-08",
+                        datetime: "2010-02-08",
                         float: "2.3",
                         integer: "2",
                         string: "string"
                     },
                     {
                         boolean: "true",
-                        date: "2010-02-09",
+                        datetime: "2010-02-09",
                         float: "2.3",
                         integer: "2",
                         string: "string"
@@ -611,21 +611,21 @@ describe("Collection tests", function () {
             obj = new Collection([
                 {
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 },
                 {
                     boolean: "true",
-                    date: "2010-02-08",
+                    datetime: "2010-02-08",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 },
                 {
                     boolean: "true",
-                    date: "2010-02-09",
+                    datetime: "2010-02-09",
                     float: "2.3",
                     integer: "2",
                     string: "string"
@@ -639,21 +639,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-09"),
+                    datetime: new Date("2010-02-09"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -1089,21 +1089,21 @@ describe("Collection tests", function () {
             obj = new Collection([
                 {
                     boolean: "true",
-                    date: "2010-02-07",
+                    datetime: "2010-02-07",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 },
                 {
                     boolean: "true",
-                    date: "2010-02-08",
+                    datetime: "2010-02-08",
                     float: "2.3",
                     integer: "2",
                     string: "string"
                 },
                 {
                     boolean: "true",
-                    date: "2010-02-09",
+                    datetime: "2010-02-09",
                     float: "2.3",
                     integer: "2",
                     string: "string"
@@ -1117,21 +1117,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-08"),
+                    datetime: new Date("2010-02-08"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    date: new Date("2010-02-09"),
+                    datetime: new Date("2010-02-09"),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -1160,14 +1160,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1195,14 +1195,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1230,14 +1230,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1266,7 +1266,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1295,7 +1295,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1324,7 +1324,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1340,14 +1340,14 @@ describe("Collection tests", function () {
                     var obj2 = new Collection([
                         {
                             boolean: "true",
-                            date: "2010-02-07",
+                            datetime: "2010-02-07",
                             float: "2.3",
                             integer: "2",
                             string: "string"
                         },
                         {
                             boolean: "true",
-                            date: "2010-02-08",
+                            datetime: "2010-02-08",
                             float: "2.3",
                             integer: "2",
                             string: "string"
@@ -1372,21 +1372,21 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1401,7 +1401,7 @@ describe("Collection tests", function () {
 
                     var obj2 = new Collection({
                         boolean: "true",
-                        date: "2010-02-07",
+                        datetime: "2010-02-07",
                         float: "2.3",
                         integer: "2",
                         string: "string"
@@ -1424,14 +1424,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1459,14 +1459,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1490,14 +1490,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1521,14 +1521,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1552,7 +1552,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1576,7 +1576,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1600,7 +1600,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1616,14 +1616,14 @@ describe("Collection tests", function () {
                     var obj2 = new Collection([
                         {
                             boolean: "true",
-                            date: "2010-02-07",
+                            datetime: "2010-02-07",
                             float: "2.3",
                             integer: "2",
                             string: "string"
                         },
                         {
                             boolean: "true",
-                            date: "2010-02-08",
+                            datetime: "2010-02-08",
                             float: "2.3",
                             integer: "2",
                             string: "string"
@@ -1643,21 +1643,21 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1673,7 +1673,7 @@ describe("Collection tests", function () {
                     var obj2 = new Collection([
                         {
                             boolean: "true",
-                            date: "2010-02-08",
+                            datetime: "2010-02-08",
                             float: "2.3",
                             integer: "2",
                             string: "string"
@@ -1692,14 +1692,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1727,14 +1727,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1758,14 +1758,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1789,14 +1789,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1820,7 +1820,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1844,7 +1844,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1868,7 +1868,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1893,21 +1893,21 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-09"),
+                            datetime: new Date("2010-02-09"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1932,14 +1932,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            date: new Date("2010-02-07"),
+                            datetime: new Date("2010-02-07"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            date: new Date("2010-02-08"),
+                            datetime: new Date("2010-02-08"),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1993,14 +1993,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2022,14 +2022,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2051,14 +2051,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2081,21 +2081,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2123,14 +2123,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2154,14 +2154,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2185,14 +2185,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2217,21 +2217,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2257,14 +2257,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2286,14 +2286,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2315,14 +2315,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2337,7 +2337,7 @@ describe("Collection tests", function () {
 
                 var obj2 = new Collection({
                     boolean: "true",
-                    date: "2010-02-09",
+                    datetime: "2010-02-09",
                     float: "2.3",
                     integer: "2",
                     string: "string"
@@ -2353,21 +2353,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2485,21 +2485,21 @@ describe("Collection tests", function () {
                 obj = new Collection([
                     {
                         boolean: "true",
-                        date: "2010-02-07",
+                        datetime: "2010-02-07",
                         float: "2.2",
                         integer: "2",
                         string: "string"
                     },
                     {
                         boolean: "true",
-                        date: "2010-02-08",
+                        datetime: "2010-02-08",
                         float: "2.3",
                         integer: "2",
                         string: "string"
                     },
                     {
                         boolean: "true",
-                        date: "2010-02-09",
+                        datetime: "2010-02-09",
                         float: "2.3",
                         integer: "2",
                         string: "string"
@@ -2513,21 +2513,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.2,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-09"),
+                        datetime: new Date("2010-02-09"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2681,7 +2681,7 @@ describe("Collection tests", function () {
 
             });
 
-            describe("sorting", function () {
+            describe.skip("sorting", function () {
 
                 var champs,
                     Driver;
@@ -3648,7 +3648,7 @@ describe("Collection tests", function () {
                     it("should search an instance of an object and return one result", function () {
 
                         var out = obj.where({
-                            date: new Date("2010-02-07")
+                            datetime: new Date("2010-02-07")
                         });
 
                         expect(out).to.be.instanceof(Collection)
@@ -3660,10 +3660,10 @@ describe("Collection tests", function () {
                     it("should search an instance of an object and return multiple results", function () {
 
                         /* Change the third collection object */
-                        obj.get(2).set("date", "2010-02-08");
+                        obj.get(2).set("datetime", "2010-02-08");
 
                         var out = obj.where({
-                            date: new Date("2010-02-08")
+                            datetime: new Date("2010-02-08")
                         });
 
                         expect(out).to.be.instanceof(Collection)
@@ -3675,7 +3675,7 @@ describe("Collection tests", function () {
                     it("should search an instance of an object and return nothing", function () {
 
                         var out = obj.where({
-                            date: new Date("2010-02-01")
+                            datetime: new Date("2010-02-01")
                         });
 
                         expect(out).to.be.instanceof(Collection)
@@ -3815,7 +3815,7 @@ describe("Collection tests", function () {
 
                     var out = obj.where({
                         integer: "2",
-                        date: "2010-02-07"
+                        datetime: "2010-02-07"
                     });
 
                     expect(out).to.be.instanceof(Collection)
@@ -3827,11 +3827,11 @@ describe("Collection tests", function () {
                 it("should cast to the datatype and return multiple results", function () {
 
                     /* Change the third collection object */
-                    obj.get(2).set("date", "2010-02-08");
+                    obj.get(2).set("datetime", "2010-02-08");
 
                     var out = obj.where({
                         integer: "2",
-                        date: "2010-02-08"
+                        datetime: "2010-02-08"
                     });
 
                     expect(out).to.be.instanceof(Collection)
@@ -3844,7 +3844,7 @@ describe("Collection tests", function () {
 
                     var out = obj.where({
                         integer: "2",
-                        date: "2010-02-10"
+                        datetime: "2010-02-10"
                     });
 
                     expect(out).to.be.instanceof(Collection)
@@ -3886,7 +3886,7 @@ describe("Collection tests", function () {
 
                 var obj = Collection.toModels({
                     boolean: true,
-                    date: new Date("2010-02-07"),
+                    datetime: new Date("2010-02-07"),
                     float: 2.3,
                     int: 3,
                     string: "string"
@@ -3900,7 +3900,7 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 3,
                         string: "string"
@@ -3914,14 +3914,14 @@ describe("Collection tests", function () {
                 var obj = Collection.toModels([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         int: 3,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         int: 2,
                         string: "string"
@@ -3937,14 +3937,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        date: new Date("2010-02-07"),
+                        datetime: new Date("2010-02-07"),
                         float: 2.3,
                         integer: 3,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        date: new Date("2010-02-08"),
+                        datetime: new Date("2010-02-08"),
                         float: 2.3,
                         integer: 2,
                         string: "string"
