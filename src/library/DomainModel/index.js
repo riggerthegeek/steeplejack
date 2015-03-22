@@ -399,7 +399,7 @@ var DomainModel = Base.extend({
                             break;
                         }
 
-                        //case "date":
+                        case "date":
                         case "datetime":
                         {
                             value = datatypes.setDate(value, defaults);
