@@ -49,12 +49,12 @@ function defineProperty (obj, name, value) {
 function Base () {
 
 
-    EventEmitter.call(this);
-
-
     if (this instanceof Base === false) {
         throw new SyntaxError("Class must be instantiated with new or create()");
     }
+
+
+    EventEmitter.call(this);
 
 
     /**
