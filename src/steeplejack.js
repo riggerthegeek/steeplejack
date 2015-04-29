@@ -101,6 +101,31 @@ var steeplejack = Base.extend({
 
 
     /**
+     * Constant
+     *
+     * This registers whatever is sent as to the IOC
+     * controller.  Although it can be used for any
+     * data type, it is designed to be used for app-wide
+     * configuration parameters.
+     *
+     * It is certainly not designed with using to store
+     * functions (although it will work, you should use
+     * either the factory or the singleton for that).
+     *
+     * @param name
+     * @param value
+     * @returns {steeplejack}
+     */
+    constant: function (name, value) {
+
+        this._injector.registerSingleton(name, value);
+
+        return this;
+
+    },
+
+
+    /**
      * Factory
      *
      * Registers a factory method to the application. A
