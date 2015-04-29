@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var Base = require("../../../../src/library/Base");
 var Exception = require("../../../../src/error/Exception");
-var ValidationException = require("../../../../src/Main").Exceptions.Validation;
+var ValidationException = require("../../../../").Exceptions.Validation;
 
 var ValidationExceptionDetail = require("../../../../src/error/Validation/Detail");
 

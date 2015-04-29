@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var Base = require("../../../../src/library/Base");
 var Exception = require("../../../../src/error/Exception");
-var FatalException = require("../../../../src/Main").Exceptions.Fatal;
+var FatalException = require("../../../../").Exceptions.Fatal;
 
 
 describe("FatalException test", function () {

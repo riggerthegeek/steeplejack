@@ -6,7 +6,7 @@ var sinonChai = require("sinon-chai");
 chai.should();
 chai.use(sinonChai);
 
-var Main = require("../../../../src/Main");
+var Main = require("../../../../");
 var collection = Main.Collection;
 var DomainModel = Main.Model;
 var ValidationErr = Main.Exceptions.Validation;

@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 /* Called "model" so I can copy the modelTest from datautils */
 var _ = require("lodash");
-var Main = require("../../../../../src/Main");
+var Main = require("../../../../../src/steeplejack");
 var Base = Main.Base;
 var datautils = Base.datatypes;
 var model = Main.Model;

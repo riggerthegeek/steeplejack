@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-var Main = require("../../../../src/Main");
+var Main = require("../../../../");
 var Base = Main.Base;
 var datatypes = Main.datatypes;
 var Injector = Main.Injector;

@@ -1,6 +1,6 @@
 var chai = require("chai");
 var expect = chai.expect;
-var Exception = require("../../../../src/Main").Exceptions.Exception;
+var Exception = require("../../../../").Exceptions.Exception;
 var util = require("util");
 var proxyquire = require("proxyquire");
 var sinon = require("sinon");

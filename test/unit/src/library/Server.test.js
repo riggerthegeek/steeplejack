@@ -12,7 +12,7 @@
 var chai = require("chai");
 var sinon = require("sinon");
 
-var Main = require("../../../../src/Main");
+var Main = require("../../../../");
 
 var Base = Main.Base;
 var Server = Main.Server;
