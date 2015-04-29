@@ -16,47 +16,7 @@ var datatypes = require("datautils").data;
 
 
 /* Files */
-
-
-/**
- * Coerce
- *
- * Coerces the value into it's datatype
- *
- * @param {string} value
- * @returns {*}
- */
-function coerce (value) {
-
-    if (value.match(/^(\-)?(\d+(\.\d+)?)$/)) {
-        value = Number(value);
-    } else {
-        switch (value) {
-
-            case "true":
-            {
-                value = true;
-                break;
-            }
-
-            case "false":
-            {
-                value = false;
-                break;
-            }
-
-            case "null":
-            {
-                value = null;
-                break;
-            }
-
-        }
-    }
-
-    return value;
-
-}
+var coerce = require("./coerce");
 
 
 /**
@@ -165,13 +125,7 @@ function cliParameters () {
     /* Convert arguments to an array */
     var input = Array.prototype.slice.call(arguments);
 
-    /* Take the final argument - this is commander */
-    var commander = input.pop();
-
-    return {
-        params: parseParams(input),
-        commander: commander
-    };
+    return parseParams(input);
 
 }
 
