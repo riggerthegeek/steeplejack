@@ -104,7 +104,12 @@ var steeplejack = Base.extend({
      * Factory
      *
      * Registers a factory method to the application. A
-     * factory is a function.
+     * factory is a function.  This is where you would
+     * store a "class" that is instantiated later on.
+     *
+     * Models and collections would typically be stored
+     * inside a factory as they create something (an
+     * instance of the class) when they are called.
      *
      * @param name
      * @param fn
@@ -165,10 +170,14 @@ var steeplejack = Base.extend({
         /* Run the create server function */
         var server = createServer(self._config);
 
+        self._injector.registerSingleton("$server", server);
+
         /* Create a closure for the outputHandler and register it to the injector */
-        self._injector.registerSingleton("$outputHandler", function () {
-            return server.outputHandler.apply(server, arguments);
-        });
+        if (self._injector.getComponent("$outputHandler") === null) {
+            self._injector.registerSingleton("$outputHandler", function () {
+                return server.outputHandler.apply(server, arguments);
+            });
+        }
 
         /* Process the routes */
         var routes = _.reduce(self._routes, function (result, fn, name) {
@@ -224,6 +233,7 @@ var steeplejack = Base.extend({
      */
     singleton: function (name, inst) {
 
+        /* Invoke any function with the config called to it */
         if (_.isFunction(inst)) {
             inst = inst(this._config);
         }
