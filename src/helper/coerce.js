@@ -19,7 +19,7 @@
 /* Files */
 
 
-module.exports = function (value) {
+module.exports = function coerce (value) {
 
     if (value.match(/^(\-)?(\d+(\.\d+)?)$/)) {
         value = Number(value);
