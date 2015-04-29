@@ -219,9 +219,9 @@ module.exports = Base.extend({
      * Register Singleton
      *
      * Register a singleton to be managed by the injector.
-     * Anything that is an object is a valid singleton
-     * component. Attempting to register the same object
-     * multiple times will throw an error.
+     * Anything anything can be a single element - both
+     * scalar and non-scalr values. Attempting to register
+     * the same name multiple times will throw an error.
      *
      * @param {string} name
      * @param {object} instance
@@ -230,10 +230,6 @@ module.exports = Base.extend({
 
         if (this.getComponent(name) !== null) {
             throw new Error("Singleton '" + name + "' already registered");
-        }
-
-        if (typeof instance !== "object" && typeof instance !== "function") {
-            throw new Error("Singleton '" + name + "' is not an object");
         }
 
         this._components[name] = {
