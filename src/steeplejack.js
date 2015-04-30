@@ -29,15 +29,15 @@ var replaceEnvVars = require("./helper/replaceEnvVars");
 
 
 /**
- * Applications
+ * Application
  *
- * Stores the instances of the applications we've
+ * Stores the application instance we've
  * created for later use
  *
  * @type {object}
  * @private
  */
-var applications = {};
+var application = null;
 
 
 /**
@@ -64,6 +64,9 @@ function createInjector (config) {
 var steeplejack = Base.extend({
 
 
+    _modules: [],
+
+
     _construct: function (config, modules, env, cliParams) {
 
         if (_.isObject(config) === false || _.isArray(config)) {
@@ -80,7 +83,7 @@ var steeplejack = Base.extend({
 
             return result;
 
-        }, []);
+        }, this._modules);
 
         /* Merge config and parameters */
         config = _.merge(config, cliParams);
@@ -280,17 +283,25 @@ var steeplejack = Base.extend({
 
 
     /**
-     * @param appName
+     * App
+     *
+     * This is a singleton that either creates an application
+     * instance or retrieves the application instance created
+     * previously.  This is designed to be where we start
+     * everything from. The options is required the first it's
+     * called and then not allowed to be passed in at a later
+     * date.
+     *
      * @param options
      */
-    app: function (appName, options) {
+    app: function app (options) {
 
         options = Base.datatypes.setObject(options, {});
 
-        if (_.has(applications, appName) === false) {
+        if (application === null) {
 
             /* Create the application */
-            applications[appName] = steeplejack.create(
+            application = steeplejack.create(
                 options.config,
                 options.modules,
                 replaceEnvVars(options.env),
@@ -302,7 +313,7 @@ var steeplejack = Base.extend({
             throw new TypeError("steeplejack.app error: Cannot redeclare options");
         }
 
-        return applications[appName];
+        return application;
 
     },
 
