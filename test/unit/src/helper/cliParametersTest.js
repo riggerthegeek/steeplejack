@@ -1,46 +1,37 @@
 var expect = require("chai").expect;
-var sinon = require("sinon");
 var cliParams = require("../../../../src/helper/cliParameters");
 
 
 describe("CLI Parameters test", function () {
 
-    var commander = {
-        thisIs: "commander"
-    };
-
-    it("should receive no arguments and assume the final one is commander", function (done) {
+    it("should receive no arguments", function (done) {
 
         var input = [
-            commander
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({});
-        expect(args.commander).to.be.equal(commander);
+        expect(args).to.be.eql({});
 
         done();
 
     });
 
-    it("should receive some string arguments and assume the final one is commander", function (done) {
+    it("should receive some string arguments", function (done) {
 
         var input = [
             "this is a string",
-            "another string",
-            commander
+            "another string"
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({
+        expect(args).to.be.eql({
             "this is a string": true,
             "another string": true
         });
-        expect(args.commander).to.be.equal(commander);
 
         done();
 
@@ -56,13 +47,12 @@ describe("CLI Parameters test", function () {
             "float=2.543",
             "negInt=-235643",
             "negFloat=-2.543",
-            commander
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({
+        expect(args).to.be.eql({
             boolT: true,
             boolF: false,
             null: null,
@@ -71,7 +61,6 @@ describe("CLI Parameters test", function () {
             negInt: -235643,
             negFloat: -2.543
         });
-        expect(args.commander).to.be.equal(commander);
 
         done();
 
@@ -80,19 +69,17 @@ describe("CLI Parameters test", function () {
     it("should parse a string to an object", function (done) {
 
         var input = [
-            "obj.boolF= false",
-            commander
+            "obj.boolF= false"
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({
+        expect(args).to.be.eql({
             obj: {
                 boolF: false
             }
         });
-        expect(args.commander).to.be.equal(commander);
 
         done();
 
@@ -102,20 +89,18 @@ describe("CLI Parameters test", function () {
 
         var input = [
             "obj.boolF= false",
-            "obj.negInt=-235643",
-            commander
+            "obj.negInt=-235643"
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({
+        expect(args).to.be.eql({
             obj: {
                 boolF: false,
                 negInt: -235643
             }
         });
-        expect(args.commander).to.be.equal(commander);
 
         done();
 
@@ -130,14 +115,13 @@ describe("CLI Parameters test", function () {
             "int=235643",
             "float=2.543",
             "obj.negInt=-235643",
-            "negFloat=-2.543",
-            commander
+            "negFloat=-2.543"
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({
+        expect(args).to.be.eql({
             boolT: true,
             obj: {
                 boolF: false,
@@ -148,7 +132,6 @@ describe("CLI Parameters test", function () {
             float: 2.543,
             negFloat: -2.543
         });
-        expect(args.commander).to.be.equal(commander);
 
         done();
 
@@ -163,14 +146,13 @@ describe("CLI Parameters test", function () {
             "obj2.obj.int=235643",
             "obj2.obj2.float=2.543",
             "obj.negInt=-235643",
-            "negFloat=-2.543",
-            commander
+            "negFloat=-2.543"
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({
+        expect(args).to.be.eql({
             boolT: true,
             obj: {
                 boolF: false,
@@ -187,7 +169,6 @@ describe("CLI Parameters test", function () {
             },
             negFloat: -2.543
         });
-        expect(args.commander).to.be.equal(commander);
 
         done();
 
@@ -198,16 +179,14 @@ describe("CLI Parameters test", function () {
         var input = [
             [],
             {},
-            new Date(),
-            commander
+            new Date()
         ];
 
         var args = cliParams.apply(this, input);
 
         expect(args).to.be.an("object");
-        expect(args.params).to.be.eql({
+        expect(args).to.be.eql({
         });
-        expect(args.commander).to.be.equal(commander);
 
         done();
 
