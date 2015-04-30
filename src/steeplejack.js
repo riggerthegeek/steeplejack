@@ -82,10 +82,10 @@ var steeplejack = Base.extend({
 
         }, []);
 
-        /* Marge config and parameters */
+        /* Merge config and parameters */
         config = _.merge(config, cliParams);
 
-        /* Marge config and env */
+        /* Merge config and env */
         config = _.merge(config, env);
 
         /* Store config to this object */
@@ -281,7 +281,7 @@ var steeplejack = Base.extend({
 
     /**
      * @param appName
-     * @param config
+     * @param options
      */
     app: function (appName, options) {
 
