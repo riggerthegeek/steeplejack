@@ -13,28 +13,6 @@ describe("Main test", function () {
 
     describe("Instantiation method", function () {
 
-        it("should wrap the run script", function () {
-
-            var runInst = {};
-
-            var run = sinon.stub()
-                .returns(runInst);
-
-            var Main2 = proxyquire("../../../", {
-                "./script/run": run
-            });
-
-            expect(Main2).to.be.a("function");
-
-            var inst = Main2(2, 3);
-
-            expect(run).to.be.calledOnce
-                .calledWith(2, 3);
-
-            expect(inst).to.be.equal(runInst);
-
-        });
-
     });
 
     describe("Static methods", function () {
