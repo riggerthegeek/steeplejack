@@ -812,9 +812,11 @@ describe("Base library", function () {
 
             });
 
-            it("should clone the Base method and remain an instance", function () {
+            it("should clone an extended Base method and remain an instance", function () {
 
                 var Model = Base.extend({
+
+                    constant: 23,
 
                     _construct: function (obj) {
                         this.values = {};
@@ -846,10 +848,23 @@ describe("Base library", function () {
                     .to.be.an.instanceof(EventEmitter)
                     .to.be.not.equal(obj);
 
+                expect(clone.constant).to.be.equal(23);
+                expect(clone.values).to.be.eql({
+                    key1: "val1"
+                });
                 expect(clone.values).to.be.eql(obj.values)
                     .to.be.not.equal(obj.values);
                 expect(clone.setValue).to.be.equal(obj.setValue);
                 expect(clone._hidden).to.be.equal(obj._hidden);
+
+                clone.setValue("key2", "val2");
+                expect(obj.values).to.be.eql({
+                    key1: "val1"
+                });
+                expect(clone.values).to.be.eql({
+                    key1: "val1",
+                    key2: "val2"
+                });
 
             });
 

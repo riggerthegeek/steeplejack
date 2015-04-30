@@ -117,7 +117,15 @@ _.extend(Base.prototype, {
         /* Get the values from this and set to clone */
         Object.getOwnPropertyNames(this).map(function (name) {
             if (_.indexOf(cloneIgnore, name) === -1) {
-                defineProperty(clone, name, _.clone(this[name]));
+
+                var obj = _.clone(this[name], function (item) {
+                    if (_.isFunction (item)) {
+                        return item;
+                    }
+                });
+
+                defineProperty(clone, name, obj);
+
             }
         }, this);
 
