@@ -647,7 +647,7 @@ describe("DomainModel tests - using new", function () {
                     })).to.be.true;
                 });
 
-                it("should return true when the input needs casting to the datatype", function () {
+                it("should return true when the input needs casting to the datatype with multiple where values", function () {
                     expect(obj.where({
                         float: "2.2",
                         date: "2010-02-07"
