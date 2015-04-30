@@ -333,21 +333,39 @@ describe("Injector test", function () {
 
             });
 
-            it("should throw an error if non-function and non-object passed", function (done) {
+            it("should accept a string", function () {
 
-                var fail = false;
-                try {
-                    obj.registerSingleton("date", true);
-                } catch (err) {
-                    fail = true;
+                obj.registerSingleton("date", "some date");
 
-                    expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal("Singleton 'date' is not an object");
-                }
+                expect(obj.getComponent("date")).to.be.an("object").to.be.eql({
+                    constructor: null,
+                    instance: "some date"
+                });
 
-                expect(fail).to.be.true;
 
-                done();
+            });
+
+            it("should accept a boolean", function () {
+
+                obj.registerSingleton("date", true);
+
+                expect(obj.getComponent("date")).to.be.an("object").to.be.eql({
+                    constructor: null,
+                    instance: true
+                });
+
+
+            });
+
+            it("should accept a number", function () {
+
+                obj.registerSingleton("date", 34.5);
+
+                expect(obj.getComponent("date")).to.be.an("object").to.be.eql({
+                    constructor: null,
+                    instance: 34.5
+                });
+
 
             });
 
