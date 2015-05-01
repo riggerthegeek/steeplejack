@@ -261,9 +261,8 @@ var steeplejack = Base.extend({
      */
     singleton: function (name, inst) {
 
-        /* Invoke any function with the config called to it */
         if (_.isFunction(inst)) {
-            inst = inst(this._config);
+            throw new TypeError("steeplejack.singleton cannot accept a function");
         }
 
         this._injector.registerSingleton(name, inst);
