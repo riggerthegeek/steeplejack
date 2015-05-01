@@ -104,6 +104,29 @@ var steeplejack = Base.extend({
 
 
     /**
+     * Config
+     *
+     * This is to be used in the config phase
+     * @param name
+     * @param fn
+     * @returns {*}
+     */
+    config: function (name, fn) {
+
+        if (_.isFunction(fn) === false) {
+            throw new TypeError("steeplejack.config can only accept functions");
+        }
+
+        /* Run the function, returning the config object as the argument */
+        var inst = fn(this._config)
+
+        /* Now we have an instance, call using the singleton method */
+        return this.singleton(name, inst);
+
+    },
+
+
+    /**
      * Constant
      *
      * This registers whatever is sent as to the IOC
