@@ -118,7 +118,7 @@ var steeplejack = Base.extend({
         }
 
         /* Run the function, returning the config object as the argument */
-        var inst = fn(this._config)
+        var inst = fn(this._config);
 
         /* Now we have an instance, call using the singleton method */
         return this.singleton(name, inst);
