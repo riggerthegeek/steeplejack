@@ -115,6 +115,10 @@ module.exports = function (grunt) {
                     },
                     coverage: true,
                     recursive: true,
+                    require: [
+                        "test/helpers/sinon",
+                        "test/helpers/rootRequire"
+                    ],
                     root: "./<%= config.src %>"
                 },
                 src: "./<%= config.test %>"
@@ -123,7 +127,11 @@ module.exports = function (grunt) {
         mochaTest: {
             test: {
                 options: {
-                    reporter: "spec"
+                    reporter: "spec",
+                    require: [
+                        "test/helpers/sinon",
+                        "test/helpers/rootRequire"
+                    ]
                 },
                 src: [
                     "./<%= config.test %>/**/*.js"
