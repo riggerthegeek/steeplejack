@@ -153,6 +153,173 @@ describe("Main test", function () {
 
         describe("#_registerModule", function () {
 
+            it("should reject non-objects", function () {
+
+                proxyquire.noCallThru();
+
+                this.Main = proxyquire("../../../", {
+                    "/path/to/module": 222
+                });
+
+                this.obj = new this.Main();
+
+                var fail = false;
+
+                try {
+                    this.obj._registerModule("/path/to/module");
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("Module must be an object");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should reject an object with 0 elements on it", function () {
+
+                proxyquire.noCallThru();
+
+                this.Main = proxyquire("../../../", {
+                    "/path/to/module": {
+
+                    }
+                });
+
+                this.obj = new this.Main();
+
+                var fail = false;
+
+                try {
+                    this.obj._registerModule("/path/to/module");
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("Module must be an object with exactly 1 element");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should reject an object with 2 elements on it", function () {
+
+                proxyquire.noCallThru();
+
+                this.Main = proxyquire("../../../", {
+                    "/path/to/module": {
+                        key1: "",
+                        key2: ""
+                    }
+                });
+
+                this.obj = new this.Main();
+
+                var fail = false;
+
+                try {
+                    this.obj._registerModule("/path/to/module");
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("Module must be an object with exactly 1 element");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should reject an key that doesn't begin with __", function () {
+
+                proxyquire.noCallThru();
+
+                this.Main = proxyquire("../../../", {
+                    "/path/to/module": {
+                        key1: ""
+                    }
+                });
+
+                this.obj = new this.Main();
+
+                var fail = false;
+
+                try {
+                    this.obj._registerModule("/path/to/module");
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("No known modules");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should throw an error if the registration function doesn't exist", function () {
+
+                proxyquire.noCallThru();
+
+                this.Main = proxyquire("../../../", {
+                    "/path/to/module": {
+                        __unknownModule: ""
+                    }
+                });
+
+                this.obj = new this.Main();
+
+                var fail = false;
+
+                try {
+                    this.obj._registerModule("/path/to/module");
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("Unknown module type: __unknownModule");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should run the registration function with the module", function () {
+
+                proxyquire.noCallThru();
+
+                this.Main = proxyquire("../../../", {
+                    "/path/to/module": {
+                        __myModule: "moduleFn"
+                    }
+                });
+
+                this.obj = new this.Main();
+
+                this.obj.registerMyModule = sinon.spy();
+
+                this.obj._registerModule("/path/to/module");
+
+                expect(this.obj.registerMyModule).to.be.calledOnce
+                    .calledWith({
+                        __myModule: "moduleFn"
+                    });
+
+            });
+
         });
 
         describe("#addModule", function () {
