@@ -520,7 +520,8 @@ var steeplejack = Base.extend({
     /**
      * Injector
      *
-     * This is a simple but effective Inversion of Control system
+     * This is a simple but effective Inversion of Control
+     * system
      */
     Injector: Injector,
 
@@ -546,9 +547,9 @@ var steeplejack = Base.extend({
     /**
      * Server
      *
-     * A parent method that we can extend to create
-     * server implementations using, for example,
-     * Express, Restify or the Node HTTP module.
+     * A strategy we can use to create server
+     * implementations using, for example, Express,
+     * Restify or the Node HTTP module.
      */
     Server: Server
 
