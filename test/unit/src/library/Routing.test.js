@@ -340,13 +340,13 @@ describe("Routing test", function () {
 
                 expect(routes).to.be.eql([{
                     name: "endpoint.js",
-                    parent: "/Users/SimonEmms/Documents/Development/SlashDevSlashNull/steeplejack/test/routes"
+                    parent: path.join(process.cwd(), "/test/routes")
                 }, {
                     name: "route.js",
-                    parent: "/Users/SimonEmms/Documents/Development/SlashDevSlashNull/steeplejack/test/routes"
+                    parent: path.join(process.cwd(), "/test/routes")
                 }, {
                     name: "index.js",
-                    parent: "/Users/SimonEmms/Documents/Development/SlashDevSlashNull/steeplejack/test/routes"
+                    parent: path.join(process.cwd(), "/test/routes")
                 }]);
 
             });
