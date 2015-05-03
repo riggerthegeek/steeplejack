@@ -23,95 +23,228 @@ var optimist = require("optimist");
 
 /* Files */
 var Base = require("./library/Base");
-var cliParameters = require("./helper/cliParameters");
 var Injector = require("./library/Injector");
+var Router = require("./library/Router");
+var cliParameters = require("./helper/cliParameters");
 var replaceEnvVars = require("./helper/replaceEnvVars");
 
-
-/**
- * Application
- *
- * Stores the application instance we've
- * created for later use
- *
- * @type {object}
- * @private
- */
-var application = null;
-
-
-/**
- * Create Injector
- *
- * This creates an instance of the injector that allows
- * us to inject in dependencies.
- *
- * @param {object} config
- * @returns {object}
- * @private
- */
-function createInjector (config) {
-
-    var injector = new Injector();
-
-    injector.registerSingleton("$config", config);
-
-    return injector;
-
-}
+var datatypes = Base.datatypes;
 
 
 var steeplejack = Base.extend({
 
 
+    /**
+     * Global config object. Gets set to $config
+     * in IOC container
+     */
+    _config: {},
+
+
+    /**
+     * Instance of the injector
+     */
+    _injector: null,
+
+
     _modules: [],
 
 
-    _construct: function (config, modules, env, cliParams) {
+    _routes: {},
 
-        if (_.isObject(config) === false || _.isArray(config)) {
-            throw new TypeError("Instantiation error: config must be an object");
+
+    /**
+     * Construct
+     *
+     * Instantiates a new instance of steeplejack.  All the
+     * parameters are optional, but you'll struggle to make
+     * an application without them.  However, it's not steeplejack's
+     * job to tell you how to build your application, merely
+     * help you do so.
+     *
+     * Ordinarily, you'd not activate this directly and should
+     * use the steeplejack.app() static method.  This gives you
+     * the ability to configure your config object with command
+     * line arguments and environment variables.
+     *
+     * --------------
+     * The Parameters
+     * --------------
+     *
+     * config - this is a JSON object that is treated as the
+     * single source of truth for all your config needs.  Stick
+     * in here database connection parameters, logging config
+     * and anything else you may need.  This will be assigned
+     * to $config in the IOC container
+     *
+     * modules - this is the location of the modules that will
+     * be loaded as part of the system.  It is strongly recommended
+     * that you used glob values in here, so that the adding
+     * and removal of plugins becomes as simple as adding in
+     * the files.
+     *
+     * routeDir - this is the location of the routes file.  In
+     * here, you can configure your routes and this will all
+     * be loaded automatically.
+     *
+     * @param config
+     * @param modules
+     * @param routeDir
+     * @private
+     */
+    _construct: function (config, modules, routeDir) {
+
+        /* Config is optional */
+        this._config = datatypes.setObject(config, {});
+
+        this._injector = new Injector();
+
+        /* Store config */
+        this.getInjector().registerSingleton("$config", config);
+
+        /* Add in the modules */
+        if (datatypes.setArray(modules, null) !== null) {
+            this.addModule(modules);
         }
 
-        /* Store the modules for runtime */
-        this._modules = _.reduce(modules, function (result, module) {
-
-            var modulePath = path.join(process.cwd(), module);
-
-            /* Glob the modules */
-            result = result.concat(glob.sync(modulePath));
-
-            return result;
-
-        }, this._modules);
-
-        /* Merge config and parameters */
-        config = _.merge(config, cliParams);
-
-        /* Merge config and env */
-        config = _.merge(config, env);
-
-        /* Store config to this object */
-        this._config = config;
-
-        /* Create the injector */
-        this._injector = createInjector(this._config);
-
-        /* Store the routes */
-        this._routes = {};
+        /* Configure the routes - pass the absolute path */
+        if (routeDir) {
+            this.setRoutes(Router.discoverRoutes(path.join(process.cwd(), routeDir)));
+        }
 
     },
 
 
     /**
-     * Config
+     * Get Name From Path
      *
-     * This is to be used in the config phase
-     * @param name
-     * @param fn
+     * Returns the name of the file, without the extensions.
+     * If you have a file with two .s (eg, filename.test.js),
+     * it just returns filename.
+     *
+     * @param filePath
+     * @returns {*}
+     * @private
+     */
+    _getNameFromPath: function _getNameFromPath (filePath) {
+
+        var fileName;
+        if (_.has(path, "parse")) {
+            /* Introduced in 0.12 */
+            fileName = path.parse(filePath).name;
+        } else {
+            /* Older way of doing it */
+            fileName = path.basename(filePath);
+        }
+
+        fileName = fileName.split(".");
+
+        return fileName[0];
+
+    },
+
+
+    /**
+     * Register Module
+     *
+     * Registers a module to the IOC container.
+     *
+     * @param {string} modulePath
+     * @private
+     */
+    _registerModule: function _registerModule (modulePath) {
+
+        /* Get the file */
+        var module = require(modulePath);
+
+        if (_.isObject(module) && _.size(module) === 1) {
+            /* Looks like we're trying to register something to the container */
+            var key = _.keys(module)[0];
+
+            /* Our register methods begin __ */
+            if (key.match(/^__[a-z]/i) !== null) {
+
+                /* Remove the __ */
+                key = key.replace(/^__/, "");
+
+                var registerFn = "register" + _.capitalize(key);
+
+                if (_.has(this, registerFn)) {
+                    this[registerFn](module, modulePath);
+                } else {
+                    throw new SyntaxError("Unknown module type: __" + key);
+                }
+
+            }
+        }
+
+    },
+
+
+    /**
+     * Add Module
+     *
+     * Takes an array of modules (or a single module)
+     * and loads it to the application.  The modules
+     * should be in a relative path to the application.
+     *
+     * It also accepts globbed paths.
+     *
+     * @param module
+     */
+    addModule: function addModule (module) {
+
+        if (_.isArray(module)) {
+            _.each(module, function (mod) {
+                this.addModule(mod);
+            }, this);
+
+            return;
+        }
+
+        if (_.isString(module) === false) {
+            throw new TypeError("steeplejack.addModule can only accept a string[]");
+        }
+
+        /* Make relative path */
+        var modulePath = path.join(process.cwd(), module);
+
+        /* Store it in array */
+        this._modules = this._modules.concat(glob.sync(modulePath));
+
+    },
+
+
+    /**
+     * Get Injector
+     *
+     * Returns the instance of the injector
+     *
+     * @returns {Injector}
+     */
+    getInjector: function getInjector () {
+        return this._injector;
+    },
+
+
+    /**
+     * Register Config
+     *
+     * This is to register config modules
+     *
+     * @param module
+     * @param modulePath
      * @returns {*}
      */
-    config: function (name, fn) {
+    registerConfig: function registerConfig (module, modulePath) {
+
+        var fn = module.__config;
+
+        var name = fn.name;
+
+        if (name === "") {
+            name = this._getNameFromPath(modulePath);
+        }
 
         if (_.isFunction(fn) === false) {
             throw new TypeError("steeplejack.config can only accept functions");
@@ -120,14 +253,16 @@ var steeplejack = Base.extend({
         /* Run the function, returning the config object as the argument */
         var inst = fn(this._config);
 
-        /* Now we have an instance, call using the singleton method */
-        return this.singleton(name, inst);
+        /* Use the register singleton method to register it */
+        return this.registerSingleton({
+            __singleton: inst
+        }, name);
 
     },
 
 
     /**
-     * Constant
+     * Register Constant
      *
      * This registers whatever is sent as to the IOC
      * controller.  Although it can be used for any
@@ -139,10 +274,13 @@ var steeplejack = Base.extend({
      * either the factory or the singleton for that).
      *
      * @param name
-     * @param value
+     * @param modulePath
      * @returns {steeplejack}
      */
-    constant: function (name, value) {
+    registerConstant: function registerConstant (module, modulePath) {
+
+        var value = module.__constant;
+        var name = this._getNameFromPath(modulePath);
 
         this._injector.registerSingleton(name, value);
 
@@ -152,7 +290,7 @@ var steeplejack = Base.extend({
 
 
     /**
-     * Factory
+     * Register Factory
      *
      * Registers a factory method to the application. A
      * factory is a function.  This is where you would
@@ -162,11 +300,19 @@ var steeplejack = Base.extend({
      * inside a factory as they create something (an
      * instance of the class) when they are called.
      *
-     * @param name
-     * @param fn
+     * @param module
+     * @param modulePath
      * @returns {steeplejack}
      */
-    factory: function (name, fn) {
+    registerFactory: function registerFactory (module, modulePath) {
+
+        var fn = module.__factory;
+        var name = fn.name;
+
+        if (name === "") {
+            name = this._getNameFromPath(modulePath);
+        }
+
         this._injector.register(name, fn);
 
         return this;
@@ -174,25 +320,29 @@ var steeplejack = Base.extend({
 
 
     /**
-     * Route
+     * Singleton
      *
-     * Registers a route to the application.  A route
-     * is how the web layer accesses the application.
+     * Registers a singleton method to the application. A
+     * singleton will typically be something that has
+     * already been instantiated or it may be just a JSON
+     * object.
      *
-     * @param route
-     * @param fn
+     * @param module
+     * @param modulePath
      * @returns {steeplejack}
      */
-    route: function (route, fn) {
+    registerSingleton: function registerSingleton (module, modulePath) {
 
-        if (_.has(this._routes, route)) {
-            throw new SyntaxError("Route has already been configured: " + route);
+        var inst = module.__singleton;
+        var name = this._getNameFromPath(modulePath);
+
+        if (_.isFunction(inst)) {
+            throw new TypeError("steeplejack.singleton cannot accept a function");
         }
 
-        this._routes[route] = fn;
+        this._injector.registerSingleton(name, inst);
 
         return this;
-
     },
 
 
@@ -205,7 +355,7 @@ var steeplejack = Base.extend({
      * @param fn
      * @returns {steeplejack}
      */
-    run: function (createServer, fn) {
+    run: function run (createServer, fn) {
 
         var self = this;
 
@@ -213,15 +363,15 @@ var steeplejack = Base.extend({
             fn = _.noop;
         }
 
-        /* Include the modules */
-        _.each(this._modules, function (module) {
-            require(module);
-        });
+        /* Register the modules */
+        _.each(self._modules, function (module) {
+            this._registerModule(module);
+        }, self);
 
         /* Run the create server function */
         var server = createServer(self._config);
 
-        self._injector.registerSingleton("$server", server);
+        this._injector.registerSingleton("$server", server);
 
         /* Create a closure for the outputHandler and register it to the injector */
         if (self._injector.getComponent("$outputHandler") === null) {
@@ -271,24 +421,15 @@ var steeplejack = Base.extend({
 
 
     /**
-     * Singleton
+     * Set Routes
      *
-     * Registers a singleton method to the application. A
-     * singleton will typically be something that have
-     * already been instantiated or it may be just a JSON
-     * object.
+     * Sets the routes to use
      *
-     * @param name
-     * @param inst
+     * @param routes
      * @returns {steeplejack}
      */
-    singleton: function (name, inst) {
-
-        if (_.isFunction(inst)) {
-            throw new TypeError("steeplejack.singleton cannot accept a function");
-        }
-
-        this._injector.registerSingleton(name, inst);
+    setRoutes: function (routes) {
+        this._routes = datatypes.setObject(routes, {});
 
         return this;
     }
@@ -318,24 +459,22 @@ var steeplejack = Base.extend({
      */
     app: function app (options) {
 
-        options = Base.datatypes.setObject(options, {});
+        options = datatypes.setObject(options, {});
 
-        if (application === null) {
+        var config = datatypes.setObject(options.config, {}); /* Config JSON - set to $config */
+        var env = datatypes.setObject(options.env, null); /* Environment variables - overrides $config */
+        var args = cliParameters.apply(this, optimist.argv._); /* Arguments passed into command line */
 
-            /* Create the application */
-            application = steeplejack.create(
-                options.config,
-                options.modules,
-                replaceEnvVars(options.env),
-                cliParameters.apply(this, optimist.argv._)
-            );
-
-        } else if (_.isEmpty(options) === false) {
-            /* Cannot redeclare options */
-            throw new TypeError("steeplejack.app error: Cannot redeclare options");
+        if (env !== null) {
+            /* Merge config and env */
+            config = _.merge(config, replaceEnvVars(env));
         }
 
-        return application;
+        /* Merge config and arguments */
+        config = _.merge(config, args);
+
+        /* Create and return the application */
+        return steeplejack.create(config, options.modules, options.routeDir);
 
     },
 
@@ -346,7 +485,7 @@ var steeplejack = Base.extend({
      * This is our Base object.  It is intended that everything
      * useful is extended from here.
      */
-    Base: require("./library/Base"),
+    Base: Base,
 
 
     /**
@@ -395,7 +534,7 @@ var steeplejack = Base.extend({
      *
      * This allows us to route our application
      */
-    Router: require("./library/Router"),
+    Router: Router,
 
 
     /**
