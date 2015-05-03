@@ -175,36 +175,35 @@ module.exports = Base.extend({
         /* Get the file */
         var module = require(modulePath);
 
-        if (datatypes.setObject(module, null) !== null) {
-
-            if (_.size(module) === 1) {
-                /* Looks like we're trying to register something to the container */
-                var key = _.keys(module)[0];
-
-                /* Our register methods begin __ */
-                if (key.match(/^__[a-z]/i) !== null) {
-
-                    /* Remove the __ */
-                    key = key.replace(/^__/, "");
-
-                    var registerFn = "register" + _.capitalize(key);
-
-                    if (_.has(this, registerFn)) {
-                        this[registerFn](module);
-                    } else {
-                        throw new SyntaxError("Unknown module type: __" + key);
-                    }
-
-                }
-            } else {
-                /* There isn't one element registered */
-                throw new SyntaxError("Module must be an object with exactly 1 element");
-            }
-
-        } else {
+        if (datatypes.setObject(module, null) === null) {
             /* Module isn't an object */
             throw new SyntaxError("Module must be an object");
         }
+
+        if (_.size(module) !== 1) {
+            /* There isn't one element registered */
+            throw new SyntaxError("Module must be an object with exactly 1 element");
+        }
+
+        /* Looks like we're trying to register something to the container */
+        var key = _.keys(module)[0];
+
+        /* Our register methods begin __ */
+        if (key.match(/^__[a-z]/i) === null) {
+            throw new SyntaxError("No known modules");
+        }
+
+        /* Remove the __ at the start */
+        key = key.replace(/^__/, "");
+
+        var registerFn = "register" + _.capitalize(key);
+
+        if (_.has(this, registerFn) === false) {
+            throw new SyntaxError("Unknown module type: __" + key);
+        }
+
+        /* Run the registration function */
+        this[registerFn](module);
 
     },
 
