@@ -8,10 +8,12 @@
 
 
 /* Node modules */
+var path = require("path");
 
 
 /* Third-party modules */
 var _ = require("lodash");
+var walk = require("walk");
 
 
 /* Files */
@@ -145,6 +147,117 @@ module.exports = Base.extend({
 
     }
 
+
+
+}, {
+
+
+    /**
+     * Discover Routes
+     *
+     * This is discovers the route files in the
+     * given route directory and then loads them
+     * up.  It then returns an array of route
+     * functions that can be used.
+     *
+     * @param routeDir
+     * @returns Array
+     */
+    discoverRoutes: function (routeDir) {
+
+        return _.reduce(this.getRouteFiles(routeDir), function (result, route) {
+
+            var routeName = route.name;
+            var cwd = route.parent;
+
+            /**
+             * Split into segments - first is require name,
+             * second is route name. We don't care about
+             * the extension
+             */
+            var segments = routeName.match(/^(((\w+)\/)?((\w{1,})))/);
+
+            if (segments !== null) {
+                var requireName = segments[1];
+                var route = segments[5];
+
+                if (route === "index") {
+                    route = segments[3];
+                } else if (segments[2]) {
+                    route = segments[2] + route;
+                }
+
+                /* Load the route file */
+                var Route = require(path.join(cwd, route));
+
+                /* Put in stack */
+                result[route] = Route;
+
+            }
+
+            return result;
+
+        }, {}, this);
+
+    },
+
+
+    /**
+     * Get Route Files
+     *
+     * Gets the route files.  Whilst it's not terribly
+     * good form to do synchronous file tasks, as this
+     * is only run once and before the server starts,
+     * it's acceptable.
+     *
+     * @param parent
+     * @returns {object}
+     */
+    getRouteFiles: function (parent) {
+
+        parent = Base.datatypes.setString(parent, "");
+
+        if (parent === "") {
+            throw new SyntaxError("parent is a required argument");
+        }
+
+        var routeFiles = [];
+
+        walk.walkSync(parent, {
+
+            listeners: {
+                file: function (root, fileStats, next) {
+
+                    var fullName = path.join(root, fileStats.name);
+
+                    /* Remove the parent path from the string */
+                    fullName = fullName.replace(parent + path.sep, "");
+
+                    routeFiles.push({
+                        name: fullName,
+                        parent: parent
+                    });
+
+                    next();
+
+                }
+            }
+
+        });
+
+        /* Sorting makes it easier to work with */
+        routeFiles.sort(function (a, b) {
+
+            if (a.name.match(/index\./)) {
+                return 1;
+            } else {
+                return a.name > b.name;
+            }
+        });
+
+        return routeFiles;
+
+    }
 
 
 });
