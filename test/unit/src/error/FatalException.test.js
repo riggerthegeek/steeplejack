@@ -36,7 +36,7 @@ describe("FatalException test", function () {
             expect(obj.getStackTrace(1)).to.be.an("object");
             expect(obj.getStackTrace(2)).to.be.equal(obj.getStackTrace()[2]);
             expect(obj.getLineNumber()).to.be.a("number").to.be.equal(26);
-            expect(obj.getFileName()).to.be.equal(require("path").join(__dirname, "FatalExceptionTest.js"));
+            expect(obj.getFileName()).to.be.equal(require("path").join(__dirname, "FatalException.test.js"));
 
             done();
 

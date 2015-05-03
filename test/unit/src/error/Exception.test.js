@@ -242,7 +242,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Child);
 
                 /* This test is a bit flakey as set here, but hey ho */
-                expect(obj.getFileName()).to.be.equal(require("path").join(__dirname, "ExceptionTest.js"));
+                expect(obj.getFileName()).to.be.equal(require("path").join(__dirname, "Exception.test.js"));
 
                 done();
 

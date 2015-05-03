@@ -121,7 +121,7 @@ module.exports = function (grunt) {
                     ],
                     root: "./<%= config.src %>"
                 },
-                src: "./<%= config.test %>"
+                src: "./<%= config.test %>/**/*.test.js"
             }
         },
         mochaTest: {
@@ -134,7 +134,7 @@ module.exports = function (grunt) {
                     ]
                 },
                 src: [
-                    "./<%= config.test %>/**/*.js"
+                    "./<%= config.test %>/**/*.test.js"
                 ]
             }
         },
