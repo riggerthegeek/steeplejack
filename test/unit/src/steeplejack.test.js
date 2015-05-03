@@ -9,7 +9,6 @@
 
 
 /* Third-party modules */
-var proxyquire = require("proxyquire");
 
 
 /* Files */
