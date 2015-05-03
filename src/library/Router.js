@@ -176,7 +176,6 @@ module.exports = Base.extend({
              * the extension
              */
             var segments = routeName.match(/^(((\w+)\/)?((\w{1,})))/);
-
             if (segments !== null) {
                 var requireName = segments[1];
                 var tmp = segments[5];
