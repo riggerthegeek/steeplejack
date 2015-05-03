@@ -109,6 +109,7 @@ module.exports = Base.extend({
         /* Config is optional */
         this._config = datatypes.setObject(config, {});
 
+        /* Create an injector */
         this._injector = new Injector();
 
         /* Store config */
