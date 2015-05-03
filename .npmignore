@@ -2,3 +2,4 @@ Gruntfile.js
 coverage
 test
 .*
+*.png
