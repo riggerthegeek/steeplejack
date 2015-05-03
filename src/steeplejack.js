@@ -37,7 +37,7 @@ var replaceEnvVars = require("./helper/replaceEnvVars");
 var datatypes = Base.datatypes;
 
 
-var steeplejack = Base.extend({
+module.exports = Base.extend({
 
 
     /**
@@ -53,9 +53,15 @@ var steeplejack = Base.extend({
     _injector: null,
 
 
+    /**
+     * Store the loaded modules
+     */
     _modules: [],
 
 
+    /**
+     * The route functions
+     */
     _routes: {},
 
 
@@ -122,6 +128,12 @@ var steeplejack = Base.extend({
 
 
     /**
+     * Get Name Instance
+     *
+     * Splits out the name and the instance. It
+     * expects the input to be an object with one
+     * key.  That key is the name of the module and
+     * whatever is set to that value is the instance.
      *
      * @param obj
      * @returns {{name: *, inst: *}}
@@ -150,7 +162,10 @@ var steeplejack = Base.extend({
     /**
      * Register Module
      *
-     * Registers a module to the IOC container.
+     * Registers a module to the IOC container. This
+     * goes through all the modules and uses the
+     * relevant method to register in the appropriate
+     * way.
      *
      * @param {string} modulePath
      * @private
@@ -160,25 +175,35 @@ var steeplejack = Base.extend({
         /* Get the file */
         var module = require(modulePath);
 
-        if (_.isObject(module) && _.size(module) === 1) {
-            /* Looks like we're trying to register something to the container */
-            var key = _.keys(module)[0];
+        if (datatypes.setObject(module, null) !== null) {
 
-            /* Our register methods begin __ */
-            if (key.match(/^__[a-z]/i) !== null) {
+            if (_.size(module) === 1) {
+                /* Looks like we're trying to register something to the container */
+                var key = _.keys(module)[0];
 
-                /* Remove the __ */
-                key = key.replace(/^__/, "");
+                /* Our register methods begin __ */
+                if (key.match(/^__[a-z]/i) !== null) {
 
-                var registerFn = "register" + _.capitalize(key);
+                    /* Remove the __ */
+                    key = key.replace(/^__/, "");
 
-                if (_.has(this, registerFn)) {
-                    this[registerFn](module);
-                } else {
-                    throw new SyntaxError("Unknown module type: __" + key);
+                    var registerFn = "register" + _.capitalize(key);
+
+                    if (_.has(this, registerFn)) {
+                        this[registerFn](module);
+                    } else {
+                        throw new SyntaxError("Unknown module type: __" + key);
+                    }
+
                 }
-
+            } else {
+                /* There isn't one element registered */
+                throw new SyntaxError("Module must be an object with exactly 1 element");
             }
+
+        } else {
+            /* Module isn't an object */
+            throw new SyntaxError("Module must be an object");
         }
 
     },
@@ -279,11 +304,10 @@ var steeplejack = Base.extend({
      * functions (although it will work, you should use
      * either the factory or the singleton for that).
      *
-     * @param name
-     * @param modulePath
+     * @param module
      * @returns {steeplejack}
      */
-    registerConstant: function registerConstant (module, modulePath) {
+    registerConstant: function registerConstant (module) {
 
         var constant = this._getNameInstance(module.__constant);
 
@@ -371,7 +395,8 @@ var steeplejack = Base.extend({
         /* Run the create server function */
         var server = self.getInjector().process(createServer, self);
 
-        this.getInjector().registerSingleton("$server", server);
+        /* Register the server */
+        self.getInjector().registerSingleton("$server", server);
 
         /* Create a closure for the outputHandler and register it to the injector */
         if (self.getInjector().getComponent("$outputHandler") === null) {
@@ -386,14 +411,9 @@ var steeplejack = Base.extend({
             return result;
         }, {}, self);
 
-
-        /* Get the all routes */
-        routes = steeplejack
-            .Router.create(routes)
-            .getRoutes();
-
         /* Add in the routes to the server */
-        server.addRoutes(routes);
+        server.addRoutes(Router.create(routes)
+            .getRoutes());
 
         /* Start the server */
         server.start(function (err) {
@@ -471,7 +491,7 @@ var steeplejack = Base.extend({
         config = _.merge(config, args);
 
         /* Create and return the application */
-        return steeplejack.create(config, options.modules, options.routeDir);
+        return this.create(config, options.modules, options.routeDir);
 
     },
 
@@ -546,6 +566,3 @@ var steeplejack = Base.extend({
 
 
 });
-
-
-module.exports = steeplejack;
