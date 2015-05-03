@@ -70,10 +70,13 @@ function _flattenObject (obj) {
  * @param {object} args
  * @returns {object}
  */
-function construct (constructor, args) {
+function construct (constructor, args, thisArg) {
 
     function F () {
-        return constructor.apply(this, args);
+        if (!thisArg) {
+            thisArg = this;
+        }
+        return constructor.apply(thisArg, args);
     }
 
     F.prototype = constructor.prototype;
@@ -157,9 +160,11 @@ module.exports = Base.extend({
      * dependencies injected.
      *
      * @param {object} target
+     * @param {object} thisArg
      * @returns {object}
      */
-    process: function (target) {
+    process: function (target, thisArg) {
+
         var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 
         /* Get the constructor text */
@@ -183,7 +188,8 @@ module.exports = Base.extend({
             }
         }
 
-        return construct(target, this.getDependencies(args));
+        return construct(target, this.getDependencies(args), thisArg);
+
     },
 
 
