@@ -23,8 +23,14 @@ var optimist = require("optimist");
 
 /* Files */
 var Base = require("./library/Base");
+var Collection = require("./library/Collection");
+var Exception = require("./error/Exception");
+var Fatal = require("./error/Fatal");
 var Injector = require("./library/Injector");
+var Model = require("./library/DomainModel");
 var Router = require("./library/Router");
+var Server = require("./library/Server");
+var Validation = require("./error/Validation");
 var cliParameters = require("./helper/cliParameters");
 var replaceEnvVars = require("./helper/replaceEnvVars");
 
@@ -495,7 +501,7 @@ var steeplejack = Base.extend({
      * various functions on groups of data.  These are designed to
      * be extended.
      */
-    Collection: require("./library/Collection"),
+    Collection: Collection,
 
 
     /**
@@ -505,9 +511,9 @@ var steeplejack = Base.extend({
      * use them as-is (the Exception class must be extended).
      */
     Exceptions: {
-        Exception: require("./error/Exception"),
-        Fatal: require("./error/Fatal"),
-        Validation: require("./error/Validation")
+        Exception: Exception,
+        Fatal: Fatal,
+        Validation: Validation
     },
 
 
@@ -526,7 +532,7 @@ var steeplejack = Base.extend({
      * are all designed to be extended and defined with
      * the schema.
      */
-    Model: require("./library/DomainModel"),
+    Model: Model,
 
 
     /**
@@ -544,7 +550,7 @@ var steeplejack = Base.extend({
      * server implementations using, for example,
      * Express, Restify or the Node HTTP module.
      */
-    Server: require("./library/Server")
+    Server: Server
 
 
 });
