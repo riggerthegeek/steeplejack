@@ -122,30 +122,27 @@ var steeplejack = Base.extend({
 
 
     /**
-     * Get Name From Path
      *
-     * Returns the name of the file, without the extensions.
-     * If you have a file with two .s (eg, filename.test.js),
-     * it just returns filename.
-     *
-     * @param filePath
-     * @returns {*}
+     * @param obj
+     * @returns {{name: *, inst: *}}
      * @private
      */
-    _getNameFromPath: function _getNameFromPath (filePath) {
+    _getNameInstance: function _getNameInstance (obj) {
 
-        var fileName;
-        if (_.has(path, "parse")) {
-            /* Introduced in 0.12 */
-            fileName = path.parse(filePath).name;
+        if (_.isObject(obj) && _.isArray(obj) === false && _.size(obj) === 1) {
+
+            var name = _.keys(obj)[0];
+
+            return {
+                name: name,
+                inst: obj[name]
+            };
+
         } else {
-            /* Older way of doing it */
-            fileName = path.basename(filePath);
+            var err = new SyntaxError("Invalid module formatting");
+            err.obj = obj;
+            throw err;
         }
-
-        fileName = fileName.split(".");
-
-        return fileName[0];
 
     },
 
@@ -176,7 +173,7 @@ var steeplejack = Base.extend({
                 var registerFn = "register" + _.capitalize(key);
 
                 if (_.has(this, registerFn)) {
-                    this[registerFn](module, modulePath);
+                    this[registerFn](module);
                 } else {
                     throw new SyntaxError("Unknown module type: __" + key);
                 }
@@ -239,17 +236,16 @@ var steeplejack = Base.extend({
      * This is to register config modules
      *
      * @param module
-     * @param modulePath
      * @returns {*}
      */
-    registerConfig: function registerConfig (module, modulePath) {
+    registerConfig: function registerConfig (module) {
 
         var fn = module.__config;
 
         var name = fn.name;
 
         if (name === "") {
-            name = this._getNameFromPath(modulePath);
+            throw new SyntaxError("steeplejack.config function cannot be anonymous");
         }
 
         if (_.isFunction(fn) === false) {
@@ -259,10 +255,14 @@ var steeplejack = Base.extend({
         /* Run the function, returning the config object as the argument */
         var inst = fn(this._config);
 
+        var singleton = {
+            __singleton: {}
+        };
+
+        singleton.__singleton[name] = inst;
+
         /* Use the register singleton method to register it */
-        return this.registerSingleton({
-            __singleton: inst
-        }, name);
+        return this.registerSingleton(singleton);
 
     },
 
@@ -285,10 +285,9 @@ var steeplejack = Base.extend({
      */
     registerConstant: function registerConstant (module, modulePath) {
 
-        var value = module.__constant;
-        var name = this._getNameFromPath(modulePath);
+        var constant = this._getNameInstance(module.__constant);
 
-        this._injector.registerSingleton(name, value);
+        this.getInjector().registerSingleton(constant.name, constant.inst);
 
         return this;
 
@@ -307,26 +306,25 @@ var steeplejack = Base.extend({
      * instance of the class) when they are called.
      *
      * @param module
-     * @param modulePath
      * @returns {steeplejack}
      */
-    registerFactory: function registerFactory (module, modulePath) {
+    registerFactory: function registerFactory (module) {
 
         var fn = module.__factory;
         var name = fn.name;
 
         if (name === "") {
-            name = this._getNameFromPath(modulePath);
+            throw new SyntaxError("steeplejack.factory function cannot be anonymous");
         }
 
-        this._injector.register(name, fn);
+        this.getInjector().register(name, fn);
 
         return this;
     },
 
 
     /**
-     * Singleton
+     * Register Singleton
      *
      * Registers a singleton method to the application. A
      * singleton will typically be something that has
@@ -334,19 +332,20 @@ var steeplejack = Base.extend({
      * object.
      *
      * @param module
-     * @param modulePath
      * @returns {steeplejack}
      */
-    registerSingleton: function registerSingleton (module, modulePath) {
+    registerSingleton: function registerSingleton (module) {
 
-        var inst = module.__singleton;
-        var name = this._getNameFromPath(modulePath);
+        var singleton = this._getNameInstance(module.__singleton);
+
+        var name = singleton.name;
+        var inst = singleton.inst;
 
         if (_.isFunction(inst)) {
             throw new TypeError("steeplejack.singleton cannot accept a function");
         }
 
-        this._injector.registerSingleton(name, inst);
+        this.getInjector().registerSingleton(name, inst);
 
         return this;
     },
@@ -358,16 +357,11 @@ var steeplejack = Base.extend({
      * Sets up the server and runs the application
      *
      * @param createServer
-     * @param fn
      * @returns {steeplejack}
      */
-    run: function run (createServer, fn) {
+    run: function run (createServer) {
 
         var self = this;
-
-        if (_.isFunction(fn) === false) {
-            fn = _.noop;
-        }
 
         /* Register the modules */
         _.each(self._modules, function (module) {
@@ -375,20 +369,20 @@ var steeplejack = Base.extend({
         }, self);
 
         /* Run the create server function */
-        var server = createServer(self._config);
+        var server = self.getInjector().process(createServer, self);
 
-        this._injector.registerSingleton("$server", server);
+        this.getInjector().registerSingleton("$server", server);
 
         /* Create a closure for the outputHandler and register it to the injector */
-        if (self._injector.getComponent("$outputHandler") === null) {
-            self._injector.registerSingleton("$outputHandler", function () {
+        if (self.getInjector().getComponent("$outputHandler") === null) {
+            self.getInjector().registerSingleton("$outputHandler", function () {
                 return server.outputHandler.apply(server, arguments);
             });
         }
 
         /* Process the routes */
         var routes = _.reduce(self._routes, function (result, fn, name) {
-            result[name] = this._injector.process(fn);
+            result[name] = this.getInjector().process(fn);
             return result;
         }, {}, self);
 
@@ -418,9 +412,6 @@ var steeplejack = Base.extend({
         self.on("server_close", function () {
             server.close();
         });
-
-        /* Finally, run the function passed in with this */
-        self._injector.process(fn);
 
         return self;
     },
