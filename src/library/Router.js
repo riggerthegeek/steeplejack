@@ -179,19 +179,19 @@ module.exports = Base.extend({
 
             if (segments !== null) {
                 var requireName = segments[1];
-                var route = segments[5];
+                var tmp = segments[5];
 
-                if (route === "index") {
-                    route = segments[3];
+                if (tmp === "index") {
+                    tmp = segments[3];
                 } else if (segments[2]) {
-                    route = segments[2] + route;
+                    tmp = segments[2] + tmp;
                 }
 
                 /* Load the route file */
-                var Route = require(path.join(cwd, route));
+                var objRoute = require(path.join(cwd, tmp));
 
                 /* Put in stack */
-                result[route] = Route;
+                result[tmp] = objRoute;
 
             }
 
