@@ -1,16 +1,23 @@
-var chai = require("chai");
-var expect = chai.expect;
-var sinon = require("sinon");
+/**
+ * Routing
+ */
 
-var sinonChai = require("sinon-chai");
-chai.should();
-chai.use(sinonChai);
+"use strict";
 
-var Main = require("../../../../");
+
+/* Node modules */
+
+
+/* Third-party modules */
+var _ = require("lodash");
+
+
+/* Files */
+var Main = rootRequire();
 var collection = Main.Collection;
 var DomainModel = Main.Model;
 var ValidationErr = Main.Exceptions.Validation;
-var _ = require("lodash");
+
 
 
 describe("Collection tests", function () {
@@ -2543,7 +2550,7 @@ describe("Collection tests", function () {
 
                     var out = obj.each(fn);
 
-                    fn.should.be.calledThrice
+                    expect(fn).to.be.calledThrice
                         .calledWith(obj.get(0), obj.get(0, true), obj.getAll())
                         .calledWith(obj.get(1), obj.get(1, true), obj.getAll())
                         .calledWith(obj.get(2), obj.get(2, true), obj.getAll());
@@ -2554,8 +2561,9 @@ describe("Collection tests", function () {
 
                 it("should set the scope to global if thisArg not set", function () {
 
+                    var self = this;
                     var out = obj.each(function () {
-                        expect(this).to.be.equal(global);
+                        expect(this).to.not.be.equal(self);
                     });
 
                     expect(out).to.be.equal(obj);
@@ -2616,7 +2624,7 @@ describe("Collection tests", function () {
 
                     var out = obj.forEach(fn);
 
-                    fn.should.be.calledThrice
+                    expect(fn).to.be.calledThrice
                         .calledWith(obj.get(0), obj.get(0, true), obj.getAll())
                         .calledWith(obj.get(1), obj.get(1, true), obj.getAll())
                         .calledWith(obj.get(2), obj.get(2, true), obj.getAll());
@@ -2627,8 +2635,9 @@ describe("Collection tests", function () {
 
                 it("should set the scope to global if thisArg not set", function () {
 
+                    var self = this;
                     var out = obj.forEach(function () {
-                        expect(this).to.be.equal(global);
+                        expect(this).to.not.be.equal(self);
                     });
 
                     expect(out).to.be.equal(obj);

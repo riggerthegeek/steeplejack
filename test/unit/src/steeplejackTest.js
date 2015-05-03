@@ -1,13 +1,22 @@
-var chai = require("chai");
-var expect = chai.expect;
+/**
+ * steeplejack
+ */
+
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
 var proxyquire = require("proxyquire");
-var sinon = require("sinon");
 
-chai.use(require("sinon-chai"));
 
-var Main = require("../../..");
-var Base = require("../../../src/library/Base");
-var package = require("../../../package");
+/* Files */
+var Main = rootRequire();
+var Base = rootRequire("/src/library/Base");
+var pkg = rootRequire("package");
+
 
 describe("Main test", function () {
 

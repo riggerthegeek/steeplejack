@@ -1,9 +1,21 @@
-var expect = require("chai").expect;
-var Base = require("../../../../../src/library/Base");
+/**
+ * Definition
+ */
+
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+var Base = rootRequire("src/library/Base");
+var Definition = rootRequire("src/library/DomainModel/Definition");
 
 var datautils = Base.datatypes;
-
-var Definition = require("../../../../../src/library/DomainModel/Definition");
 
 
 describe("DomainModel Definition tests", function () {

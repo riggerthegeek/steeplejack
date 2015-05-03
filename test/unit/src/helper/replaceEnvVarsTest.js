@@ -9,12 +9,10 @@
 
 
 /* Third-party modules */
-var expect = require("chai").expect;
-var sinon = require("sinon");
 
 
 /* Files */
-var replaceEnvVars = require("../../../../src/helper/replaceEnvVars");
+var replaceEnvVars = rootRequire("src/helper/replaceEnvVars");
 
 
 describe("replaceEnvVars test", function () {

@@ -1,7 +1,20 @@
-var expect = require("chai").expect;
-var Base = require("../../../../src/library/Base");
-var Exception = require("../../../../src/error/Exception");
-var FatalException = require("../../../../").Exceptions.Fatal;
+/**
+ * Fatal Exception
+ */
+
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+var Base = rootRequire("src/library/Base");
+var Exception = rootRequire("src/error/Exception");
+var FatalException = rootRequire().Exceptions.Fatal;
 
 
 describe("FatalException test", function () {
@@ -22,7 +35,7 @@ describe("FatalException test", function () {
             expect(obj.getStackTrace()).to.be.an("array");
             expect(obj.getStackTrace(1)).to.be.an("object");
             expect(obj.getStackTrace(2)).to.be.equal(obj.getStackTrace()[2]);
-            expect(obj.getLineNumber()).to.be.a("number").to.be.equal(13);
+            expect(obj.getLineNumber()).to.be.a("number").to.be.equal(26);
             expect(obj.getFileName()).to.be.equal(require("path").join(__dirname, "FatalExceptionTest.js"));
 
             done();

@@ -1,9 +1,21 @@
-var expect = require("chai").expect;
-var Base = require("../../../../../src/library/Base");
+/**
+ * Validation
+ */
+
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+var Base = rootRequire("src/library/Base");
+var Validation = rootRequire("src/library/DomainModel/Validation");
 
 var datautils = Base.datatypes;
-
-var Validation = require("../../../../../src/library/DomainModel/Validation");
 
 
 describe("DomainModel Validation tests", function () {

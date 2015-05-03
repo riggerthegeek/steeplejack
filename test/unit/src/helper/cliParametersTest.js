@@ -1,5 +1,18 @@
-var expect = require("chai").expect;
-var cliParams = require("../../../../src/helper/cliParameters");
+/**
+ * CLI Parameters
+ */
+
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+var cliParams = rootRequire("src/helper/cliParameters");
 
 
 describe("CLI Parameters test", function () {

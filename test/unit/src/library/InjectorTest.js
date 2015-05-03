@@ -1,7 +1,21 @@
-var expect = require("chai").expect;
-var Injector = require("../../../../src/library/Injector");
-var Base = require("../../../../src/library/Base");
+/**
+ * Injector
+ */
+
+"use strict";
+
+
+/* Node modules */
 var EventEmitter = require("events").EventEmitter;
+
+
+/* Third-party modules */
+
+
+/* Files */
+var Injector = rootRequire("src/library/Injector");
+var Base = rootRequire("src/library/Base");
+
 
 describe("Injector test", function () {
 

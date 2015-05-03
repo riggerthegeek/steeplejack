@@ -1,13 +1,24 @@
-var expect = require("chai").expect;
+/**
+ * Routing
+ */
 
-var Main = require("../../../../");
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+var Main = rootRequire();
 var Base = Main.Base;
 var datatypes = Main.datatypes;
 var Injector = Main.Injector;
 var Router = Main.Router;
 
-var fn = function () {
-};
+var fn = function () {};
 
 
 describe("Routing test", function () {

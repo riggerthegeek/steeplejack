@@ -9,20 +9,13 @@
 
 
 /* Third-party modules */
-var chai = require("chai");
-var sinon = require("sinon");
-
-var Main = require("../../../../");
-
-var Base = Main.Base;
-var Server = Main.Server;
 
 
 /* Files */
+var Main = rootRequire();
 
-
-chai.use(require("sinon-chai"));
-var expect = chai.expect;
+var Base = Main.Base;
+var Server = Main.Server;
 
 
 describe("Server test", function () {

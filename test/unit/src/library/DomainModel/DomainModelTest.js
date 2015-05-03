@@ -1,12 +1,24 @@
-var expect = require("chai").expect;
+/**
+ * Domain Model
+ */
 
-/* Called "model" so I can copy the modelTest from datautils */
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
 var _ = require("lodash");
-var Main = require("../../../../../src/steeplejack");
+
+
+/* Files */
+var Main = rootRequire("src/steeplejack");
 var Base = Main.Base;
 var datautils = Base.datatypes;
-var model = Main.Model;
+var model = Main.Model; /* Called "model" so I can copy the modelTest from datautils */
 var collection = Main.Collection;
+
 
 describe("DomainModel tests - using new", function () {
 
@@ -1022,7 +1034,7 @@ describe("DomainModel tests - using new", function () {
                 var fail = false;
 
                 try {
-                    obj = new Model();
+                    var obj = new Model();
                 } catch (err) {
 
                     fail = true;
@@ -1938,7 +1950,7 @@ describe("DomainModel tests - using new", function () {
                 var fail = false;
 
                 try {
-                    obj = Model.create();
+                    var obj = Model.create();
                 } catch (err) {
 
                     fail = true;

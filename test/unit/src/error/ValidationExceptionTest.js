@@ -1,9 +1,22 @@
-var expect = require("chai").expect;
-var Base = require("../../../../src/library/Base");
-var Exception = require("../../../../src/error/Exception");
-var ValidationException = require("../../../../").Exceptions.Validation;
+/**
+ * Validation Exception
+ */
 
-var ValidationExceptionDetail = require("../../../../src/error/Validation/Detail");
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+var Base = rootRequire("src/library/Base");
+var Exception = rootRequire("src/error/Exception");
+var ValidationException = rootRequire().Exceptions.Validation;
+
+var ValidationExceptionDetail = rootRequire("src/error/Validation/Detail");
 
 
 describe("ValidationException test", function () {

@@ -1,11 +1,20 @@
-var chai = require("chai");
-var expect = chai.expect;
-var Exception = require("../../../../").Exceptions.Exception;
-var util = require("util");
-var proxyquire = require("proxyquire");
-var sinon = require("sinon");
+/**
+ * Exception
+ */
 
-chai.use(require("sinon-chai"));
+"use strict";
+
+
+/* Node modules */
+var util = require("util");
+
+
+/* Third-party modules */
+var proxyquire = require("proxyquire");
+
+
+/* Files */
+var Exception = rootRequire().Exceptions.Exception;
 
 
 describe("Exception test", function () {
@@ -258,7 +267,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Exception);
                 expect(obj).to.be.instanceof(Child);
 
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(255);
+                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(264);
 
             });
 
@@ -272,7 +281,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Exception);
                 expect(obj).to.be.instanceof(Child);
 
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(267);
+                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(276);
 
             });
 

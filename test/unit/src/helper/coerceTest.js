@@ -9,11 +9,10 @@
 
 
 /* Third-party modules */
-var expect = require("chai").expect;
 
 
 /* Files */
-var coerce = require("../../../../src/helper/coerce");
+var coerce = rootRequire("src/helper/coerce");
 
 
 describe("coerce test", function () {

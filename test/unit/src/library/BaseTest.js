@@ -1,10 +1,24 @@
-var expect = require("chai").expect;
-var util = require("util");
-var Base = require("../../../../src/library/Base");
-var DomainModel = require("../../../../src/library/DomainModel");
-var EventEmitter = require("events").EventEmitter;
+/**
+ * Base
+ */
 
+"use strict";
+
+
+/* Node modules */
+var EventEmitter = require("events").EventEmitter;
+var util = require("util");
+
+
+/* Third-party modules */
 var _ = require("lodash");
+
+
+/* Files */
+var Base = rootRequire("src/library/Base");
+var DomainModel = rootRequire("src/library/DomainModel");
+
+
 
 describe("Base library", function () {
 
