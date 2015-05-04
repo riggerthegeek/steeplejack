@@ -324,6 +324,132 @@ describe("Main test", function () {
 
         describe("#addModule", function () {
 
+            beforeEach(function () {
+
+                proxyquire.noCallThru();
+
+                this.glob = {
+                    sync: sinon.stub()
+                };
+
+                this.Main = proxyquire("../../../", {
+                    glob: this.glob
+                });
+
+                this.obj = new this.Main();
+
+            });
+
+            it("should register an array of modules", function () {
+
+                this.glob.sync.onCall(0).returns([
+                    "/path/to/module1",
+                    "/path/to/module1a"
+                ]);
+
+                this.glob.sync.onCall(1).returns([
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b"
+                ]);
+
+                this.glob.sync.onCall(2).returns([
+                    "/path/to/module3"
+                ]);
+
+                this.obj.addModule([
+                    "module1",
+                    "module2",
+                    "module3"
+                ]);
+
+                expect(this.obj._modules).to.be.eql([
+                    "/path/to/module1",
+                    "/path/to/module1a",
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b",
+                    "/path/to/module3"
+                ]);
+
+                expect(this.glob.sync).to.be.calledThrice
+                    .calledWith(path.join(process.cwd(), "module1"))
+                    .calledWith(path.join(process.cwd(), "module2"))
+                    .calledWith(path.join(process.cwd(), "module3"));
+
+            });
+
+            it("should register a single string", function () {
+
+                this.glob.sync.returns([
+                    "/path/to/module1",
+                    "/path/to/module2"
+                ]);
+
+                this.obj.addModule("module1");
+
+                expect(this.obj._modules).to.be.eql([
+                    "/path/to/module1",
+                    "/path/to/module2"
+                ]);
+
+                expect(this.glob.sync).to.be.calledOnce
+                    .calledWith(path.join(process.cwd(), "module1"));
+
+            });
+
+            it("should throw an error if a non-string is passed in with the array", function () {
+
+                var fail = false;
+
+                try {
+
+                    this.obj.addModule([
+                        2
+                    ]);
+
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[]");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.glob.sync).to.not.be.called;
+
+                }
+
+            });
+
+            it("should throw an error if a non-string is passed in", function () {
+
+                var fail = false;
+
+                try {
+
+                    this.obj.addModule({});
+
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[]");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.glob.sync).to.not.be.called;
+
+                }
+
+            });
+
         });
 
         describe("#getInjector", function () {
