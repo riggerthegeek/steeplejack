@@ -322,6 +322,45 @@ describe("Main test", function () {
 
         });
 
+        describe("#_processRoutes", function () {
+
+            it("should run the injector.process method on each of the routes and return Router instance", function () {
+
+                var obj = new Main();
+
+                var processStub = sinon.stub();
+                processStub.returns({});
+
+                var getFn = function () {};
+
+                processStub.withArgs("route1").returns({
+                    get: getFn
+                });
+
+                var getInjector = sinon.stub(obj, "getInjector")
+                    .returns({
+                        process: processStub
+                    });
+
+                obj._routes = {
+                    "/route1": "route1",
+                    "/route2": "route2",
+                    "/route3": "route3"
+                };
+
+                var output = obj._processRoutes();
+                expect(output).to.be.instanceof(Router);
+
+                expect(output.getRoutes()).to.be.eql({
+                    "/route1": {
+                        get: getFn
+                    }
+                });
+
+            });
+
+        });
+
         describe("#addModule", function () {
 
             beforeEach(function () {
@@ -447,6 +486,41 @@ describe("Main test", function () {
                     expect(this.glob.sync).to.not.be.called;
 
                 }
+
+            });
+
+        });
+
+        describe("#createOutputHandler", function () {
+
+            it("should register the method to the IOC container", function () {
+
+                var obj = new Main();
+
+                var getInjector = sinon.stub(obj, "getInjector");
+                var registerSingleton = sinon.spy();
+
+                getInjector.returns({
+                    registerSingleton: registerSingleton
+                });
+
+                var server = {
+                    outputHandler: sinon.spy()
+                };
+
+                var $outputHandler = obj.createOutputHandler(server);
+
+                expect($outputHandler).to.be.a("function");
+
+                expect(getInjector).to.be.calledOnce;
+
+                expect(registerSingleton).to.be.calledOnce
+                    .calledWithExactly("$outputHandler", $outputHandler);
+
+                $outputHandler(1, 2, 3, "string");
+
+                expect(server.outputHandler).to.be.calledOnce
+                    .calledWithExactly(1, 2, 3, "string");
 
             });
 
@@ -688,6 +762,171 @@ describe("Main test", function () {
         });
 
         describe("#run", function () {
+
+            beforeEach(function () {
+
+                this.obj = new Main({
+                    config: "value"
+                });
+
+                this.createOutputHandler = sinon.stub(this.obj, "createOutputHandler");
+                this.getInjector = sinon.stub(this.obj, "getInjector");
+                this.registerModule = sinon.stub(this.obj, "_registerModule");
+
+                this.server = {
+                    addRoutes: sinon.spy(),
+                    close: sinon.spy(),
+                    outputHandler: sinon.spy(),
+                    start: sinon.stub()
+                };
+
+                this.getComponent = sinon.stub();
+                this.registerSingleton = sinon.spy();
+                this.process = sinon.stub()
+                    .returns(this.server);
+
+                this.getInjector.returns({
+                    getComponent: this.getComponent,
+                    registerSingleton: this.registerSingleton,
+                    process: this.process
+                });
+
+            });
+
+            it("should run the steeplejack server successfully - create $outputHandler", function (done) {
+
+                var self = this;
+
+                /* Put in the modules and routes manually */
+                self.obj._modules = [
+                    "module1",
+                    "module2"
+                ];
+
+                self.obj._routes = {
+                    "/route": "routeFn"
+                };
+
+                self.server.start.yieldsAsync(null);
+
+                var createServer = function () {};
+
+                self.getComponent.returns(null);
+
+                /* Wait for the start emitter */
+                self.obj.on("start", function (config) {
+
+                    expect(config).to.be.eql({
+                        config: "value"
+                    });
+
+                    /* Emit close event */
+                    self.obj.emit("close");
+
+                    expect(self.server.close).to.be.calledOnce;
+
+                    done();
+
+                });
+
+                expect(self.obj.run(createServer)).to.be.equal(self.obj);
+
+                expect(self.createOutputHandler).to.be.calledOnce
+                    .calledWithExactly(this.server);
+
+                expect(self.registerModule).to.be.calledTwice
+                    .calledWith("module1")
+                    .calledWith("module2");
+
+                expect(self.process).to.be.called // @todo callcount
+                    .calledWithExactly(createServer, self.obj)
+                    .calledWithExactly("routeFn");
+
+                expect(self.registerSingleton).to.be.calledOnce
+                    .calledWithExactly("$server", self.server);
+
+                expect(self.getComponent).to.be.calledOnce
+                    .calledWithExactly("$outputHandler");
+
+            });
+
+            it("should run the steeplejack server successfully - don't create $outputHandler", function (done) {
+
+                var self = this;
+
+                /* Put in the modules and routes manually */
+                self.obj._modules = [
+                    "module1",
+                    "module2"
+                ];
+
+                self.obj._routes = {
+                    "/route": "routeFn"
+                };
+
+                self.server.start.yieldsAsync(null);
+
+                var createServer = function () {};
+
+                self.getComponent.returns(2);
+
+                /* Wait for the start emitter */
+                self.obj.on("start", function (config) {
+
+                    expect(config).to.be.eql({
+                        config: "value"
+                    });
+
+                    /* Emit close event */
+                    self.obj.emit("close");
+
+                    expect(self.server.close).to.be.calledOnce;
+
+                    done();
+
+                });
+
+                expect(self.obj.run(createServer)).to.be.equal(self.obj);
+
+                expect(self.createOutputHandler).to.not.be.called;
+
+                expect(self.registerModule).to.be.calledTwice
+                    .calledWith("module1")
+                    .calledWith("module2");
+
+                expect(self.process).to.be.called // @todo callcount
+                    .calledWithExactly(createServer, self.obj)
+                    .calledWithExactly("routeFn");
+
+                expect(self.registerSingleton).to.be.calledOnce
+                    .calledWithExactly("$server", self.server);
+
+                expect(self.getComponent).to.be.calledOnce
+                    .calledWithExactly("$outputHandler");
+
+            });
+
+            it("should handle an error from the server start", function () {
+
+                var startupErr = new Error("error");
+
+                this.server.start.yields(startupErr);
+
+                var fail = false;
+
+                try {
+                    this.obj.run(function () {});
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.equal(startupErr);
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
 
         });
 
