@@ -338,7 +338,7 @@ module.exports = Base.extend({
         var name = fn.name;
 
         if (name === "") {
-            throw new SyntaxError("steeplejack.factory function cannot be anonymous");
+            throw new SyntaxError("steeplejack.registerFactory function cannot be anonymous");
         }
 
         this.getInjector().register(name, fn);
