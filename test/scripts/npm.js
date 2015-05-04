@@ -15,8 +15,6 @@ var child = require("child_process");
 
 
 /* Third-party modules */
-var async = require("async");
-var semver = require("semver");
 
 
 /* Files */
@@ -42,10 +40,99 @@ function getNpmVersion (cb) {
     });
 }
 
+function iterator (tasks) {
+    var makeCallback = function (index) {
+        var fn = function () {
+            if (tasks.length) {
+                tasks[index].apply(null, arguments);
+            }
+            return fn.next();
+        };
+        fn.next = function () {
+            return (index < tasks.length - 1) ? makeCallback(index + 1): null;
+        };
+        return fn;
+    };
+    return makeCallback(0);
+};
+
+/**
+ * Simple version of async.waterfall
+ * @param modules
+ * @param fn
+ */
+function waterfall (tasks, callback) {
+    callback = callback || function () {};
+    if (tasks instanceof Array === false) {
+        var err = new Error('First argument to waterfall must be an array of functions');
+        return callback(err);
+    }
+    if (!tasks.length) {
+        return callback();
+    }
+    var wrapIterator = function (iterator) {
+        return function (err) {
+            if (err) {
+                callback.apply(null, arguments);
+                callback = function () {};
+            }
+            else {
+                var args = Array.prototype.slice.call(arguments, 1);
+                var next = iterator.next();
+                if (next) {
+                    args.push(wrapIterator(next));
+                }
+                else {
+                    args.push(callback);
+                }
+                process.nextTick(function () {
+                    iterator.apply(null, args);
+                });
+            }
+        };
+    };
+    wrapIterator(iterator(tasks))();
+}
+
+
+function isLessThan (version, requiredVersion) {
+
+    version = version.split(".");
+    requiredVersion = requiredVersion.split(".");
+
+    if (requiredVersion[0] > version[0]) {
+        /* Major version bigger */
+        return true;
+    } else if (requiredVersion[0] < version[0]) {
+        /* Major version smaller */
+        return false;
+    }
+
+    if (requiredVersion[1] > version[1]) {
+        /* Minor version bigger */
+        return true;
+    } else if (requiredVersion[1] < version[1]) {
+        /* Minor version smaller */
+        return false;
+    }
+
+    if (requiredVersion[2] > version[2]) {
+        /* Patch bigger */
+        return true;
+    } else if (requiredVersion[2] < version[2]) {
+        /* Patch smaller */
+        return false;
+    }
+
+    /* Identical */
+    return false;
+
+}
 
 
 
-async.waterfall([
+
+waterfall([
     function (callback) {
         /* Get the npm version */
         getNpmVersion(callback);
@@ -53,7 +140,7 @@ async.waterfall([
     function (version, callback) {
 
         /* Is it lower than the minVersion? */
-        if (semver.lt(version, minVersion) === false) {
+        if (isLessThan(version, minVersion) === false) {
             /* No - nothing to do */
             callback(null);
             return;
@@ -83,7 +170,7 @@ async.waterfall([
                 return;
             }
 
-            if (semver.lt(version, minVersion)) {
+            if (isLessThan(version, minVersion)) {
                 /* Not worked */
                 callback("Unable to install");
                 return;
