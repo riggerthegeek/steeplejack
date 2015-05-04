@@ -116,12 +116,12 @@ module.exports = function (grunt) {
                     coverage: true,
                     recursive: true,
                     require: [
-                        "test/helpers/sinon",
-                        "test/helpers/rootRequire"
+                        "./<%= config.test %>/helpers/sinon",
+                        "./<%= config.test %>/helpers/rootRequire"
                     ],
                     root: "./<%= config.src %>"
                 },
-                src: "./<%= config.test %>/**/*.test.js"
+                src: "./<%= config.test %>/unit/**/*.test.js"
             }
         },
         mochaTest: {
@@ -129,12 +129,12 @@ module.exports = function (grunt) {
                 options: {
                     reporter: "spec",
                     require: [
-                        "test/helpers/sinon",
-                        "test/helpers/rootRequire"
+                        "./<%= config.test %>/helpers/sinon",
+                        "./<%= config.test %>/helpers/rootRequire"
                     ]
                 },
                 src: [
-                    "./<%= config.test %>/**/*.test.js"
+                    "./<%= config.test %>/unit/**/*.test.js"
                 ]
             }
         },
@@ -215,8 +215,8 @@ module.exports = function (grunt) {
                     "Gruntfile.js",
                     "src/**/*.js",
                     "src/**/*.json",
-                    "test/**/*.js",
-                    "test/**/*.json"
+                    "./<%= config.test %>/**/*.js",
+                    "./<%= config.test %>/**/*.json"
                 ],
                 tasks: [
                     "mocha_istanbul"
@@ -227,8 +227,8 @@ module.exports = function (grunt) {
                     "Gruntfile.js",
                     "src/**/*.js",
                     "src/**/*.json",
-                    "test/**/*.js",
-                    "test/**/*.json"
+                    "./<%= config.test %>/**/*.js",
+                    "./<%= config.test %>/**/*.json"
                 ],
                 tasks: [
                     "test"
