@@ -351,6 +351,14 @@ describe("Routing test", function () {
 
             });
 
+            it.only("should correctly sort the route files so index is last", function () {
+
+                this.Router = proxyquire("../../../src/library/Router")
+
+                var routes = Router.getRouteFiles("/path/to/routes");
+
+            });
+
         });
 
     });
