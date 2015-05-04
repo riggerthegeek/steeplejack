@@ -7,6 +7,7 @@ node_js:
 - iojs
 matrix:
   fast_finish: true
+sudo: false
 before_install:
 - node test/scripts/npm.js
 - npm install -g grunt-cli
