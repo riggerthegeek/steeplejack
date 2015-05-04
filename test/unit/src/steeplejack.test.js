@@ -693,6 +693,22 @@ describe("Main test", function () {
 
         describe("#setRoutes", function () {
 
+            it("should set the routes", function () {
+
+                var obj = new Main();
+
+                expect(obj.setRoutes({
+                    "/endpoint": "endpoint",
+                    "/other-endpoint": "otherendpoint"
+                })).to.be.equal(obj);
+
+                expect(obj._routes).to.be.eql({
+                    "/endpoint": "endpoint",
+                    "/other-endpoint": "otherendpoint"
+                });
+
+            });
+
         });
 
     });

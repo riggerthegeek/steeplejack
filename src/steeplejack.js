@@ -104,7 +104,7 @@ module.exports = Base.extend({
      * @param routeDir
      * @private
      */
-    _construct: function (config, modules, routeDir) {
+    _construct: function _construct (config, modules, routeDir) {
 
         /* Config is optional */
         this._config = datatypes.setObject(config, {});
@@ -445,7 +445,7 @@ module.exports = Base.extend({
      * @param routes
      * @returns {steeplejack}
      */
-    setRoutes: function (routes) {
+    setRoutes: function setRoutes (routes) {
         this._routes = datatypes.setObject(routes, {});
 
         return this;
