@@ -69,7 +69,7 @@ describe("Injector test", function () {
 
             obj.registerSingleton("topLevel", function () {
                 return "hello";
-            })
+            });
 
             var objTarget = obj.process(target);
 
@@ -77,6 +77,22 @@ describe("Injector test", function () {
             expect(objTarget.exec()).to.be.equal("hello");
 
             done();
+
+        });
+
+        it("should process a target that has a top-level dependency and on a custom scope", function () {
+
+            var target = function () {
+
+                return this;
+
+            };
+
+            expect(obj.process(target, {
+                value: "2"
+            })).to.be.eql({
+                    value: "2"
+                });
 
         });
 
