@@ -161,6 +161,28 @@ module.exports = Base.extend({
 
 
     /**
+     * Process Routes
+     *
+     * Processes the routes and puts them into
+     * the Routes library
+     *
+     * @returns {Object}
+     * @private
+     */
+    _processRoutes: function _processRoutes () {
+
+        var routes = _.reduce(this._routes, function (result, fn, name) {
+            result[name] = this.getInjector().process(fn);
+            return result;
+        }, {}, this);
+
+        /* Put to the router and return */
+        return Router.create(routes);
+
+    },
+
+
+    /**
      * Register Module
      *
      * Registers a module to the IOC container. This
@@ -239,6 +261,30 @@ module.exports = Base.extend({
 
         /* Store it in array */
         this._modules = this._modules.concat(glob.sync(modulePath));
+
+    },
+
+
+    /**
+     * Create Output Handler
+     *
+     * Creates the output handler.  This is available
+     * publicly in case a user wishes to register it
+     * at a different point during the run phase.
+     *
+     * @param server
+     * @returns {Function}
+     */
+    createOutputHandler: function createOutputHandler (server) {
+
+        var $outputHandler = function $outputHandler () {
+            return server.outputHandler.apply(server, arguments);
+        };
+
+        this.getInjector().registerSingleton("$outputHandler", $outputHandler);
+
+        /* Return it so it can be used elsewhere */
+        return $outputHandler;
 
     },
 
@@ -400,20 +446,14 @@ module.exports = Base.extend({
 
         /* Create a closure for the outputHandler and register it to the injector */
         if (self.getInjector().getComponent("$outputHandler") === null) {
-            self.getInjector().registerSingleton("$outputHandler", function () {
-                return server.outputHandler.apply(server, arguments);
-            });
+            self.createOutputHandler(server);
         }
 
         /* Process the routes */
-        var routes = _.reduce(self._routes, function (result, fn, name) {
-            result[name] = this.getInjector().process(fn);
-            return result;
-        }, {}, self);
+        var routes = self._processRoutes();
 
         /* Add in the routes to the server */
-        server.addRoutes(Router.create(routes)
-            .getRoutes());
+        server.addRoutes(routes.getRoutes());
 
         /* Start the server */
         server.start(function (err) {
