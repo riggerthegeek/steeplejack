@@ -267,14 +267,14 @@ module.exports = Base.extend({
 
         var fn = module.__config;
 
+        if (_.isFunction(fn) === false) {
+            throw new TypeError("steeplejack.registerConfig can only accept functions");
+        }
+
         var name = fn.name;
 
         if (name === "") {
-            throw new SyntaxError("steeplejack.config function cannot be anonymous");
-        }
-
-        if (_.isFunction(fn) === false) {
-            throw new TypeError("steeplejack.config can only accept functions");
+            throw new SyntaxError("steeplejack.registerConfig function cannot be anonymous");
         }
 
         /* Run the function, returning the config object as the argument */
