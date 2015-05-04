@@ -464,19 +464,226 @@ describe("Main test", function () {
 
         });
 
-        describe("#registerConfig", function () {
+        describe("module registration", function () {
 
-        });
+            beforeEach(function () {
 
-        describe("#registerConstant", function () {
+                this.obj = new Main({
+                    config: "value"
+                });
 
-        });
+                this.getInjector = sinon.stub(this.obj, "getInjector");
 
-        describe("#registerFactory", function () {
+                this.register = sinon.spy();
+                this.registerSingleton = sinon.spy();
 
-        });
+                this.getInjector.returns({
+                    register: this.register,
+                    registerSingleton: this.registerSingleton
+                });
 
-        describe("#registerSingleton", function () {
+            });
+
+            describe("#registerConfig", function () {
+
+                it("should call the config function with the config object", function () {
+
+                    var fn = sinon.stub()
+                        .returns({
+                            hello: "world"
+                        });
+
+                    var module = {
+                        __config: fn
+                    };
+
+                    expect(this.obj.registerConfig(module)).to.be.equal(this.obj);
+
+                    expect(fn).to.be.calledOnce
+                        .calledWithExactly({
+                            config: "value"
+                        });
+
+                    expect(this.registerSingleton).to.be.calledOnce
+                        .calledWithExactly("proxy", {
+                            hello: "world"
+                        });
+
+
+                });
+
+                it("should throw an error if a non-function is used", function () {
+
+                    var fail = false;
+
+                    try {
+                        this.obj.registerConfig({
+                            __config: {}
+                        });
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(TypeError);
+                        expect(err.message).to.be.equal("steeplejack.registerConfig can only accept functions");
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+                it("should throw an error if an anonymous function used", function () {
+
+                    var fail = false;
+
+                    try {
+                        this.obj.registerConfig({
+                            __config: function () {}
+                        });
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(SyntaxError);
+                        expect(err.message).to.be.equal("steeplejack.registerConfig function cannot be anonymous");
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+            });
+
+            describe("#registerConstant", function () {
+
+                it("should throw an error if __constant not registered", function () {
+
+                    var fail = false;
+
+                    try {
+                        this.obj.registerConstant("erm");
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(SyntaxError);
+                        expect(err.message).to.be.equal("Invalid module formatting");
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+                it("should load the constant to the registerSingleton method", function () {
+
+                    var module = {
+                        __constant: {
+                            constantName: "value"
+                        }
+                    };
+
+                    expect(this.obj.registerConstant(module)).to.be.equal(this.obj);
+
+                    expect(this.getInjector).to.be.calledOnce
+                        .calledWithExactly();
+
+                    expect(this.registerSingleton).to.be.calledOnce
+                        .calledWithExactly("constantName", "value");
+
+                });
+
+            });
+
+            describe("#registerFactory", function () {
+
+                it("should register a function to the factory", function () {
+
+                    var fn = function factoryName () {};
+
+                    var module = {
+                        __factory: fn
+                    };
+
+                    expect(this.obj.registerFactory(module)).to.be.equal(this.obj);
+
+                    expect(this.getInjector).to.be.calledOnce
+                        .calledWithExactly();
+
+                    expect(this.register).to.be.calledOnce
+                        .calledWithExactly("factoryName", fn);
+
+                });
+
+                it("should throw an error if anonymous function used", function () {
+
+                    var fn = function () {};
+
+                    var module = {
+                        __factory: fn
+                    };
+
+                    var fail = false;
+
+                    try {
+                        this.obj.registerFactory(module);
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(SyntaxError);
+                        expect(err.message).to.be.equal("steeplejack.registerFactory function cannot be anonymous");
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+            });
+
+            describe("#registerSingleton", function () {
+
+                it("should throw an error if a function passed in", function () {
+
+                    var module = {
+                        __singleton: {
+                            moduleName: function () {}
+                        }
+                    };
+
+                    var fail = false;
+
+                    try {
+                        this.obj.registerSingleton(module);
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(TypeError);
+                        expect(err.message).to.be.equal("steeplejack.registerSingleton cannot accept a function");
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+                it("should register an instance", function () {
+
+                    var obj = {
+                        hello: "world"
+                    };
+
+                    var module = {
+                        __singleton: {
+                            moduleName: obj
+                        }
+                    };
+
+                    expect(this.obj.registerSingleton(module)).to.be.equal(this.obj);
+
+                    expect(this.getInjector).to.be.calledOnce
+                        .calledWithExactly();
+
+                    expect(this.registerSingleton).to.be.calledOnce
+                        .calledWithExactly("moduleName", obj);
+
+                })
+
+            });
 
         });
 
