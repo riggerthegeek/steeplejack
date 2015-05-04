@@ -351,11 +351,60 @@ describe("Routing test", function () {
 
             });
 
-            it.only("should correctly sort the route files so index is last", function () {
+            it("should correctly sort the route files so index is last", function () {
 
-                this.Router = proxyquire("../../../src/library/Router")
+                proxyquire.noCallThru();
 
-                var routes = Router.getRouteFiles("/path/to/routes");
+                var stubCalled = false;
+
+                var walkSync = function (path, obj) {
+
+                    expect(path).to.be.equal("/path/to/routes");
+
+                    [
+                        "index.js",
+                        "route.js",
+                        "apple.js",
+                        "zucchini.js"
+                    ].forEach(function (file) {
+
+                        var next = sinon.spy();
+
+                        obj.listeners.file("/path/to/routes", {
+                            name: file
+                        }, next);
+
+                        expect(next).to.be.calledOnce;
+
+                    });
+
+                    stubCalled = true;
+
+                };
+
+                this.Router = proxyquire("../../../../src/library/Router", {
+                    walk: {
+                        walkSync: walkSync
+                    }
+                });
+
+                var routes = this.Router.getRouteFiles("/path/to/routes");
+
+                expect(routes).to.be.eql([{
+                    name: "apple.js",
+                    parent: "/path/to/routes"
+                }, {
+                    name: "route.js",
+                    parent: "/path/to/routes"
+                }, {
+                    name: "zucchini.js",
+                    parent: "/path/to/routes"
+                }, {
+                    name: "index.js",
+                    parent: "/path/to/routes"
+                }]);
+
+                expect(stubCalled).to.be.true;
 
             });
 
