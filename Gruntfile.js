@@ -213,8 +213,8 @@ module.exports = function (grunt) {
             coverage: {
                 files: [
                     "Gruntfile.js",
-                    "src/**/*.js",
-                    "src/**/*.json",
+                    "./<%= config.src %>/**/*.js",
+                    "./<%= config.src %>/**/*.json",
                     "./<%= config.test %>/**/*.js",
                     "./<%= config.test %>/**/*.json"
                 ],
@@ -225,8 +225,8 @@ module.exports = function (grunt) {
             test: {
                 files: [
                     "Gruntfile.js",
-                    "src/**/*.js",
-                    "src/**/*.json",
+                    "./<%= config.src %>/**/*.js",
+                    "./<%= config.src %>/**/*.json",
                     "./<%= config.test %>/**/*.js",
                     "./<%= config.test %>/**/*.json"
                 ],
