@@ -250,7 +250,7 @@ module.exports = Base.extend({
             if (a.name.match(/index\./)) {
                 return 1;
             } else {
-                return a.name > b.name;
+                return a.name > b.name ? 1 : -1;
             }
         });
 
