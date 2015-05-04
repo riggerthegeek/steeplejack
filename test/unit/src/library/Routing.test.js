@@ -344,9 +344,6 @@ describe("Routing test", function () {
                 }, {
                     name: "route.js",
                     parent: path.join(process.cwd(), "/test/routes")
-                }, {
-                    name: "index.js",
-                    parent: path.join(process.cwd(), "/test/routes")
                 }]);
 
             });
