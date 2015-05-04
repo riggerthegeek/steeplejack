@@ -424,12 +424,12 @@ module.exports = Base.extend({
             }
 
             /* Emit the config */
-            self.emit("server_start", self._config);
+            self.emit("start", self._config);
 
         });
 
         /* Listen for close events */
-        self.on("server_close", function () {
+        self.on("close", function () {
             server.close();
         });
 
