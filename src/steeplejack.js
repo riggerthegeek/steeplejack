@@ -366,7 +366,7 @@ module.exports = Base.extend({
         var inst = singleton.inst;
 
         if (_.isFunction(inst)) {
-            throw new TypeError("steeplejack.singleton cannot accept a function");
+            throw new TypeError("steeplejack.registerSingleton cannot accept a function");
         }
 
         this.getInjector().registerSingleton(name, inst);
