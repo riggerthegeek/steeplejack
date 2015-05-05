@@ -431,26 +431,24 @@ module.exports = Base.extend({
      */
     run: function run (createServer) {
 
-        var self = this;
-
         /* Register the modules */
-        _.each(self._modules, function (module) {
+        _.each(this._modules, function (module) {
             this._registerModule(module);
-        }, self);
+        }, this);
 
         /* Run the create server function */
-        var server = self.getInjector().process(createServer, self);
+        var server = this.getInjector().process(createServer, this);
 
         /* Register the server */
-        self.getInjector().registerSingleton("$server", server);
+        this.getInjector().registerSingleton("$server", server);
 
         /* Create a closure for the outputHandler and register it to the injector */
-        if (self.getInjector().getComponent("$outputHandler") === null) {
-            self.createOutputHandler(server);
+        if (this.getInjector().getComponent("$outputHandler") === null) {
+            this.createOutputHandler(server);
         }
 
         /* Process the routes */
-        var routes = self._processRoutes();
+        var routes = this._processRoutes();
 
         /* Add in the routes to the server */
         server.addRoutes(routes.getRoutes());
@@ -464,16 +462,16 @@ module.exports = Base.extend({
             }
 
             /* Emit the config */
-            self.emit("start", self._config);
+            this.emit("start", this._config);
 
-        });
+        }.bind(this));
 
         /* Listen for close events */
-        self.on("close", function () {
+        this.on("close", function () {
             server.close();
         });
 
-        return self;
+        return this;
     },
 
 
