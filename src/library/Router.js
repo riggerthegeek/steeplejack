@@ -182,6 +182,9 @@ module.exports = Base.extend({
 
                 if (tmp === "index") {
                     tmp = segments[3];
+                    if (_.isUndefined(tmp)) {
+                        tmp = "";
+                    }
                 } else if (segments[2]) {
                     tmp = segments[2] + tmp;
                 }
