@@ -273,6 +273,9 @@ describe("Routing test", function () {
                 }, {
                     name: "dir",
                     parent: "/path/to/dir"
+                }, {
+                    name: "index",
+                    parent: "/path/to/dir"
                 }]);
 
                 var obj = this.router.discoverRoutes("/path/to/dir");
