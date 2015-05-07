@@ -253,7 +253,8 @@ describe("Routing test", function () {
                     "/path/to/dir/dir/endpoint": "/path/to/dir/dir/endpoint",
                     "/path/to/dir/dir/endpoint2": "/path/to/dir/dir/index",
                     "/path/to/dir/endpoint": "/path/to/dir/endpoint",
-                    "/path/to/dir/dir": "/path/to/dir/endpoint"
+                    "/path/to/dir/dir": "/path/to/dir/endpoint",
+                    "/path/to/dir": "/path/to/dir"
                 });
             });
 
@@ -287,7 +288,8 @@ describe("Routing test", function () {
                     "dir/endpoint": '/path/to/dir/dir/endpoint',
                     "dir/endpoint2": '/path/to/dir/dir/index',
                     endpoint: '/path/to/dir/endpoint',
-                    dir: '/path/to/dir/endpoint'
+                    dir: '/path/to/dir/endpoint',
+                    "": '/path/to/dir'
                 });
 
                 stub.restore();
