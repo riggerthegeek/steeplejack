@@ -133,21 +133,19 @@ module.exports = Base.extend({
      */
     getDependencies: function (arr) {
 
-        var self = this;
-
-        return arr.map(function (value) {
-            var dep = self.getComponent(value);
+        return _.map(arr, function (value) {
+            var dep = this.getComponent(value);
 
             if (dep === null) {
                 throw new Error("Missing dependency: " + value);
             }
 
             if (dep.instance === null) {
-                dep.instance = self.process(dep.constructor);
+                dep.instance = this.process(dep.constructor);
             }
 
             return dep.instance;
-        });
+        }, this);
 
     },
 
