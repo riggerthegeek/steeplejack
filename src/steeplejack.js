@@ -6,6 +6,8 @@
  * and then loads up the server
  *
  * @package steeplejack
+ *
+ * @todo improve error handling
  */
 
 "use strict";
@@ -192,8 +194,6 @@ module.exports = Base.extend({
      *
      * @param {string} modulePath
      * @private
-     *
-     * @todo improve error handling
      */
     _registerModule: function _registerModule (modulePath) {
 
@@ -202,12 +202,12 @@ module.exports = Base.extend({
 
         if (datatypes.setObject(module, null) === null) {
             /* Module isn't an object */
-            throw new SyntaxError("Module must be an object: ");
+            throw new SyntaxError("Module must be an object: " + modulePath);
         }
 
         if (_.size(module) !== 1) {
             /* There isn't one element registered */
-            throw new SyntaxError("Module must be an object with exactly 1 element");
+            throw new SyntaxError("Module must be an object with exactly 1 element: " + modulePath);
         }
 
         /* Looks like we're trying to register something to the container */
@@ -215,7 +215,7 @@ module.exports = Base.extend({
 
         /* Our register methods begin __ */
         if (key.match(/^__[a-z]/i) === null) {
-            throw new SyntaxError("No known modules: " + key);
+            throw new SyntaxError("No known modules: " + modulePath);
         }
 
         /* Remove the __ at the start */
@@ -228,7 +228,7 @@ module.exports = Base.extend({
         }
 
         /* Run the registration function */
-        this[registerFn](module);
+        this[registerFn](module, modulePath);
 
     },
 
@@ -309,20 +309,21 @@ module.exports = Base.extend({
      * This is to register config modules
      *
      * @param module
+     * @param modulePath
      * @returns {*}
      */
-    registerConfig: function registerConfig (module) {
+    registerConfig: function registerConfig (module, modulePath) {
 
         var fn = module.__config;
 
         if (_.isFunction(fn) === false) {
-            throw new TypeError("steeplejack.registerConfig can only accept functions");
+            throw new TypeError("steeplejack.registerConfig can only accept functions: " + modulePath);
         }
 
         var name = fn.name;
 
         if (name === "") {
-            throw new SyntaxError("steeplejack.registerConfig function cannot be anonymous");
+            throw new SyntaxError("steeplejack.registerConfig function cannot be anonymous: " + modulePath);
         }
 
         /* Run the function, returning the config object as the argument */
@@ -335,7 +336,7 @@ module.exports = Base.extend({
         singleton.__singleton[name] = inst;
 
         /* Use the register singleton method to register it */
-        return this.registerSingleton(singleton);
+        return this.registerSingleton(singleton, modulePath);
 
     },
 
@@ -378,15 +379,16 @@ module.exports = Base.extend({
      * instance of the class) when they are called.
      *
      * @param module
+     * @param modulePath
      * @returns {steeplejack}
      */
-    registerFactory: function registerFactory (module) {
+    registerFactory: function registerFactory (module, modulePath) {
 
         var fn = module.__factory;
         var name = fn.name;
 
         if (name === "") {
-            throw new SyntaxError("steeplejack.registerFactory function cannot be anonymous");
+            throw new SyntaxError("steeplejack.registerFactory function cannot be anonymous: " + modulePath);
         }
 
         this.getInjector().register(name, fn);
@@ -404,9 +406,10 @@ module.exports = Base.extend({
      * object.
      *
      * @param module
+     * @param modulePath
      * @returns {steeplejack}
      */
-    registerSingleton: function registerSingleton (module) {
+    registerSingleton: function registerSingleton (module, modulePath) {
 
         var singleton = this._getNameInstance(module.__singleton);
 
@@ -414,7 +417,7 @@ module.exports = Base.extend({
         var inst = singleton.inst;
 
         if (_.isFunction(inst)) {
-            throw new TypeError("steeplejack.registerSingleton cannot accept a function");
+            throw new TypeError("steeplejack.registerSingleton cannot accept a function: " + modulePath);
         }
 
         this.getInjector().registerSingleton(name, inst);
