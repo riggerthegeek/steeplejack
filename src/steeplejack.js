@@ -192,6 +192,8 @@ module.exports = Base.extend({
      *
      * @param {string} modulePath
      * @private
+     *
+     * @todo improve error handling
      */
     _registerModule: function _registerModule (modulePath) {
 
@@ -200,7 +202,7 @@ module.exports = Base.extend({
 
         if (datatypes.setObject(module, null) === null) {
             /* Module isn't an object */
-            throw new SyntaxError("Module must be an object");
+            throw new SyntaxError("Module must be an object: ");
         }
 
         if (_.size(module) !== 1) {
@@ -213,7 +215,7 @@ module.exports = Base.extend({
 
         /* Our register methods begin __ */
         if (key.match(/^__[a-z]/i) === null) {
-            throw new SyntaxError("No known modules");
+            throw new SyntaxError("No known modules: " + key);
         }
 
         /* Remove the __ at the start */
