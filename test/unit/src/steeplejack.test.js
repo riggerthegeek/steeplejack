@@ -172,7 +172,7 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(SyntaxError);
-                    expect(err.message).to.be.equal("Module must be an object");
+                    expect(err.message).to.be.equal("Module must be an object: /path/to/module");
 
                 } finally {
                     expect(fail).to.be.true;
@@ -201,7 +201,7 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(SyntaxError);
-                    expect(err.message).to.be.equal("Module must be an object with exactly 1 element");
+                    expect(err.message).to.be.equal("Module must be an object with exactly 1 element: /path/to/module");
 
                 } finally {
                     expect(fail).to.be.true;
@@ -231,7 +231,7 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(SyntaxError);
-                    expect(err.message).to.be.equal("Module must be an object with exactly 1 element");
+                    expect(err.message).to.be.equal("Module must be an object with exactly 1 element: /path/to/module");
 
                 } finally {
                     expect(fail).to.be.true;
@@ -260,7 +260,7 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(SyntaxError);
-                    expect(err.message).to.be.equal("No known modules");
+                    expect(err.message).to.be.equal("No known modules: /path/to/module");
 
                 } finally {
                     expect(fail).to.be.true;
@@ -593,12 +593,12 @@ describe("Main test", function () {
                     try {
                         this.obj.registerConfig({
                             __config: {}
-                        });
+                        }, "/path/to/module");
                     } catch (err) {
                         fail = true;
 
                         expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("steeplejack.registerConfig can only accept functions");
+                        expect(err.message).to.be.equal("steeplejack.registerConfig can only accept functions: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }
@@ -612,12 +612,12 @@ describe("Main test", function () {
                     try {
                         this.obj.registerConfig({
                             __config: function () {}
-                        });
+                        }, "/path/to/module");
                     } catch (err) {
                         fail = true;
 
                         expect(err).to.be.instanceof(SyntaxError);
-                        expect(err.message).to.be.equal("steeplejack.registerConfig function cannot be anonymous");
+                        expect(err.message).to.be.equal("steeplejack.registerConfig function cannot be anonymous: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }
@@ -696,12 +696,12 @@ describe("Main test", function () {
                     var fail = false;
 
                     try {
-                        this.obj.registerFactory(module);
+                        this.obj.registerFactory(module, "/path/to/module");
                     } catch (err) {
                         fail = true;
 
                         expect(err).to.be.instanceof(SyntaxError);
-                        expect(err.message).to.be.equal("steeplejack.registerFactory function cannot be anonymous");
+                        expect(err.message).to.be.equal("steeplejack.registerFactory function cannot be anonymous: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }
@@ -723,12 +723,12 @@ describe("Main test", function () {
                     var fail = false;
 
                     try {
-                        this.obj.registerSingleton(module);
+                        this.obj.registerSingleton(module, "/path/to/module");
                     } catch (err) {
                         fail = true;
 
                         expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("steeplejack.registerSingleton cannot accept a function");
+                        expect(err.message).to.be.equal("steeplejack.registerSingleton cannot accept a function: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }
