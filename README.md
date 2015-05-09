@@ -13,7 +13,8 @@ A NodeJS scaffolding framework
 
 # Installation
 
-You need NodeJS and NPM installed to install this.  It's tested on NodeJS 0.8 and above, but should work on 0.6
+You need NodeJS and NPM installed to install this.  It's [tested](https://travis-ci.org/slash-dev-slash-null/steeplejack)
+on NodeJS 0.8 and above and on io.js
 
     npm install steeplejack
 
