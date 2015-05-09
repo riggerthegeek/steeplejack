@@ -9,18 +9,17 @@
 [![Dependencies][dependencies-image]][dependencies-url]
 [![Dev Dependencies][dev-dependencies-image]][dev-dependencies-url]
 
-![By 'eck, that were grand](https://github.com/slash-dev-slash-null/steeplejack/raw/master/steeplejack-small.png)
-
 A NodeJS scaffolding framework
 
-## Installation
+# Installation
 
 You need NodeJS and NPM installed to install this.  It's tested on NodeJS 0.8 and above, but should work on 0.6
 
-    [sudo] npm install -g steeplejack
+    npm install steeplejack
 
-###### Not affiliated in any way with Fred Dibnah. I just think he's a superhero.
+# Documentation
 
+Full documentation can be found at http://slash-dev-slash-null.github.io/steeplejack
 
 [npm-image]: https://img.shields.io/npm/v/steeplejack.svg?style=flat
 [downloads-image]: https://img.shields.io/npm/dm/steeplejack.svg?style=flat
