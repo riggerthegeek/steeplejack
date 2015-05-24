@@ -508,12 +508,9 @@ module.exports = Base.extend({
     /**
      * App
      *
-     * This is a singleton that either creates an application
-     * instance or retrieves the application instance created
-     * previously.  This is designed to be where we start
-     * everything from. The options is required the first it's
-     * called and then not allowed to be passed in at a later
-     * date.
+     * This is a singleton that creates an application
+     * instance.  This is designed to be where we start
+     * everything from.
      *
      * @param options
      */
