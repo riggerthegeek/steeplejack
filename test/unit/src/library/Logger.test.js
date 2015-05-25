@@ -7,7 +7,6 @@
 
 /* Node modules */
 var _ = require("lodash");
-var steeplejack = require("steeplejack");
 
 
 /* Third-party modules */
