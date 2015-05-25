@@ -29,6 +29,7 @@ var Collection = require("./library/Collection");
 var Exception = require("./error/Exception");
 var Fatal = require("./error/Fatal");
 var Injector = require("./library/Injector");
+var Logger = require("./library/Logger");
 var Model = require("./library/DomainModel");
 var Router = require("./library/Router");
 var Server = require("./library/Server");
@@ -575,6 +576,16 @@ module.exports = Base.extend({
      * system
      */
     Injector: Injector,
+
+
+    /**
+     * Logger
+     *
+     * A strategy we can use to make use of
+     * different logging modules, such as Bunyan
+     * or Log4JS.
+     */
+    Logger: Logger,
 
 
     /**
