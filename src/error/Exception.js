@@ -229,7 +229,7 @@ _.extend(Exception, {
 
     extend: function extend (properties, staticProps) {
 
-        properties = datatypes.setObject(properties, null);
+        properties = datatypes.setObject(properties, {});
         staticProps = datatypes.setObject(staticProps, {});
 
         var parent = this;
@@ -249,9 +249,8 @@ _.extend(Exception, {
         /* Attach the parent */
         Class.prototype._super = parent.prototype;
 
-        if (properties) {
-            _.extend(Class.prototype, properties);
-        }
+        /* The instance will require a type, so properties must exist */
+        _.extend(Class.prototype, properties);
 
         Class.prototype._Class = Class;
 
