@@ -6,8 +6,6 @@
  * and then loads up the server
  *
  * @package steeplejack
- *
- * @todo improve error handling
  */
 
 "use strict";
