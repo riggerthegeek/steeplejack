@@ -12,6 +12,7 @@
 
 
 /* Node modules */
+var util = require("util");
 
 
 /* Third-party modules */
@@ -22,8 +23,20 @@ var stackTrace = require("stack-trace");
 /* Files */
 var Base = require("../library/Base");
 
+var datatypes = Base.datatypes;
+
 
 function Exception (message) {
+
+    Error.call(this);
+
+    /* Search for and run the constructor function */
+    if (_.isFunction(this._construct) === false) {
+        this._construct = function () { };
+    }
+
+    /* Activate the constructor */
+    this._construct.apply(this, arguments);
 
     var tmpStack;
     var reduceTrace = true;
@@ -63,7 +76,7 @@ function Exception (message) {
 }
 
 
-Exception.prototype = new Error();
+util.inherits(Exception, Error);
 
 
 _.extend(Exception.prototype, {
@@ -205,6 +218,48 @@ _.extend(Exception.prototype, {
      */
     getType: function () {
         return this.type;
+    }
+
+
+});
+
+
+_.extend(Exception, {
+
+
+    extend: function extend (properties, staticProps) {
+
+        properties = datatypes.setObject(properties, null);
+        staticProps = datatypes.setObject(staticProps, {});
+
+        var parent = this;
+        var Class = function () {
+            return parent.apply(this, arguments);
+        };
+
+        /* Add static properties */
+        _.extend(Class, parent, staticProps);
+
+        function Surrogate () {
+        }
+
+        Surrogate.prototype = parent.prototype;
+        Class.prototype = new Surrogate();
+
+        /* Attach the parent */
+        Class.prototype._super = parent.prototype;
+
+        if (properties) {
+            _.extend(Class.prototype, properties);
+        }
+
+        Class.prototype._Class = Class;
+
+        /* Set the parent to the super_ parameter - keep consistent with util.inherits */
+        Class.super_ = parent;
+
+        return Class;
+
     }
 
 

@@ -13,32 +13,17 @@
 
 
 /* Node modules */
-var util = require("util");
 
 
 /* Third-party modules */
-var _ = require("lodash");
 
 
 /* Files */
 var Exception = require("./Exception");
 
 
-function FatalException () {
+module.exports = Exception.extend({
 
-    this.type = "Fatal";
-
-    Exception.apply(this, arguments);
-
-}
-
-
-util.inherits(FatalException, Exception);
-
-
-_.extend(FatalException.prototype, {
+    type: "Fatal"
 
 });
-
-
-module.exports = FatalException;

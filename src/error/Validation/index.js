@@ -12,7 +12,6 @@
 
 
 /* Node modules */
-var util = require("util");
 
 
 /* Third-party modules */
@@ -25,26 +24,20 @@ var Exception = require("../Exception");
 var Detail = require("./Detail");
 
 
-function ValidationException () {
-
-    this.type = "Validation";
-
-    Exception.apply(this, arguments);
-
-    Object.defineProperty(this, "_errors", {
-        value: {},
-        enumerable: false
-    });
-
-    return this;
-
-}
+module.exports = Exception.extend({
 
 
-util.inherits(ValidationException, Exception);
+    type: "Validation",
 
 
-_.extend(ValidationException.prototype, {
+    _construct: function () {
+
+        Object.defineProperty(this, "_errors", {
+            value: {},
+            enumerable: false
+        });
+
+    },
 
 
 
@@ -115,6 +108,3 @@ _.extend(ValidationException.prototype, {
 
 
 });
-
-
-module.exports = ValidationException;
