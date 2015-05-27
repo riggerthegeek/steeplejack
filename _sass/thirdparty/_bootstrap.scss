@@ -1,0 +1,15 @@
+/*
+
+    Configure Twitter Bootstrap
+
+ */
+
+
+/* Get Bootstrap */
+@import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+
+
+/* Make all images responsive */
+img {
+    @extend .img-responsive;
+}
