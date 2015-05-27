@@ -1,0 +1,10 @@
+.default_layout {
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: inset 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+
+    div {
+        flex: 1;
+    }
+}
