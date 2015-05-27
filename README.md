@@ -8,18 +8,33 @@
 [![Dependencies][dependencies-image]][dependencies-url]
 [![Dev Dependencies][dev-dependencies-image]][dev-dependencies-url]
 
-A NodeJS scaffolding framework
+A NodeJS scaffolding framework.
+
+It enables you to quickly build module applications and for new modules to be available simply with the file being
+present.  It's built with [Inversion of Control](http://en.wikipedia.org/wiki/Inversion_of_control) in mind, so that
+adding new modules becomes as simple as adding the files to your project.  It also provides routing, any HTTP strategy
+you care to use and powerful data models that ensures your data is correct and valid 
+
+# Features
+ - Inversion of Control container
+ - Data models and collections
+ - File-based routing
+ - Rely on Express, Restify for your HTTP layer or write your own
+ - Logging via Bunyan or Log4JS or your own provider
+ - Class inheritance without ever touching the `util` module
+ - Enhanced errors
+ - [100% code coverage](https://coveralls.io/r/slash-dev-slash-null/steeplejack)
 
 # Installation
 
 You need NodeJS and NPM installed to install this.  It's [tested](https://travis-ci.org/slash-dev-slash-null/steeplejack)
-on NodeJS 0.8 and above and on io.js
+on NodeJS 0.8 and above and on io.js 1.04 and above
 
     npm install steeplejack
 
 # Documentation
 
-Full documentation can be found at http://slash-dev-slash-null.github.io/steeplejack
+Full documentation can be found at [http://slash-dev-slash-null.github.io/steeplejack](http://slash-dev-slash-null.github.io/steeplejack)
 
 [npm-image]: https://img.shields.io/npm/v/steeplejack.svg?style=flat
 [downloads-image]: https://img.shields.io/npm/dm/steeplejack.svg?style=flat
