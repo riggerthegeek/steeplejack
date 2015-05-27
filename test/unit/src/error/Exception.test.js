@@ -123,6 +123,47 @@ describe("Exception test", function () {
 
     describe("Extension tests", function () {
 
+        it("should extend using the .extend method", function () {
+
+            var Child = Exception.extend({
+
+                type: "Child"
+
+            });
+
+            var obj = new Child("message");
+
+            expect(obj.getType()).to.be.equal("Child").to.be.equal(obj.type);
+            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
+            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+
+            /* Ensure we're getting stacktrace from this file */
+            expect(obj.getFileName()).to.be.equal(__filename);
+
+        });
+
+        it("should extend a child using the .extend method", function () {
+
+            var Parent = Exception.extend({
+
+                type: "Parent"
+
+            });
+
+            var Child = Parent.extend({
+
+                type: "Child"
+
+            });
+
+            var obj = new Child("message");
+
+            expect(obj.getType()).to.be.equal("Child").to.be.equal(obj.type);
+            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
+            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+
+        });
+
         it("should extend the Exception class", function (done) {
 
             function Child() {
@@ -267,7 +308,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Exception);
                 expect(obj).to.be.instanceof(Child);
 
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(264);
+                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(305);
 
             });
 
@@ -281,7 +322,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Exception);
                 expect(obj).to.be.instanceof(Child);
 
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(276);
+                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(317);
 
             });
 
