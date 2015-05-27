@@ -11,9 +11,9 @@
 A NodeJS scaffolding framework.
 
 It enables you to quickly build module applications and for new modules to be available simply with the file being
-present.  It's built with [Inversion of Control](http://en.wikipedia.org/wiki/Inversion_of_control) in mind, so that
-adding new modules becomes as simple as adding the files to your project.  It also provides routing, any HTTP strategy
-you care to use and powerful data models that ensures your data is correct and valid 
+present.  It's built with [Inversion of Control](http://en.wikipedia.org/wiki/Inversion_of_control) at it's core, so
+that adding new modules becomes as simple as adding the files to your project.  It also provides routing, any HTTP
+strategy you care to use and powerful data models that ensures your data is correct and valid. 
 
 # Features
  - Inversion of Control container
@@ -35,6 +35,10 @@ on NodeJS 0.8 and above and on io.js 1.04 and above
 # Documentation
 
 Full documentation can be found at [http://slash-dev-slash-null.github.io/steeplejack](http://slash-dev-slash-null.github.io/steeplejack)
+
+# License
+
+MIT License
 
 [npm-image]: https://img.shields.io/npm/v/steeplejack.svg?style=flat
 [downloads-image]: https://img.shields.io/npm/dm/steeplejack.svg?style=flat

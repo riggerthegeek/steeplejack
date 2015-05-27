@@ -6,6 +6,7 @@
  * and then loads up the server
  *
  * @package steeplejack
+ * @license MIT License
  */
 
 "use strict";
