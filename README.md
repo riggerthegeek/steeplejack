@@ -17,6 +17,7 @@ strategy you care to use and powerful data models that ensures your data is corr
 
 # Features
  - Inversion of Control container
+ - A single config object that is aware of environment variables and command line arguments
  - Data models and collections
  - File-based routing
  - Rely on Express, Restify for your HTTP layer or write your own
