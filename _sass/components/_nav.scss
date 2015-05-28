@@ -10,6 +10,15 @@
         display: inline-block;
         height: 75px;
     }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 .masthead-nav > li {
@@ -25,6 +34,7 @@
     font-weight: bold;
     color: $light-grey;
     border-bottom: 2px solid transparent;
+    text-shadow: 2px 2px $black;
 }
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {

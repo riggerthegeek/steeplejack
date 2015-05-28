@@ -8,6 +8,7 @@
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
     "base/_variables",
+    "base/_mixins",
     "thirdparty/_bootstrap",
     "base/_global",
     "layouts/_default",

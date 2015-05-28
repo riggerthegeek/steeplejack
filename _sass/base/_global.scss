@@ -19,6 +19,7 @@ a {
     outline: none !important;
     color: $teal;
     text-decoration: none;
+    transition: all 0.25s ease 0s;
 
     &:hover {
         color: $teal;
@@ -28,4 +29,9 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
+}
+
+h1 {
+    text-shadow: 2px 2px $dark-grey;
+    color: $lighter-grey;
 }

@@ -15,5 +15,5 @@ nav:
         name: "Home"
         url: "/"
     -
-        name: "Getting Started"
-        url: "/getting-started/"
+        name: "Documentation"
+        url: "/documentation/"

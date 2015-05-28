@@ -1,10 +1,92 @@
 .default_layout {
+
     display: flex;
     flex-direction: column;
-
     box-shadow: inset 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
 
-    div {
+    .site_content {
         flex: 1;
     }
+
+    .page_content {
+
+        .main_body {
+
+            @extend .col-sm-9;
+            background-color: $medium-grey;
+
+            @include border-radius(10px);
+
+        }
+
+        .sidebar {
+
+            @extend .col-sm-3;
+
+            h5 {
+                text-transform: uppercase;
+                text-align: right;
+                padding: {
+                    bottom: $grid-gutter-width / 2;
+                }
+                border: {
+                    bottom: 1px solid $red;
+                }
+                text-shadow: 2px 2px $black;
+                margin: {
+                    left: -$grid-gutter-width / 2;
+                }
+            }
+
+            ul {
+
+                @extend .list-unstyled;
+
+                li {
+                    position: relative;
+
+                    a {
+
+                        margin: {
+                            left: $grid-gutter-width / 2;
+                        }
+                        color: $teal;
+                        text-shadow: 2px 2px $black;
+
+                        &:hover {
+                            color: darken($teal, 10%);
+                            text-decoration: none;
+                        }
+
+                    }
+
+                    &.active {
+
+                        a {
+
+                            &:after {
+
+                                content: "";
+                                position: absolute;
+                                top: 3px;
+                                left: -$grid-gutter-width / 2;
+                                border: {
+                                    width: 7px 0px 7px 12px;
+                                    style: solid;
+                                    color: transparent transparent transparent $medium-grey;
+                                }
+                                display: block;
+                                width: 0;
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
 }

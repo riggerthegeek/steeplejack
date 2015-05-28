@@ -3,8 +3,10 @@
     <div class="masthead clearfix">
 
         <h3 class="masthead-brand">
-            <img alt="steeplejack" src="{{ '/img/logo.png' | prepend: site.baseurl }}">
-            steeplejack
+            <a href="{{ "/" | prepend: site.baseurl }}">
+                <img alt="steeplejack" src="{{ '/img/logo.png' | prepend: site.baseurl }}">
+                steeplejack
+            </a>
         </h3>
 
         {% assign page_url = page.url | prepend: site.baseurl | replace:'index.html','' %}
