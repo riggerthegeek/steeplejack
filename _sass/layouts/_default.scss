@@ -15,6 +15,9 @@
             @extend .col-sm-9;
 
             background-color: $medium-grey;
+            margin: {
+                bottom: 50px;
+            }
 
             @include border-radius(10px);
 

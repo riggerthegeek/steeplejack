@@ -28,3 +28,12 @@ docs:
             -
                 name: "Your First App"
                 url: "/docs/your-first-app/"
+            -
+                name: "Routing"
+                url: "/docs/routing/"
+    -
+        title: "API Reference"
+        items:
+            -
+                name: "IOC Container"
+                url: "/docs/ioc-container/"
