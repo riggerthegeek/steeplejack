@@ -1,11 +1,11 @@
 # Site settings
 title: steeplejack
-description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-baseurl: "/steeplejack" # the subpath of your site, e.g. /blog/
-url: "https://slash-dev-slash-null.github.io/" # the base hostname & protocol for your site
+description: > #
+  steeplejack is a scaffolding framework for node.js/io.js that adds
+  awesomity to your projects - IOC container, data models and collections,
+  URL routing and class inheritance for grown-ups - all out of the box.
+baseurl: "/steeplejack"
+url: "https://slash-dev-slash-null.github.io"
 
 # Build settings
 markdown: kramdown
@@ -13,7 +13,7 @@ markdown: kramdown
 nav:
     -
         name: "Home"
-        url: ""
+        url: "/"
     -
         name: "Getting Started"
-        url: "getting-started"
+        url: "/getting-started/"

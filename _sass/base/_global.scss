@@ -3,9 +3,18 @@ html, body {
     color: $white;
 }
 
-html{
-    height: 100%;
-}
 body {
-    min-height: 100%;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+.site_content {
+    flex: 1;
+}
+
+a {
+    outline: none !important;
 }
