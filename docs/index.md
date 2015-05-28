@@ -15,5 +15,4 @@ Create a new directory `myapp`. In that directory, you'll need to run the follow
  
 That's all you need to create a basic steeplejack server
 
-<a href="/docs/your-first-app" class="prev_button">Back</a>
 <a href="/docs/your-first-app" class="next_button">Next</a>
