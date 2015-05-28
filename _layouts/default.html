@@ -3,6 +3,8 @@
 
     {% include head.html %}
 
+    {% assign page_url = page.url | prepend: site.baseurl | replace:'index.html','' %}
+
     <body class="default_layout">
 
         {% include header.html %}
@@ -19,20 +21,27 @@
 
                     <div class="sidebar">
 
-                        <h5>Getting Started</h5>
+                        {% for section in site.docs %}
 
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Hello
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="#">
-                                    Bum
-                                </a>
-                            </li>
-                        </ul>
+                            <h5>
+                                {{ section.title }}
+                            </h5>
+
+                            <ul>
+                                {% for doc in section.items %}
+
+                                    {% assign link_url = doc.url | prepend: site.baseurl %}
+
+                                    <li class="{% if page_url == link_url} %}active{% endif %}">
+                                        <a href="{{ link_url }}">
+                                            {{ doc.name }}
+                                        </a>
+                                    </li>
+
+                                {% endfor %}
+                            </ul>
+
+                        {% endfor %}
 
                     </div>
 
@@ -42,8 +51,8 @@
 
         </div>
 
-    </body>
+        {% include footer.html %}
 
-    {% include footer.html %}
+    </body>
 
 </html>

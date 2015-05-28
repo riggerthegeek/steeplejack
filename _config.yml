@@ -16,4 +16,12 @@ nav:
         url: "/"
     -
         name: "Documentation"
-        url: "/documentation/"
+        url: "/docs/"
+
+docs:
+    -
+        title: "Getting Started"
+        items:
+            -
+                name: "Hello2"
+                url: "/docs/"
