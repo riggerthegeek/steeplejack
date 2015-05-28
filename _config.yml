@@ -23,5 +23,8 @@ docs:
         title: "Getting Started"
         items:
             -
-                name: "Hello2"
+                name: "Installation"
                 url: "/docs/"
+            -
+                name: "Your First App"
+                url: "/docs/your-first-app/"
