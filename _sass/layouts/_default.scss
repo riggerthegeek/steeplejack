@@ -13,6 +13,7 @@
         .main_body {
 
             @extend .col-sm-9;
+
             background-color: $medium-grey;
 
             @include border-radius(10px);

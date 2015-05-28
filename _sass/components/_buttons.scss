@@ -1,0 +1,29 @@
+.next_button {
+
+    @extend .btn;
+    @extend .btn-success;
+    @extend .pull-right;
+
+    &:after {
+        @extend .fa;
+
+        padding-left: 3px;
+        content: $fa-var-arrow-right;
+    }
+
+}
+
+.prev_button {
+
+    @extend .btn;
+    @extend .btn-danger;
+    @extend .pull-left;
+
+    &:before {
+        @extend .fa;
+
+        padding-right: 3px;
+        content: $fa-var-arrow-left;
+    }
+
+}
