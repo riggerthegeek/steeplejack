@@ -5,7 +5,15 @@ description: > # this means to ignore newlines until "baseurl:"
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 baseurl: "/steeplejack" # the subpath of your site, e.g. /blog/
-url: "https://slash-dev-slash-null.github.io" # the base hostname & protocol for your site
+url: "https://slash-dev-slash-null.github.io/" # the base hostname & protocol for your site
 
 # Build settings
 markdown: kramdown
+
+nav:
+    -
+        name: "Home"
+        url: ""
+    -
+        name: "Getting Started"
+        url: "getting-started"
