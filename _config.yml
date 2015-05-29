@@ -38,11 +38,17 @@ docs:
         title: "API Reference"
         items:
             -
+                name: "Collections"
+                url: "/docs/api/collections/"
+            -
                 name: "HTTP Strategies"
                 url: "/docs/api/http-strategies"
             -
                 name: "IOC Container"
                 url: "/docs/api/ioc-container/"
+            -
+                name: "Models"
+                url: "/docs/api/models/"
             -
                 name: "Router"
                 url: "/docs/api/router/"
