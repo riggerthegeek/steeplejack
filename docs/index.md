@@ -13,6 +13,6 @@ Create a new directory `myapp`. In that directory, you'll need to run the follow
     - `npm install steeplejack-restify --save`: this example uses Restify, but there are other 
        [HTTP strategies]({{ '/docs/http-strategies' | prepend: site.baseurl }}) available
  
-That's all you need to create a basic steeplejack server
+That's all you need to create a basic steeplejack server.  Let's now look at creating your first app.
 
 <a href="{{ '/docs/your-first-app' | prepend: site.baseurl }}" class="next_button">Your First App</a>

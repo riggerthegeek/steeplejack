@@ -52,7 +52,7 @@ Now, if you view [http://localhost:3000](http://localhost:3000) in a browser, yo
     }
 
 That means that you have a working server, but that it cannot find an endpoint to go to.  As we've not set any up yet,
-this is correct and we've got our first server up an running.
+this is correct and we've got our first server up an running.  The next job is to get some routes in there.
 
 <a href="{{ '/docs' | prepend: site.baseurl }}" class="prev_button">Installation</a>
 <a href="{{ '/docs/routing' | prepend: site.baseurl }}" class="next_button">Routing</a>

@@ -31,6 +31,9 @@ docs:
             -
                 name: "Routing"
                 url: "/docs/routing/"
+            -
+                name: "Registering Modules"
+                url: "/docs/modules"
     -
         title: "API Reference"
         items:
@@ -40,3 +43,6 @@ docs:
             -
                 name: "IOC Container"
                 url: "/docs/ioc-container/"
+            -
+                name: "Router"
+                url: "/docs/router/"
