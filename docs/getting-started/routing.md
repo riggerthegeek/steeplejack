@@ -83,8 +83,7 @@ it just becomes your normal function like you'd get in Express/Restify.  As with
 either a single function or an array of functions.
 
 A more detailed look at the router can be found in the [Router]({{ '/docs/api/router' | prepend: site.baseurl }}) section.
-Now we have an understanding of the routing, we can start writing a proper module and get the app to do something
-interesting.
+Now we have an understanding of the routing, we can start getting the app to do something interesting.
 
 <a href="{{ '/docs/getting-started/your-first-app' | prepend: site.baseurl }}" class="prev_button">Your First App</a>
 <a href="{{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}" class="next_button">Models and Collections</a>
