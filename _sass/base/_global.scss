@@ -22,8 +22,8 @@ a {
     transition: all 0.25s ease 0s;
 
     &:hover {
-        color: $teal;
-        text-decoration: underline;
+        color: darken($teal, 10%);
+        text-decoration: none;
     }
 }
 
