@@ -39,10 +39,10 @@ docs:
         items:
             -
                 name: "HTTP Strategies"
-                url: "/docs/http-strategies"
+                url: "/docs/api/http-strategies"
             -
                 name: "IOC Container"
-                url: "/docs/ioc-container/"
+                url: "/docs/api/ioc-container/"
             -
                 name: "Router"
-                url: "/docs/router/"
+                url: "/docs/api/router/"
