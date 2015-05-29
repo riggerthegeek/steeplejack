@@ -18,7 +18,7 @@ Creating a basic steeplejack app is simple.
         .run(function ($config) {
     
             return new Restify({
-                port: $config.port
+                port: $config.port // Port 3000
             });
     
         })
@@ -32,7 +32,8 @@ Let's look at what's happening here.
 2. Once we've done that, we create an application using the `steeplejack.app()` factory with a config object in.
 3. Next, is the `run` phase where we configure how our server is going to work.  This function is processed by the IOC
    container so you can get any item in here registered to the IOC container; in this example, we just want the
-   `$config`. See the [IOC Container](/docs/ioc-container) for further information on this.
+   `$config`. See the [IOC Container]({{ '/docs/ioc-container' | prepend: site.baseurl }}) for further information
+   (eg, why it must be `$config` and not `config`) on this.
 4. Finally, listen for when the server is running.  The `start` event receives the `config` object so you can output it.
 
 If you go to your terminal and run `node app.js`, you should see:
@@ -53,5 +54,5 @@ Now, if you view [http://localhost:3000](http://localhost:3000) in a browser, yo
 That means that you have a working server, but that it cannot find an endpoint to go to.  As we've not set any up yet,
 this is correct and we've got our first server up an running.
 
-<a href="/docs" class="prev_button">Back</a>
-<a href="/docs/routing" class="next_button">Next</a>
+<a href="{{ '/docs' | prepend: site.baseurl }}" class="prev_button">Installation</a>
+<a href="{{ '/docs/routing' | prepend: site.baseurl }}" class="next_button">Routing</a>

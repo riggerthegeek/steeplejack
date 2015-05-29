@@ -35,5 +35,8 @@ docs:
         title: "API Reference"
         items:
             -
+                name: "HTTP Strategies"
+                url: "/docs/http-strategies"
+            -
                 name: "IOC Container"
                 url: "/docs/ioc-container/"
