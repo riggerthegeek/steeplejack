@@ -71,7 +71,7 @@ if you wanted the route `/path/to/my/route`, then you could do that by creating 
 > is also true in directories (you could create directories `/path/to/my/route` and have an `index.js` file in there).
 
 Now, looking at the file contents.  The function that's being sent to `module.exports` is processed by the
-[IOC Container]({{ '/docs/ioc-container' | prepend: site.baseurl }}) and `$outputHandler` is a helper function
+[Dependency Injector]({{ '/docs/api/dependency-injection' | prepend: site.baseurl }}) and `$outputHandler` is a helper function
 steeplejack creates when you want to send the final output.
 
 The keys of object we're returning represent the URL we want to build and follow the

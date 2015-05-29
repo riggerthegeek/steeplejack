@@ -2,7 +2,7 @@
 title: steeplejack
 description: > #
   steeplejack is a scaffolding framework for node.js/io.js that adds
-  awesomity to your projects - IOC container, data models and collections,
+  awesomity to your projects - Dependency Injection, data models and collections,
   URL routing and class inheritance for grown-ups - all out of the box.
 baseurl: "/steeplejack"
 url: "https://slash-dev-slash-null.github.io"
@@ -44,8 +44,8 @@ docs:
                 name: "HTTP Strategies"
                 url: "/docs/api/http-strategies"
             -
-                name: "IOC Container"
-                url: "/docs/api/ioc-container/"
+                name: "Dependency Injection"
+                url: "/docs/api/dependency-injection/"
             -
                 name: "Models"
                 url: "/docs/api/models/"
