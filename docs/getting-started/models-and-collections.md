@@ -4,7 +4,7 @@ title: Models and Collections
 permalink: /docs/getting-started/models-and-collections/
 ---
 
-### What are models and collections?
+### Models
 
 A model can be thought of as a piece of information.  At it's simplest form, think of a product in a shop - it will
 have a product id, a title, a price and other things.  Well, that is a data model.  One of the criticisms of JavaScript
@@ -60,7 +60,36 @@ as the way we export functions from a file.  The rest is all down to how the
 [Dependency Injection]({{ '/docs/api/dependency-injection' | prepend: site.baseurl }}) in steeplejack works.  Put
 simply, it takes away the need to `require` a file and traverse through directories to find it.
 
-The API docs cover everything in that, but there are two things you need to know to notice here.  First, we're
+The API docs cover everything in that, but there are two things you should to notice here.  First, is that a function
+is assign to `.__factory` - this tells the Dependency Injector how to to treat this file.  Second is that we've named
+the function - this is so that the Dependency Injector knows what to call it.  An anonymous factory function will throw
+an error.
+
+### Collections
+
+A collection is a collection of models, that's it.  If you think of your model as a single JSON object then a collection
+would be an array of those objects.  It ensures that the individual models are instances of the model 'class' and you
+can do useful things like filtering or sorting the data.
+
+The collection definition is related to the model definition.  Create a folder called `/collections` and a file called
+`Products.js`.  Then define the collection file as follows:
+
+    var steeplejack = require("steeplejack");
+
+    module.exports.__factory = function Products (Product) {
+
+        return steeplejack.Collection.extend({
+            model: Product
+        });
+
+    };
+
+All you have to define is the instance of the model that you want to use.
+
+Notice also how we've against added `.__factory` to the `module.exports` and that we've called this collection
+'Products'.  The other thing you should notice is that the function has a parameter called `Product`.  This is the
+dependency injector wiring it all together behind the scenes without a single `require` in sight.  When we come to run
+this, you'll see that the `Product` defined in the model file is what's passed through to the `Products` collection.
 
 <a href="{{ '/docs/getting-started/routing' | prepend: site.baseurl }}" class="prev_button">Routing</a>
-<a href="{{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}" class="next_button">Modules</a>
+<a href="{{ '/docs/getting-started/running-your-app' | prepend: site.baseurl }}" class="next_button">Running Your App</a>

@@ -34,6 +34,9 @@ docs:
             -
                 name: "Models and Collections"
                 url: "/docs/getting-started/models-and-collections/"
+            -
+                name: "Running Your App"
+                url: "/docs/getting-started/running-your-app/"
     -
         title: "API Reference"
         items:
