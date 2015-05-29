@@ -27,7 +27,7 @@ Add in a `routeDir` parameter to tell the application where to look for route fi
             },
             routeDir: "routes"
         });
-        
+
 Now create a directory called `routes` in your project and then a file called `hello.js` inside that directory.  Your
 project will now look something like this.
 
@@ -37,30 +37,30 @@ project will now look something like this.
 ├── package.json
 └── routes
     └── hello.js
-        
+
 {% endhighlight %}
 
 In the `hello.js` file, write the following (we'll go through what's happening shortly):
 
-    module.exports = function ($outputHandler) {    
-        return {    
-            "/:name": {    
-                get: function (req, res) {    
+    module.exports = function ($outputHandler) {
+        return {
+            "/:name": {
+                get: function (req, res) {
                     $outputHandler(null, {
                         hello: req.params.name
-                    }, req, res);    
-                }    
-            }   
+                    }, req, res);
+                }
+            }
         };
     };
-    
+
 Now, start up your server and go to [http://localhost:3000/hello/world](http://localhost:3000/hello/world) and you
 should see this:
 
-    {    
-        "hello": "world"   
+    {
+        "hello": "world"
     }
-    
+
 Anything you put in the '/world' section of the URL is what the app says hello to.
 
 Let's look at how the routing works in detail.  The first thing to understand is that the file name is important.  This
@@ -79,7 +79,7 @@ The keys of object we're returning represent the URL we want to build and follow
 we assign any text in that part of the URL to a parameter called `name`.
 
 Next comes the HTTP verb - in our case, we've used `get`, but you can use any of get/post/put/delete etc in there.  Then
-it just becomes your normal function like you'd get in Express/Restify.  As with these libraries, you can pass in 
+it just becomes your normal function like you'd get in Express/Restify.  As with these libraries, you can pass in
 either a single function or an array of functions.
 
 A more detailed look at the router can be found in the [Router]({{ '/docs/router' | prepend: site.baseurl }}) section.

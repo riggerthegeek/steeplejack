@@ -8,7 +8,7 @@ Creating a basic steeplejack app is simple.
 
     var steeplejack = require("steeplejack");
     var Restify = require("steeplejack-restify");
-    
+
     steeplejack
         .app({
             config: {
@@ -16,16 +16,16 @@ Creating a basic steeplejack app is simple.
             }
         })
         .run(function ($config) {
-    
+
             return new Restify({
                 port: $config.port // Port 3000
             });
-    
+
         })
         .on("start", function (config) {
             console.log("Server started on port " + config.port);
         });
-        
+
 Let's look at what's happening here.
 
 1. First we require steeplejack and the HTTP strategy library (in this case, Restify).
@@ -41,7 +41,7 @@ If you go to your terminal and run `node app.js`, you should see:
 {% highlight bash %}
 
     Server started on port 3000
-      
+
 {% endhighlight %}
 
 Now, if you view [http://localhost:3000](http://localhost:3000) in a browser, you should see:

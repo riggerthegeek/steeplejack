@@ -33,7 +33,7 @@ docs:
                 url: "/docs/routing/"
             -
                 name: "Registering Modules"
-                url: "/docs/modules"
+                url: "/docs/modules/"
     -
         title: "API Reference"
         items:
