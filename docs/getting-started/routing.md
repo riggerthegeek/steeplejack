@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Routing
-permalink: /docs/routing/
+permalink: /docs/getting-started/routing/
 ---
 
 So far, you should have a simple app set up that returns an HTTP 404 error.  In order to get your application to return
@@ -82,9 +82,9 @@ Next comes the HTTP verb - in our case, we've used `get`, but you can use any of
 it just becomes your normal function like you'd get in Express/Restify.  As with these libraries, you can pass in
 either a single function or an array of functions.
 
-A more detailed look at the router can be found in the [Router]({{ '/docs/router' | prepend: site.baseurl }}) section.
+A more detailed look at the router can be found in the [Router]({{ '/docs/api/router' | prepend: site.baseurl }}) section.
 Now we have an understanding of the routing, we can start writing a proper module and get the app to do something
 interesting.
 
-<a href="{{ '/docs/your-first-app' | prepend: site.baseurl }}" class="prev_button">Your First App</a>
-<a href="{{ '/docs/modules' | prepend: site.baseurl }}" class="next_button">Modules</a>
+<a href="{{ '/docs/getting-started/your-first-app' | prepend: site.baseurl }}" class="prev_button">Your First App</a>
+<a href="{{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}" class="next_button">Models and Collections</a>

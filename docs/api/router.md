@@ -1,5 +1,5 @@
 ---
 layout: default
 title: Router
-permalink: /docs/router/
+permalink: /docs/api/router/
 ---

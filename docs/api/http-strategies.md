@@ -1,5 +1,5 @@
 ---
 layout: default
 title: HTTP Strategies
-permalink: /docs/http-strategies/
+permalink: /docs/api/http-strategies/
 ---

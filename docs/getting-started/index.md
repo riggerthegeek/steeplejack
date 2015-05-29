@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Installation
-permalink: /docs/
+permalink: /docs/getting-started/
 ---
 
 Create a new directory `myapp`. In that directory, you'll need to run the following commands:
@@ -10,9 +10,9 @@ Create a new directory `myapp`. In that directory, you'll need to run the follow
   you.  This example assumes that your main file is `app.js`.
 - Install the steeplejack dependencies:
     - `npm install steeplejack --save`
-    - `npm install steeplejack-restify --save`: this example uses Restify, but there are other 
-       [HTTP strategies]({{ '/docs/http-strategies' | prepend: site.baseurl }}) available
- 
+    - `npm install steeplejack-restify --save`: this example uses Restify, but there are other
+       [HTTP strategies]({{ '/docs/api/http-strategies' | prepend: site.baseurl }}) available
+
 That's all you need to create a basic steeplejack server.  Let's now look at creating your first app.
 
-<a href="{{ '/docs/your-first-app' | prepend: site.baseurl }}" class="next_button">Your First App</a>
+<a href="{{ '/docs/getting-started/your-first-app' | prepend: site.baseurl }}" class="next_button">Your First App</a>

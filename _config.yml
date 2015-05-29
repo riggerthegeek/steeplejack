@@ -24,16 +24,16 @@ docs:
         items:
             -
                 name: "Installation"
-                url: "/docs/"
+                url: "/docs/getting-started/"
             -
                 name: "Your First App"
-                url: "/docs/your-first-app/"
+                url: "/docs/getting-started/your-first-app/"
             -
                 name: "Routing"
-                url: "/docs/routing/"
+                url: "/docs/getting-started/routing/"
             -
-                name: "Registering Modules"
-                url: "/docs/modules/"
+                name: "Models and Collections"
+                url: "/docs/getting-started/models-and-collections/"
     -
         title: "API Reference"
         items:

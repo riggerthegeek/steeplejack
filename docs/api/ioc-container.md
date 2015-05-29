@@ -1,5 +1,5 @@
 ---
 layout: default
 title: IOC Container
-permalink: /docs/ioc-container/
+permalink: /docs/api/ioc-container/
 ---
