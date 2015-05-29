@@ -60,7 +60,7 @@ as the way we export functions from a file.  The rest is all down to how the
 [Dependency Injection]({{ '/docs/api/dependency-injection' | prepend: site.baseurl }}) in steeplejack works.  Put
 simply, it takes away the need to `require` a file and traverse through directories to find it.
 
-The API docs cover everything in that, but there are two things you need to know to understand
+The API docs cover everything in that, but there are two things you need to know to notice here.  First, we're
 
 <a href="{{ '/docs/getting-started/routing' | prepend: site.baseurl }}" class="prev_button">Routing</a>
 <a href="{{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}" class="next_button">Modules</a>

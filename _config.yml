@@ -41,14 +41,32 @@ docs:
                 name: "Collections"
                 url: "/docs/api/collections/"
             -
-                name: "HTTP Strategies"
-                url: "/docs/api/http-strategies"
-            -
                 name: "Dependency Injection"
                 url: "/docs/api/dependency-injection/"
+            -
+                name: "Errors"
+                url: "/docs/api/errors/"
+            -
+                name: "HTTP"
+                url: "/docs/api/http"
+            -
+                name: "Inheritance"
+                url: "/docs/api/inheritance/"
+            -
+                name: "Logging"
+                url: "/docs/api/logging/"
             -
                 name: "Models"
                 url: "/docs/api/models/"
             -
                 name: "Router"
                 url: "/docs/api/router/"
+    -
+        title: "Plugins"
+        items:
+            -
+                name: "HTTP Strategies"
+                url: "/docs/plugins/http-strategies/"
+            -
+                name: "Logging Strategies"
+                url: "/docs/plugins/logginghttp-strategies.md-strategies/"
