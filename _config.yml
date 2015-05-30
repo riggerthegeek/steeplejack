@@ -37,6 +37,9 @@ docs:
             -
                 name: "Running Your App"
                 url: "/docs/getting-started/running-your-app/"
+            -
+                name: "Config"
+                url: "/docs/getting-started/config/"
     -
         title: "API Reference"
         items:

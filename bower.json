@@ -4,7 +4,8 @@
   "homepage": "https://github.com/slash-dev-slash-null/steeplejack",
   "dependencies": {
     "bootstrap-sass": "~3.3.4",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "zeroclipboard": "~2.2.0"
   },
   "devDependencies": {},
   "authors": [
