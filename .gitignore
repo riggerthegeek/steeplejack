@@ -37,3 +37,5 @@ node_modules
 /.settings/
 /tmp/
 /build/
+/.sass-cache/
+/_site/
