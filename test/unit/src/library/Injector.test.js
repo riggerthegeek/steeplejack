@@ -565,6 +565,75 @@ describe("Injector test", function () {
 
         describe("#replace", function () {
 
+            beforeEach(function () {
+
+                sinon.stub(obj, "register");
+                sinon.stub(obj, "registerSingleton");
+                sinon.stub(obj, "remove");
+
+            });
+
+            it("should replace a module with a new module", function () {
+
+                /* Register directly as stubbing the register functions */
+                obj._components.module = {
+                    constructor: function Old () {},
+                    instance: null
+                };
+
+                var fn = function New () { };
+
+                expect(obj.replace("module", fn)).to.be.equal(obj);
+
+                expect(obj.register).to.be.calledOnce
+                    .calledWithExactly("module", fn);
+
+                expect(obj.remove).to.be.calledOnce
+                    .calledWithExactly("module");
+
+                expect(obj.registerSingleton).to.not.be.called;
+
+            });
+
+            it("should replace a singleton with a new singleton", function () {
+
+                /* Register directly as stubbing the register functions */
+                obj._components.module = {
+                    constructor: null,
+                    instance: "old"
+                };
+
+                expect(obj.replace("module", "new")).to.be.equal(obj);
+
+                expect(obj.registerSingleton).to.be.calledOnce
+                    .calledWithExactly("module", "new");
+
+                expect(obj.remove).to.be.calledOnce
+                    .calledWithExactly("module");
+
+                expect(obj.register).to.not.be.called;
+
+            });
+
+            it("should throw an error when trying to register something that doesn't exist", function () {
+
+                var fail = false;
+
+                try {
+                    obj.replace("module");
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Error);
+                    expect(err.message).to.be.equal("Component 'module' cannot be replaced as it's not currently registered");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
         });
 
         describe("#remove", function () {

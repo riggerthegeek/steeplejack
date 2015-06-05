@@ -157,11 +157,17 @@ module.exports = Base.extend({
      * instantiate an instance of the target with all
      * dependencies injected.
      *
+     * If it's a test, it allows modules to be specified
+     * with an underscore at the start and end.
+     *
      * @param {object} target
      * @param {object} thisArg
+     * @param {boolean} test
      * @returns {object}
      */
-    process: function (target, thisArg) {
+    process: function (target, thisArg, test) {
+
+        test = datatypes.setBool(test, false);
 
         var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 
@@ -176,15 +182,25 @@ module.exports = Base.extend({
         var tmp = text.match(FN_ARGS)[1].split(",");
         tmp = datatypes.setArray(tmp, []);
 
-        /* Trim out spaces */
-        var args = [];
-        for (var i = 0; i < tmp.length; i++) {
-            var str = tmp[i].trim();
+        /* Get a definitive list of dependencies */
+        var args = _.reduce(tmp, function (result, str) {
+
+            str = str.trim();
 
             if (str !== "") {
-                args.push(str);
+
+                if (test) {
+                    /* Test - remove underscores at start and end of string */
+                    str = str.replace(/\b_([\w\$]+)_\b/g, "$1");
+                }
+
+                result.push(str);
+
             }
-        }
+
+            return result;
+
+        }, []);
 
         return construct(target, this.getDependencies(args), thisArg);
 
@@ -201,6 +217,7 @@ module.exports = Base.extend({
      *
      * @param {string} name
      * @param {function} constructor
+     * @returns {exports}
      */
     register: function (name, constructor) {
 
@@ -216,6 +233,9 @@ module.exports = Base.extend({
             constructor: constructor,
             instance: null
         };
+
+        return this;
+
     },
 
 
@@ -229,6 +249,7 @@ module.exports = Base.extend({
      *
      * @param {string} name
      * @param {object} instance
+     * @returns {exports}
      */
     registerSingleton: function (name, instance) {
 
@@ -240,6 +261,61 @@ module.exports = Base.extend({
             constructor: null,
             instance: instance
         };
+
+        return this;
+
+    },
+
+
+    /**
+     * Replace
+     *
+     *
+     * @param name
+     * @param component
+     * @returns {exports}
+     */
+    replace: function (name, component) {
+
+        var registered = this.getComponent(name);
+
+        if (registered === null) {
+            /* Cannot replace something that doesn't exist */
+            throw new Error("Component '" + name + "' cannot be replaced as it's not currently registered");
+        }
+
+        var singleton = registered.constructor === null;
+
+        /* Remove the component */
+        this.remove(name);
+
+        /* Register the new component */
+        if (singleton) {
+            /* Singleton */
+            this.registerSingleton(name, component);
+        } else {
+            /* Function */
+            this.register(name, component);
+        }
+
+        return this;
+
+    },
+
+
+    /**
+     * Remove
+     *
+     * Removes a component from the lists of components
+     *
+     * @param name
+     * @returns {exports}
+     */
+    remove: function (name) {
+
+        this._components = _.omit(this._components, name);
+
+        return this;
 
     }
 
