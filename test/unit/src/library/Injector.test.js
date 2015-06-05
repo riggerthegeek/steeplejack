@@ -250,6 +250,159 @@ describe("Injector test", function () {
 
         });
 
+        describe("test dependencies", function () {
+
+            it("should process test dependencies wrapped in underscores", function () {
+
+                var target = function (_topLevel_, _topLevel2_, _$config_, __config_, topLevel, topLevel2, $config, _config) {
+
+                    this.exec = _topLevel_;
+                    this.exec2 = _topLevel2_;
+                    this.exec3 = _$config_;
+                    this.exec4 = __config_;
+
+                    this.match = _topLevel_ === topLevel;
+                    this.match2 = _topLevel2_ === topLevel2;
+                    this.match3 = _$config_ === $config;
+                    this.match4 = __config_ === _config;
+
+                };
+
+                obj.register("topLevel", function () {
+                    return {
+                        key: "value"
+                    }
+                })
+                    .register("topLevel2", function () {
+                        return {
+                            key: "value2"
+                        }
+                    })
+                    .register("$config", function () {
+                        return {
+                            key: "value3"
+                        }
+                    })
+                    .register("_config", function () {
+                        return {
+                            key: "value4"
+                        }
+                    });
+
+                var objTarget = obj.process(target, null, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
+                });
+
+                expect(objTarget.match).to.be.true;
+
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
+
+                expect(objTarget.match2).to.be.true;
+
+                expect(objTarget.exec3).to.be.eql({
+                    key: "value3"
+                });
+
+                expect(objTarget.match3).to.be.true;
+
+                expect(objTarget.exec4).to.be.eql({
+                    key: "value4"
+                });
+
+                expect(objTarget.match4).to.be.true;
+
+            });
+
+            it("should process alnum dependencies with no underscores", function () {
+
+                var target = function (topLevel, topLevel2) {
+
+                    this.exec = topLevel;
+                    this.exec2 = topLevel2;
+
+                };
+
+                obj.register("topLevel", function () {
+                    return {
+                        key: "value"
+                    }
+                })
+                    .register("topLevel2", function () {
+                        return {
+                            key: "value2"
+                        }
+                    });
+
+                var objTarget = obj.process(target, null, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
+                });
+
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
+
+            });
+
+            it("should process test dependencies wrapped in non-wrapping underscores", function () {
+
+                var target = function (_topLevel, topLevel2_, $_config, _$config) {
+
+                    this.exec = _topLevel;
+                    this.exec2 = topLevel2_;
+                    this.exec3 = $_config;
+                    this.exec4 = _$config;
+
+                };
+
+                obj.register("_topLevel", function () {
+                    return {
+                        key: "value"
+                    }
+                })
+                    .register("topLevel2_", function () {
+                        return {
+                            key: "value2"
+                        }
+                    })
+                    .register("$_config", function () {
+                        return {
+                            key: "value3"
+                        }
+                    })
+                    .register("_$config", function () {
+                        return {
+                            key: "value4"
+                        }
+                    });
+
+                var objTarget = obj.process(target, null, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
+                });
+
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
+
+                expect(objTarget.exec3).to.be.eql({
+                    key: "value3"
+                });
+
+                expect(objTarget.exec4).to.be.eql({
+                    key: "value4"
+                });
+
+            });
+
+        });
+
     });
 
     describe("Registration", function () {
@@ -396,6 +549,59 @@ describe("Injector test", function () {
                     instance: 34.5
                 });
 
+
+            });
+
+        });
+
+    });
+
+    describe("Methods", function () {
+
+        var obj;
+        beforeEach(function () {
+            obj = new Injector();
+        });
+
+        describe("#replace", function () {
+
+        });
+
+        describe("#remove", function () {
+
+            it("should return this when module not registered", function () {
+
+                expect(obj.remove("module")).to.be.equal(obj);
+
+            });
+
+            it("should remove a module that's registered", function () {
+
+                obj.register("module", function () { })
+                    .register("module2", function () { });
+
+                expect(obj.getComponent("module")).to.not.be.null;
+                expect(obj.getComponent("module2")).to.not.be.null;
+
+                expect(obj.remove("module")).to.be.equal(obj);
+
+                expect(obj.getComponent("module")).to.be.null;
+                expect(obj.getComponent("module2")).to.not.be.null;
+
+            });
+
+            it("should remove a singleton that's registered", function () {
+
+                obj.registerSingleton("singleton", "hello")
+                    .registerSingleton("singleton2", "hello");
+
+                expect(obj.getComponent("singleton")).to.not.be.null;
+                expect(obj.getComponent("singleton2")).to.not.be.null;
+
+                expect(obj.remove("singleton")).to.be.equal(obj);
+
+                expect(obj.getComponent("singleton")).to.be.null;
+                expect(obj.getComponent("singleton2")).to.not.be.null;
 
             });
 
