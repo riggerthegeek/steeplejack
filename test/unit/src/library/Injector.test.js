@@ -263,7 +263,7 @@ describe("Injector test", function () {
 
             it("should register a constructor function", function (done) {
 
-                obj.register("date", Date);
+                expect(obj.register("date", Date)).to.be.equal(obj);
 
                 expect(obj.getComponent("date")).to.be.an("object").to.be.eql({
                     constructor: Date,
@@ -326,7 +326,7 @@ describe("Injector test", function () {
 
             it("should register a singleton function", function (done) {
 
-                obj.registerSingleton("date", date);
+                expect(obj.registerSingleton("date", date)).to.be.equal(obj);
 
                 expect(obj.getComponent("date")).to.be.an("object").to.be.eql({
                     constructor: null,
