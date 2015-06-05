@@ -1128,6 +1128,152 @@ describe("Main test", function () {
 
         });
 
+        describe("#test", function () {
+
+            var injector,
+                construct,
+                registerModules,
+                getInjector;
+            beforeEach(function () {
+
+                injector = {
+                    process: sinon.stub(),
+                    replace: sinon.spy()
+                };
+
+                construct = sinon.stub(Main.prototype, "_construct");
+                registerModules = sinon.stub(Main.prototype, "registerModules");
+                getInjector = sinon.stub(Main.prototype, "getInjector")
+                    .returns(injector);
+
+            });
+
+            afterEach(function () {
+                construct.restore();
+                registerModules.restore();
+                getInjector.restore();
+            });
+
+            it("should return a function", function () {
+
+                expect(Main.test()).to.be.a("function");
+
+            });
+
+            it("should throw an error if no moduleFn passed in", function () {
+
+                var fail = false;
+
+                var fn = Main.test();
+
+                try {
+                    fn();
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("A function declaring what modules to be tested must be specified");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should create a testable app with no changed config or overridden modules", function () {
+
+                var app = {
+                    getInjector: getInjector
+                };
+
+                construct.returns(app);
+                registerModules.returns(app);
+
+                var fn = Main.test({
+                    config: {
+                        server: {
+                            port: 3000
+                        }
+                    },
+                    modules: [
+                        "module"
+                    ]
+                });
+
+                var moduleFn = function (Module) { };
+
+                fn(moduleFn);
+
+                expect(construct).to.be.calledOnce
+                    .calledWithExactly({
+                        server: {
+                            port: 3000
+                        }
+                    }, [
+                        "module"
+                    ]);
+
+                expect(injector.replace).to.not.be.called;
+
+                expect(injector.process).to.be.calledOnce
+                    .calledWithExactly(moduleFn, null, true);
+
+            });
+
+            it("should create a testable app with some overridden modules and config", function () {
+
+                var app = {
+                    getInjector: getInjector
+                };
+
+                construct.returns(app);
+                registerModules.returns(app);
+
+                var fn = Main.test({
+                    config: {
+                        server: {
+                            port: 3000,
+                            host: "localhost"
+                        }
+                    },
+                    modules: [
+                        "module"
+                    ]
+                });
+
+                var moduleFn = function (Module) { };
+
+                fn(moduleFn, {
+                    Module1: "mod1",
+                    Module2: "mod2"
+                }, {
+                    server: {
+                        port: 3001
+                    }
+                });
+
+                expect(construct).to.be.calledOnce
+                    .calledWithExactly({
+                        server: {
+                            port: 3001,
+                            host: "localhost"
+                        }
+                    }, [
+                        "module"
+                    ]);
+
+                expect(injector.replace).to.be.calledTwice
+                    .calledWithExactly("Module1", "mod1")
+                    .calledWithExactly("Module2", "mod2");
+
+                expect(injector.process).to.be.calledOnce
+                    .calledWithExactly(moduleFn, null, true);
+
+            });
+
+        });
+
         describe("#Base", function () {
 
             it("should be the same as the Base object", function (done) {

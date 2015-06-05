@@ -398,6 +398,25 @@ module.exports = Base.extend({
 
 
     /**
+     * Register Modules
+     *
+     * Takes the modules registered to the application and
+     * calls the register module function on each.
+     *
+     * @returns {steeplejack}
+     */
+    registerModules: function () {
+
+        _.each(this._modules, function (module) {
+            this._registerModule(module);
+        }, this);
+
+        return this;
+
+    },
+
+
+    /**
      * Register Singleton
      *
      * Registers a singleton method to the application. A
@@ -437,9 +456,7 @@ module.exports = Base.extend({
     run: function run (createServer) {
 
         /* Register the modules */
-        _.each(this._modules, function (module) {
-            this._registerModule(module);
-        }, this);
+        this.registerModules();
 
         /* Run the create server function */
         var server = this.getInjector().process(createServer, this);
@@ -612,7 +629,74 @@ module.exports = Base.extend({
      * implementations using, for example, Express,
      * Restify or the Node HTTP module.
      */
-    Server: Server
+    Server: Server,
+
+
+    /**
+     * Test
+     *
+     * A method to build a testable instance of the
+     * application.  It needs to receive a config
+     * object and also the module array to define the
+     * modules to load.
+     *
+     * It returns a closure function.
+     *
+     * @param options
+     * @returns {function}
+     */
+    test: function test (options) {
+
+        options = datatypes.setObject(options, {});
+
+        var config = datatypes.setObject(options.config, {}); /* Config JSON */
+
+        /**
+         * Creates a test.  Receives three parameters.
+         *  - moduleFn: this is a function that is parsed by the
+         *    dependency injector to get modules.  It's loaded with
+         *    the test options, so we can wrap the dependencies in
+         *   underscores.
+         *  - mocks: this is an object of mocks. This replaces
+         *    components registered to the dependency injector
+         *    with whatever is sent in.
+         *  - configOverride: an object of params that override
+         *    the config object.
+         *
+         * @param moduleFn
+         * @param mocks
+         * @param configOverride
+         * @returns {Object}
+         */
+        return function (moduleFn, mocks, configOverride) {
+
+            if (_.isFunction(moduleFn) === false) {
+                throw new SyntaxError("A function declaring what modules to be tested must be specified");
+            }
+
+            /* Ensure config is an object */
+            configOverride = datatypes.setObject(configOverride, {});
+
+            /* Merge together the config and override */
+            config = _.merge(config, configOverride);
+
+            /* Create and configure the application */
+            var app = this.create(config, options.modules)
+                .registerModules();
+
+            var injector = app.getInjector();
+
+            /* Override any modules passed in */
+            _.each(mocks, function (mock, name) {
+                this.replace(name, mock);
+            }, injector);
+
+            /* Process it's dependencies and return */
+            return injector.process(moduleFn, null, true);
+
+        }.bind(this);
+
+    }
 
 
 });
