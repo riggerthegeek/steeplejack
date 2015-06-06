@@ -1,4 +1,4 @@
-/**
+    /**
  * Base
  *
  * This is our base object.  Everything extends from
@@ -22,6 +22,7 @@ var datatypes = datautils.data;
 
 
 /* Files */
+var extender = require("../helper/extender");
 
 
 /**
@@ -174,45 +175,10 @@ _.extend(Base, {
      * Extend
      *
      * Allows us to extend the Base object
-     *
-     * @param {object} properties
-     * @param {object} staticProps
-     * @returns {object}
      */
-    extend: function extend (properties, staticProps) {
+    extend: extender,
 
-        properties = this.datatypes.setObject(properties, null);
-        staticProps = this.datatypes.setObject(staticProps, {});
 
-        var parent = this;
-        var Class = function () {
-            return parent.apply(this, arguments);
-        };
-
-        /* Add static properties */
-        _.extend(Class, parent, staticProps);
-
-        function Surrogate () {
-        }
-
-        Surrogate.prototype = parent.prototype;
-        Class.prototype = new Surrogate();
-
-        /* Attach the parent */
-        Class.prototype._super = parent.prototype;
-
-        if (properties) {
-            _.extend(Class.prototype, properties);
-        }
-
-        Class.prototype._Class = Class;
-
-        /* Set the parent to the super_ parameter - keep consistent with util.inherits */
-        Class.super_ = parent;
-
-        return Class;
-
-    },
 
 
     /**

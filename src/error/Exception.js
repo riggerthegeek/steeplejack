@@ -22,6 +22,7 @@ var stackTrace = require("stack-trace");
 
 /* Files */
 var Base = require("../library/Base");
+var extender = require("../helper/extender");
 
 var datatypes = Base.datatypes;
 
@@ -227,39 +228,12 @@ _.extend(Exception.prototype, {
 _.extend(Exception, {
 
 
-    extend: function extend (properties, staticProps) {
-
-        properties = datatypes.setObject(properties, {});
-        staticProps = datatypes.setObject(staticProps, {});
-
-        var parent = this;
-        var Class = function () {
-            return parent.apply(this, arguments);
-        };
-
-        /* Add static properties */
-        _.extend(Class, parent, staticProps);
-
-        function Surrogate () {
-        }
-
-        Surrogate.prototype = parent.prototype;
-        Class.prototype = new Surrogate();
-
-        /* Attach the parent */
-        Class.prototype._super = parent.prototype;
-
-        /* The instance will require a type, so properties must exist */
-        _.extend(Class.prototype, properties);
-
-        Class.prototype._Class = Class;
-
-        /* Set the parent to the super_ parameter - keep consistent with util.inherits */
-        Class.super_ = parent;
-
-        return Class;
-
-    }
+    /**
+     * Extend
+     *
+     * Allows us to extend this object
+     */
+    extend: extender
 
 
 });
