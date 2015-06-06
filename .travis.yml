@@ -25,7 +25,6 @@ before_install:
 - npm install -g grunt-cli
 script:
 - grunt ci
-- grunt coveralls:push
 deploy:
   provider: npm
   email: simon@simonemms.com
