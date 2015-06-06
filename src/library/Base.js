@@ -22,29 +22,9 @@ var datatypes = datautils.data;
 
 
 /* Files */
+var defineProperty = require("../helper/defineProperty");
 var extender = require("../helper/extender");
 
-
-/**
- * Define Property
- *
- * @param {object} obj
- * @param {string} name
- * @param {*} value
- */
-function defineProperty (obj, name, value) {
-
-    obj = datatypes.setObject(obj, null);
-    name = datatypes.setString(name, null);
-
-    Object.defineProperty(obj, name, {
-        value: value,
-        writable: true,
-        enumerable: name.match(/^\_/) === null,
-        configurable: true
-    });
-
-}
 
 
 function Base () {
