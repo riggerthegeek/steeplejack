@@ -653,7 +653,7 @@ var DomainModel = Base.extend({
                 if (value instanceof Date) {
                     value = value.toISOString();
                 } else {
-                    value = value.toString();
+                    value = JSON.stringify(value);
                 }
             }
             props[key] = value;
@@ -670,7 +670,7 @@ var DomainModel = Base.extend({
                 if (value instanceof Date) {
                     value = value.toISOString();
                 } else {
-                    value = value.toString();
+                    value = JSON.stringify(value);
                 }
             }
             obj[key] = value;

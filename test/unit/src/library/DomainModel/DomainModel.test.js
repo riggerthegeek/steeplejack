@@ -619,16 +619,22 @@ describe("DomainModel tests - using new", function () {
                             },
                             string: {
                                 type: "string"
+                            },
+                            obj: {
+                                type: "object"
                             }
                         }
                     });
 
                     obj = Model.create({
                         boolean: "true",
-                        date: "2010-02-07",
+                        datetime: "2010-02-07",
                         float: "2.2",
                         integer: "2",
-                        string: "string"
+                        string: "string",
+                        obj: {
+                            hello: 'world'
+                        }
                     });
                 });
 
@@ -650,6 +656,42 @@ describe("DomainModel tests - using new", function () {
                     });
 
                     expect(out).to.be.true;
+
+                });
+
+                it("should return true when multiple params of same type are passed in including an object", function () {
+
+                    var out = obj.where({
+                        string: "string",
+                        datetime: new Date('2010-02-07'),
+                        obj: {
+                            hello: 'world'
+                        }
+                    });
+
+                    expect(out).to.be.true;
+
+                });
+
+                it("should return false when objects don't match", function () {
+
+                    var out = obj.where({
+                        obj: {
+                            hello: 'worlds'
+                        }
+                    });
+
+                    expect(out).to.be.false;
+
+                });
+
+                it("should return false when Date objects don't match", function () {
+
+                    var out = obj.where({
+                        datetime: new Date('2010-02-06')
+                    });
+
+                    expect(out).to.be.false;
 
                 });
 
