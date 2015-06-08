@@ -18,8 +18,6 @@ var util = require("util");
 var _ = require("lodash");
 var datautils = require("datautils");
 
-var datatypes = datautils.data;
-
 
 /* Files */
 var defineProperty = require("../helper/defineProperty");
@@ -148,7 +146,7 @@ _.extend(Base, {
      * consistent data coersion throughout
      * the package.
      */
-    datatypes: datatypes,
+    datatypes: datautils.data,
 
 
     /**

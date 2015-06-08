@@ -4,7 +4,7 @@
   "description": "A NodeJS scaffolding framework",
   "main": "./src/steeplejack",
   "dependencies": {
-    "datautils": "^1.1.6",
+    "datautils": "^3.0.0",
     "glob": "^5.0.10",
     "lodash": "^3.9.3",
     "node-uuid": "^1.4.3",
