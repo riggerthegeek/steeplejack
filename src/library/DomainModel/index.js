@@ -650,10 +650,15 @@ var DomainModel = Base.extend({
 
             if (_.isObject(value)) {
                 /* Set objects to strings */
-                value = value.toString();
+                if (value instanceof Date) {
+                    value = value.toISOString();
+                } else {
+                    value = value.toString();
+                }
             }
             props[key] = value;
         }, tmp);
+
 
         /* What properties are set? */
         var obj = {};
@@ -662,7 +667,11 @@ var DomainModel = Base.extend({
 
             if (_.isObject(value)) {
                 /* Set objects to strings */
-                value = value.toString();
+                if (value instanceof Date) {
+                    value = value.toISOString();
+                } else {
+                    value = value.toString();
+                }
             }
             obj[key] = value;
         }, this);
