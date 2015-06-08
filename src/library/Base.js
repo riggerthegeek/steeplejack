@@ -172,7 +172,7 @@ _.extend(Base, {
      */
     extendsContructor: function extendsContructor (ChildClass) {
 
-        ChildClass = datatypes.setFunction(ChildClass, null);
+        ChildClass = Base.datatypes.setFunction(ChildClass, null);
 
         /* Convert to array and remove first one */
         var classes = Array.prototype.slice.call(arguments);
@@ -181,7 +181,7 @@ _.extend(Base, {
         return _.some(classes, function (ParentClass) {
 
             var tmp = ChildClass;
-            ParentClass = datatypes.setFunction(ParentClass, null);
+            ParentClass = Base.datatypes.setFunction(ParentClass, null);
 
             /* Default to false */
             var extenderOf = false;
