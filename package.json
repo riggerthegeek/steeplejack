@@ -9,7 +9,6 @@
     "lodash": "^3.9.3",
     "node-uuid": "^1.4.3",
     "optimist": "^0.6.1",
-    "stack-trace": "0.0.9",
     "walk": "^2.3.9"
   },
   "devDependencies": {
