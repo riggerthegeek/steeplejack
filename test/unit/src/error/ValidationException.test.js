@@ -31,9 +31,9 @@ describe("ValidationException test", function () {
             expect(obj).to.be.instanceof(Exception);
             expect(obj).to.be.instanceof(Error);
 
-            expect(obj.getType()).to.be.equal("Validation").to.be.equal(obj.type);
-            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
-            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+            expect(obj.type).to.be.equal("Validation");
+            expect(obj.message).to.be.equal("message");
+            expect(obj.stack).to.be.a("string").to.have.length.above("0");
 
             expect(obj.addError).to.be.a("function");
             expect(obj.getErrors).to.be.a("function");
@@ -51,9 +51,9 @@ describe("ValidationException test", function () {
             expect(obj).to.be.instanceof(Exception);
             expect(obj).to.be.instanceof(Error);
 
-            expect(obj.getType()).to.be.equal("Validation").to.be.equal(obj.type);
-            expect(obj.getMessage()).to.be.equal("UNKNOWN_ERROR").to.be.equal(obj.message);
-            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+            expect(obj.type).to.be.equal("Validation");
+            expect(obj.message).to.be.equal("UNKNOWN_ERROR");
+            expect(obj.stack).to.be.a("string").to.have.length.above("0");
 
             done();
 

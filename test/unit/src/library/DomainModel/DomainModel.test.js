@@ -2600,7 +2600,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         email: [
@@ -2610,8 +2610,6 @@ describe("DomainModel tests - using new", function () {
                             }
                         ]
                     });
-
-                    expect(err.getStack()).to.be.a("string").to.be.equal(err.stack);
 
                 }
 
@@ -2639,7 +2637,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         name: [
@@ -2717,7 +2715,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         name: [
@@ -2750,7 +2748,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         emailAddress: [
@@ -2783,7 +2781,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         name: [
@@ -2900,7 +2898,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         emailAddress1: [
@@ -2944,7 +2942,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         emailAddress1: [
@@ -2987,7 +2985,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         emailAddress1: [
@@ -3061,7 +3059,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         name: [
@@ -3141,7 +3139,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         name: [
@@ -3225,7 +3223,7 @@ describe("DomainModel tests - using new", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(Error);
-                        expect(err.getType()).to.be.equal("Validation");
+                        expect(err.type).to.be.equal("Validation");
 
                         expect(err.getErrors()).to.be.eql({
                             name: [
@@ -3261,7 +3259,7 @@ describe("DomainModel tests - using new", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(Error);
-                        expect(err.getType()).to.be.equal("Validation");
+                        expect(err.type).to.be.equal("Validation");
 
                         expect(err.getErrors()).to.be.eql({
                             name: [
@@ -3340,7 +3338,7 @@ describe("DomainModel tests - using new", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(Error);
-                        expect(err.getType()).to.be.equal("Validation");
+                        expect(err.type).to.be.equal("Validation");
 
                         expect(err.getErrors()).to.be.eql({
                             name: [
@@ -3378,7 +3376,7 @@ describe("DomainModel tests - using new", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(Error);
-                        expect(err.getType()).to.be.equal("Validation");
+                        expect(err.type).to.be.equal("Validation");
 
                         expect(err.getErrors()).to.be.eql({
                             name: [
@@ -3461,7 +3459,7 @@ describe("DomainModel tests - using new", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(Error);
-                        expect(err.getType()).to.be.equal("Validation");
+                        expect(err.type).to.be.equal("Validation");
 
                         expect(err.getErrors()).to.be.eql({
                             name: [
@@ -3499,7 +3497,7 @@ describe("DomainModel tests - using new", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(Error);
-                        expect(err.getType()).to.be.equal("Validation");
+                        expect(err.type).to.be.equal("Validation");
 
                         expect(err.getErrors()).to.be.eql({
                             name: [
@@ -3587,7 +3585,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         password: [
@@ -3625,7 +3623,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         password2: [
@@ -3663,7 +3661,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         password: [
@@ -3819,7 +3817,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.getType()).to.be.equal("Validation");
+                    expect(err.type).to.be.equal("Validation");
 
                     expect(err.getErrors()).to.be.eql({
                         postCode: [
@@ -3832,8 +3830,6 @@ describe("DomainModel tests - using new", function () {
                             }
                         ]
                     });
-
-                    expect(err.getStack()).to.be.a("string").to.be.equal(err.stack);
 
                 }
 

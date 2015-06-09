@@ -21,7 +21,7 @@ describe("FatalException test", function () {
 
     describe("Instantiation tests", function () {
 
-        it("should extend the Exception and Error classes", function (done) {
+        it("should extend the Exception and Error classes", function () {
 
             var obj = new FatalException("message");
 
@@ -29,16 +29,9 @@ describe("FatalException test", function () {
             expect(obj).to.be.instanceof(Exception);
             expect(obj).to.be.instanceof(Error);
 
-            expect(obj.getType()).to.be.equal("Fatal").to.be.equal(obj.type);
-            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
-            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
-            expect(obj.getStackTrace()).to.be.an("array");
-            expect(obj.getStackTrace(1)).to.be.an("object");
-            expect(obj.getStackTrace(2)).to.be.equal(obj.getStackTrace()[2]);
-            expect(obj.getLineNumber()).to.be.a("number").to.be.equal(26);
-            expect(obj.getFileName()).to.be.equal(require("path").join(__dirname, "FatalException.test.js"));
-
-            done();
+            expect(obj.type).to.be.equal("Fatal");
+            expect(obj.message).to.be.equal("message");
+            expect(obj.stack).to.be.a("string").to.have.length.above("0");
 
         });
 

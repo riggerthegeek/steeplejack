@@ -133,12 +133,12 @@ describe("Exception test", function () {
 
             var obj = new Child("message");
 
-            expect(obj.getType()).to.be.equal("Child").to.be.equal(obj.type);
-            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
-            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+            expect(obj.type).to.be.equal("Child");
+            expect(obj.message).to.be.equal("message");
+            expect(obj.stack).to.be.a("string").to.have.length.above("0");
 
             /* Ensure we're getting stacktrace from this file */
-            expect(obj.getFileName()).to.be.equal(__filename);
+            expect(obj.stack).to.contain(__filename);
 
         });
 
@@ -158,9 +158,9 @@ describe("Exception test", function () {
 
             var obj = new Child("message");
 
-            expect(obj.getType()).to.be.equal("Child").to.be.equal(obj.type);
-            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
-            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+            expect(obj.type).to.be.equal("Child");
+            expect(obj.message).to.be.equal("message");
+            expect(obj.stack).to.be.a("string").to.have.length.above("0");
 
         });
 
@@ -184,12 +184,12 @@ describe("Exception test", function () {
             expect(obj).to.be.instanceof(Exception);
             expect(obj).to.be.instanceof(Error);
 
-            expect(obj.getType()).to.be.equal("Child").to.be.equal(obj.type);
-            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
-            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+            expect(obj.type).to.be.equal("Child");
+            expect(obj.message).to.be.equal("message");
+            expect(obj.stack).to.be.a("string").to.have.length.above("0");
 
             /* Ensure we're getting stacktrace from this file */
-            expect(obj.getFileName()).to.be.equal(__filename);
+            expect(obj.stack).to.contain(__filename);
 
             done();
 
@@ -244,12 +244,12 @@ describe("Exception test", function () {
             expect(obj).to.be.instanceof(Exception);
             expect(obj).to.be.instanceof(Error);
 
-            expect(obj.getType()).to.be.equal("Child").to.be.equal(obj.type);
-            expect(obj.getMessage()).to.be.equal("message").to.be.equal(obj.message);
-            expect(obj.getStack()).to.be.a("string").to.have.length.above("0").to.be.equal(obj.stack);
+            expect(obj.type).to.be.equal("Child");
+            expect(obj.message).to.be.equal("message");
+            expect(obj.stack).to.be.a("string").to.have.length.above("0");
 
             /* Ensure we're getting stacktrace from this file */
-            expect(obj.getFileName()).to.be.equal(__filename);
+            expect(obj.stack).to.contain(__filename);
 
         });
 
@@ -283,80 +283,7 @@ describe("Exception test", function () {
                 expect(obj).to.be.instanceof(Child);
 
                 /* This test is a bit flakey as set here, but hey ho */
-                expect(obj.getFileName()).to.be.equal(require("path").join(__dirname, "Exception.test.js"));
-
-                done();
-
-            });
-
-        });
-
-        describe("#lineNumber", function () {
-
-            /**
-             * These tests are a little dodgy as we have to
-             * specify the line number manually.  If we ever
-             * add more tests above, this will make these
-             * tests fail.
-             */
-
-            it("should return the called line number", function () {
-
-                var obj = new Child("message");
-
-                expect(obj).to.be.instanceof(Error);
-                expect(obj).to.be.instanceof(Exception);
-                expect(obj).to.be.instanceof(Child);
-
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(305);
-
-            });
-
-            it("should return the line number of where an error object is created not the Exception", function () {
-
-                var err = new Error("message");
-
-                var obj = new Child(err);
-
-                expect(obj).to.be.instanceof(Error);
-                expect(obj).to.be.instanceof(Exception);
-                expect(obj).to.be.instanceof(Child);
-
-                expect(obj.getLineNumber()).to.be.a("number").to.be.equal(317);
-
-            });
-
-        });
-
-        describe("#getStackTrace", function () {
-
-            it("should return an array when id left empty", function (done) {
-
-                var obj = new Child("message");
-
-                expect(obj.getStackTrace()).to.be.an("array");
-
-                done();
-
-            });
-
-            it("should return an object when id given", function (done) {
-
-                var obj = new Child("message");
-
-                expect(obj.getStackTrace(2)).to.be.an("object").to.not.be.null;
-
-                done();
-
-            });
-
-            it("should return an null when id given and nothing set", function (done) {
-
-                var obj = new Child("message");
-
-                var length = obj.getStackTrace().length;
-
-                expect(obj.getStackTrace(length + 1)).to.be.null;
+                expect(obj.stack).to.contain(require("path").join(__dirname, "Exception.test.js"));
 
                 done();
 
