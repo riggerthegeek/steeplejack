@@ -1,6 +1,6 @@
 {
   "name": "steeplejack",
-  "version": "1.0.0-alpha8",
+  "version": "1.0.0-alpha9",
   "description": "A NodeJS scaffolding framework",
   "main": "./src/steeplejack",
   "dependencies": {
