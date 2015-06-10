@@ -610,8 +610,6 @@ var DomainModel = Base.extend({
 
         if (objValidationError.hasErrors()) {
             /* There's validation errors */
-            this.emit("invalid", objValidationError);
-
             throw objValidationError;
         }
 
