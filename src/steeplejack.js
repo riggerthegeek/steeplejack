@@ -19,7 +19,6 @@ var path = require("path");
 /* Third-party modules */
 var _ = require("lodash");
 var glob = require("glob");
-var optimist = require("optimist");
 
 
 /* Files */
@@ -532,6 +531,9 @@ module.exports = Base.extend({
      * @param options
      */
     app: function app (options) {
+
+        /* Declare optimist here - it breaks Browserified packages in PhantomJS */
+        var optimist = require("optimist");
 
         options = datatypes.setObject(options, {});
 
