@@ -1015,12 +1015,10 @@ describe("Main test", function () {
 
             it("should merge in environment variables to the config", function () {
 
-                this.optimist.argv._ = [];
+                this.optimist.argv._ = [];;
 
-                var stub = sinon.sandbox.create().stub(process.env);
-
-                stub.VAL_1_ENVVAR = "false";
-                stub.VAL_2_ENVVAR = "goodbye";
+                process.env.VAL_1_ENVVAR = "false";
+                process.env.VAL_2_ENVVAR = "goodbye";
 
                 var app = this.Main.app({
                     config: {
@@ -1050,10 +1048,8 @@ describe("Main test", function () {
                     "val2=erm?"
                 ];
 
-                var stub = sinon.sandbox.create().stub(process.env);
-
-                stub.VAL_1_ENVVAR = "false";
-                stub.VAL_2_ENVVAR = "goodbye";
+                process.env.VAL_1_ENVVAR = "false";
+                process.env.VAL_2_ENVVAR = "goodbye";
 
                 var app = this.Main.app({
                     config: {
