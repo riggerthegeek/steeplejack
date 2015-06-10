@@ -2594,10 +2594,17 @@ describe("DomainModel tests - using new", function () {
 
                 var fail = false;
 
+                var error;
+                obj.on("invalid", function (_error_) {
+                    error = _error_;
+                });
+
                 try {
                     obj.validate();
                 } catch (err) {
                     fail = true;
+
+                    expect(err).to.be.equal(error);
 
                     expect(err).to.be.instanceof(Error);
                     expect(err.type).to.be.equal("Validation");
