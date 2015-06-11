@@ -20,9 +20,14 @@ node_js:
 matrix:
   fast_finish: true
 sudo: false
+env:
+- TZ=Etc/UTC
+- TZ=America/Los_Angeles
+- TZ=Asia/Tokyo
 before_install:
 - node test/scripts/npm.js
 - npm install -g grunt-cli
+- date
 script:
 - grunt ci
 deploy:
