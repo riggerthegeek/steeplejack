@@ -1597,8 +1597,8 @@ describe("DomainModel tests - using new", function () {
 
                 var obj = Model.toModel({
                     boolean: "1",
-                    date: "2013-02-07 10:20:30.1",
-                    datetime: "2013-02-07 10:20:30.1",
+                    date: "2013-07-07T10:20:30.100Z",
+                    datetime: "2013-07-07T10:20:30.100Z",
                     float: "3",
                     int: 4,
                     string: "hello this is a string"
@@ -1609,8 +1609,8 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: true,
-                    date: new Date("2013-02-07"),
-                    datetime: new Date("2013-02-07 10:20:30.1"),
+                    date: new Date(1373151600000),
+                    datetime: new Date(1373192430000),
                     float: 3,
                     integer: 4,
                     object: null,

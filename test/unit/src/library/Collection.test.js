@@ -2872,7 +2872,7 @@ describe("Collection tests", function () {
                                 firstName: "Jenson",
                                 lastName: "Button",
                                 team: "McLaren",
-                                dateOfBirth: new Date("1980-01-19"),
+                                dateOfBirth: new Date(317088000000),
                                 championYears: [
                                     2009
                                 ]
@@ -2882,7 +2882,7 @@ describe("Collection tests", function () {
                                 firstName: "Lewis",
                                 lastName: "Hamilton",
                                 team: "Mercedes",
-                                dateOfBirth: new Date("1985-01-07"),
+                                dateOfBirth: new Date(473904000000),
                                 championYears: [
                                     2008
                                 ]
@@ -2891,7 +2891,7 @@ describe("Collection tests", function () {
                                 id: 3,
                                 firstName: "Nico",
                                 lastName: "Rosberg",
-                                dateOfBirth: new Date("1985-06-27"),
+                                dateOfBirth: new Date(488674800000),
                                 team: "Mercedes",
                                 championYears: null
                             },
@@ -2900,7 +2900,7 @@ describe("Collection tests", function () {
                                 firstName: "Sebastian",
                                 lastName: "Vettel",
                                 team: "Red Bull",
-                                dateOfBirth: new Date("1987-07-03"),
+                                dateOfBirth: new Date(552265200000),
                                 championYears: [
                                     2010,
                                     2011,
@@ -2913,7 +2913,7 @@ describe("Collection tests", function () {
                                 firstName: "james",
                                 lastName: "hunt",
                                 team: "mclaren",
-                                dateOfBirth: new Date("1947-08-29"),
+                                dateOfBirth: new Date(-705114000000),
                                 championYears: [
                                     1976
                                 ]
@@ -2969,7 +2969,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -2979,7 +2979,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -2989,7 +2989,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -2998,7 +2998,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3007,7 +3007,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3030,7 +3030,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3040,7 +3040,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3050,7 +3050,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3059,7 +3059,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3068,7 +3068,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3091,7 +3091,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3103,7 +3103,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3112,7 +3112,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3122,7 +3122,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3132,7 +3132,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3152,7 +3152,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3162,7 +3162,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3172,7 +3172,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3181,7 +3181,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3190,7 +3190,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3213,7 +3213,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3226,7 +3226,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3235,7 +3235,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3244,7 +3244,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3254,7 +3254,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3277,7 +3277,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3287,7 +3287,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3297,7 +3297,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3306,7 +3306,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3315,7 +3315,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3338,7 +3338,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3348,7 +3348,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3361,7 +3361,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3370,7 +3370,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3379,7 +3379,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3399,7 +3399,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3408,7 +3408,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3417,7 +3417,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3427,7 +3427,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3440,7 +3440,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3462,7 +3462,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3472,7 +3472,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3482,7 +3482,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3491,7 +3491,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3500,7 +3500,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3524,7 +3524,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date("1987-07-03"),
+                                    dateOfBirth: new Date(552265200000),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3537,7 +3537,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date("1980-01-19"),
+                                    dateOfBirth: new Date(317088000000),
                                     championYears: [
                                         2009
                                     ]
@@ -3547,7 +3547,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date("1985-01-07"),
+                                    dateOfBirth: new Date(473904000000),
                                     championYears: [
                                         2008
                                     ]
@@ -3557,7 +3557,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date("1947-08-29"),
+                                    dateOfBirth: new Date(-705114000000),
                                     championYears: [
                                         1976
                                     ]
@@ -3566,7 +3566,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date("1985-06-27"),
+                                    dateOfBirth: new Date(488674800000),
                                     team: "Mercedes",
                                     championYears: null
                                 }

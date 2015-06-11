@@ -405,11 +405,11 @@ var DomainModel = Base.extend({
                             value = datatypes.setDate(value, defaults);
 
                             if (definition.type === "date" && value instanceof Date) {
-                                /* Time not specified - set time to midnight */
-                                value.setUTCHours(0);
-                                value.setUTCMinutes(0);
-                                value.setUTCSeconds(0);
-                                value.setUTCMilliseconds(0);
+                                /* Time not specified - set time to midnight UTC */
+                                value.setHours(0);
+                                value.setMinutes(0);
+                                value.setSeconds(0);
+                                value.setMilliseconds(0);
                             }
                             break;
                         }
