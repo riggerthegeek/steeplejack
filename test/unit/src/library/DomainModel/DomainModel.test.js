@@ -209,7 +209,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    datetime: new Date("2013-02-07 10:11:12"),
+                    datetime: new Date(2013, 1, 7, 10, 11, 12),
                     float: 2.3,
                     int: 89034,
                     object: {
@@ -222,7 +222,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    datetime: new Date("2013-02-07 10:11:12"),
+                    datetime: new Date(2013, 1, 7, 10, 11, 12),
                     float: 2.3,
                     integer: 89034,
                     object: {
@@ -282,7 +282,7 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: true,
-                    datetime: new Date("2013-02-07 10:20:30"),
+                    datetime: new Date(2013, 1, 7, 10, 20, 30),
                     float: 3,
                     integer: 4,
                     object: null,
