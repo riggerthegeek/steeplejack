@@ -5,18 +5,7 @@ node_js:
 - '0.10'
 - '0.8'
 - 'iojs'
-- 'iojs-v1.0.4'
-- 'iojs-v1.1.0'
-- 'iojs-v1.2.0'
-- 'iojs-v1.3.0'
-- 'iojs-v1.4.3'
-- 'iojs-v1.5.1'
-- 'iojs-v1.6.4'
-- 'iojs-v1.7.1'
 - 'iojs-v1.8.1'
-- 'iojs-v2.0.1'
-- 'iojs-v2.1.0'
-- 'iojs-v2.2.1'
 matrix:
   fast_finish: true
 sudo: false
