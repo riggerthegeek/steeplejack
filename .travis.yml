@@ -23,6 +23,7 @@ sudo: false
 env:
 - TZ=Etc/UTC
 - TZ=America/Los_Angeles
+- TZ=Europe/Paris
 - TZ=Asia/Tokyo
 before_install:
 - node test/scripts/npm.js
