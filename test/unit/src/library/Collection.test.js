@@ -74,7 +74,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -135,7 +135,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -163,7 +163,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -200,14 +200,14 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -254,7 +254,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: false,
-                    datetime: new Date("2013-02-02"),
+                    datetime: new Date(2013, 1, 2),
                     float: null,
                     integer: null,
                     string: null
@@ -296,7 +296,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -328,7 +328,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -369,14 +369,14 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -407,7 +407,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -434,14 +434,14 @@ describe("Collection tests", function () {
                 }),
                 new Model({
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 }),
                 new Model({
                     boolean: true,
-                    datetime: new Date("2010-02-09"),
+                    datetime: new Date(2010, 1, 9),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -456,21 +456,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-09"),
+                    datetime: new Date(2010, 1, 9),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -497,7 +497,7 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -520,14 +520,14 @@ describe("Collection tests", function () {
                 }),
                 new Model({
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 }),
                 new Model({
                     boolean: true,
-                    datetime: new Date("2010-02-09"),
+                    datetime: new Date(2010, 1, 9),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -542,21 +542,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-09"),
+                    datetime: new Date(2010, 1, 9),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -646,21 +646,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-09"),
+                    datetime: new Date(2010, 1, 9),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -1124,21 +1124,21 @@ describe("Collection tests", function () {
             expect(obj.toJSON()).to.be.eql([
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-08"),
+                    datetime: new Date(2010, 1, 8),
                     float: 2.3,
                     integer: 2,
                     string: "string"
                 },
                 {
                     boolean: true,
-                    datetime: new Date("2010-02-09"),
+                    datetime: new Date(2010, 1, 9),
                     float: 2.3,
                     integer: 2,
                     string: "string"
@@ -1167,14 +1167,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1202,14 +1202,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1237,14 +1237,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1273,7 +1273,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1302,7 +1302,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1331,7 +1331,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1379,21 +1379,21 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1431,14 +1431,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1466,14 +1466,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1497,14 +1497,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1528,14 +1528,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1559,7 +1559,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1583,7 +1583,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1607,7 +1607,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1650,21 +1650,21 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1699,14 +1699,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1734,14 +1734,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1765,14 +1765,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1796,14 +1796,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1827,7 +1827,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1851,7 +1851,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1875,7 +1875,7 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1900,21 +1900,21 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-09"),
+                            datetime: new Date(2010, 1, 9),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -1939,14 +1939,14 @@ describe("Collection tests", function () {
                     expect(obj.toJSON()).to.be.eql([
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-07"),
+                            datetime: new Date(2010, 1, 7),
                             float: 2.3,
                             integer: 2,
                             string: "string"
                         },
                         {
                             boolean: true,
-                            datetime: new Date("2010-02-08"),
+                            datetime: new Date(2010, 1, 8),
                             float: 2.3,
                             integer: 2,
                             string: "string"
@@ -2000,14 +2000,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2029,14 +2029,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2058,14 +2058,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2088,21 +2088,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2130,14 +2130,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2161,14 +2161,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2192,14 +2192,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2224,21 +2224,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2264,14 +2264,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2293,14 +2293,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2322,14 +2322,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2360,21 +2360,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2520,21 +2520,21 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.2,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-09"),
+                        datetime: new Date(2010, 1, 9),
                         float: 2.3,
                         integer: 2,
                         string: "string"
@@ -2872,7 +2872,7 @@ describe("Collection tests", function () {
                                 firstName: "Jenson",
                                 lastName: "Button",
                                 team: "McLaren",
-                                dateOfBirth: new Date(317088000000),
+                                dateOfBirth: new Date(1980, 0, 19),
                                 championYears: [
                                     2009
                                 ]
@@ -2882,7 +2882,7 @@ describe("Collection tests", function () {
                                 firstName: "Lewis",
                                 lastName: "Hamilton",
                                 team: "Mercedes",
-                                dateOfBirth: new Date(473904000000),
+                                dateOfBirth: new Date(1985, 0, 7),
                                 championYears: [
                                     2008
                                 ]
@@ -2891,7 +2891,7 @@ describe("Collection tests", function () {
                                 id: 3,
                                 firstName: "Nico",
                                 lastName: "Rosberg",
-                                dateOfBirth: new Date(488674800000),
+                                dateOfBirth: new Date(1985, 5, 27),
                                 team: "Mercedes",
                                 championYears: null
                             },
@@ -2900,7 +2900,7 @@ describe("Collection tests", function () {
                                 firstName: "Sebastian",
                                 lastName: "Vettel",
                                 team: "Red Bull",
-                                dateOfBirth: new Date(552265200000),
+                                dateOfBirth: new Date(1987, 6, 3),
                                 championYears: [
                                     2010,
                                     2011,
@@ -2913,7 +2913,7 @@ describe("Collection tests", function () {
                                 firstName: "james",
                                 lastName: "hunt",
                                 team: "mclaren",
-                                dateOfBirth: new Date(-705114000000),
+                                dateOfBirth: new Date(1947, 7, 29),
                                 championYears: [
                                     1976
                                 ]
@@ -2969,7 +2969,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -2979,7 +2979,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -2989,7 +2989,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -2998,7 +2998,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3007,7 +3007,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3030,7 +3030,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3040,7 +3040,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3050,7 +3050,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3059,7 +3059,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3068,7 +3068,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3091,7 +3091,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3103,7 +3103,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3112,7 +3112,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3122,7 +3122,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3132,7 +3132,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3152,7 +3152,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3162,7 +3162,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3172,7 +3172,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3181,7 +3181,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3190,7 +3190,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3213,7 +3213,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3226,7 +3226,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3235,7 +3235,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3244,7 +3244,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3254,7 +3254,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3277,7 +3277,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3287,7 +3287,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3297,7 +3297,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3306,7 +3306,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3315,7 +3315,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3338,7 +3338,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3348,7 +3348,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3361,7 +3361,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3370,7 +3370,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3379,7 +3379,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3399,7 +3399,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3408,7 +3408,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3417,7 +3417,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3427,7 +3427,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3440,7 +3440,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3462,7 +3462,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3472,7 +3472,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3482,7 +3482,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3491,7 +3491,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 },
@@ -3500,7 +3500,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3524,7 +3524,7 @@ describe("Collection tests", function () {
                                     firstName: "Sebastian",
                                     lastName: "Vettel",
                                     team: "Red Bull",
-                                    dateOfBirth: new Date(552265200000),
+                                    dateOfBirth: new Date(1987, 6, 3),
                                     championYears: [
                                         2010,
                                         2011,
@@ -3537,7 +3537,7 @@ describe("Collection tests", function () {
                                     firstName: "Jenson",
                                     lastName: "Button",
                                     team: "McLaren",
-                                    dateOfBirth: new Date(317088000000),
+                                    dateOfBirth: new Date(1980, 0, 19),
                                     championYears: [
                                         2009
                                     ]
@@ -3547,7 +3547,7 @@ describe("Collection tests", function () {
                                     firstName: "Lewis",
                                     lastName: "Hamilton",
                                     team: "Mercedes",
-                                    dateOfBirth: new Date(473904000000),
+                                    dateOfBirth: new Date(1985, 0, 7),
                                     championYears: [
                                         2008
                                     ]
@@ -3557,7 +3557,7 @@ describe("Collection tests", function () {
                                     firstName: "james",
                                     lastName: "hunt",
                                     team: "mclaren",
-                                    dateOfBirth: new Date(-705114000000),
+                                    dateOfBirth: new Date(1947, 7, 29),
                                     championYears: [
                                         1976
                                     ]
@@ -3566,7 +3566,7 @@ describe("Collection tests", function () {
                                     id: 3,
                                     firstName: "Nico",
                                     lastName: "Rosberg",
-                                    dateOfBirth: new Date(488674800000),
+                                    dateOfBirth: new Date(1985, 5, 27),
                                     team: "Mercedes",
                                     championYears: null
                                 }
@@ -3656,7 +3656,7 @@ describe("Collection tests", function () {
                     it("should search an instance of an object and return one result", function () {
 
                         var out = obj.where({
-                            datetime: new Date("2010-02-07")
+                            datetime: new Date(2010, 1, 7)
                         });
 
                         expect(out).to.be.instanceof(Collection)
@@ -3671,7 +3671,7 @@ describe("Collection tests", function () {
                         obj.get(2).set("datetime", "2010-02-08");
 
                         var out = obj.where({
-                            datetime: new Date("2010-02-08")
+                            datetime: new Date(2010, 1, 8)
                         });
 
                         expect(out).to.be.instanceof(Collection)
@@ -3894,7 +3894,7 @@ describe("Collection tests", function () {
 
                 var obj = Collection.toModels({
                     boolean: true,
-                    datetime: new Date("2010-02-07"),
+                    datetime: new Date(2010, 1, 7),
                     float: 2.3,
                     int: 3,
                     string: "string"
@@ -3908,7 +3908,7 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 3,
                         string: "string"
@@ -3922,14 +3922,14 @@ describe("Collection tests", function () {
                 var obj = Collection.toModels([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         int: 3,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         int: 2,
                         string: "string"
@@ -3945,14 +3945,14 @@ describe("Collection tests", function () {
                 expect(obj.toJSON()).to.be.eql([
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-07"),
+                        datetime: new Date(2010, 1, 7),
                         float: 2.3,
                         integer: 3,
                         string: "string"
                     },
                     {
                         boolean: true,
-                        datetime: new Date("2010-02-08"),
+                        datetime: new Date(2010, 1, 8),
                         float: 2.3,
                         integer: 2,
                         string: "string"

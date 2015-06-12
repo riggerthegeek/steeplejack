@@ -402,7 +402,7 @@ describe("DomainModel tests - using new", function () {
                             ]
                         ],
                         "boolean": false,
-                        "datetime": new Date("2013-02-07T10:11:12.000Z"),
+                        "datetime": new Date(2013, 1, 7, 10, 11, 12),
                         "float": 2.3,
                         "integer": 89034,
                         "object": {
@@ -663,9 +663,9 @@ describe("DomainModel tests - using new", function () {
 
                     var out = obj.where({
                         string: "string",
-                        datetime: new Date('2010-02-07'),
+                        datetime: new Date(2010, 1, 7),
                         obj: {
-                            hello: 'world'
+                            hello: "world"
                         }
                     });
 
@@ -1532,8 +1532,8 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date("2013-02-07"),
-                    datetime: new Date("2013-02-07 10:11:12"),
+                    date: new Date(2013, 1, 7),
+                    datetime: new Date(2013, 1, 7, 10, 11, 12),
                     float: 2.3,
                     int: 89034,
                     object: {
@@ -1546,8 +1546,8 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date("2013-02-07"),
-                    datetime: new Date("2013-02-07 10:11:12"),
+                    date: new Date(2013, 1, 7),
+                    datetime: new Date(2013, 1, 7, 10, 11, 12),
                     float: 2.3,
                     integer: 89034,
                     object: {
@@ -1609,8 +1609,8 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: true,
-                    date: new Date(1373151600000),
-                    datetime: new Date(1373192430000),
+                    date: new Date(2013, 6, 7),
+                    datetime: new Date(Date.UTC(2013, 6, 7, 10, 20, 30, 100)),
                     float: 3,
                     integer: 4,
                     object: null,
