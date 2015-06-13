@@ -32,7 +32,7 @@ describe("Collection tests", function () {
                     value: false
                 },
                 datetime: {
-                    type: "datetime"
+                    type: "date"
                 },
                 float: {
                     type: "float"

@@ -62,7 +62,7 @@ describe("DomainModel tests - using new", function () {
                         //    type: "date"
                         //},
                         datetime: {
-                            type: "datetime"
+                            type: "date"
                         },
                         float: {
                             type: "float"
@@ -608,7 +608,7 @@ describe("DomainModel tests - using new", function () {
                                 value: false
                             },
                             datetime: {
-                                type: "datetime"
+                                type: "date"
                             },
                             float: {
                                 type: "float"
@@ -1486,7 +1486,7 @@ describe("DomainModel tests - using new", function () {
                             type: "date"
                         },
                         datetime: {
-                            type: "datetime"
+                            type: "date"
                         },
                         float: {
                             type: "float"
@@ -3817,7 +3817,7 @@ describe("DomainModel tests - using new", function () {
                             value: null
                         },
                         datetime: {
-                            type: "datetime",
+                            type: "date",
                             value: new Date()
                         },
                         postCode: {
