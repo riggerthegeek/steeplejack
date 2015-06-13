@@ -1532,7 +1532,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date(2013, 1, 7),
+                    date: new Date(2013, 1, 7, 10, 11, 12),
                     datetime: new Date(2013, 1, 7, 10, 11, 12),
                     float: 2.3,
                     int: 89034,
@@ -1546,7 +1546,7 @@ describe("DomainModel tests - using new", function () {
                         "an", "array of", ["stuff", 2]
                     ],
                     boolean: false,
-                    date: new Date(2013, 1, 7),
+                    date: new Date(2013, 1, 7, 10, 11, 12),
                     datetime: new Date(2013, 1, 7, 10, 11, 12),
                     float: 2.3,
                     integer: 89034,
@@ -1597,7 +1597,7 @@ describe("DomainModel tests - using new", function () {
 
                 var obj = Model.toModel({
                     boolean: "1",
-                    date: "2013-07-07T10:20:30.100Z",
+                    date: "2013-07-07T16:20:30.100Z",
                     datetime: "2013-07-07T10:20:30.100Z",
                     float: "3",
                     int: 4,
@@ -1609,7 +1609,42 @@ describe("DomainModel tests - using new", function () {
                 expect(obj.toObject()).to.be.eql({
                     array: null,
                     boolean: true,
-                    date: new Date(2013, 6, 7),
+                    date: new Date(Date.UTC(2013, 6, 7, 16, 20, 30, 100)),
+                    datetime: new Date(Date.UTC(2013, 6, 7, 10, 20, 30, 100)),
+                    float: 3,
+                    integer: 4,
+                    object: null,
+                    string: "hello this is a string"
+                });
+
+                /* Check stuff can be set */
+                obj.set("integer", "12345");
+                expect(obj.get("integer")).to.be.equal(12345);
+
+                obj.set("boolean", 0);
+                expect(obj.get("boolean")).to.be.false;
+
+                done();
+
+            });
+
+            it("should create a model from data - afternoon date", function (done) {
+
+                var obj = Model.toModel({
+                    boolean: "1",
+                    date: "2013-07-07T16:20:30.100Z",
+                    datetime: "2013-07-07T10:20:30.100Z",
+                    float: "3",
+                    int: 4,
+                    string: "hello this is a string"
+                });
+
+                expect(obj).to.be.instanceof(Model);
+
+                expect(obj.toObject()).to.be.eql({
+                    array: null,
+                    boolean: true,
+                    date: new Date(Date.UTC(2013, 6, 7, 16, 20, 30, 100)),
                     datetime: new Date(Date.UTC(2013, 6, 7, 10, 20, 30, 100)),
                     float: 3,
                     integer: 4,
