@@ -4,8 +4,8 @@ description: > #
   steeplejack is a scaffolding framework for node.js/io.js that adds
   awesomity to your projects - Dependency Injection, data models and collections,
   URL routing and class inheritance for grown-ups - all out of the box.
-baseurl: "/steeplejack"
-url: "https://slash-dev-slash-null.github.io"
+baseurl: "/"
+url: "http://steeplejack.info"
 
 # Build settings
 markdown: kramdown
