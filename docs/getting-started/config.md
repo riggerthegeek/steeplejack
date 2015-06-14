@@ -114,7 +114,7 @@ again `node app.js port=9999 db.password=wrongpassword`.  This gives:
     }
 
 Notice how we can traverse into objects by using the dot notation `db.password`.  Also, with arguments, it will add
-things in if they don't exist in the config object.  And if you don't set a value, it'll set it as true.  Let's see
+things in if they don't exist in the config object.  And if you don't set a value, it'll set it as `true`.  Let's see
 what happens when we run `node app.js port=9998 test server.logging=false`.
 
     {
