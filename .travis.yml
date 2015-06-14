@@ -27,3 +27,10 @@ deploy:
     all_branches: true
     tags: true
     repo: riggerthegeek/steeplejack
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/d048e712b735c6cb4cf2
+    on_success: change
+    on_failure: always
+    on_start: false
