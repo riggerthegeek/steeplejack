@@ -1,8 +1,11 @@
 .header {
 
     @extend .navbar;
-    @extend .navbar-inverse;
     @extend .navbar-fixed-top;
+
+    background: {
+        color: $black;
+    };
 
     .navbar-header {
 

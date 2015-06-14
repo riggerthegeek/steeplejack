@@ -2,6 +2,36 @@
 
     @extend .navbar-nav;
 
+    li {
+
+        a {
+
+            color: $white;
+            background: none !important;
+            font: {
+                weight: bold;
+            }
+
+            &:hover {
+
+                color: $teal;
+
+            }
+
+        }
+
+        &.active {
+
+            a {
+
+                color: $teal;
+
+            }
+
+        }
+
+    }
+
     @media (min-width: $screen-sm-min) {
 
         float: right;

@@ -1,7 +1,9 @@
 .footer {
 
     padding: 50px 30px;
-    background: $black;
+    background: {
+        color: $black;
+    }
     color: $light-grey;
 
     a {
