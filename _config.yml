@@ -11,6 +11,8 @@ url: "http://steeplejack.info"
 markdown: kramdown
 
 github: https://github.com/riggerthegeek/steeplejack
+gitter_url: https://gitter.im/riggerthegeek/steeplejack
+bugs_url: https://github.com/riggerthegeek/steeplejack/issues
 
 gems:
   - jekyll-redirect-from
