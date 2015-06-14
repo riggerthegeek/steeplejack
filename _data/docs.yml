@@ -35,7 +35,7 @@
             url: "/docs/api/errors/"
         -
             name: "HTTP"
-            url: "/docs/api/http"
+            url: "/docs/api/http/"
         -
             name: "Inheritance"
             url: "/docs/api/inheritance/"
