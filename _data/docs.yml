@@ -20,6 +20,12 @@
         -
             name: "Config"
             url: "/docs/getting-started/config/"
+        -
+            name: "Unit Testing"
+            url: "/docs/getting-started/unit-testing/"
+        -
+            name: "Overview"
+            url: "/docs/getting-started/overview/"
 -
     id: "api"
     title: "API Reference"
