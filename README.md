@@ -4,6 +4,7 @@
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Node.js Version][node-version-image]][node-version-url]
 [![Build Status][travis-image]][travis-url]
+[![Gitter](gitter-img)](gitter-url)
 [![Dependencies][dependencies-image]][dependencies-url]
 [![Dev Dependencies][dev-dependencies-image]][dev-dependencies-url]
 
@@ -46,6 +47,7 @@ MIT License
 [travis-image]: https://img.shields.io/travis/riggerthegeek/steeplejack.svg?style=flat
 [dependencies-image]: http://img.shields.io/david/riggerthegeek/steeplejack.svg?style=flat
 [dev-dependencies-image]: http://img.shields.io/david/dev/riggerthegeek/steeplejack.svg?style=flat
+[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
 
 [npm-url]: https://npmjs.org/package/steeplejack
 [node-version-url]: http://nodejs.org/download/
@@ -53,3 +55,4 @@ MIT License
 [downloads-url]: https://npmjs.org/package/steeplejack
 [dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack
 [dev-dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack#info=devDependencies&view=table
+[gitter-url]: https://gitter.im/riggerthegeek/steeplejack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge
