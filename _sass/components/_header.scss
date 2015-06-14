@@ -1,3 +1,25 @@
 .header {
-    @extend .container;
+
+    @extend .navbar;
+    @extend .navbar-inverse;
+    @extend .navbar-fixed-top;
+
+    .navbar-header {
+
+        .navbar-brand {
+
+            img {
+
+                margin: {
+                    top: -($navbar-padding-horizontal / 2);
+                    bottom: -($navbar-padding-horizontal / 2);
+                }
+                height: $navbar-height - $navbar-padding-horizontal;
+
+            }
+
+        }
+
+    }
+
 }

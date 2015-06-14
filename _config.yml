@@ -10,4 +10,4 @@ url: "http://steeplejack.info"
 # Build settings
 markdown: kramdown
 
-github_edit: https://github.com/riggerthegeek/steeplejack/edit/gh-pages/
+github: https://github.com/riggerthegeek/steeplejack

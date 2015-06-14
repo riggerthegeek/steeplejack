@@ -1,31 +1,51 @@
 <header class="header">
 
-    <div class="masthead clearfix">
+    <div class="container">
 
-        <h3 class="masthead-brand">
-            <a href="{{ "/" | prepend: site.baseurl }}">
+        <div class="navbar-header">
+
+            <button
+                class="navbar-toggle collapsed"
+                aria-controls="navbar"
+                aria-expanded="false"
+                data-target="#navbar"
+                data-toggle="collapse"
+                type="button">
+
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+            </button>
+
+            <a href="{{ "/" | prepend: site.baseurl }}" class="navbar-brand">
                 <img alt="steeplejack" src="{{ '/img/logo.png' | prepend: site.baseurl }}">
-                steeplejack
             </a>
-        </h3>
 
-        {% assign page_url = page.url | prepend: site.baseurl | replace:'index.html','' %}
+        </div>
 
-        <ul class="nav masthead-nav">
+        <div id="navbar" class="collapse navbar-collapse">
 
-            {% for link in site.data.nav %}
+            <ul class="nav">
 
-                {% assign link_url = link.url | prepend: site.baseurl %}
+                {% assign page_url = page.url | prepend: site.baseurl | replace:'index.html','' %}
 
-                <li role="presentation" class="{% if page_url == link_url} %}active{% endif %}">
-                    <a href="{{ link.url | prepend: site.baseurl }}">
-                        {{ link.name }}
-                    </a>
-                </li>
+                {% for link in site.data.nav %}
 
-            {% endfor %}
+                    {% assign link_url = link.url | prepend: site.baseurl %}
 
-        </ul>
+                    <li role="presentation" class="{% if page_url == link_url} %}active{% endif %}">
+                        <a href="{{ link.url | prepend: site.baseurl }}">
+                            {{ link.name }}
+                        </a>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
 
     </div>
 

@@ -1,28 +1,19 @@
 .docs_layout {
 
-    display: flex;
-    flex-direction: column;
-    box-shadow: inset 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
-
-    blockquote {
-        font-size: inherit;
-    }
-
-    .site_content {
-        flex: 1;
-    }
-
-    .page_content {
+    &.page_content {
 
         .main_body {
 
             @extend .col-sm-9;
+            @extend .clearfix;
 
         }
 
         .sidebar {
 
             @extend .col-sm-3;
+            @extend .clearfix;
+
             margin: {
                 bottom: 50px;
             }

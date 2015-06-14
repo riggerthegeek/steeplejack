@@ -12,4 +12,19 @@
         }
     }
 
+
+    .improve_article {
+
+        @extend .black_button;
+
+        &:before {
+            @extend .fa;
+            content: $fa-var-pencil;
+            padding: {
+                right: 5px;
+            }
+        }
+
+    }
+
 }
