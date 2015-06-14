@@ -1,0 +1,34 @@
+.page_content {
+
+    .main_body {
+
+        @extend .col-sm-12;
+
+        position: relative;
+        background-color: $medium-grey;
+        margin: {
+            bottom: 50px;
+        }
+
+        @include border-radius(10px);
+
+        .improve_article {
+
+            @extend .black_button;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+
+            &:before {
+                @extend .fa;
+                content: $fa-var-pencil;
+                padding: {
+                    right: 5px;
+                }
+            }
+
+        }
+
+    }
+
+}
