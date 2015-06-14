@@ -9,6 +9,17 @@
 
     .navbar-header {
 
+        .navbar-toggle {
+            border-color: $medium-grey;
+            &:hover,
+            &:focus {
+                background-color: $medium-grey;
+            }
+            .icon-bar {
+                background-color: $white;
+            }
+        }
+
         .navbar-brand {
 
             img {
