@@ -1,4 +1,4 @@
-.default_layout {
+.docs_layout {
 
     display: flex;
     flex-direction: column;
@@ -17,31 +17,6 @@
         .main_body {
 
             @extend .col-sm-9;
-
-            position: relative;
-            background-color: $medium-grey;
-            margin: {
-                bottom: 50px;
-            }
-
-            @include border-radius(10px);
-
-            .improve_article {
-
-                @extend .black_button;
-                position: absolute;
-                top: 20px;
-                right: 20px;
-
-                &:before {
-                    @extend .fa;
-                    content: $fa-var-pencil;
-                    padding: {
-                        right: 5px;
-                    }
-                }
-
-            }
 
         }
 
