@@ -33,7 +33,7 @@ on NodeJS 0.8 and above and on io.js 1.04 and above
 
 # Documentation
 
-Full documentation can be found at [http://riggerthegeek.github.io/steeplejack](http://riggerthegeek.github.io/steeplejack)
+Full documentation can be found at [http://steeplejack.info](http://steeplejack.info)
 
 # License
 
