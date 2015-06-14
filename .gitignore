@@ -39,3 +39,4 @@ node_modules
 /build/
 _site
 .sass-cache
+Gemfile.lock

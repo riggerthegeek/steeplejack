@@ -1,16 +1,15 @@
 .page_content {
 
-    .main_body {
+    @extend .col-sm-12;
 
-        blockquote {
+    margin: {
+        bottom: 50px;
+    }
+    blockquote {
 
-            font: {
-                size: 1em;
-            }
+        font: {
+            size: 1em;
         }
-
-        @extend .col-sm-12;
-
     }
 
 }

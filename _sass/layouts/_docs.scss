@@ -1,81 +1,73 @@
 .docs_layout {
 
-    &.page_content {
+    .main_body {
 
-        .main_body {
+        @extend .col-sm-9;
+        @extend .col-sm-push-3;
+        @extend .clearfix;
 
-            @extend .col-sm-9;
-            @extend .col-sm-push-3;
-            @extend .clearfix;
+    }
 
+    .sidebar {
+
+        @extend .col-sm-3;
+        @extend .col-sm-pull-9;
+        @extend .clearfix;
+
+        h5 {
+
+            display: block;
+            text-transform: uppercase;
+            padding: {
+                top: $grid-gutter-width / 2;
+                bottom: $grid-gutter-width / 2;
+            }
+            border: {
+                bottom: 1px solid $red;
+            }
+            text-shadow: 2px 2px $black;
+            margin: {
+                left: -$grid-gutter-width / 2;
+            }
         }
 
-        .sidebar {
+        ul {
 
-            @extend .col-sm-3;
-            @extend .col-sm-pull-9;
-            @extend .clearfix;
+            @extend .list-unstyled;
 
-            margin: {
-                bottom: 50px;
-            }
+            li {
+                position: relative;
 
-            h5 {
+                a {
 
-                display: block;
-                text-transform: uppercase;
-                padding: {
-                    top: $grid-gutter-width / 2;
-                    bottom: $grid-gutter-width / 2;
+                    display: block;
+                    margin: {
+                        left: -$grid-gutter-width / 2;
+                    }
+                    padding: {
+                        left: $grid-gutter-width;
+                    }
+                    color: $teal;
+                    text-shadow: 2px 2px $black;
+
+                    &:hover {
+                        color: darken($teal, 10%);
+                        text-decoration: none;
+                    }
+
                 }
-                border: {
-                    bottom: 1px solid $red;
-                }
-                text-shadow: 2px 2px $black;
-                margin: {
-                    left: -$grid-gutter-width / 2;
-                }
-            }
 
-            ul {
-
-                @extend .list-unstyled;
-
-                li {
-                    position: relative;
+                &.active {
 
                     a {
 
-                        display: block;
-                        margin: {
-                            left: -$grid-gutter-width / 2;
+                        background: {
+                            color: $medium-grey;
                         }
-                        padding: {
-                            left: $grid-gutter-width;
-                        }
-                        color: $teal;
-                        text-shadow: 2px 2px $black;
-
-                        &:hover {
-                            color: darken($teal, 10%);
-                            text-decoration: none;
-                        }
+                        color: $orange;
+                        font-weight: 500;
 
                     }
-
-                    &.active {
-
-                        a {
-
-                            background: {
-                                color: $medium-grey;
-                            }
-                            color: $orange;
-                            font-weight: 500;
-
-                        }
-                    }
-
                 }
 
             }
