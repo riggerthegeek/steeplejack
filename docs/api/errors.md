@@ -1,5 +1,5 @@
 ---
 layout: default
 title: Errors
-permalink: /docs/errors/
+permalink: /docs/api/errors/
 ---

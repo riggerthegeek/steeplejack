@@ -1,5 +1,5 @@
 ---
 layout: default
 title: Inheritance
-permalink: /docs/api/inheritance
+permalink: /docs/api/inheritance/
 ---
