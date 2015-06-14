@@ -2,6 +2,7 @@
 layout: docs
 title: Installation
 permalink: /docs/getting-started/
+section: docs
 ---
 
 Create a new directory `myapp`. In that directory, you'll need to run the following commands:

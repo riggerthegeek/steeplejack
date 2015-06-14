@@ -2,6 +2,7 @@
 layout: docs
 title: Running Your App
 permalink: /docs/getting-started/running-your-app/
+section: docs
 ---
 
 Now we've got the model and collection done, we can look to start wrapping things up and getting a runnable app.

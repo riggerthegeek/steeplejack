@@ -2,6 +2,7 @@
 layout: docs
 title: Config and Environment Variables
 permalink: /docs/getting-started/config/
+section: docs
 ---
 
 Now we've got our skeleton app up and running, let's look at configuration.  This was one of the original reasons why

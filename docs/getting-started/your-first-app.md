@@ -2,6 +2,7 @@
 layout: docs
 title: Your First App
 permalink: /docs/getting-started/your-first-app/
+section: docs
 ---
 
 Creating a basic steeplejack app is simple.

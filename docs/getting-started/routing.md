@@ -2,6 +2,7 @@
 layout: docs
 title: Routing
 permalink: /docs/getting-started/routing/
+section: docs
 ---
 
 So far, you should have a simple app set up that returns an HTTP 404 error.  In order to get your application to return

@@ -2,6 +2,7 @@
 layout: docs
 title: Models and Collections
 permalink: /docs/getting-started/models-and-collections/
+section: docs
 ---
 
 ### Models

@@ -5,6 +5,7 @@
         .main_body {
 
             @extend .col-sm-9;
+            @extend .col-sm-push-3;
             @extend .clearfix;
 
         }
@@ -12,6 +13,7 @@
         .sidebar {
 
             @extend .col-sm-3;
+            @extend .col-sm-pull-9;
             @extend .clearfix;
 
             margin: {
@@ -19,9 +21,10 @@
             }
 
             h5 {
+                display: block;
                 text-transform: uppercase;
-                text-align: right;
                 padding: {
+                    top: $grid-gutter-width / 2;
                     bottom: $grid-gutter-width / 2;
                 }
                 border: {
