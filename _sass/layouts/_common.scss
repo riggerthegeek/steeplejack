@@ -2,6 +2,13 @@
 
     .main_body {
 
+        blockquote {
+
+            font: {
+                size: 1em;
+            }
+        }
+
         @extend .col-sm-12;
 
     }

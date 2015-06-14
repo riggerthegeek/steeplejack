@@ -27,9 +27,12 @@ layout: 'base'
             <ul>
                 {% for doc in section.items %}
 
+                    {% assign page_url = page.url | prepend: site.baseurl | replace:'index.html','' %}
+
                     {% assign link_url = doc.url | prepend: site.baseurl %}
 
                     <li class="{% if page_url == link_url} %}active{% endif %}">
+
                         <a href="{{ link_url }}">
                             {{ doc.name }}
                         </a>
