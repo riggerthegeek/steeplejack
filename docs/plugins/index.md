@@ -1,11 +1,11 @@
 ---
 layout: docs
-title: API
-permalink: /docs/api/
+title: Plugins
+permalink: /docs/plugins/
 section: docs
 ---
 
-{% assign docs = site.data.docs | where: "id", "api" %}
+{% assign docs = site.data.docs | where: "id", "plugins" %}
 
 {% for doc in docs %}
 {% for item in doc.items %}

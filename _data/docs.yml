@@ -1,4 +1,5 @@
 -
+    id: "getting-started"
     title: "Getting Started"
     items:
         -
@@ -20,6 +21,7 @@
             name: "Config"
             url: "/docs/getting-started/config/"
 -
+    id: "api"
     title: "API Reference"
     items:
         -
@@ -47,6 +49,7 @@
             name: "Router"
             url: "/docs/api/router/"
 -
+    id: "plugins"
     title: "Plugins"
     items:
         -
