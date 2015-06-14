@@ -43,9 +43,9 @@ MIT License
 [downloads-image]: https://img.shields.io/npm/dm/steeplejack.svg?style=flat
 [node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.8-brightgreen.svg?style=flat
 [travis-image]: https://img.shields.io/travis/riggerthegeek/steeplejack.svg?style=flat
-[dependencies-image]: http://img.shields.io/david/riggerthegeek/steeplejack.svg?style=flat
-[dev-dependencies-image]: http://img.shields.io/david/dev/riggerthegeek/steeplejack.svg?style=flat
-[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[dependencies-image]: https://img.shields.io/david/riggerthegeek/steeplejack.svg?style=flat
+[dev-dependencies-image]: https://img.shields.io/david/dev/riggerthegeek/steeplejack.svg?style=flat
+[gitter-image]: https://img.shields.io/badge/GITTER-JOIN%20CHAT%20%E2%86%92-1DCE73.svg?style=flat
 
 [npm-url]: https://npmjs.org/package/steeplejack
 [node-version-url]: http://nodejs.org/download/
