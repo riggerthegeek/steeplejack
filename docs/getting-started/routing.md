@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: docs
 title: Routing
 permalink: /docs/getting-started/routing/
 ---

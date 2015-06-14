@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: docs
 title: Your First App
 permalink: /docs/getting-started/your-first-app/
 ---

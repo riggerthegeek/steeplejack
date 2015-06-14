@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: docs
 title: Config and Environment Variables
 permalink: /docs/getting-started/config/
 ---
