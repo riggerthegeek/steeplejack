@@ -526,6 +526,27 @@ describe("Main test", function () {
 
         });
 
+        describe("#getModules", function () {
+
+            it("should return the modules registered", function () {
+
+                var obj = new Main();
+
+                expect(obj.getModules()).to.be.eql([]);
+
+                var arr = [
+                    "mod1",
+                    "mod2"
+                ];
+
+                obj._modules = arr;
+
+                expect(obj.getModules()).to.be.equal(arr);
+
+            });
+
+        });
+
         describe("#getInjector", function () {
 
             it("should return the injector instance", function () {

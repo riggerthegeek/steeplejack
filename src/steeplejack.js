@@ -303,6 +303,18 @@ module.exports = Base.extend({
 
 
     /**
+     * Get Modules
+     *
+     * Get the modules registered
+     *
+     * @returns {Array}
+     */
+    getModules: function getModules () {
+        return this._modules;
+    },
+
+
+    /**
      * Register Config
      *
      * This is to register config modules
