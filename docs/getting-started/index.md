@@ -5,6 +5,8 @@ permalink: /docs/getting-started/
 section: docs
 ---
 
+> This example app can be downloaded from [GitHub](https://github.com/riggerthegeek/steeplejack-example)
+
 Create a new directory `myapp`. In that directory, you'll need to run the following commands:
 
 - Run `npm init` to set up your NodeJS project. Follow the prompts and this will also generate a package.json file for
