@@ -39,3 +39,4 @@ node_modules
 /build/
 /.sass-cache/
 /_site/
+*.lock
