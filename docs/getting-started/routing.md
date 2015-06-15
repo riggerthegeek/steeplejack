@@ -32,6 +32,8 @@ Add in a `routeDir` parameter to tell the application where to look for route fi
 Now create a directory called `routes` in your project and then a file called `hello.js` inside that directory.  Your
 project will now look something like this.
 
+> The `routeDir` path is prepended with the result of `process.cwd()` so it should be relative to that path.
+
 {% highlight bash %}
     .
 ├── app.js
