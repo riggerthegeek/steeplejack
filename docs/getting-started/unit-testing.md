@@ -20,9 +20,11 @@ The first thing to do is to create a test version of your application.  This is 
 files are located and very close to what we created in `app.js` right at the start.
 
     var injector = steeplejack.test({
-        config: require("/path/to/config"),
+        config: {
+            port: 3000
+        },
         modules: [
-            "**/*.js"
+            "!(routes)/**/*.js"
         ]
     });
 

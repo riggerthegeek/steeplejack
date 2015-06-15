@@ -52,7 +52,48 @@ That has registered a GET method on `/product` which calls the the object we jus
 
 ### App
 
-Finally, we need to add in the modules
+Finally, we need to add in the module paths for steeplejack to load up.  In your `app.js`, you need to add in a `modules`
+section to the factory method.
+
+    steeplejack
+        .app({
+            config: {
+                port: 3000
+            },
+            modules: [
+                 "!(routes)/**/*.js"
+            ],
+            routeDir: "routes"
+        });
+
+> Like the `routeDir` path, the `modules` are prepended with the result of `process.cwd()`.
+
+The modules accept an array.  As you can [glob](https://en.wikipedia.org/wiki/Glob_%28programming%29) these files, I'd
+suggest doing something like this that requires as little entries as possible.  In this example, it includes every file
+ending in `.js`, except those in the `routes` folder.
+
+### Running
+
+Now you've got an application that is ready to run.  In your console, type
+
+    node app.js
+
+Now, when you got to [http://localhost:3000/product](http://localhost:3000/product) you should see the following
+
+    [
+        {
+            "id": null,
+            "name": "product 1",
+            "price": 24
+        },
+        {
+            "id": null,
+            "name": "product 2",
+            "price": 28.99
+        }
+    ]
+
+Congratulations, you've got your first steeplejack app running.
 
 <a href="{{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}" class="prev_button">Models and Collections</a>
 <a href="{{ '/docs/getting-started/config' | prepend: site.baseurl }}" class="next_button">Config</a>
