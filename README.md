@@ -1,4 +1,4 @@
-# steeplejack   
+# steeplejack
 
 [![Gitter][gitter-image]][gitter-url]
 [![NPM Version][npm-image]][npm-url]
@@ -11,7 +11,7 @@ A NodeJS scaffolding framework.
 It enables you to quickly build module applications and for new modules to be available simply with the file being
 present.  It's built with [Inversion of Control](http://en.wikipedia.org/wiki/Inversion_of_control) at it's core, so
 that adding new modules becomes as simple as adding the files to your project.  It also provides routing, any HTTP
-strategy you care to use and powerful data models that ensures your data is correct and valid. 
+strategy you care to use and powerful data models that ensures your data is correct and valid.
 
 # Features
  - Inversion of Control container
@@ -49,7 +49,7 @@ MIT License
 
 [npm-url]: https://npmjs.org/package/steeplejack
 [node-version-url]: http://nodejs.org/download/
-[travis-url]: https://travis-ci.org/riggerthegeek/steeplejack 
+[travis-url]: https://travis-ci.org/riggerthegeek/steeplejack
 [downloads-url]: https://npmjs.org/package/steeplejack
 [dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack
 [dev-dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack#info=devDependencies&view=table
