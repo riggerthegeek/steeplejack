@@ -4,9 +4,9 @@ layout: 'docs'
 
 <div class="api_layout">
 
-    <h2>
+    <h4>
         Table of Contents
-    </h2>
+    </h4>
 
     <ul class="toc">
 
@@ -14,12 +14,14 @@ layout: 'docs'
 
             <li class="section">
 
-                {% if section.type == 'method' %}
-                    Prototypical
-                {% else %}
-                    Static
-                {% endif %}
-                Methods
+                <a href="#{{section.type}}head">
+                    {% if section.type == 'method' %}
+                        Prototypical
+                    {% else %}
+                        Static
+                    {% endif %}
+                    Methods
+                </a>
 
                 <ul>
                     {% for method in section.items %}
@@ -40,9 +42,24 @@ layout: 'docs'
         {{ page.description | markdownify }}
     </div>
 
+    {% if page.extends %}
+        <div class="extends">
+
+            <h3>
+                Extends
+            </h3>
+
+            <a href="{{ page.extends.url }}">
+                {{ page.extends.name }}
+            </a>
+
+        </div>
+    {% endif %}
+
     {% for section in page.api %}
 
         <h3>
+            <a name="{{section.type}}head"></a>
             {% if section.type == 'method' %}
                 Prototypical
             {% else %}
@@ -55,15 +72,15 @@ layout: 'docs'
             <div class="method">
                 <a name="{{section.type}}_{{ method.name }}"></a>
 
-                <h4>
+                <h5>
                     {{ method.name }}
-                </h4>
+                </h5>
 
                 <div class="description">
                     {{ method.desc | markdownify }}
                 </div>
 
-                <a href="#top">Back to top</a>
+                <a class="toTop" href="#top">Back to top</a>
             </div>
         {% endfor %}
 

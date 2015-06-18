@@ -1,0 +1,64 @@
+.api_layout {
+
+    .toc {
+
+        @extend .list-unstyled;
+
+        margin: 0 auto;
+        padding: 0 50px;
+        font: {
+            weight: 500;
+        }
+
+    }
+
+    h3 {
+
+        background: {
+            color: $medium-grey;
+        }
+        padding: 10px;
+        margin: {
+            bottom: 10px;
+        }
+        border: {
+            bottom: 1px solid $medium-grey;
+        }
+
+    }
+
+    .method {
+
+        margin: {
+            top: 10px;
+            bottom: 10px;
+        }
+        padding: {
+            bottom: 10px;
+        }
+        border: {
+            bottom: 1px solid $medium-grey;
+        }
+
+        .description {
+
+            margin: {
+                left: 50px;
+            }
+
+        }
+
+        .toTop {
+
+            margin: {
+                left: 50px;
+            }
+            font: {
+                size: 8pt;
+            }
+
+        }
+
+    }
+
+}

@@ -6,6 +6,7 @@ html, body {
 }
 
 body {
+
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -18,7 +19,11 @@ body {
 }
 
 .site_content {
+
+    @extend .container;
+
     flex: 1;
+
 }
 
 a {
