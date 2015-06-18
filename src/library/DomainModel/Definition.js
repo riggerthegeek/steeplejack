@@ -133,7 +133,7 @@ var Definition = Base.extend({
 
         definition = datatypes.setObject(definition, {});
 
-        return Definition.create({
+        return new Definition({
             type: definition.type,
             value: definition.value,
             column: definition.column === null ? null : definition.column || name,

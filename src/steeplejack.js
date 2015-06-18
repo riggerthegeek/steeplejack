@@ -178,7 +178,7 @@ module.exports = Base.extend({
         }, {}, this);
 
         /* Put to the router and return */
-        return Router.create(routes);
+        return new Router(routes);
 
     },
 
@@ -562,7 +562,7 @@ module.exports = Base.extend({
         config = _.merge(config, args);
 
         /* Create and return the application */
-        return this.create(config, options.modules, options.routeDir);
+        return new this(config, options.modules, options.routeDir);
 
     },
 
@@ -695,7 +695,7 @@ module.exports = Base.extend({
             config = _.merge(config, configOverride);
 
             /* Create and configure the application */
-            var app = this.create(config, options.modules)
+            var app = new this(config, options.modules)
                 .registerModules();
 
             var injector = app.getInjector();

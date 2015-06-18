@@ -375,7 +375,7 @@ var DomainModel = Base.extend({
                             }
 
                             if (createCollection) {
-                                value = definition.type.create(value);
+                                value = new definition.type(value);
                             }
                         }
                     } else {
@@ -700,7 +700,7 @@ var DomainModel = Base.extend({
         objData = datatypes.setObject(objData, {});
 
         /* Create instance of model */
-        var obj = this.create();
+        var obj = new this();
 
         /* Get the definition */
         var def = obj.getColumnKeys();

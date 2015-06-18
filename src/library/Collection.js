@@ -119,7 +119,7 @@ module.exports = Base.extend({
                         /* Already instance of the model */
                         obj = data;
                     } else {
-                        obj = this.model.create(data);
+                        obj = new this.model(data);
                     }
 
                     var key = uuid.v4();
@@ -696,7 +696,7 @@ module.exports = Base.extend({
     toModels: function (data) {
 
         /* Create an instance of the collection */
-        var collection = this.create();
+        var collection = new this();
 
         var array = datatypes.setArray(data, null);
 

@@ -88,8 +88,8 @@ _.extend(Base.prototype, {
     clone: function () {
 
         /* If this._Class not set, it's only an instance of Base */
-        var constructor = this._Class || this.constructor;
-        var clone = constructor.create();
+        var Constructor = this._Class || this.constructor;
+        var clone = new Constructor();
 
         var cloneIgnore = Base.datatypes.setArray(this._cloneIgnore, []);
 
