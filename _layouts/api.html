@@ -1,0 +1,72 @@
+---
+layout: 'docs'
+---
+
+<div class="api_layout">
+
+    <h2>
+        Table of Contents
+    </h2>
+
+    <ul class="toc">
+
+        {% for section in page.api %}
+
+            <li class="section">
+
+                {% if section.type == 'method' %}
+                    Prototypical
+                {% else %}
+                    Static
+                {% endif %}
+                Methods
+
+                <ul>
+                    {% for method in section.items %}
+                        <li>
+                            <a href="#{{section.type}}_{{ method.name }}">
+                                {{ method.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+        {% endfor %}
+
+    </ul>
+
+    <div class="description">
+        {{ page.description | markdownify }}
+    </div>
+
+    {% for section in page.api %}
+
+        <h3>
+            {% if section.type == 'method' %}
+                Prototypical
+            {% else %}
+                Static
+            {% endif %}
+            Methods
+        </h3>
+
+        {% for method in section.items %}
+            <div class="method">
+                <a name="{{section.type}}_{{ method.name }}"></a>
+
+                <h4>
+                    {{ method.name }}
+                </h4>
+
+                <div class="description">
+                    {{ method.desc | markdownify }}
+                </div>
+
+                <a href="#top">Back to top</a>
+            </div>
+        {% endfor %}
+
+    {% endfor %}
+
+</div>

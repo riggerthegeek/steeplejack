@@ -31,6 +31,12 @@
     title: "API Reference"
     items:
         -
+            name: "steeplejack"
+            url: "/docs/api/steeplejack/"
+        -
+            name: "Base"
+            url: "/docs/api/base/"
+        -
             name: "Collections"
             url: "/docs/api/collections/"
         -
