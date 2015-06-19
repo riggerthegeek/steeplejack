@@ -8,8 +8,6 @@ source: src/library/Base.js
 description: |
     This is the steeplejack Base object, which most other steeplejack classes extend.  This contains methods that are
     useful to all higher-level classes, just as extension and cloning.
-
-
 extends:
     name: EventEmitter
     url: https://nodejs.org/api/events.html

@@ -4,8 +4,9 @@ title: steeplejack
 permalink: /api/steeplejack/
 section: api
 
+source: src/library/
 description: |
-
+extends:
 api:
     -
         type: method
@@ -19,5 +20,4 @@ api:
             -
                 name: method
                 desc: |
-
 ---
