@@ -170,7 +170,7 @@ _.extend(Base, {
      * @param ChildClass
      * @returns {boolean}
      */
-    extendsContructor: function extendsContructor (ChildClass) {
+    extendsConstructor: function extendsConstructor (ChildClass) {
 
         ChildClass = Base.datatypes.setFunction(ChildClass, null);
 

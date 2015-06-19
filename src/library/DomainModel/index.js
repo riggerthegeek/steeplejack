@@ -362,7 +362,7 @@ var DomainModel = Base.extend({
                 if (typeof definition.type === "function") {
 
                     /* Does it extend DomainModel or Collection? */
-                    if (Base.extendsContructor(definition.type, DomainModel, Collection)) {
+                    if (Base.extendsConstructor(definition.type, DomainModel, Collection)) {
                         /* Instanceof DomainModel or Collection */
                         if (value instanceof definition.type === false) {
                             var createCollection = false;
@@ -712,9 +712,9 @@ var DomainModel = Base.extend({
             var type = obj.getDefinition(key).type;
 
             if (value !== obj.getDefinition(key).value && value !== undefined) {
-                if (Base.extendsContructor(type, Collection)) {
+                if (Base.extendsConstructor(type, Collection)) {
                     value = type.toModels(value).toJSON();
-                } else if (Base.extendsContructor(type, DomainModel)) {
+                } else if (Base.extendsConstructor(type, DomainModel)) {
                     value = type.toModel(value);
                 }
             }

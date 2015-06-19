@@ -619,7 +619,7 @@ describe("Base library", function () {
 
     });
 
-    describe("#extendsContructor", function () {
+    describe("#extendsConstructor", function () {
 
         describe("Steeplejack methods", function () {
 
@@ -627,7 +627,7 @@ describe("Base library", function () {
 
                 var ChildClass = Base.extend();
 
-                expect(Base.extendsContructor(ChildClass, Base)).to.be.true;
+                expect(Base.extendsConstructor(ChildClass, Base)).to.be.true;
 
             });
 
@@ -635,7 +635,7 @@ describe("Base library", function () {
 
                 var ChildClass = DomainModel.extend();
 
-                expect(Base.extendsContructor(ChildClass, Base));
+                expect(Base.extendsConstructor(ChildClass, Base));
 
             });
 
@@ -643,7 +643,7 @@ describe("Base library", function () {
 
                 var ChildClass = DomainModel.extend();
 
-                expect(Base.extendsContructor(ChildClass, DomainModel));
+                expect(Base.extendsConstructor(ChildClass, DomainModel));
 
             });
 
@@ -653,7 +653,7 @@ describe("Base library", function () {
 
                 var ChildClass = ParentClass.extend();
 
-                expect(Base.extendsContructor(ChildClass, ParentClass)).to.be.true;
+                expect(Base.extendsConstructor(ChildClass, ParentClass)).to.be.true;
 
             });
 
@@ -663,7 +663,7 @@ describe("Base library", function () {
 
                 var ChildClass = ParentClass.extend();
 
-                expect(Base.extendsContructor(ChildClass, DomainModel)).to.be.false;
+                expect(Base.extendsConstructor(ChildClass, DomainModel)).to.be.false;
 
             });
 
@@ -673,7 +673,7 @@ describe("Base library", function () {
 
                 var ChildClass = ParentClass.extend();
 
-                expect(Base.extendsContructor(ChildClass, DomainModel, ParentClass)).to.be.true;
+                expect(Base.extendsConstructor(ChildClass, DomainModel, ParentClass)).to.be.true;
 
             });
 
@@ -693,7 +693,7 @@ describe("Base library", function () {
 
                 util.inherits(ChildClass, ParentClass);
 
-                expect(Base.extendsContructor(ChildClass, ParentClass)).to.be.true;
+                expect(Base.extendsConstructor(ChildClass, ParentClass)).to.be.true;
 
             });
 
@@ -705,7 +705,7 @@ describe("Base library", function () {
 
                 util.inherits(ChildClass, Error);
 
-                expect(Base.extendsContructor(ChildClass, Error)).to.be.true;
+                expect(Base.extendsConstructor(ChildClass, Error)).to.be.true;
 
             });
 
@@ -726,7 +726,7 @@ describe("Base library", function () {
                 util.inherits(ChildClass, ParentClass);
                 util.inherits(ParentClass, ParentClass2);
 
-                expect(Base.extendsContructor(ChildClass, ParentClass2)).to.be.true;
+                expect(Base.extendsConstructor(ChildClass, ParentClass2)).to.be.true;
 
             });
 
@@ -746,7 +746,7 @@ describe("Base library", function () {
 
                 util.inherits(ChildClass, ParentClass);
 
-                expect(Base.extendsContructor(ChildClass, NonParentClass, ParentClass)).to.be.true;
+                expect(Base.extendsConstructor(ChildClass, NonParentClass, ParentClass)).to.be.true;
 
             });
 
@@ -760,7 +760,7 @@ describe("Base library", function () {
 
                 }
 
-                expect(Base.extendsContructor(ChildClass, NonParentClass)).to.be.false;
+                expect(Base.extendsConstructor(ChildClass, NonParentClass)).to.be.false;
 
             });
 
@@ -780,20 +780,20 @@ describe("Base library", function () {
 
                 util.inherits(NonParentClass, NonParentClass2)
 
-                expect(Base.extendsContructor(ChildClass, NonParentClass, NonParentClass2)).to.be.false;
+                expect(Base.extendsConstructor(ChildClass, NonParentClass, NonParentClass2)).to.be.false;
 
             });
 
             it("should return false if ChildClass isn't a function", function () {
 
-                expect(Base.extendsContructor({}, function () {
+                expect(Base.extendsConstructor({}, function () {
                 })).to.be.false;
 
             });
 
             it("should return false if ParentClass isn't a function", function () {
 
-                expect(Base.extendsContructor(function () {
+                expect(Base.extendsConstructor(function () {
                 }, {})).to.be.false;
 
             });
@@ -802,7 +802,7 @@ describe("Base library", function () {
 
                 var date = new Date();
 
-                expect(Base.extendsContructor(date, date)).to.be.false;
+                expect(Base.extendsConstructor(date, date)).to.be.false;
 
             });
 
