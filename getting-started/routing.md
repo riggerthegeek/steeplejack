@@ -74,7 +74,7 @@ if you wanted the route `/path/to/my/route`, then you could do that by creating 
 > is also true in directories (you could create directories `/path/to/my/route` and have an `index.js` file in there).
 
 Now, looking at the file contents.  The function that's being sent to `module.exports` is processed by the
-[Dependency Injector]({{ '/docs/api/dependency-injection' | prepend: site.baseurl }}) and `$outputHandler` is a helper function
+[Dependency Injector]({{ '/api/dependency-injection' | prepend: site.baseurl }}) and `$outputHandler` is a helper function
 steeplejack creates when you want to send the final output.
 
 The keys of object we're returning represent the URL we want to build and follow the
@@ -85,7 +85,7 @@ Next comes the HTTP verb - in our case, we've used `get`, but you can use any of
 it just becomes your normal function like you'd get in Express/Restify.  As with these libraries, you can pass in
 either a single function or an array of functions.
 
-A more detailed look at the router can be found in the [Router]({{ '/docs/api/router' | prepend: site.baseurl }}) section.
+A more detailed look at the router can be found in the [Router]({{ '/api/router' | prepend: site.baseurl }}) section.
 Now we have an understanding of the routing, we can start getting the app to do something interesting.
 
 <a href="{{ '/getting-started/your-first-app' | prepend: site.baseurl }}" class="prev_button">Your First App</a>

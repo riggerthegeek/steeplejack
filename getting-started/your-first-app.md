@@ -33,7 +33,7 @@ Let's look at what's happening here.
 2. Once we've done that, we create an application using the `steeplejack.app()` factory with a config object in.
 3. Next, is the `run` phase where we configure how our server is going to work.  This function is processed by the
    Dependency Injector so you can get any item in here registered to the dependency injector; in this example, we just
-   want the `$config`. See the [Dependency Injection]({{ '/docs/api/dependency-injection' | prepend: site.baseurl }})
+   want the `$config`. See the [Dependency Injection]({{ '/api/dependency-injection' | prepend: site.baseurl }})
    section for further information (eg, why it must be `$config` and not `config`) on this.
 4. Finally, listen for when the server is running.  The `start` event receives the `config` object so you can output it.
 
@@ -55,5 +55,5 @@ Now, if you view [http://localhost:3000](http://localhost:3000) in a browser, yo
 That means that you have a working server, but that it cannot find an endpoint to go to.  As we've not set any up yet,
 this is correct and we've got our first server up an running.  The next job is to get some routes in there.
 
-<a href="{{ '/docs/getting-started' | prepend: site.baseurl }}" class="prev_button">Installation</a>
+<a href="{{ '/getting-started' | prepend: site.baseurl }}" class="prev_button">Installation</a>
 <a href="{{ '/getting-started/routing' | prepend: site.baseurl }}" class="next_button">Routing</a>

@@ -14,7 +14,7 @@ Create a new directory `myapp`. In that directory, you'll need to run the follow
 - Install the steeplejack dependencies:
     - `npm install steeplejack --save`
     - `npm install steeplejack-restify --save`: this example uses Restify, but there are other
-       [HTTP strategies]({{ '/docs/plugins/http-strategies' | prepend: site.baseurl }}) available
+       [HTTP strategies]({{ '/plugins/http-strategies' | prepend: site.baseurl }}) available
 
 That's all you need to create a basic steeplejack server.  Let's now look at creating your first app.
 

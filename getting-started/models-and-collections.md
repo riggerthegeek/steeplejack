@@ -58,7 +58,7 @@ section.
 Now let's go back and look at the way we've declared the function on the third line
 `module.exports.__factory = function Product () { }`.  The `module.exports` bit should familiar to any NodeJS developer
 as the way we export functions from a file.  The rest is all down to how the
-[Dependency Injection]({{ '/docs/api/dependency-injection' | prepend: site.baseurl }}) in steeplejack works.  Put
+[Dependency Injection]({{ '/api/dependency-injection' | prepend: site.baseurl }}) in steeplejack works.  Put
 simply, it takes away the need to `require` a file and traverse through directories to find it.
 
 The API docs cover everything in that, but there are two things you should to notice here.  First, is that a function
