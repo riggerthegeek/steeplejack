@@ -4,69 +4,69 @@
     items:
         -
             name: "Installation"
-            url: "/docs/getting-started/"
+            url: "/getting-started/"
         -
             name: "Your First App"
-            url: "/docs/getting-started/your-first-app/"
+            url: "/getting-started/your-first-app/"
         -
             name: "Routing"
-            url: "/docs/getting-started/routing/"
+            url: "/getting-started/routing/"
         -
             name: "Models and Collections"
-            url: "/docs/getting-started/models-and-collections/"
+            url: "/getting-started/models-and-collections/"
         -
             name: "Running Your App"
-            url: "/docs/getting-started/running-your-app/"
+            url: "/getting-started/running-your-app/"
         -
             name: "Config"
-            url: "/docs/getting-started/config/"
+            url: "/getting-started/config/"
         -
             name: "Unit Testing"
-            url: "/docs/getting-started/unit-testing/"
+            url: "/getting-started/unit-testing/"
         -
             name: "Overview"
-            url: "/docs/getting-started/overview/"
+            url: "/getting-started/overview/"
 -
     id: "api"
-    title: "API Reference"
+    title: "API"
     items:
         -
             name: "steeplejack"
-            url: "/docs/api/steeplejack/"
+            url: "/api/steeplejack/"
         -
             name: "Base"
-            url: "/docs/api/base/"
+            url: "/api/base/"
         -
             name: "Collections"
-            url: "/docs/api/collections/"
+            url: "/api/collections/"
         -
             name: "Dependency Injection"
-            url: "/docs/api/dependency-injection/"
+            url: "/api/dependency-injection/"
         -
             name: "Errors"
-            url: "/docs/api/errors/"
+            url: "/api/errors/"
         -
             name: "HTTP"
-            url: "/docs/api/http/"
+            url: "/api/http/"
         -
             name: "Inheritance"
-            url: "/docs/api/inheritance/"
+            url: "/api/inheritance/"
         -
             name: "Logging"
-            url: "/docs/api/logging/"
+            url: "/api/logging/"
         -
             name: "Models"
-            url: "/docs/api/models/"
+            url: "/api/models/"
         -
             name: "Router"
-            url: "/docs/api/router/"
+            url: "/api/router/"
 -
     id: "plugins"
     title: "Plugins"
     items:
         -
             name: "HTTP Strategies"
-            url: "/docs/plugins/http-strategies/"
+            url: "/plugins/http-strategies/"
         -
             name: "Logging Strategies"
-            url: "/docs/plugins/logging-strategies/"
+            url: "/plugins/logging-strategies/"

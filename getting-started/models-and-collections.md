@@ -1,8 +1,8 @@
 ---
 layout: docs
 title: Models and Collections
-permalink: /docs/getting-started/models-and-collections/
-section: docs
+permalink: /getting-started/models-and-collections/
+section: getting-started
 ---
 
 ### Models
@@ -52,7 +52,7 @@ definition. This model has three parameters:
    is able to differentiate between integers and floats (in production software, be careful about using floating points
    like this as it can be inaccurate, but this is an example - try adding `0.1 + 0.2` if you don't believe me).
 
-This is just scratching the surface. There's much more in the [Models]({{ '/docs/getting-started/routing' | prepend: site.baseurl }})
+This is just scratching the surface. There's much more in the [Models]({{ '/getting-started/routing' | prepend: site.baseurl }})
 section.
 
 Now let's go back and look at the way we've declared the function on the third line
@@ -92,5 +92,5 @@ Notice also how we've against added `.__factory` to the `module.exports` and tha
 dependency injector wiring it all together behind the scenes without a single `require` in sight.  When we come to run
 this, you'll see that the `Product` defined in the model file is what's passed through to the `Products` collection.
 
-<a href="{{ '/docs/getting-started/routing' | prepend: site.baseurl }}" class="prev_button">Routing</a>
-<a href="{{ '/docs/getting-started/running-your-app' | prepend: site.baseurl }}" class="next_button">Running Your App</a>
+<a href="{{ '/getting-started/routing' | prepend: site.baseurl }}" class="prev_button">Routing</a>
+<a href="{{ '/getting-started/running-your-app' | prepend: site.baseurl }}" class="next_button">Running Your App</a>

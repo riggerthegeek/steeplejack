@@ -1,8 +1,8 @@
 ---
 layout: docs
 title: Routing
-permalink: /docs/getting-started/routing/
-section: docs
+permalink: /getting-started/routing/
+section: getting-started
 ---
 
 So far, you should have a simple app set up that returns an HTTP 404 error.  In order to get your application to return
@@ -88,5 +88,5 @@ either a single function or an array of functions.
 A more detailed look at the router can be found in the [Router]({{ '/docs/api/router' | prepend: site.baseurl }}) section.
 Now we have an understanding of the routing, we can start getting the app to do something interesting.
 
-<a href="{{ '/docs/getting-started/your-first-app' | prepend: site.baseurl }}" class="prev_button">Your First App</a>
-<a href="{{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}" class="next_button">Models and Collections</a>
+<a href="{{ '/getting-started/your-first-app' | prepend: site.baseurl }}" class="prev_button">Your First App</a>
+<a href="{{ '/getting-started/models-and-collections' | prepend: site.baseurl }}" class="next_button">Models and Collections</a>

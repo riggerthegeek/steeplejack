@@ -1,8 +1,8 @@
 ---
 layout: docs
 title: Unit Testing
-permalink: /docs/getting-started/unit-testing/
-section: docs
+permalink: /getting-started/unit-testing/
+section: getting-started
 ---
 
 steeplejack is entirely testing framework agnostic. Unit testing is probably the one thing that can take a good idea
@@ -55,7 +55,7 @@ illustration).
 ### Stubbing Modules
 
 There will be times when you want to stub a module - perhaps when you're testing a
-[Collection]({{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}), you'd want to ensure it
+[Collection]({{ '/getting-started/models-and-collections' | prepend: site.baseurl }}), you'd want to ensure it
 calls certain methods on the Model.  We can easily achieve this by passing an object with th.
 
     var $collection,
@@ -78,5 +78,5 @@ Inside the `$collection` in this example, it would have it's model set as `$mode
 [Sinon](http://sinonjs.org) spy, we have replaced the module that it's in the dependency injector so we can test what
 it's doing with it.  You can put in as many items into this object as you want to define for this test.
 
-<a href="{{ '/docs/getting-started/config' | prepend: site.baseurl }}" class="prev_button">Config</a>
-<a href="{{ '/docs/getting-started/overview' | prepend: site.baseurl }}" class="next_button">Overview</a>
+<a href="{{ '/getting-started/config' | prepend: site.baseurl }}" class="prev_button">Config</a>
+<a href="{{ '/getting-started/overview' | prepend: site.baseurl }}" class="next_button">Overview</a>

@@ -1,8 +1,8 @@
 ---
 layout: api
 title: Base
-permalink: /docs/api/base/
-section: docs
+permalink: /api/base/
+section: api
 
 source: src/library/Base.js
 description: |

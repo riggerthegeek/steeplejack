@@ -3,6 +3,14 @@
     url: "/"
     section: "home"
 -
-    name: "Documentation"
-    url: "/docs/getting-started/"
-    section: "docs"
+    name: "Getting Started"
+    url: "/getting-started/"
+    section: "getting-started"
+-
+    name: "API"
+    url: "/api/"
+    section: "api"
+-
+    name: "Plugins"
+    url: "/plugins/"
+    section: "plugins"

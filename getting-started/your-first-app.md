@@ -1,8 +1,8 @@
 ---
 layout: docs
 title: Your First App
-permalink: /docs/getting-started/your-first-app/
-section: docs
+permalink: /getting-started/your-first-app/
+section: getting-started
 ---
 
 Creating a basic steeplejack app is simple.
@@ -56,4 +56,4 @@ That means that you have a working server, but that it cannot find an endpoint t
 this is correct and we've got our first server up an running.  The next job is to get some routes in there.
 
 <a href="{{ '/docs/getting-started' | prepend: site.baseurl }}" class="prev_button">Installation</a>
-<a href="{{ '/docs/getting-started/routing' | prepend: site.baseurl }}" class="next_button">Routing</a>
+<a href="{{ '/getting-started/routing' | prepend: site.baseurl }}" class="next_button">Routing</a>

@@ -1,8 +1,8 @@
 ---
 layout: docs
 title: Running Your App
-permalink: /docs/getting-started/running-your-app/
-section: docs
+permalink: /getting-started/running-your-app/
+section: getting-started
 ---
 
 Now we've got the model and collection done, we can look to start wrapping things up and getting a runnable app.
@@ -95,5 +95,5 @@ Now, when you got to [http://localhost:3000/product](http://localhost:3000/produ
 
 Congratulations, you've got your first steeplejack app running.
 
-<a href="{{ '/docs/getting-started/models-and-collections' | prepend: site.baseurl }}" class="prev_button">Models and Collections</a>
-<a href="{{ '/docs/getting-started/config' | prepend: site.baseurl }}" class="next_button">Config</a>
+<a href="{{ '/getting-started/models-and-collections' | prepend: site.baseurl }}" class="prev_button">Models and Collections</a>
+<a href="{{ '/getting-started/config' | prepend: site.baseurl }}" class="next_button">Config</a>

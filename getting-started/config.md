@@ -1,8 +1,8 @@
 ---
 layout: docs
 title: Config and Environment Variables
-permalink: /docs/getting-started/config/
-section: docs
+permalink: /getting-started/config/
+section: getting-started
 ---
 
 Now we've got our skeleton app up and running, let's look at configuration.  This was one of the original reasons why
@@ -134,5 +134,5 @@ what happens when we run `node app.js port=9998 test server.logging=false`.
 
 We've still overridden the `port` value and we've created a `test` boolean and a `server` object.
 
-<a href="{{ '/docs/getting-started/running-your-app' | prepend: site.baseurl }}" class="prev_button">Running Your App</a>
-<a href="{{ '/docs/getting-started/unit-testing' | prepend: site.baseurl }}" class="next_button">Unit Testing</a>
+<a href="{{ '/getting-started/running-your-app' | prepend: site.baseurl }}" class="prev_button">Running Your App</a>
+<a href="{{ '/getting-started/unit-testing' | prepend: site.baseurl }}" class="next_button">Unit Testing</a>

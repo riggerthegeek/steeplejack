@@ -20,26 +20,30 @@ layout: 'base'
 
         {% for section in site.data.docs %}
 
-            <h5>
-                {{ section.title }}
-            </h5>
+            {% if section.id == page.section %}
 
-            <ul>
-                {% for doc in section.items %}
+                <h5>
+                    {{ section.title }}
+                </h5>
 
-                    {% assign page_url = page.url | prepend: site.baseurl | replace:'index.html','' %}
+                <ul>
+                    {% for doc in section.items %}
 
-                    {% assign link_url = doc.url | prepend: site.baseurl %}
+                        {% assign page_url = page.url | prepend: site.baseurl | replace:'index.html','' %}
 
-                    <li class="{% if page_url == link_url} %}active{% endif %}">
+                        {% assign link_url = doc.url | prepend: site.baseurl %}
 
-                        <a href="{{ link_url }}">
-                            {{ doc.name }}
-                        </a>
-                    </li>
+                        <li class="{% if page_url == link_url} %}active{% endif %}">
 
-                {% endfor %}
-            </ul>
+                            <a href="{{ link_url }}">
+                                {{ doc.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+            {% endif %}
 
         {% endfor %}
 

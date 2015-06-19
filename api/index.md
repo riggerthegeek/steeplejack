@@ -1,8 +1,8 @@
 ---
 layout: docs
 title: API
-permalink: /docs/api/
-section: docs
+permalink: /api/
+section: api
 ---
 
 {% assign docs = site.data.docs | where: "id", "api" %}

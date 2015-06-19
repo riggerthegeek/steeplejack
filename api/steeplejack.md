@@ -1,8 +1,8 @@
 ---
 layout: api
 title: steeplejack
-permalink: /docs/api/steeplejack/
-section: docs
+permalink: /api/steeplejack/
+section: api
 
 description: |
 
