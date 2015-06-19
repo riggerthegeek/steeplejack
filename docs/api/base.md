@@ -4,7 +4,12 @@ title: Base
 permalink: /docs/api/base/
 section: docs
 
+source: src/library/Base.js
 description: |
+    This is the steeplejack Base object, which most other steeplejack classes extend.  This contains methods that are
+    useful to all higher-level classes, just as extension and cloning.
+
+
 extends:
     name: EventEmitter
     url: https://nodejs.org/api/events.html
@@ -28,7 +33,8 @@ api:
             -
                 name: datatypes
                 desc: |
-                    This is the data object in the [datautils](https://github.com/riggerthegeek/datautils-js#data)
+                    This exposes the methods from the `.data` section of the
+                    [datautils](https://github.com/riggerthegeek/datautils-js#data)
                     package
             -
                 name: extend([prototype] [, static])
@@ -38,17 +44,76 @@ api:
                     to `static` is attached as static methods (ie, they can be called with `Class.staticMethod`.
 
                     If you add a `_construct` function to the `prototype`, this will be called when you instantiate the
-                    class.
+                    class.  This can receive zero or more arguments.
+
+
+                        var Child = Base.extend({
+                            _construct: function (param1, param2) {
+                                 this.param1 = param1;
+                                 this.param2 = param2
+                            },
+                            getParam1: function () {
+                                return this.param1;
+                            }
+                        }, {
+                            staticMethod: function () {
+                                return 'method';
+                            }
+                        });
+
+                        var obj = new Child('param1', 'param2');
+
+                        obj.getParam1(); // 'param1'
+
+                        Child.staticMethod(); // 'method'
+
+                    Classes that have extended `Base.extend` inherit all prototypical and static methods that are on
+                    that class.  These can be extended using the `.extend` method infinitely.
+
+                        var Grandchild = Child.extend({
+
+                            _private: function () {
+                                return 'shhh';
+                            }
+
+                        });
+
+                        var obj1 = new Grandchild('param1', 'param2');
+
+                        obj1.getParam1(); // 'param1'
+
+                        Grandchild.staticMethod(); // 'method'
+
+                    Any method that begins with `_` is considered to be a private method and is hidden when you output
+                    the object. However, it is still callable.
+
+                        console.log(obj1); // object without '_private'
+
+                        obj1._private(); // 'shhh'
             -
                 name: extendsConstructor(ChildClass [, ParentClass1] [, ParentClass2] [, ...])
                 desc: |
                     Returns a `boolean` if the ChildClass extends any of the ParentClasses. This does not instantiate
                     any of the classes but looks in the `super_` parameter, so should be able to be used by both Node
                     and steeplejack classes.
+
+                        var Child = Base.extend();
+                        var Grandchild = Child.extend();
+
+                        Base.extendsConstructor(Child, Base); // true
+
+                        Base.extendsConstructor(Child, function () { }, Base); // true
+
+                        Base.extendsConstructor(Child, Child); // true
+
+                        Base.extendsConstructor(Grandchild, require('events').EventEmitter); // true
+
+                        Base.extendsConstructor(Base, Error); // false
             -
                 name: validation
                 desc: |
-                    This is the validation object in the [datautils](https://github.com/riggerthegeek/datautils-js#validation)
+                    This exposes the methods from the `.validation` section of the
+                    [datautils](https://github.com/riggerthegeek/datautils-js#validation)
                     package
 
 ---

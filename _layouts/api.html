@@ -4,6 +4,12 @@ layout: 'docs'
 
 <div class="api_layout">
 
+    {% if page.source %}
+        <a href="{{ page.source | prepend: site.github_src | prepend : site.github }}">
+            View source code
+        </a>
+    {% endif %}
+
     <h4>
         Table of Contents
     </h4>
@@ -58,31 +64,35 @@ layout: 'docs'
 
     {% for section in page.api %}
 
-        <h3>
-            <a name="{{section.type}}head" class="anchor"></a>
-            {% if section.type == 'method' %}
-                Prototype
-            {% else %}
-                Static
-            {% endif %}
-            Methods
-        </h3>
+        <div class="api_docs">
 
-        {% for method in section.items %}
-            <div class="method">
-                <a name="{{section.type}}_{{ method.name }}" class="anchor"></a>
+            <h3>
+                <a name="{{section.type}}head" class="anchor"></a>
+                {% if section.type == 'method' %}
+                    Prototype
+                {% else %}
+                    Static
+                {% endif %}
+                Methods
+            </h3>
 
-                <h5>
-                    {{ method.name }}
-                </h5>
+            {% for method in section.items %}
+                <div class="method">
+                    <a name="{{section.type}}_{{ method.name }}" class="anchor"></a>
 
-                <div class="description">
-                    {{ method.desc | markdownify }}
+                    <h5>
+                        {{ method.name }}
+                    </h5>
+
+                    <div class="description">
+                        {{ method.desc | markdownify }}
+                    </div>
+
+                    <a class="toTop" href="#top">Back to top</a>
                 </div>
+            {% endfor %}
 
-                <a class="toTop" href="#top">Back to top</a>
-            </div>
-        {% endfor %}
+        </div>
 
     {% endfor %}
 
