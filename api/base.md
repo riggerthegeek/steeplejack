@@ -65,22 +65,7 @@ api:
 
                         Child.staticMethod(); // 'method'
 
-                    Classes that have extended `Base.extend` inherit all prototypical and static methods that are on
-                    that class.  These can be extended using the `.extend` method infinitely.
-
-                        var Grandchild = Child.extend({
-
-                            _private: function () {
-                                return 'shhh';
-                            }
-
-                        });
-
-                        var obj1 = new Grandchild('param1', 'param2');
-
-                        obj1.getParam1(); // 'param1'
-
-                        Grandchild.staticMethod(); // 'method'
+                    See [Inheritance Docs]({{ '/api/inheritance' | prepend: site.baseurl }}) for more details
 
                     Any method that begins with `_` is considered to be a private method and is hidden when you output
                     the object. However, it is still callable.

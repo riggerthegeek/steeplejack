@@ -11,6 +11,10 @@
     url: "/api/"
     section: "api"
 -
+    name: "Documentation"
+    url: "/docs/"
+    section: "docs"
+-
     name: "Plugins"
     url: "/plugins/"
     section: "plugins"

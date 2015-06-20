@@ -14,7 +14,7 @@ app is deployed on the CI box, which is different from the QA and live environme
 > think about the security implications of this and change them so they're unique to each environment.
 
 The config is designed as a [single source of truth](http://en.wikipedia.org/wiki/Single_Source_of_Truth).  Any values
-set in the config are registered with the [Dependency Injector]({{ '/api/dependency-injection' | prepend: site.baseurl }})
+set in the config are registered with the [Dependency Injector]({{ '/docs/dependency-injection' | prepend: site.baseurl }})
 under the `$config` variable.
 
 ### Environment Variables

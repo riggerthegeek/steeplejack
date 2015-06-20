@@ -1,7 +1,7 @@
 ---
 layout: api
-title: Errors
-permalink: /api/errors/
+title: Server
+permalink: /api/server/
 section: api
 
 source: src/library/

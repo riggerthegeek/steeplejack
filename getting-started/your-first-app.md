@@ -33,7 +33,7 @@ Let's look at what's happening here.
 2. Once we've done that, we create an application using the `steeplejack.app()` factory with a config object in.
 3. Next, is the `run` phase where we configure how our server is going to work.  This function is processed by the
    Dependency Injector so you can get any item in here registered to the dependency injector; in this example, we just
-   want the `$config`. See the [Dependency Injection]({{ '/api/dependency-injection' | prepend: site.baseurl }})
+   want the `$config`. See the [Dependency Injection]({{ '/docs/dependency-injection' | prepend: site.baseurl }})
    section for further information (eg, why it must be `$config` and not `config`) on this.
 4. Finally, listen for when the server is running.  The `start` event receives the `config` object so you can output it.
 

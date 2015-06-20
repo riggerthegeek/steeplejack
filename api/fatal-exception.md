@@ -1,12 +1,14 @@
 ---
 layout: api
-title: Logging
-permalink: /api/logging/
+title: Exception
+permalink: /api/fatal/
 section: api
 
-source: src/library/
+source: src/error/Fatal.js
 description: |
 extends:
+    url: /api/exception/
+    name: Exception
 api:
     -
         type: method

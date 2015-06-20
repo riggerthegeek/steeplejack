@@ -1,12 +1,14 @@
 ---
 layout: api
-title: Dependency Injection
-permalink: /api/dependency-injection/
+title: Exception
+permalink: /api/validation-exception/
 section: api
 
-source: src/library/
+source: src/error/Validation/index.js
 description: |
 extends:
+    url: /api/exception/
+    name: Exception
 api:
     -
         type: method

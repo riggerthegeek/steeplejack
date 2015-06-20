@@ -1,7 +1,7 @@
 ---
 layout: api
-title: HTTP
-permalink: /api/http/
+title: Injector
+permalink: /api/injector/
 section: api
 
 source: src/library/

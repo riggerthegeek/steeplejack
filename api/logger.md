@@ -1,7 +1,7 @@
 ---
 layout: api
-title: Inheritance
-permalink: /api/inheritance/
+title: Logger
+permalink: /api/logger/
 section: api
 
 source: src/library/

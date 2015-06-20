@@ -40,26 +40,42 @@
             name: "Collections"
             url: "/api/collections/"
         -
-            name: "Dependency Injection"
-            url: "/api/dependency-injection/"
+            name: "Exception"
+            url: "/api/exception/"
         -
-            name: "Errors"
-            url: "/api/errors/"
+            name: "Fatal Exception"
+            url: "/api/fatal-exception/"
         -
-            name: "HTTP"
-            url: "/api/http/"
+            name: "Validation Exception"
+            url: "/api/validation-exception/"
         -
-            name: "Inheritance"
-            url: "/api/inheritance/"
+            name: "Injector"
+            url: "/api/injector/"
         -
-            name: "Logging"
-            url: "/api/logging/"
+            name: "Logger"
+            url: "/api/logger/"
         -
             name: "Models"
             url: "/api/models/"
         -
             name: "Router"
             url: "/api/router/"
+        -
+            name: "Server"
+            url: "/api/server/"
+-
+    id: docs
+    title: Documentation
+    items:
+        -
+            name: "Dependency Injection"
+            url: "/docs/dependency-injection/"
+        -
+            name: "HTTP(S) Service"
+            url: "/docs/http/"
+        -
+            name: "Inheritance"
+            url: "/docs/inheritance/"
 -
     id: "plugins"
     title: "Plugins"
