@@ -7,11 +7,11 @@ html, body {
 
 body {
 
+    @extend .roboto-normal;
+
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
     padding: {
         top: 50px;
     }
@@ -39,7 +39,7 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
+    @extend .roboto-heavy;
 }
 
 h1 {

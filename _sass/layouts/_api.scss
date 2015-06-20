@@ -12,12 +12,10 @@
     .toc {
 
         @extend .list-unstyled;
+        @extend .roboto-heavy;
 
         margin: 0 auto 20px;
         padding: 0 50px;
-        font: {
-            weight: 500;
-        }
 
     }
 

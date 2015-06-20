@@ -61,11 +61,12 @@
 
                     a {
 
+                        @extend .roboto-heavy;
+
                         background: {
                             color: $medium-grey;
                         }
                         color: $orange;
-                        font-weight: 500;
 
                     }
                 }
