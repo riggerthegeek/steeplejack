@@ -4,7 +4,7 @@ title: Router
 permalink: /api/router/
 section: api
 
-source: src/library/
+source: src/library/Router.js
 description: |
 extends:
 api:

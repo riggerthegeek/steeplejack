@@ -4,7 +4,7 @@ title: Collection
 permalink: /api/collection/
 section: api
 
-source: src/library/
+source: src/library/Collection.js
 description: |
 extends:
 api:

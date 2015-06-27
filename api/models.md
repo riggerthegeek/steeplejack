@@ -4,7 +4,7 @@ title: Models
 permalink: /api/models/
 section: api
 
-source: src/library/
+source: src/library/DomainModel/index.js
 description: |
 extends:
 api:

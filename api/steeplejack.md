@@ -4,7 +4,7 @@ title: steeplejack
 permalink: /api/steeplejack/
 section: api
 
-source: src/library/
+source: src/steeplejack.js
 description: |
 extends:
 api:

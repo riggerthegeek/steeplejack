@@ -4,7 +4,7 @@ title: Server
 permalink: /api/server/
 section: api
 
-source: src/library/
+source: src/library/Server.js
 description: |
 extends:
 api:

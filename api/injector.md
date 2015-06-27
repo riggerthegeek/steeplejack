@@ -4,7 +4,7 @@ title: Injector
 permalink: /api/injector/
 section: api
 
-source: src/library/
+source: src/library/Injector.js
 description: |
 extends:
 api:

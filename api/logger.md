@@ -4,7 +4,7 @@ title: Logger
 permalink: /api/logger/
 section: api
 
-source: src/library/
+source: src/library/Logger.js
 description: |
 extends:
 api:
