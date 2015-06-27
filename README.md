@@ -5,7 +5,7 @@
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Node.js Version][node-version-image]][node-version-url]
 [![Build Status][travis-image]][travis-url]
-[![Dependencies][dependencies-image]]][dependencies-url]
+[![Dependencies][dependencies-image]][dependencies-url]
 [![Dev Depedencies][dev-dependencies-image]][dev-dependencies-url]
 
 A NodeJS scaffolding framework.
