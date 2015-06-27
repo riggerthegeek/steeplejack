@@ -1,7 +1,7 @@
 ---
 layout: api
-title: Collections
-permalink: /api/collections/
+title: Collection
+permalink: /api/collection/
 section: api
 
 source: src/library/

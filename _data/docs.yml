@@ -37,8 +37,8 @@
             name: "Base"
             url: "/api/base/"
         -
-            name: "Collections"
-            url: "/api/collections/"
+            name: "Collection"
+            url: "/api/collection/"
         -
             name: "Exception"
             url: "/api/exception/"
