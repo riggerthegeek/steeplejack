@@ -1,7 +1,7 @@
 ---
 layout: api
-title: Models
-permalink: /api/models/
+title: Model
+permalink: /api/model/
 section: api
 
 source: src/library/DomainModel/index.js

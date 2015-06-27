@@ -55,8 +55,8 @@
             name: "Logger"
             url: "/api/logger/"
         -
-            name: "Models"
-            url: "/api/models/"
+            name: "Model"
+            url: "/api/model/"
         -
             name: "Router"
             url: "/api/router/"
