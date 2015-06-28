@@ -43,7 +43,10 @@ api:
                 name: replace(name, component)
                 desc: |
                  This allows a module to be replaced with another module. It will be re-registered with the same
-                 register function as what it was originally registered with.  This should only be used during testing.
+                 register function as what it was originally registered with.
+
+                 This should only be used during unit testing as can cause issues for modules dependent upon what
+                 you're replacing.
             -
                 name: remove(name)
                 desc: |
