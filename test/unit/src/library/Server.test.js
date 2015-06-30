@@ -359,6 +359,22 @@ describe("Server test", function () {
 
             });
 
+            it("should add 'all' to each known method", function () {
+
+                var fn = function () {};
+
+                obj.addRoute("all", "/route", fn);
+
+                expect(obj._addRoute).to.be.callCount(6)
+                    .calledWithExactly("get", "/route", fn)
+                    .calledWithExactly("post", "/route", fn)
+                    .calledWithExactly("put", "/route", fn)
+                    .calledWithExactly("del", "/route", fn)
+                    .calledWithExactly("head", "/route", fn)
+                    .calledWithExactly("patch", "/route", fn);
+
+            });
+
             it("should throw an error if an unknown HTTP method", function () {
 
                 var fail = false;

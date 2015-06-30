@@ -116,43 +116,57 @@ module.exports = Base.extend({
 
         httpMethod = httpMethod.toLowerCase();
 
-        var err;
+        if (httpMethod === "all") {
 
-        switch (httpMethod) {
+            _.each([
+                "get",
+                "post",
+                "put",
+                "del",
+                "head",
+                "patch"
+            ], function (method) {
+                this.addRoute(method, route, fn);
+            }, this);
 
-            case "delete":
-            {
-                /* Convert to del */
-                httpMethod = "del";
-                break;
+        } else {
+
+            var err;
+
+            switch (httpMethod) {
+
+                case "delete": {
+                    /* Convert to del */
+                    httpMethod = "del";
+                    break;
+                }
+
+                case "get":
+                case "post":
+                case "put":
+                case "del":
+                case "head":
+                case "patch": {
+                    /* Nothing to do - just pass through */
+                    break;
+                }
+
+                default: {
+                    /* Unknown HTTP method type */
+                    err = new TypeError("httpMethod is unknown: " + httpMethod);
+                    break;
+                }
+
             }
 
-            case "get":
-            case "post":
-            case "put":
-            case "del":
-            case "head":
-            case "patch":
-            {
-                /* Nothing to do - just pass through */
-                break;
+            if (err) {
+                /* Throw error */
+                throw err;
             }
 
-            default:
-            {
-                /* Unknown HTTP method type */
-                err = new TypeError("httpMethod is unknown: " + httpMethod);
-                break;
-            }
+            this._addRoute(httpMethod, route, fn);
 
         }
-
-        if (err) {
-            /* Throw error */
-            throw err;
-        }
-
-        this._addRoute(httpMethod, route, fn);
 
     },
 
