@@ -41,6 +41,14 @@ module.exports = function (grunt) {
                 src: "**/*.js"
             }
         },
+        coveralls: {
+            options: {
+                force: false
+            },
+            src: {
+                src: "./<%= config.coverage %>/lcov.info"
+            }
+        },
         jscs: {
             options: {
                 config: ".jscsrc"
