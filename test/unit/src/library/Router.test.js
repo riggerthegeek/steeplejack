@@ -252,6 +252,7 @@ describe("Routing test", function () {
                 this.router = proxyquire("../../../../src/library/Router", {
                     "/path/to/dir/dir/endpoint": "/path/to/dir/dir/endpoint",
                     "/path/to/dir/dir/endpoint2/index": "/path/to/dir/dir/index",
+                    "/path/to/dir/dir/endpoint2/twitter": "/path/to/dir/dir/hello",
                     "/path/to/dir/endpoint/index": "/path/to/dir/endpoint",
                     "/path/to/dir/dir": "/path/to/dir/endpoint",
                     "/path/to/dir/index": "/path/to/dir"
@@ -264,6 +265,9 @@ describe("Routing test", function () {
 
                 stub.returns([{
                     name: "dir/endpoint",
+                    parent: "/path/to/dir"
+                }, {
+                    name: "dir/endpoint2/twitter",
                     parent: "/path/to/dir"
                 }, {
                     name: "dir/endpoint2/index",
@@ -286,6 +290,7 @@ describe("Routing test", function () {
 
                 expect(obj).to.be.eql({
                     "dir/endpoint": '/path/to/dir/dir/endpoint',
+                    "dir/endpoint2/twitter": '/path/to/dir/dir/hello',
                     "dir/endpoint2": '/path/to/dir/dir/index',
                     endpoint: '/path/to/dir/endpoint',
                     dir: '/path/to/dir/endpoint',
