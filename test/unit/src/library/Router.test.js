@@ -251,10 +251,10 @@ describe("Routing test", function () {
 
                 this.router = proxyquire("../../../../src/library/Router", {
                     "/path/to/dir/dir/endpoint": "/path/to/dir/dir/endpoint",
-                    "/path/to/dir/dir/endpoint2": "/path/to/dir/dir/index",
-                    "/path/to/dir/endpoint": "/path/to/dir/endpoint",
+                    "/path/to/dir/dir/endpoint2/index": "/path/to/dir/dir/index",
+                    "/path/to/dir/endpoint/index": "/path/to/dir/endpoint",
                     "/path/to/dir/dir": "/path/to/dir/endpoint",
-                    "/path/to/dir": "/path/to/dir"
+                    "/path/to/dir/index": "/path/to/dir"
                 });
             });
 

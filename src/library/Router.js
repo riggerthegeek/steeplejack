@@ -165,7 +165,10 @@ module.exports = Base.extend({
      */
     discoverRoutes: function (routeDir) {
 
-        return _.reduce(this.getRouteFiles(routeDir), function (result, route) {
+        /* Get the route files */
+        var files = this.getRouteFiles(routeDir);
+
+        return _.reduce(files, function (result, route) {
 
             var routeName = route.name;
             var cwd = route.parent;
@@ -175,22 +178,25 @@ module.exports = Base.extend({
              * second is route name. We don't care about
              * the extension
              */
-            var segments = routeName.match(/^(((\w+)\/)?((\w{1,})))/);
+            var segments = routeName.match(/^((\w+\/){1,})?(\w+)/);
             if (segments !== null) {
-                var requireName = segments[1];
-                var tmp = segments[5];
+
+                var tmp = segments[3];
 
                 if (tmp === "index") {
-                    tmp = segments[3];
+                    tmp = segments[1];
                     if (_.isUndefined(tmp)) {
                         tmp = "";
+                    } else {
+                        /* Remove any trailing slash */
+                        tmp = tmp.replace(new RegExp(path.sep + "$"), "");
                     }
-                } else if (segments[2]) {
-                    tmp = segments[2] + tmp;
+                } else if (segments[1]) {
+                    tmp = segments[1] + tmp;
                 }
 
                 /* Load the route file */
-                var objRoute = require(path.join(cwd, tmp));
+                var objRoute = require(path.join(cwd, routeName));
 
                 /* Put in stack */
                 result[tmp] = objRoute;
