@@ -29,6 +29,7 @@ var Fatal = require("./error/Fatal");
 var Injector = require("./library/Injector");
 var Logger = require("./library/Logger");
 var Model = require("./library/DomainModel");
+var Plugin = require("./library/Plugin");
 var Router = require("./library/Router");
 var Server = require("./library/Server");
 var Validation = require("./error/Validation");
@@ -626,6 +627,17 @@ module.exports = Base.extend({
      * the schema.
      */
     Model: Model,
+
+
+    /**
+     * Plugin
+     *
+     * A plugin is an entire module that is exported
+     * to be reused again.  This would be for something
+     * that you wouldn't ordinarily want to change,
+     * except for config parameters.
+     */
+    Plugin: Plugin,
 
 
     /**
