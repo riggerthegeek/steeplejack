@@ -254,7 +254,20 @@ module.exports = Base.extend({
             return;
         }
 
+        if (_.has(module, "getModules")) {
+            /* Loaded a plugin */
+
+            console.log(module.getModules());
+            process.exit();
+
+            return;
+        }
+
         if (_.isString(module) === false) {
+
+            console.log(module);
+            process.exit();
+
             throw new TypeError("steeplejack.addModule can only accept a string[]");
         }
 
