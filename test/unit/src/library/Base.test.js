@@ -15,8 +15,9 @@ var _ = require("lodash");
 
 
 /* Files */
-var Base = rootRequire("src/library/Base");
-var DomainModel = rootRequire("src/library/DomainModel");
+var Main = rootRequire();
+var Base = Main.Base;
+var DomainModel = Main.Model;
 
 
 

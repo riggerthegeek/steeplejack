@@ -13,8 +13,9 @@ var EventEmitter = require("events").EventEmitter;
 
 
 /* Files */
-var Injector = rootRequire("src/library/Injector");
-var Base = rootRequire("src/library/Base");
+var Main = rootRequire();
+var Injector = Main.Injector;
+var Base = Main.Base;
 
 
 describe("Injector test", function () {
