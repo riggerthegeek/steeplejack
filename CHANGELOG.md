@@ -1,3 +1,7 @@
+# v1.1.0
+
+ - Added support for Plugins
+
 # v1.0.1
 
  - Added a new server HTTP method of `all`. This cycles through all recognised HTTP methods, registering the given
