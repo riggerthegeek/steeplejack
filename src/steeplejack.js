@@ -197,8 +197,15 @@ module.exports = Base.extend({
      */
     _registerModule: function _registerModule (modulePath) {
 
-        /* Get the file */
-        var module = require(modulePath);
+        /* Get the module */
+        var module;
+        if (_.isString(modulePath)) {
+            /* It's a string - load the module path */
+            module = require(modulePath);
+        } else {
+            /* It's a plugin - no need to load again */
+            module = modulePath;
+        }
 
         if (datatypes.setObject(module, null) === null) {
             /* Module isn't an object */
@@ -254,21 +261,14 @@ module.exports = Base.extend({
             return;
         }
 
-        if (_.has(module, "getModules")) {
-            /* Loaded a plugin */
-
-            console.log(module.getModules());
-            process.exit();
-
+        if (_.has(module, "getModules") && _.isFunction(module.getModules)) {
+            /* Plugin - add in the plugin */
+            this._modules = this._modules.concat(module.getModules());
             return;
         }
 
         if (_.isString(module) === false) {
-
-            console.log(module);
-            process.exit();
-
-            throw new TypeError("steeplejack.addModule can only accept a string[]");
+            throw new TypeError("steeplejack.addModule can only accept a string[] or an instance of Plugin");
         }
 
         /* Make relative path */
