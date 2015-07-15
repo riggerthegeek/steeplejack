@@ -291,6 +291,55 @@ module.exports = Base.extend({
 
 
     /**
+     * Limit
+     *
+     * Limits in the same way as MySQL limits.  The first
+     * is the limit, which is the maximum number of items
+     * we can keep.  The second is the offset, which is
+     * the number of items we pad.
+     *
+     * On a collection with 5 items, limit(2, 2) will
+     * only keep the data at position 2 and 3, dropping
+     * 0, 1 and 4 out.
+     *
+     * @param {number} limit
+     * @param {number} offset
+     */
+    limit: function (limit, offset) {
+
+        limit = datatypes.setInt(limit, null);
+        offset = datatypes.setInt(offset, 0);
+
+        if (limit === null || limit < 0) {
+            throw new SyntaxError("Collection.limit must be a positive integer");
+        }
+
+        if (limit === 0) {
+
+            /* Get rid of everything */
+            this.reset();
+
+        } else if (limit < this.getCount()) {
+
+            var keys = this.getKeys();
+
+            /* Slice the keys */
+            var endKey = limit + offset;
+
+            var removeKeys = _.difference(keys, keys.slice(offset, endKey));
+
+            _.each(removeKeys, function (remove) {
+                this.remove(remove);
+            }, this);
+
+        }
+
+        return this;
+
+    },
+
+
+    /**
      * Remove
      *
      * Removes the specific model or models
