@@ -41,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/riggerthegeek/steeplejack/issues"
   },
-  "licence": "MIT",
+  "license": "MIT",
   "scripts": {
     "test": "grunt watchtest"
   }
