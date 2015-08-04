@@ -1,3 +1,8 @@
+# v1.1.0
+
+ - Added support for Plugins
+ - Added `limit` method to the Collection - works similar to MySQL's `LIMIT`
+
 # v1.0.2
 
  - Fixed an issue with the router that meant nested route files (below 3 subdirectories) didn't load correctly. Files

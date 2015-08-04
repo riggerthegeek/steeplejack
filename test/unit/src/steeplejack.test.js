@@ -320,6 +320,26 @@ describe("Main test", function () {
 
             });
 
+            it("should register a plugin", function () {
+
+                /* This would be the result of plugin.getModules() */
+                var module = {
+                    __myModule: "moduleFn"
+                };
+
+                this.obj = new Main();
+
+                this.obj.registerMyModule = sinon.spy();
+
+                this.obj._registerModule(module);
+
+                expect(this.obj.registerMyModule).to.be.calledOnce
+                    .calledWith({
+                        __myModule: "moduleFn"
+                    });
+
+            });
+
         });
 
         describe("#_processRoutes", function () {
@@ -452,7 +472,7 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[]");
+                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
 
                 } finally {
 
@@ -477,7 +497,100 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[]");
+                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.glob.sync).to.not.be.called;
+
+                }
+
+            });
+
+            it("should allow registration of a single Plugin", function () {
+
+                var plugin = new Main.Plugin();
+
+                this.obj.addModule(plugin);
+
+                expect(this.glob.sync).to.not.be.called;
+
+            });
+
+            it("should allow registration of mixed Plugins and files", function () {
+
+                var plugin1 = new Main.Plugin([
+                    "plugin1-1",
+                    "plugin1-2"
+                ]);
+                var plugin2 = new Main.Plugin([
+                    "plugin2-1",
+                    "plugin2-2",
+                    "plugin2-3",
+                    {}
+                ]);
+
+                this.glob.sync.onCall(0).returns([
+                    "/path/to/module1",
+                    "/path/to/module1a"
+                ]);
+
+                this.glob.sync.onCall(1).returns([
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b"
+                ]);
+
+                this.glob.sync.onCall(2).returns([
+                    "/path/to/module3"
+                ]);
+
+                this.obj.addModule([
+                    plugin1,
+                    "module1",
+                    "module2",
+                    plugin2,
+                    "module3"
+                ]);
+
+                expect(this.obj.getModules()).to.be.eql([
+                    "plugin1-1",
+                    "plugin1-2",
+                    "/path/to/module1",
+                    "/path/to/module1a",
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b",
+                    "plugin2-1",
+                    "plugin2-2",
+                    "plugin2-3",
+                    {},
+                    "/path/to/module3"
+                ]);
+
+                expect(this.glob.sync).to.be.calledThrice
+                    .calledWith(path.join(process.cwd(), "module1"))
+                    .calledWith(path.join(process.cwd(), "module2"))
+                    .calledWith(path.join(process.cwd(), "module3"));
+
+            });
+
+            it("should ignore a module with a getModules non-function", function () {
+
+                var fail = false;
+
+                try {
+
+                    this.obj.addModule({ getModules: null });
+
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
 
                 } finally {
 
@@ -923,6 +1036,64 @@ describe("Main test", function () {
                     .calledWithExactly("$server", self.server);
 
                 expect(self.getComponent).to.be.calledOnce
+                    .calledWithExactly("$outputHandler");
+
+            });
+
+            it("should run the steeplejack server successfully with plugins", function () {
+
+                var plugin = new Main.Plugin("hello");
+
+                /* Put in the modules and routes manually */
+                this.obj._modules = [
+                    "module1",
+                    "module2",
+                    plugin
+                ];
+
+                this.obj._routes = {
+                    "/route": "routeFn"
+                };
+
+                this.server.start.yieldsAsync(null);
+
+                var createServer = function () {};
+
+                this.getComponent.returns(2);
+
+                /* Wait for the start emitter */
+                this.obj.on("start", function (config) {
+
+                    expect(config).to.be.eql({
+                        config: "value"
+                    });
+
+                    /* Emit close event */
+                    this.obj.emit("close");
+
+                    expect(this.server.close).to.be.calledOnce;
+
+                    done();
+
+                }.bind(this));
+
+                expect(this.obj.run(createServer)).to.be.equal(this.obj);
+
+                expect(this.createOutputHandler).to.not.be.called;
+
+                expect(this.registerModule).to.be.calledThrice
+                    .calledWith("module1")
+                    .calledWith("module2")
+                    .calledWith(plugin);
+
+                expect(this.process).to.be.called // @todo callcount
+                    .calledWithExactly(createServer, this.obj)
+                    .calledWithExactly("routeFn");
+
+                expect(this.registerSingleton).to.be.calledOnce
+                    .calledWithExactly("$server", this.server);
+
+                expect(this.getComponent).to.be.calledOnce
                     .calledWithExactly("$outputHandler");
 
             });

@@ -29,6 +29,7 @@ var Fatal = require("./error/Fatal");
 var Injector = require("./library/Injector");
 var Logger = require("./library/Logger");
 var Model = require("./library/DomainModel");
+var Plugin = require("./library/Plugin");
 var Router = require("./library/Router");
 var Server = require("./library/Server");
 var Validation = require("./error/Validation");
@@ -196,8 +197,15 @@ module.exports = Base.extend({
      */
     _registerModule: function _registerModule (modulePath) {
 
-        /* Get the file */
-        var module = require(modulePath);
+        /* Get the module */
+        var module;
+        if (_.isString(modulePath)) {
+            /* It's a string - load the module path */
+            module = require(modulePath);
+        } else {
+            /* It's a plugin - no need to load again */
+            module = modulePath;
+        }
 
         if (datatypes.setObject(module, null) === null) {
             /* Module isn't an object */
@@ -253,8 +261,14 @@ module.exports = Base.extend({
             return;
         }
 
+        if (_.has(module, "getModules") && _.isFunction(module.getModules)) {
+            /* Plugin - add in the plugin */
+            this._modules = this._modules.concat(module.getModules());
+            return;
+        }
+
         if (_.isString(module) === false) {
-            throw new TypeError("steeplejack.addModule can only accept a string[]");
+            throw new TypeError("steeplejack.addModule can only accept a string[] or an instance of Plugin");
         }
 
         /* Make relative path */
@@ -626,6 +640,17 @@ module.exports = Base.extend({
      * the schema.
      */
     Model: Model,
+
+
+    /**
+     * Plugin
+     *
+     * A plugin is an entire module that is exported
+     * to be reused again.  This would be for something
+     * that you wouldn't ordinarily want to change,
+     * except for config parameters.
+     */
+    Plugin: Plugin,
 
 
     /**
