@@ -641,7 +641,7 @@ describe("Server test", function () {
                     expect(obj.enableCORS(origins)).to.be.equal(obj);
 
                     expect(obj._enableCORS).to.be.callCount(i + 1)
-                        .calledWithExactly([], []);
+                        .calledWithExactly(["*"], []);
 
                 });
 

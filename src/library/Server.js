@@ -259,7 +259,7 @@ module.exports = Base.extend({
      * @returns {exports}
      */
     enableCORS: function (origins, addHeaders) {
-        origins = datatypes.setArray(origins, []);
+        origins = datatypes.setArray(origins, ["*"]);
 
         /* Check the headers are an array of strings */
         addHeaders = datatypes.setArray(addHeaders, []);
