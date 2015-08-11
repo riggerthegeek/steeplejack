@@ -259,9 +259,7 @@ module.exports = Base.extend({
      * @returns {exports}
      */
     enableCORS: function (origins, addHeaders) {
-        if (origins instanceof Array === false) {
-            throw new TypeError("CORS.origins can only receive an array");
-        }
+        origins = datatypes.setArray(origins, []);
 
         /* Check the headers are an array of strings */
         addHeaders = datatypes.setArray(addHeaders, []);

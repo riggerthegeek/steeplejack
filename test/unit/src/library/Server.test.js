@@ -621,7 +621,7 @@ describe("Server test", function () {
 
             });
 
-            it("should throw an error if non-array sent as origins", function () {
+            it("should ignore non-object sent in as the orgins", function () {
 
                 [
                     null,
@@ -636,21 +636,12 @@ describe("Server test", function () {
                     3,
                     NaN,
                     Infinity
-                ].forEach(function (origins) {
+                ].forEach(function (origins, i) {
 
-                    var fail = false;
-                    try {
-                        expect(obj.enableCORS(origins)).to.be.equal(obj);
-                    } catch (err) {
-                        fail = true;
-                        expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("CORS.origins can only receive an array");
-                    } finally {
+                    expect(obj.enableCORS(origins)).to.be.equal(obj);
 
-                        expect(obj._enableCORS).to.not.be.called;
-                        expect(fail).to.be.true;
-
-                    }
+                    expect(obj._enableCORS).to.be.callCount(i + 1)
+                        .calledWithExactly([], []);
 
                 });
 
