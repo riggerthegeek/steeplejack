@@ -171,16 +171,43 @@ module.exports = Base.extend({
 
         var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 
-        /* Get the constructor text */
-        var text;
-        if (target.prototype._construct) {
-            text = target.prototype._construct.toString();
+        /* Get the constructor */
+        var constFn;
+        if (_.has(target.prototype, "_construct")) {
+            constFn = target.prototype._construct;
         } else {
-            text = target.toString();
+            constFn = target;
         }
 
-        var tmp = text.match(FN_ARGS)[1].split(",");
-        tmp = datatypes.setArray(tmp, []);
+        /* Get the dependencies, either from array or constructor function */
+        var tmp;
+        if (_.isArray(constFn)) {
+
+            /* Last one should be function */
+            var fn = constFn.pop();
+
+            if (_.has(target.prototype, "_construct")) {
+                target.prototype._construct = fn;
+            } else {
+                target = fn;
+            }
+
+            if (_.isFunction(fn) === false) {
+                throw new Error("constructor not a function");
+            }
+
+            tmp = constFn;
+
+        } else if (_.isFunction(constFn)) {
+
+            var text = constFn.toString();
+
+            tmp = text.match(FN_ARGS)[1].split(",");
+            tmp = datatypes.setArray(tmp, []);
+
+        } else {
+            throw new Error("Injectable constructor must be an array or function");
+        }
 
         /* Get a definitive list of dependencies */
         var args = _.reduce(tmp, function (result, str) {

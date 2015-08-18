@@ -212,7 +212,7 @@ describe("Injector test", function () {
             });
             obj.registerSingleton("bottomLevel", function () {
                 return "lowerLevel";
-            })
+            });
 
             var objTarget = obj.process(target);
 
@@ -248,6 +248,54 @@ describe("Injector test", function () {
             expect(fail).to.be.true;
 
             done();
+
+        });
+
+        describe("array dependencies", function () {
+
+            it("should process a target that has a top-level dependency and is instance of Base", function () {
+
+                var target = Base.extend({
+
+                    _construct: ["topLevel", function (a) {
+
+                        this.exec = a;
+
+                    }]
+
+                });
+
+                obj.registerSingleton("topLevel", function () {
+                    return "hello";
+                });
+
+                var objTarget = obj.process(target);
+
+                expect(objTarget).to.be.instanceof(target);
+                expect(objTarget.exec()).to.be.equal("hello");
+
+            });
+
+            it.only("should process a target that had a top-level dependency and a function", function () {
+
+                var target = ["topLevel", function (a) {
+
+                    this.exec = a;
+
+                }];
+
+                obj.register("topLevel", ["bottomLevel", function (b) {
+                    return b;
+                }]);
+                obj.registerSingleton("bottomLevel", function () {
+                    return "lowerLevel";
+                });
+
+                var objTarget = obj.process(target);
+
+                expect(objTarget.exec()).to.be.equal("lowerLevel");
+
+            })
 
         });
 
