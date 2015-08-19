@@ -27,7 +27,7 @@ function replaceEnvVars(obj) {
 
     for (var k in obj) {
         var envvar = obj[k];
-        if (typeof envvar === "object" && envvar !== null) {
+        if (_.isPlainObject(envvar)) {
             replaceEnvVars(envvar);
         } else {
             if (_.has(process.env, envvar)) {
