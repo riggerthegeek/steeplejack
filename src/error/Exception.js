@@ -51,7 +51,7 @@ function Exception (message) {
 
     this.stack = stack;
 
-    if (this.type === undefined) {
+    if (_.isUndefined(this.type)) {
         throw new SyntaxError("Exception type must be set");
     }
 

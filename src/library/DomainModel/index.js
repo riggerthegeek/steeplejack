@@ -438,7 +438,7 @@ var DomainModel = Base.extend({
 
                         case "mixed":
                         {
-                            if (value === undefined) {
+                            if (_.isUndefined(value)) {
                                 value = defaults;
                             }
                             break;

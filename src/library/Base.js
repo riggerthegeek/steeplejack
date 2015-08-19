@@ -54,7 +54,7 @@ function Base () {
     for (var key in this) {
         var definition = Object.getOwnPropertyDescriptor(this, key);
 
-        if (definition === undefined || definition.configurable === true) {
+        if (_.isUndefined(definition) || definition.configurable === true) {
             defineProperty(this, key, this[key]);
         }
     }

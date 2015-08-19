@@ -103,7 +103,7 @@ function parseParams (input) {
 
         var tmp = decodeParams(input[i]);
 
-        if (tmp === undefined) {
+        if (_.isUndefined(tmp)) {
             continue;
         }
 
