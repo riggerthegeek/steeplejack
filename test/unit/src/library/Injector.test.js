@@ -276,7 +276,26 @@ describe("Injector test", function () {
 
             });
 
-            it.only("should process a target that had a top-level dependency and a function", function () {
+            it("should process a target that has a top-level dependency and is not instance of Base", function () {
+
+                var target = ["topLevel", function (a) {
+
+                    this.exec = a;
+
+                }];
+
+                obj.registerSingleton("topLevel", function () {
+                    return "hello";
+                });
+
+                var objTarget = obj.process(target);
+
+                expect(objTarget).to.be.instanceof(target[1]);
+                expect(objTarget.exec()).to.be.equal("hello");
+
+            });
+
+            it.skip("should process a target that had a top-level dependency and a function", function () {
 
                 var target = ["topLevel", function (a) {
 

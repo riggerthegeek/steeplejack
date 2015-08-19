@@ -184,6 +184,7 @@ module.exports = Base.extend({
         if (_.isArray(constFn)) {
 
             /* Last one should be function */
+            constFn = _.cloneDeep(constFn);
             var fn = constFn.pop();
 
             if (_.has(target.prototype, "_construct")) {
