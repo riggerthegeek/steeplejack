@@ -27,7 +27,7 @@ deploy:
   provider: npm
   email: simon@simonemms.com
   api_key:
-    secure: scvV1vsf/S4OgeXjKysHViN4cVjyZQYo+nzl0UY9DsDeYCVoEijnTN4zR46eC7CVCXiUL13kc8VSqmk0w/9ZHNnj37fGE9wfRAuMNGmqIzi8in4ZTaGip/OxKtjW3mmWnst7HyR92C6mo0HtBa1BFa2jw8fhi8TmSbktTvW7UIo=
+    secure: sjeE2VqUFprtBzZk+q0CnIDwhWaLpkpqCxbBUl70D5yTu29Vrw0pKdwpmDGyH3nC9JOauKtS9xIIB4r7dWK0ijFEmbdsZRjpE1pcjyX9kFIVvjiSyYmhNg6S7UWvyeLQtbElrYKJHC69U4/6Pebk/7pcZ6p469XwccvKCnludDc=
   on:
     all_branches: true
     tags: true
