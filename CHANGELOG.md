@@ -2,6 +2,7 @@
 
  - The dependency injector now accepts arrays - same syntax as AngularJS's DI
  - CORS now defaults to * if no arguments added
+ - Removed typeofs and replaced with the lodash function
 
 # v1.1.0
 
