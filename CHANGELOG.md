@@ -1,3 +1,8 @@
+# v1.2.0
+
+ - The dependency injector now accepts arrays - same syntax as AngularJS's DI
+ - CORS now defaults to * if no arguments added
+
 # v1.1.0
 
  - Added support for Plugins
