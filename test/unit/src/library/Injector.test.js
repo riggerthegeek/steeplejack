@@ -295,7 +295,7 @@ describe("Injector test", function () {
 
             });
 
-            it.skip("should process a target that had a top-level dependency and a function", function () {
+            it("should process a target that had a top-level dependency and a function", function () {
 
                 var target = ["topLevel", function (a) {
 
@@ -314,7 +314,58 @@ describe("Injector test", function () {
 
                 expect(objTarget.exec()).to.be.equal("lowerLevel");
 
-            })
+            });
+
+            it("should throw an error if the final array item is not a function", function () {
+
+                var target = ["item1", "item2"];
+
+                var fail = false;
+
+                try {
+                    obj.process(target);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("No constructor function in injector array");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should throw an error if non-array or non-function passed into process", function () {
+
+                [
+                    2,
+                    2.3,
+                    "hello",
+                    {hello: "world"},
+                    null,
+                    undefined
+                ].forEach(function (item) {
+
+                    var fail = false;
+
+                    try {
+                        obj.process(item);
+                    } catch (err) {
+
+                        fail = true;
+
+                        expect(err).to.be.instanceof(SyntaxError);
+                        expect(err.message).to.be.equal("Injectable constructor must be an array or function");
+
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+            });
 
         });
 
@@ -530,7 +581,7 @@ describe("Injector test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal("Component 'date' is not a function");
+                    expect(err.message).to.be.equal("Component 'date' is not a function or an array");
                 }
 
                 expect(fail).to.be.true;

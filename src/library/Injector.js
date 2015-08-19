@@ -86,6 +86,25 @@ function construct (constructor, args, thisArg) {
 }
 
 
+/**
+ * Has Proto Construct
+ *
+ * Detects if the target item has a .prototype._construct
+ * on it
+ *
+ * @param target
+ * @returns {*}
+ */
+function hasProtoConstruct (target) {
+
+    return _.has(target, [
+        "prototype",
+        "_construct"
+    ]);
+
+}
+
+
 module.exports = Base.extend({
 
 
@@ -173,7 +192,7 @@ module.exports = Base.extend({
 
         /* Get the constructor */
         var constFn;
-        if (_.has(target.prototype, "_construct")) {
+        if (hasProtoConstruct(target)) {
             constFn = target.prototype._construct;
         } else {
             constFn = target;
@@ -187,14 +206,14 @@ module.exports = Base.extend({
             constFn = _.cloneDeep(constFn);
             var fn = constFn.pop();
 
-            if (_.has(target.prototype, "_construct")) {
+            if (hasProtoConstruct(target)) {
                 target.prototype._construct = fn;
             } else {
                 target = fn;
             }
 
             if (_.isFunction(fn) === false) {
-                throw new Error("constructor not a function");
+                throw new SyntaxError("No constructor function in injector array");
             }
 
             tmp = constFn;
@@ -207,7 +226,7 @@ module.exports = Base.extend({
             tmp = datatypes.setArray(tmp, []);
 
         } else {
-            throw new Error("Injectable constructor must be an array or function");
+            throw new SyntaxError("Injectable constructor must be an array or function");
         }
 
         /* Get a definitive list of dependencies */
@@ -253,8 +272,8 @@ module.exports = Base.extend({
             throw new Error("Component '" + name + "' already registered");
         }
 
-        if (typeof constructor !== "function") {
-            throw new Error("Component '" + name + "' is not a function");
+        if (_.isFunction(constructor) === false && _.isArray(constructor) === false) {
+            throw new Error("Component '" + name + "' is not a function or an array");
         }
 
         this._components[name] = {
