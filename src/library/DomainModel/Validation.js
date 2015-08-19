@@ -117,7 +117,7 @@ var Validation = Base.extend(null, {
                 if (rule === "match") {
                     /* Use the special match rule */
                     ruleFn = Validation.match;
-                } else if (typeof validationutils[rule] !== "function") {
+                } else if (_.isFunction(validationutils[rule]) === false) {
                     /* Developer has specified an invalid rule */
                     err = new SyntaxError(obj.rule + " is not a validation function");
                 } else {

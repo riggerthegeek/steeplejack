@@ -47,7 +47,7 @@ function _ucwords (str) {
 function _flattenObject (obj) {
     var toReturn = {};
     for (var i in obj) {
-        if ((typeof obj[i]) === "object") {
+        if (_.isPlainObject(obj[i])) {
             var flatObject = _flattenObject(obj[i]);
             for (var x in flatObject) {
                 toReturn[i + "." + x] = flatObject[x];

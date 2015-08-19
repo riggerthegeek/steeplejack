@@ -617,10 +617,10 @@ module.exports = Base.extend({
                 a = a.model.get(key);
                 b = b.model.get(key);
 
-                if (typeof a === "string") {
+                if (_.isString(a)) {
                     a = a.toLowerCase();
                 }
-                if (typeof b === "string") {
+                if (_.isString(b)) {
                     b = b.toLowerCase();
                 }
 

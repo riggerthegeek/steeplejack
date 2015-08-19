@@ -110,7 +110,7 @@ module.exports = Base.extend({
             throw new TypeError("route must be a string");
         }
 
-        if (typeof fn !== "function" && fn instanceof Array === false) {
+        if (_.isFunction(fn) === false && _.isArray(fn) === false) {
             throw new TypeError("fn must be a function or array");
         }
 

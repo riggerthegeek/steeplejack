@@ -314,7 +314,7 @@ var DomainModel = Base.extend({
         var getFunc = DomainModel.getFnName("get", key);
         checkForCustom = datatypes.setBool(checkForCustom, true);
 
-        if (checkForCustom === true && getFunc !== null && this[getFunc] && typeof this[getFunc] === "function") {
+        if (checkForCustom === true && getFunc !== null && this[getFunc] && _.isFunction(this[getFunc])) {
 
             return this[getFunc]();
 
@@ -351,7 +351,7 @@ var DomainModel = Base.extend({
             /* Search for a set function - makes it setKey() */
             var setFunc = DomainModel.getFnName("set", key);
 
-            if (checkForCustom === true && setFunc !== null && this[setFunc] && typeof this[setFunc] === "function") {
+            if (checkForCustom === true && setFunc !== null && this[setFunc] && _.isFunction(this[setFunc])) {
 
                 return this[setFunc](value, defaults);
 
@@ -359,7 +359,7 @@ var DomainModel = Base.extend({
 
                 var err;
 
-                if (typeof definition.type === "function") {
+                if (_.isFunction(definition.type)) {
 
                     /* Does it extend DomainModel or Collection? */
                     if (Base.extendsConstructor(definition.type, DomainModel, Collection)) {
