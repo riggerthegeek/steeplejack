@@ -9,6 +9,7 @@
 
 
 /* Third-party modules */
+var Bluebird = require("bluebird");
 
 
 /* Files */
@@ -775,36 +776,150 @@ describe("Server test", function () {
 
             });
 
-            it("should defer to _outputHandler and call the callback", function () {
+            describe("callbacks", function () {
 
-                var cb = sinon.spy();
+                it("should defer to _outputHandler and call the callback", function () {
 
-                var err = {};
-                var data = {};
-                var req = {};
-                var res = {};
+                    var cb = sinon.spy();
 
-                obj.outputHandler(err, data, req, res, cb);
+                    var err = {};
+                    var data = {};
+                    var req = {};
+                    var res = {};
 
-                expect(obj._outputHandler).to.be.calledOnce
-                    .calledWithExactly(err, data, req, res);
+                    obj.outputHandler(err, data, req, res, cb);
 
-                expect(cb).to.be.calledOnce
-                    .calledWithExactly();
+                    expect(obj._outputHandler).to.be.calledOnce
+                        .calledWithExactly(err, data, req, res);
+
+                    expect(cb).to.be.calledOnce
+                        .calledWithExactly();
+
+                });
+
+                it("should not call callback if it's not a function", function () {
+
+                    var err = {};
+                    var data = {};
+                    var req = {};
+                    var res = {};
+
+                    obj.outputHandler(err, data, req, res);
+
+                    expect(obj._outputHandler).to.be.calledOnce
+                        .calledWithExactly(err, data, req, res);
+
+                });
 
             });
 
-            it("should not call callback if it's not a function", function () {
+            describe("promises", function () {
 
-                var err = {};
-                var data = {};
-                var req = {};
-                var res = {};
+                it("should defer to _outputHandler and call the callback - resolving", function (done) {
 
-                obj.outputHandler(err, data, req, res);
+                    var cb = sinon.spy();
 
-                expect(obj._outputHandler).to.be.calledOnce
-                    .calledWithExactly(err, data, req, res);
+                    var promise = Bluebird.defer();
+
+                    var req = {};
+                    var res = {};
+
+                    obj.outputHandler(promise.promise, req, res, cb)
+                        .finally(function () {
+
+                            expect(obj._outputHandler).to.be.calledOnce
+                                .calledWithExactly(null, "some result", req, res);
+
+                            expect(cb).to.be.calledOnce
+                                .calledWithExactly();
+
+                            done();
+
+                        });
+
+                    /* Resolve */
+                    promise.resolve("some result");
+
+                });
+
+                it("should defer to _outputHandler and call the callback - rejecting", function (done) {
+
+                    var cb = sinon.spy();
+
+                    var promise = Bluebird.defer();
+
+                    var req = {};
+                    var res = {};
+
+                    obj.outputHandler(promise.promise, req, res, cb)
+                        .finally(function () {
+
+                            expect(obj._outputHandler).to.be.calledOnce
+                                .calledWithExactly("shit - an error", null, req, res);
+
+                            expect(cb).to.be.calledOnce
+                                .calledWithExactly();
+
+                            done();
+
+                        });
+
+                    /* Reject */
+                    promise.reject("shit - an error");
+
+                });
+
+                it("should defer to _outputHandler and not call the callback - resolving", function (done) {
+
+                    var cb = sinon.spy();
+
+                    var promise = Bluebird.defer();
+
+                    var req = {};
+                    var res = {};
+
+                    obj.outputHandler(promise.promise, req, res)
+                        .finally(function () {
+
+                            expect(obj._outputHandler).to.be.calledOnce
+                                .calledWithExactly(null, "some result", req, res);
+
+                            expect(cb).to.not.be.called;
+
+                            done();
+
+                        });
+
+                    /* Resolve */
+                    promise.resolve("some result");
+
+                });
+
+                it("should defer to _outputHandler and not call the callback - rejecting", function (done) {
+
+                    var cb = sinon.spy();
+
+                    var promise = Bluebird.defer();
+
+                    var req = {};
+                    var res = {};
+
+                    obj.outputHandler(promise.promise, req, res)
+                        .finally(function () {
+
+                            expect(obj._outputHandler).to.be.calledOnce
+                                .calledWithExactly("shit - an error", null, req, res);
+
+                            expect(cb).to.not.be.called;
+
+                            done();
+
+                        });
+
+                    /* Reject */
+                    promise.reject("shit - an error");
+
+                });
 
             });
 

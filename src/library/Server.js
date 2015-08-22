@@ -20,6 +20,21 @@ var Base = require("./Base");
 var datatypes = Base.datatypes;
 
 
+/**
+ * Is Promise
+ *
+ * Detects if the obj is a promise
+ *
+ * @param obj
+ * @returns {*}
+ */
+function isPromise (obj) {
+
+    return _.isObject(obj) && _.isFunction(obj.then) && _.isFunction(obj.catch);
+
+}
+
+
 
 module.exports = Base.extend({
 
@@ -339,19 +354,60 @@ module.exports = Base.extend({
      * around.  Receives an optional callback function
      * at the end.
      *
+     * Also checks if the first parameter is a promise.
+     * If it it, then all subsequent arguments are moved
+     * up one position (ie, data becomes req, req becomes
+     * res, res becomes cb)
+     *
      * @param err
      * @param data
      * @param req
      * @param res
      * @param cb
+     * @returns {*}
      */
     outputHandler: function (err, data, req, res, cb) {
-        this._outputHandler(err, data, req, res);
 
-        /* Allow a callback to be invoked */
-        if (_.isFunction(cb)) {
-            cb();
+        if (isPromise(err)) {
+
+            return this.outputPromise(err, data, req, res);
+
+        } else {
+
+            this._outputHandler(err, data, req, res);
+
+            /* Allow a callback to be invoked */
+            if (_.isFunction(cb)) {
+                cb();
+            }
+
         }
+
+    },
+
+
+    /**
+     * Output Promise
+     *
+     * Sugar for the outputHandler method to resolve
+     * a promise
+     *
+     * @param obj
+     * @param req
+     * @param res
+     * @param cb
+     * @returns {*}
+     */
+    outputPromise: function (obj, req, res, cb) {
+
+        return obj
+            .then(function (data) {
+                return this.outputHandler(null, data, res, res, cb);
+            }.bind(this))
+            .catch(function (err) {
+                return this.outputHandler(err, null, req, res, cb);
+            }.bind(this));
+
     },
 
 
