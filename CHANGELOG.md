@@ -4,6 +4,7 @@
  - CORS now defaults to * if no arguments added
  - Removed typeofs and replaced with the lodash function
  - $outputHandler now accepts promises
+ - Added OPTIONS HTTP method
 
 # v1.1.0
 

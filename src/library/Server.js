@@ -139,6 +139,7 @@ module.exports = Base.extend({
                 "put",
                 "del",
                 "head",
+                "opts",
                 "patch"
             ], function (method) {
                 this.addRoute(method, route, fn);
@@ -156,11 +157,18 @@ module.exports = Base.extend({
                     break;
                 }
 
+                case "options": {
+                    /* Convert to opts */
+                    httpMethod = "opts";
+                    break;
+                }
+
                 case "get":
                 case "post":
                 case "put":
                 case "del":
                 case "head":
+                case "opts":
                 case "patch": {
                     /* Nothing to do - just pass through */
                     break;

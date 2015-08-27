@@ -340,7 +340,11 @@ describe("Server test", function () {
                     "head",
                     "HEAD",
                     "patch",
-                    "PATCH"
+                    "PATCH",
+                    "opts",
+                    "OPTS",
+                    "options",
+                    "OPTIONS"
                 ].forEach(function (method, i) {
 
                     var fn = function () {};
@@ -351,6 +355,8 @@ describe("Server test", function () {
 
                     if (httpMethod === "delete") {
                         httpMethod = "del";
+                    } else if (httpMethod === "options") {
+                        httpMethod = "opts";
                     }
 
                     expect(obj._addRoute).to.be.callCount(i + 1)
@@ -366,13 +372,14 @@ describe("Server test", function () {
 
                 obj.addRoute("all", "/route", fn);
 
-                expect(obj._addRoute).to.be.callCount(6)
+                expect(obj._addRoute).to.be.callCount(7)
                     .calledWithExactly("get", "/route", fn)
                     .calledWithExactly("post", "/route", fn)
                     .calledWithExactly("put", "/route", fn)
                     .calledWithExactly("del", "/route", fn)
                     .calledWithExactly("head", "/route", fn)
-                    .calledWithExactly("patch", "/route", fn);
+                    .calledWithExactly("patch", "/route", fn)
+                    .calledWithExactly("opts", "/route", fn);
 
             });
 
