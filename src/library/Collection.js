@@ -150,6 +150,29 @@ module.exports = Base.extend({
 
 
     /**
+     * Filter
+     *
+     * Anything that matches is removed from the
+     * collection.  This is the opposite of where()
+     *
+     * @param props
+     * @returns {object}
+     */
+    filter: function (props) {
+
+        _.each(this.getAll(), function (model, id) {
+            if (model.where(props)) {
+                /* Remove this from the collection */
+                this.remove(id);
+            }
+        }, this);
+
+        return this;
+
+    },
+
+
+    /**
      * For Each
      *
      * This is fundamentally a copy of the Lodash forEach
@@ -710,7 +733,7 @@ module.exports = Base.extend({
      *
      * Performs a where query on the collection.  Removes
      * anything that doesn't meet the criteria from the
-     * collection.
+     * collection.  This is the opposite of filter()
      *
      * @param {object} props
      * @returns {exports}

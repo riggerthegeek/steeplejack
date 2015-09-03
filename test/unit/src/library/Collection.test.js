@@ -3882,6 +3882,287 @@ describe("Collection tests", function () {
 
             });
 
+            describe("#filter", function () {
+
+                describe("single property", function () {
+
+                    it("should filter a single result", function () {
+
+                        var orig = obj.clone();
+
+                        var out = obj.filter({
+                            float: 2.2
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(2);
+                        expect(orig.get(1)).to.be.equal(out.get(0));
+                        expect(orig.get(2)).to.be.equal(out.get(1));
+
+                    });
+
+                    it("should filter multiple results", function () {
+
+                        var orig = obj.clone();
+
+                        var out = obj.filter({
+                            float: 2.3
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(1);
+                        expect(orig.get(0)).to.be.equal(out.get(0));
+
+                    });
+
+                    it("should filter no results", function () {
+
+                        var orig = obj.clone();
+
+                        var out = obj.filter({
+                            float: "nothing"
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(3);
+                        expect(orig.get(0)).to.be.equal(out.get(0));
+                        expect(orig.get(1)).to.be.equal(out.get(1));
+                        expect(orig.get(2)).to.be.equal(out.get(2));
+
+                    });
+
+                    it("should search an instance of an object and filter one result", function () {
+
+                        var out = obj.filter({
+                            datetime: new Date(2010, 1, 7)
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(2);
+
+                    });
+
+                    it("should search an instance of an object and filter multiple results", function () {
+
+                        /* Change the third collection object */
+                        obj.get(2).set("datetime", "2010-02-08");
+
+                        var out = obj.filter({
+                            datetime: new Date(2010, 1, 8)
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(1);
+
+                    });
+
+                    it("should search an instance of an object and filter nothing", function () {
+
+                        var out = obj.filter({
+                            datetime: new Date("2010-02-01")
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(3);
+
+                    });
+
+                    it("should cast to the datatype and filter one result", function () {
+
+                        var out = obj.filter({
+                            float: "2.2"
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(2);
+
+                    });
+
+                    it("should cast to the datatype and filter multiple results", function () {
+
+                        var out = obj.filter({
+                            float: "2.3"
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(1);
+
+                    });
+
+                    it("should cast to the datatype and filter no results", function () {
+
+                        var out = obj.filter({
+                            float: "2"
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(3);
+
+                    });
+
+                });
+
+                describe("multiple properties", function () {
+
+                    it("should filter a single result", function () {
+
+                        var orig = obj.clone();
+
+                        var out = obj.filter({
+                            float: 2.2,
+                            string: "string"
+                        });
+
+                        expect(out).to.be.instanceof(Collection)
+                            .to.be.equal(obj);
+                        expect(out.getCount()).to.be.equal(2);
+                        expect(orig.get(1)).to.be.equal(out.get(0));
+                        expect(orig.get(2)).to.be.equal(out.get(1));
+
+                    });
+
+                });
+
+                it("should filter multiple results", function () {
+
+                    var orig = obj.clone();
+
+                    var out = obj.filter({
+                        float: 2.3,
+                        string: "string"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(1);
+                    expect(orig.get(0)).to.be.equal(out.get(0));
+
+                });
+
+                it("should filter no results", function () {
+
+                    var out = obj.filter({
+                        float: 2.3,
+                        string: "nothing"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(3);
+
+                });
+
+                it("should search an instance of an object and filter one result", function () {
+
+                    var out = obj.filter({
+                        float: 2.2,
+                        integer: 2
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(2);
+
+                });
+
+                it("should search an instance of an object and filter multiple results", function () {
+
+                    var out = obj.filter({
+                        float: 2.3,
+                        integer: 2
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(1);
+
+                });
+
+                it("should search an instance of an object and filter nothing", function () {
+
+                    var out = obj.filter({
+                        float: 2.1,
+                        integer: 2
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(3);
+
+                });
+
+                it("should cast to the datatype and filter one result", function () {
+
+                    var out = obj.filter({
+                        integer: "2",
+                        datetime: "2010-02-07"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(2);
+
+                });
+
+                it("should cast to the datatype and filter multiple results", function () {
+
+                    /* Change the third collection object */
+                    obj.get(2).set("datetime", "2010-02-08");
+
+                    var out = obj.filter({
+                        integer: "2",
+                        datetime: "2010-02-08"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(1);
+
+                });
+
+                it("should cast to the datatype and filter no results", function () {
+
+                    var out = obj.filter({
+                        integer: "2",
+                        datetime: "2010-02-10"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(obj);
+                    expect(out.getCount()).to.be.equal(3);
+
+                });
+
+                it("should throw an error if non-object passed in", function () {
+
+                    var fail = false;
+
+                    try {
+                        obj.filter();
+                    } catch (err) {
+
+                        fail = true;
+                        expect(err).to.be.instanceof(SyntaxError);
+                        expect(err.message).to.be.equal("where.props must be an object");
+
+                    } finally {
+
+                        expect(fail).to.be.true;
+
+                    }
+                });
+
+            });
+
         });
 
         describe("#limit", function () {

@@ -5,6 +5,7 @@
  - Removed typeofs and replaced with the lodash function
  - $outputHandler now accepts promises
  - Added OPTIONS HTTP method
+ - Collection now has a `filter` method which is the opposite of the `where` method
 
 # v1.1.0
 
