@@ -13,26 +13,12 @@
 
 /* Third-party modules */
 var _ = require("lodash");
+var Bluebird = require("bluebird");
 
 
 /* Files */
 var Base = require("./Base");
 var datatypes = Base.datatypes;
-
-
-/**
- * Is Promise
- *
- * Detects if the obj is a promise
- *
- * @param obj
- * @returns {*}
- */
-function isPromise (obj) {
-
-    return _.isObject(obj) && _.isFunction(obj.then) && _.isFunction(obj.catch);
-
-}
 
 
 
@@ -376,8 +362,9 @@ module.exports = Base.extend({
      */
     outputHandler: function (err, data, req, res, cb) {
 
-        if (isPromise(err)) {
+        if (_.isFunction(err)) {
 
+            /* Treat as a promise */
             return this.outputPromise(err, data, req, res);
 
         } else {
@@ -408,7 +395,7 @@ module.exports = Base.extend({
      */
     outputPromise: function (obj, req, res, cb) {
 
-        return obj
+        return Bluebird.try(obj)
             .then(function (data) {
                 return this.outputHandler(null, data, res, res, cb);
             }.bind(this))

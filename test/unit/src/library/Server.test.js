@@ -831,7 +831,9 @@ describe("Server test", function () {
                     var req = {};
                     var res = {};
 
-                    obj.outputHandler(promise.promise, req, res, cb)
+                    obj.outputHandler(function () {
+                        return promise.promise;
+                    }, req, res, cb)
                         .finally(function () {
 
                             expect(obj._outputHandler).to.be.calledOnce
@@ -858,7 +860,9 @@ describe("Server test", function () {
                     var req = {};
                     var res = {};
 
-                    obj.outputHandler(promise.promise, req, res, cb)
+                    obj.outputHandler(function () {
+                        return promise.promise;
+                    }, req, res, cb)
                         .finally(function () {
 
                             expect(obj._outputHandler).to.be.calledOnce
@@ -885,7 +889,9 @@ describe("Server test", function () {
                     var req = {};
                     var res = {};
 
-                    obj.outputHandler(promise.promise, req, res)
+                    obj.outputHandler(function () {
+                        return promise.promise;
+                    }, req, res)
                         .finally(function () {
 
                             expect(obj._outputHandler).to.be.calledOnce
@@ -911,7 +917,9 @@ describe("Server test", function () {
                     var req = {};
                     var res = {};
 
-                    obj.outputHandler(promise.promise, req, res)
+                    obj.outputHandler(function () {
+                        return promise.promise;
+                    }, req, res)
                         .finally(function () {
 
                             expect(obj._outputHandler).to.be.calledOnce
