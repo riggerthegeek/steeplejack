@@ -6,13 +6,13 @@
  * @param grunt
  */
 
+"use strict";
+
 /* Node modules */
 var semver = require("semver");
 
 
 module.exports = function (grunt) {
-
-    "use strict";
 
     /* Load all grunt tasks */
     require("load-grunt-tasks")(grunt);
