@@ -2,7 +2,7 @@
 
  - The dependency injector now accepts arrays - same syntax as AngularJS's DI
  - CORS now defaults to * if no arguments added
- - Removed typeofs and replaced with the lodash function
+ - Removed `typeof`s and replaced with the appropriate lodash function
  - $outputHandler now accepts promises
  - Added OPTIONS HTTP method
  - Collection now has a `filter` method which is the opposite of the `where` method
