@@ -19,6 +19,7 @@ var path = require("path");
 /* Third-party modules */
 var _ = require("lodash");
 var glob = require("glob");
+var pathIsAbsolute = require("path-is-absolute");
 
 
 /* Files */
@@ -125,7 +126,7 @@ module.exports = Base.extend({
         /* Configure the routes - pass the absolute path */
         if (routeDir) {
 
-            if (path.isAbsolute(routeDir) === false) {
+            if (pathIsAbsolute(routeDir) === false) {
                 routeDir = path.join(process.cwd(), routeDir);
             }
 
@@ -277,7 +278,7 @@ module.exports = Base.extend({
         }
 
         /* Make relative path */
-        var modulePath = path.isAbsolute(module) ? module : path.join(process.cwd(), module);
+        var modulePath = pathIsAbsolute(module) ? module : path.join(process.cwd(), module);
 
         /* Store it in array */
         this._modules = this._modules.concat(glob.sync(modulePath));

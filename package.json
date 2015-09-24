@@ -10,6 +10,7 @@
     "lodash": "^3.10.1",
     "node-uuid": "^1.4.3",
     "optimist": "^0.6.1",
+    "path-is-absolute": "^1.0.0",
     "walk": "^2.3.9"
   },
   "devDependencies": {
