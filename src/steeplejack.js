@@ -124,7 +124,12 @@ module.exports = Base.extend({
 
         /* Configure the routes - pass the absolute path */
         if (routeDir) {
-            this.setRoutes(Router.discoverRoutes(path.join(process.cwd(), routeDir)));
+
+            if (path.isAbsolute(routeDir) === false) {
+                routeDir = path.join(process.cwd(), routeDir);
+            }
+
+            this.setRoutes(Router.discoverRoutes(routeDir));
         }
 
     },
@@ -272,7 +277,7 @@ module.exports = Base.extend({
         }
 
         /* Make relative path */
-        var modulePath = path.join(process.cwd(), module);
+        var modulePath = path.isAbsolute(module) ? module : path.join(process.cwd(), module);
 
         /* Store it in array */
         this._modules = this._modules.concat(glob.sync(modulePath));

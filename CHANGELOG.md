@@ -6,6 +6,8 @@
  - $outputHandler now accepts promises
  - Added OPTIONS HTTP method
  - Collection now has a `filter` method which is the opposite of the `where` method
+ - The `routeDir` and `modules` in the main factory method can now receive absolute paths, not just ones relative to the
+    result of `process.cwd()`
 
 # v1.1.0
 

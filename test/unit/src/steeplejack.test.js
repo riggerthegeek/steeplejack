@@ -416,10 +416,15 @@ describe("Main test", function () {
                     "/path/to/module3"
                 ]);
 
+                this.glob.sync.onCall(3).returns([
+                    "/module4"
+                ]);
+
                 this.obj.addModule([
                     "module1",
                     "module2",
-                    "module3"
+                    "module3",
+                    "/module4" // absolute path
                 ]);
 
                 expect(this.obj._modules).to.be.eql([
@@ -428,13 +433,15 @@ describe("Main test", function () {
                     "/path/to/module2",
                     "/path/to/module2a",
                     "/path/to/module2b",
-                    "/path/to/module3"
+                    "/path/to/module3",
+                    "/module4"
                 ]);
 
-                expect(this.glob.sync).to.be.calledThrice
+                expect(this.glob.sync).to.be.callCount(4)
                     .calledWith(path.join(process.cwd(), "module1"))
                     .calledWith(path.join(process.cwd(), "module2"))
-                    .calledWith(path.join(process.cwd(), "module3"));
+                    .calledWith(path.join(process.cwd(), "module3"))
+                    .calledWith(path.join("/module4"));
 
             });
 
@@ -1311,6 +1318,29 @@ describe("Main test", function () {
 
                 expect(this.router.discoverRoutes).to.be.calledOnce
                     .calledWith(path.join(process.cwd(), "route/dir"));
+
+            });
+
+            it("should pass in an absolute path", function () {
+
+                var spy = sinon.spy(this.Main.prototype, "setRoutes");
+
+                this.router.discoverRoutes.returns("routes");
+
+                var app = this.Main.app({
+                    routeDir: "/route/dir"
+                });
+
+                expect(app).to.be.instanceof(this.Main);
+
+                expect(app._config).to.be.eql({});
+                expect(app._modules).to.be.eql([]);
+
+                expect(spy).to.be.calledOnce
+                    .calledWith("routes");
+
+                expect(this.router.discoverRoutes).to.be.calledOnce
+                    .calledWith(path.join("/route/dir"));
 
             });
 
