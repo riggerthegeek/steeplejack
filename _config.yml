@@ -11,7 +11,7 @@ url: "http://steeplejack.info"
 markdown: kramdown
 
 github: https://github.com/riggerthegeek/steeplejack
-github_src: /blob/release/1.0/
+github_src: /blob/master/
 gitter_url: https://gitter.im/riggerthegeek/steeplejack
 bugs_url: https://github.com/riggerthegeek/steeplejack/issues
 
