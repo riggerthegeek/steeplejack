@@ -31,7 +31,12 @@ pre {
 
         .copyButton {
 
-            //@extend .black_button;
+            @extend .btn;
+            @extend .btn-sm;
+            @extend .btn-success;
+            @extend .fa;
+            @extend .fa-copy;
+
             position: absolute;
             top: 5px;
             right: 5px;
