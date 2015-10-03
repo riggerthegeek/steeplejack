@@ -1,0 +1,15 @@
+.page_content {
+
+    @extend .col-sm-12;
+
+    margin: {
+        bottom: 50px;
+    }
+    blockquote {
+
+        font: {
+            size: 1em;
+        }
+    }
+
+}

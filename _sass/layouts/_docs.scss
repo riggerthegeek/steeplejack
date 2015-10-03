@@ -3,7 +3,6 @@
     .main_body {
 
         @extend .col-sm-9;
-        @extend .col-sm-push-3;
         @extend .clearfix;
 
     }
@@ -11,7 +10,6 @@
     .sidebar {
 
         @extend .col-sm-3;
-        @extend .col-sm-pull-9;
         @extend .clearfix;
 
         h5 {
@@ -22,56 +20,14 @@
                 top: $grid-gutter-width / 2;
                 bottom: $grid-gutter-width / 2;
             }
-            border: {
-                bottom: 1px solid $red;
-            }
-            text-shadow: 2px 2px $black;
-            margin: {
-                left: -$grid-gutter-width / 2;
-            }
+
         }
 
         ul {
 
-            @extend .list-unstyled;
-
-            li {
-                position: relative;
-
-                a {
-
-                    display: block;
-                    margin: {
-                        left: -$grid-gutter-width / 2;
-                    }
-                    padding: {
-                        left: $grid-gutter-width;
-                    }
-                    color: $teal;
-                    text-shadow: 2px 2px $black;
-
-                    &:hover {
-                        color: darken($teal, 10%);
-                        text-decoration: none;
-                    }
-
-                }
-
-                &.active {
-
-                    a {
-
-                        @extend .roboto-heavy;
-
-                        background: {
-                            color: $medium-grey;
-                        }
-                        color: $orange;
-
-                    }
-                }
-
-            }
+            @extend .nav;
+            @extend .nav-pills;
+            @extend .nav-stacked;
 
         }
 

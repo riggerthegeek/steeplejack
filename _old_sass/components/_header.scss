@@ -1,0 +1,49 @@
+.header {
+
+    @extend .navbar;
+    @extend .navbar-fixed-top;
+    @extend .montserrat-normal;
+
+    background: {
+        color: $black;
+    };
+
+    .navbar-header {
+
+        .navbar-toggle {
+            border-color: $medium-grey;
+            &:hover,
+            &:focus {
+                background-color: $medium-grey;
+            }
+            .icon-bar {
+                background-color: $white;
+            }
+        }
+
+        .navbar-brand {
+
+            img {
+
+                float: left;
+                margin: {
+                    top: -($navbar-padding-horizontal / 2);
+                    bottom: -($navbar-padding-horizontal / 2);
+                    right: ($navbar-padding-horizontal / 2);
+                }
+                height: $navbar-height - $navbar-padding-horizontal;
+
+            }
+
+            .title {
+
+                color: $white;
+                float: left;
+
+            }
+
+        }
+
+    }
+
+}

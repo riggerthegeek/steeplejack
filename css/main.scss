@@ -4,21 +4,41 @@
 @charset "utf-8";
 
 
+/*
 
-// Import partials from `sass_dir` (defaults to `_sass`)
-@import
-    "base/_variables",
-    "base/_typography",
-    "base/_mixins",
-    "thirdparty/_bootstrap",
-    "thirdparty/_fontawesome",
-    "base/_global",
-    "layouts/_common",
-    "layouts/_api",
-    "layouts/_docs",
-    "layouts/_home",
-    "components/_buttons",
-    "components/_header",
-    "components/_footer",
-    "components/_nav"
-;
+    Base
+
+*/
+@import "base/variables";
+@import "base/global";
+@import "base/typography";
+
+
+/*
+
+    Third party
+
+*/
+@import "third-party/bootstrap";
+@import "third-party/fontawesome";
+
+
+/*
+
+    Components
+
+ */
+@import "components/buttons";
+@import "components/footer";
+@import "components/header";
+
+
+/*
+
+    Layouts
+
+ */
+@import "layouts/api";
+@import "layouts/common";
+@import "layouts/docs";
+@import "layouts/home";

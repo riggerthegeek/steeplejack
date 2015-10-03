@@ -1,25 +1,10 @@
 .header {
 
     @extend .navbar;
+    @extend .navbar-inverse;
     @extend .navbar-fixed-top;
-    @extend .montserrat-normal;
-
-    background: {
-        color: $black;
-    };
 
     .navbar-header {
-
-        .navbar-toggle {
-            border-color: $medium-grey;
-            &:hover,
-            &:focus {
-                background-color: $medium-grey;
-            }
-            .icon-bar {
-                background-color: $white;
-            }
-        }
 
         .navbar-brand {
 
@@ -35,13 +20,16 @@
 
             }
 
-            .title {
+        }
 
-                color: $white;
-                float: left;
+    }
 
-            }
+    .nav {
 
+        @extend .navbar-nav;
+
+        @media (min-width: $screen-sm-min) {
+            float: right;
         }
 
     }
