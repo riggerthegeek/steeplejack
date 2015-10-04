@@ -185,6 +185,41 @@ module.exports = Base.extend({
 
 
     /**
+     * Find
+     *
+     * Similar to the where method, except that this
+     * returns the first model that returns a match.
+     * This may mean that there are additional things
+     * that would match.
+     *
+     * @param {object} props
+     * @returns {object|null}
+     */
+    find: function (props) {
+
+        var result = null;
+
+        /* Use the for loop so logic can be broken */
+        var models = this.getAll();
+        for (var id in models) {
+
+            var model = models[id];
+
+            if (model.where(props)) {
+
+                result = model;
+                break;
+
+            }
+
+        }
+
+        return result;
+
+    },
+
+
+    /**
      * For Each
      *
      * This is fundamentally a copy of the Lodash forEach

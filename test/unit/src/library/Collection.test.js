@@ -2542,6 +2542,34 @@ describe("Collection tests", function () {
                 ]);
             });
 
+            describe("#find", function () {
+
+                it("should return a unique object", function () {
+
+                    expect(obj.find({
+                        float: 2.2
+                    })).to.be.equal(obj.get(0));
+
+                });
+
+                it("should return the first of a non-unique object", function () {
+
+                    expect(obj.find({
+                        float: 2.3
+                    })).to.be.equal(obj.get(1));
+
+                });
+
+                it("should return null if nothing matches", function () {
+
+                    expect(obj.find({
+                        float: 2.4
+                    })).to.be.null;
+
+                });
+
+            });
+
             describe("#each", function () {
 
                 it("should run the each method", function () {
