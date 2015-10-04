@@ -2546,14 +2546,15 @@ describe("Collection tests", function () {
 
                 it("should run the each method", function () {
 
-                    var fn = sinon.stub();
+                    var x = 0;
 
-                    var out = obj.each(fn);
+                    var out = obj.each(function (model) {
 
-                    expect(fn).to.be.calledThrice
-                        .calledWith(obj.get(0), obj.get(0, true), obj.getAll())
-                        .calledWith(obj.get(1), obj.get(1, true), obj.getAll())
-                        .calledWith(obj.get(2), obj.get(2, true), obj.getAll());
+                        expect(model).to.be.equal(obj.get(x++));
+
+                    });
+
+                    expect(x).to.be.equal(3);
 
                     expect(out).to.be.equal(obj);
 
@@ -2620,14 +2621,15 @@ describe("Collection tests", function () {
 
                 it("should run the forEach method", function () {
 
-                    var fn = sinon.stub();
+                    var x = 0;
 
-                    var out = obj.forEach(fn);
+                    var out = obj.forEach(function (model) {
 
-                    expect(fn).to.be.calledThrice
-                        .calledWith(obj.get(0), obj.get(0, true), obj.getAll())
-                        .calledWith(obj.get(1), obj.get(1, true), obj.getAll())
-                        .calledWith(obj.get(2), obj.get(2, true), obj.getAll());
+                        expect(model).to.be.equal(obj.get(x++));
+
+                    });
+
+                    expect(x).to.be.equal(3);
 
                     expect(out).to.be.equal(obj);
 
@@ -2677,6 +2679,156 @@ describe("Collection tests", function () {
 
                     try {
                         obj.forEach("string");
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(TypeError);
+                        expect(err.message).to.be.equal("iterator must be a function");
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+            });
+
+            describe("#eachRight", function () {
+
+                it("should run the eachRight method", function () {
+
+                    var x = 3;
+
+                    var out = obj.eachRight(function (model) {
+
+                        expect(model).to.be.equal(obj.get(--x));
+
+                    });
+
+                    expect(x).to.be.equal(0);
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should set the scope to global if thisArg not set", function () {
+
+                    var self = this;
+                    var out = obj.eachRight(function () {
+                        expect(this).to.not.be.equal(self);
+                    });
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should receive a function and set the scope with the second parameter to this", function () {
+
+                    var self = this;
+
+                    var out = obj.eachRight(function () {
+                        expect(this).to.be.equal(self);
+                    }, this);
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should set the scope to a different object", function () {
+
+                    var out = obj.eachRight(function () {
+                        expect(this.fn).to.be.a("function");
+                        expect(this.id).to.be.equal(12345);
+                    }, {
+                        fn: function () {
+                        },
+                        id: 12345
+                    });
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should throw an error when a non-function received", function () {
+
+                    var fail = false;
+
+                    try {
+                        obj.eachRight("string");
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(TypeError);
+                        expect(err.message).to.be.equal("iterator must be a function");
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+            });
+
+            describe("#forEachRight", function () {
+
+                it("should run the forEachRight method", function () {
+
+                    var x = 3;
+
+                    var out = obj.forEachRight(function (model) {
+
+                        expect(model).to.be.equal(obj.get(--x));
+
+                    });
+
+                    expect(x).to.be.equal(0);
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should set the scope to global if thisArg not set", function () {
+
+                    var self = this;
+                    var out = obj.forEachRight(function () {
+                        expect(this).to.not.be.equal(self);
+                    });
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should receive a function and set the scope with the second parameter to this", function () {
+
+                    var self = this;
+
+                    var out = obj.forEachRight(function () {
+                        expect(this).to.be.equal(self);
+                    }, this);
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should set the scope to a different object", function () {
+
+                    var out = obj.forEachRight(function () {
+                        expect(this.fn).to.be.a("function");
+                        expect(this.id).to.be.equal(12345);
+                    }, {
+                        fn: function () {
+                        },
+                        id: 12345
+                    });
+
+                    expect(out).to.be.equal(obj);
+
+                });
+
+                it("should throw an error when a non-function received", function () {
+
+                    var fail = false;
+
+                    try {
+                        obj.forEachRight("string");
                     } catch (err) {
                         fail = true;
 

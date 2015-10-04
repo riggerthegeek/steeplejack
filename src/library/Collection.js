@@ -185,31 +185,6 @@ module.exports = Base.extend({
 
 
     /**
-     * Find
-     *
-     * Similar to the where method, except that this
-     * returns the first model that returns a match.
-     * This may mean that there are additional things
-     * that would match.
-     *
-     * @param {object} props
-     * @returns {exports}
-     */
-    find: function (props) {
-
-        _.each(this.getAll(), function (model, id) {
-            if (model.where(props)) {
-                /* Remove this from the collection */
-                this.remove(id);
-            }
-        }, this);
-
-        return this;
-
-    },
-
-
-    /**
      * For Each
      *
      * This is fundamentally a copy of the Lodash forEach
@@ -234,7 +209,7 @@ module.exports = Base.extend({
             return iterator.call(thisArg, self.get(id), id, obj);
         }, thisArg);
 
-        return this;
+        return self;
 
     },
 
@@ -251,7 +226,19 @@ module.exports = Base.extend({
      */
     forEachRight: function (iterator, thisArg) {
 
-        return this;
+        var self = this;
+
+        iterator = datatypes.setFunction(iterator, null);
+
+        if (iterator === null) {
+            throw new TypeError("iterator must be a function");
+        }
+
+        _.eachRight(this.getAll(), function (model, id, obj) {
+            return iterator.call(thisArg, self.get(id), id, obj);
+        }, thisArg);
+
+        return self;
 
     },
 
