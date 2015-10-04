@@ -199,20 +199,40 @@ module.exports = Base.extend({
 
         var result = null;
 
-        /* Use the for loop so logic can be broken */
-        var models = this.getAll();
-        for (var id in models) {
+        this.forEach(function (model) {
 
-            var model = models[id];
-
-            if (model.where(props)) {
-
+            if (result === null && model.where(props)) {
                 result = model;
-                break;
-
             }
 
-        }
+        });
+
+        return result;
+
+    },
+
+
+    /**
+     * Find Last
+     *
+     * Opposite of find method.  This performs a
+     * reverse search on the collection, finding
+     * the last matching model.
+     *
+     * @param {object} props
+     * @returns {*}
+     */
+    findLast: function (props) {
+
+        var result = null;
+
+        this.forEachRight(function (model) {
+
+            if (result === null && model.where(props)) {
+                result = model;
+            }
+
+        });
 
         return result;
 

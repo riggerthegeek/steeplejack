@@ -2570,6 +2570,34 @@ describe("Collection tests", function () {
 
             });
 
+            describe("#findLast", function () {
+
+                it("should return a unique object", function () {
+
+                    expect(obj.findLast({
+                        float: 2.2
+                    })).to.be.equal(obj.get(0));
+
+                });
+
+                it("should return the last of a non-unique object", function () {
+
+                    expect(obj.findLast({
+                        float: 2.3
+                    })).to.be.equal(obj.get(2));
+
+                });
+
+                it("should return null if nothing matches", function () {
+
+                    expect(obj.findLast({
+                        float: 2.4
+                    })).to.be.null;
+
+                });
+
+            });
+
             describe("#each", function () {
 
                 it("should run the each method", function () {
