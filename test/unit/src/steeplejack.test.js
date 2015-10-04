@@ -479,7 +479,8 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
+                    expect(err.message).to.be
+                        .equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
 
                 } finally {
 
@@ -504,7 +505,8 @@ describe("Main test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
+                    expect(err.message).to.be
+                        .equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
 
                 } finally {
 
@@ -590,14 +592,17 @@ describe("Main test", function () {
 
                 try {
 
-                    this.obj.addModule({ getModules: null });
+                    this.obj.addModule({
+                        getModules: null
+                    });
 
                 } catch (err) {
 
                     fail = true;
 
                     expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
+                    expect(err.message).to.be
+                        .equal("steeplejack.addModule can only accept a string[] or an instance of Plugin");
 
                 } finally {
 
@@ -739,7 +744,8 @@ describe("Main test", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("steeplejack.registerConfig can only accept functions: /path/to/module");
+                        expect(err.message).to.be
+                            .equal("steeplejack.registerConfig can only accept functions: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }
@@ -758,7 +764,8 @@ describe("Main test", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(SyntaxError);
-                        expect(err.message).to.be.equal("steeplejack.registerConfig function cannot be anonymous: /path/to/module");
+                        expect(err.message).to.be
+                            .equal("steeplejack.registerConfig function cannot be anonymous: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }
@@ -842,7 +849,8 @@ describe("Main test", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(SyntaxError);
-                        expect(err.message).to.be.equal("steeplejack.registerFactory function cannot be anonymous: /path/to/module");
+                        expect(err.message).to.be
+                            .equal("steeplejack.registerFactory function cannot be anonymous: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }
@@ -869,7 +877,8 @@ describe("Main test", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("steeplejack.registerSingleton cannot accept a function: /path/to/module");
+                        expect(err.message).to.be
+                            .equal("steeplejack.registerSingleton cannot accept a function: /path/to/module");
                     } finally {
                         expect(fail).to.be.true;
                     }

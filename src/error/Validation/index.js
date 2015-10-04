@@ -4,8 +4,6 @@
  * This is an error that can be recovered from.  Normally, this
  * would be invalid input from the client or similar.  Ultimately,
  * this would return something like an HTTP 400 error.
- *
- * @package Exceptions
  */
 
 "use strict";

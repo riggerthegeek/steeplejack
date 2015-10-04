@@ -167,7 +167,7 @@ _.extend(Base, {
      * parameter, so should be able to be used by both Node and
      * steeplejack classes
      *
-     * @param ChildClass
+     * @param {function} ChildClass
      * @returns {boolean}
      */
     extendsConstructor: function extendsConstructor (ChildClass) {

@@ -92,7 +92,7 @@ function construct (constructor, args, thisArg) {
  * Detects if the target item has a .prototype._construct
  * on it
  *
- * @param target
+ * @param {string} target
  * @returns {*}
  */
 function hasProtoConstruct (target) {
@@ -326,8 +326,8 @@ module.exports = Base.extend({
      * can cause issues for modules dependent upon what
      * you're replacing.
      *
-     * @param name
-     * @param component
+     * @param {string} name
+     * @param {*} component
      * @returns {exports}
      */
     replace: function (name, component) {
@@ -363,7 +363,7 @@ module.exports = Base.extend({
      *
      * Removes a component from the lists of components
      *
-     * @param name
+     * @param {string} name
      * @returns {exports}
      */
     remove: function (name) {

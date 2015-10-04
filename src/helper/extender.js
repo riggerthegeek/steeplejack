@@ -30,8 +30,8 @@ var datatypes = datautils.data;
  * further up, then that should be done in the
  * constructor of that object.
  *
- * @param properties
- * @param staticProps
+ * @param {object} properties
+ * @param {object} staticProps
  * @returns {Function}
  */
 module.exports = function extender (properties, staticProps) {

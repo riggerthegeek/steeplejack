@@ -58,13 +58,13 @@ function iterator (tasks) {
 
 /**
  * Simple version of async.waterfall
- * @param modules
- * @param fn
+ * @param {array} tasks
+ * @param {function} callback
  */
 function waterfall (tasks, callback) {
     callback = callback || function () {};
     if (tasks instanceof Array === false) {
-        var err = new Error('First argument to waterfall must be an array of functions');
+        var err = new Error("First argument to waterfall must be an array of functions");
         return callback(err);
     }
     if (!tasks.length) {

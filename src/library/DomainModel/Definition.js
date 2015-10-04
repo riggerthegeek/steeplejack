@@ -7,8 +7,6 @@
  * Although this is technically a Model, it cannot use the
  * DomainModel object as that would create a circular
  * dependency.
- *
- * @package DomainModel
  */
 
 "use strict";

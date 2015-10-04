@@ -58,7 +58,7 @@ module.exports = Base.extend({
      * Sets the modules to be included with this
      * plugin
      *
-     * @param module
+     * @param {string[]} module
      * @returns {exports}
      */
     setModules: function (module) {

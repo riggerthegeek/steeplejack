@@ -3591,7 +3591,8 @@ describe("Collection tests", function () {
                                     fail = true;
 
                                     expect(err).to.be.instanceof(SyntaxError);
-                                    expect(err.message).to.be.equal("Collection.sortBy must receive string, object or array");
+                                    expect(err.message).to.be
+                                        .equal("Collection.sortBy must receive string, object or array");
                                 } finally {
                                     expect(fail).to.be.true;
                                 }

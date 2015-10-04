@@ -4,8 +4,6 @@
  * A model is a representation of data so it
  * can be used in a consistent way throughout
  * the application.
- *
- * @package steeplejack
  */
 
 "use strict";
@@ -266,7 +264,7 @@ var DomainModel = Base.extend({
      * key
      *
      * @param {string} key
-     * @returns {object}
+     * @returns {object|null}
      */
     getDefinition: function getter (key) {
         if (datatypes.setString(key, null) === null) {
@@ -306,7 +304,7 @@ var DomainModel = Base.extend({
      * Gets an individual parameter
      *
      * @param {string} key
-     * @params {boolean} checkForCustom
+     * @param {boolean} checkForCustom
      * @returns {*}
      */
     get: function getter (key, checkForCustom) {

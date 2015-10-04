@@ -3,8 +3,6 @@
  *
  * A collection is a series of Models put
  * together so that they can be useful.
- *
- * @package steeplejack
  */
 
 "use strict";
@@ -150,12 +148,26 @@ module.exports = Base.extend({
 
 
     /**
+     * Each Right
+     *
+     * Assigns forEachRight to eachRight
+     *
+     * @param {function} iterator
+     * @param {object} thisArg
+     * @returns {object}
+     */
+    eachRight: function (iterator, thisArg) {
+        return this.forEachRight(iterator, thisArg);
+    },
+
+
+    /**
      * Filter
      *
      * Anything that matches is removed from the
      * collection.  This is the opposite of where()
      *
-     * @param props
+     * @param {object} props
      * @returns {object}
      */
     filter: function (props) {
@@ -180,7 +192,7 @@ module.exports = Base.extend({
      * This may mean that there are additional things
      * that would match.
      *
-     * @param props
+     * @param {object} props
      * @returns {exports}
      */
     find: function (props) {
@@ -221,6 +233,23 @@ module.exports = Base.extend({
         _.each(this.getAll(), function (model, id, obj) {
             return iterator.call(thisArg, self.get(id), id, obj);
         }, thisArg);
+
+        return this;
+
+    },
+
+
+    /**
+     * For Each Right
+     *
+     * Similar to forEach method, but does it in the
+     * opposite order
+     *
+     * @param {function} iterator
+     * @param {object} thisArg
+     * @returns {object}
+     */
+    forEachRight: function (iterator, thisArg) {
 
         return this;
 
@@ -393,8 +422,8 @@ module.exports = Base.extend({
      * Removes the specific model or models
      * from the collection
      *
-     * @param {int|object|array|string} model
-     * @returns {bool|array}
+     * @param {number|object|array|string} model
+     * @returns {boolean|array}
      */
     remove: function (model) {
 
@@ -515,7 +544,7 @@ module.exports = Base.extend({
      * Resets the collection back to it's original (empty)
      * setting
      *
-     * @return {bool}
+     * @return {boolean}
      */
     reset: function () {
 

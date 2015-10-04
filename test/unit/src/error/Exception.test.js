@@ -46,11 +46,11 @@ describe("Exception test", function () {
                 var stackTrace = {
                     parse: function () {
                         return [{}, {}, {
-                            fileName: '/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js',
+                            fileName: "/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js",
                             lineNumber: 40,
-                            functionName: 'Context.it.type',
-                            typeName: 'Context',
-                            methodName: 'it.type',
+                            functionName: "Context.it.type",
+                            typeName: "Context",
+                            methodName: "it.type",
                             columnNumber: 23,
                             native: false,
                             getFileName: function () {
@@ -60,11 +60,11 @@ describe("Exception test", function () {
                                 return this.lineNumber;
                             }
                         }, {
-                            fileName: '/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js',
+                            fileName: "/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js",
                             lineNumber: 50,
-                            functionName: '',
-                            typeName: 'Context',
-                            methodName: 'type',
+                            functionName: "",
+                            typeName: "Context",
+                            methodName: "type",
                             columnNumber: 23,
                             native: false,
                             getFileName: function () {
@@ -74,11 +74,11 @@ describe("Exception test", function () {
                                 return this.lineNumber;
                             }
                         }, {
-                            fileName: '/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js',
+                            fileName: "/opt/dev/steeplejack/test/unit/src/error/ExceptionTest.js",
                             lineNumber: 60,
-                            functionName: '',
+                            functionName: "",
                             typeName: null,
-                            methodName: 'type',
+                            methodName: "type",
                             columnNumber: 23,
                             native: false,
                             getFileName: function () {

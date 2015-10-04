@@ -4,8 +4,6 @@
  * This is the main error object for the framework. It
  * is an extension of the global Error object and can
  * be further extended
- *
- * @package steeplejack
  */
 
 "use strict";

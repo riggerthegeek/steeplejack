@@ -5,7 +5,6 @@
  * object that receives all the config parameters
  * and then loads up the server
  *
- * @package steeplejack
  * @license MIT License
  */
 
@@ -102,9 +101,9 @@ module.exports = Base.extend({
      * here, you can configure your routes and this will all
      * be loaded automatically.
      *
-     * @param config
-     * @param modules
-     * @param routeDir
+     * @param {object} config
+     * @param {array} modules
+     * @param {string} routeDir
      * @private
      */
     _construct: function _construct (config, modules, routeDir) {
@@ -144,7 +143,7 @@ module.exports = Base.extend({
      * key.  That key is the name of the module and
      * whatever is set to that value is the instance.
      *
-     * @param obj
+     * @param {object} obj
      * @returns {{name: *, inst: *}}
      * @private
      */
@@ -255,7 +254,7 @@ module.exports = Base.extend({
      *
      * It also accepts globbed paths.
      *
-     * @param module
+     * @param {string|array} module
      */
     addModule: function addModule (module) {
 
@@ -293,7 +292,7 @@ module.exports = Base.extend({
      * publicly in case a user wishes to register it
      * at a different point during the run phase.
      *
-     * @param server
+     * @param {object} server
      * @returns {Function}
      */
     createOutputHandler: function createOutputHandler (server) {
@@ -339,8 +338,8 @@ module.exports = Base.extend({
      *
      * This is to register config modules
      *
-     * @param module
-     * @param modulePath
+     * @param {string} module
+     * @param {string} modulePath
      * @returns {*}
      */
     registerConfig: function registerConfig (module, modulePath) {
@@ -384,7 +383,7 @@ module.exports = Base.extend({
      * functions (although it will work, you should use
      * either the factory or the singleton for that).
      *
-     * @param module
+     * @param {*} module
      * @returns {steeplejack}
      */
     registerConstant: function registerConstant (module) {
@@ -409,8 +408,8 @@ module.exports = Base.extend({
      * inside a factory as they create something (an
      * instance of the class) when they are called.
      *
-     * @param module
-     * @param modulePath
+     * @param {string} module
+     * @param {function} modulePath
      * @returns {steeplejack}
      */
     registerFactory: function registerFactory (module, modulePath) {
@@ -455,8 +454,8 @@ module.exports = Base.extend({
      * already been instantiated or it may be just a JSON
      * object.
      *
-     * @param module
-     * @param modulePath
+     * @param {string} module
+     * @param {object} modulePath
      * @returns {steeplejack}
      */
     registerSingleton: function registerSingleton (module, modulePath) {
@@ -481,7 +480,7 @@ module.exports = Base.extend({
      *
      * Sets up the server and runs the application
      *
-     * @param createServer
+     * @param {function} createServer
      * @returns {steeplejack}
      */
     run: function run (createServer) {
@@ -533,7 +532,7 @@ module.exports = Base.extend({
      *
      * Sets the routes to use
      *
-     * @param routes
+     * @param {object} routes
      * @returns {steeplejack}
      */
     setRoutes: function setRoutes (routes) {
@@ -560,7 +559,7 @@ module.exports = Base.extend({
      * instance.  This is designed to be where we start
      * everything from.
      *
-     * @param options
+     * @param {object} options
      */
     app: function app (options) {
 
@@ -687,7 +686,7 @@ module.exports = Base.extend({
      *
      * It returns a closure function.
      *
-     * @param options
+     * @param {object} options
      * @returns {function}
      */
     test: function test (options) {
@@ -708,9 +707,9 @@ module.exports = Base.extend({
          *  - configOverride: an object of params that override
          *    the config object.
          *
-         * @param moduleFn
-         * @param mocks
-         * @param configOverride
+         * @param {function} moduleFn
+         * @param {object} mocks
+         * @param {object} configOverride
          * @returns {Object}
          */
         return function (moduleFn, mocks, configOverride) {

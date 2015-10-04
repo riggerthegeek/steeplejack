@@ -289,12 +289,12 @@ describe("Routing test", function () {
                     .calledWith("/path/to/dir");
 
                 expect(obj).to.be.eql({
-                    "dir/endpoint": '/path/to/dir/dir/endpoint',
-                    "dir/endpoint2/twitter": '/path/to/dir/dir/hello',
-                    "dir/endpoint2": '/path/to/dir/dir/index',
-                    endpoint: '/path/to/dir/endpoint',
-                    dir: '/path/to/dir/endpoint',
-                    "": '/path/to/dir'
+                    "dir/endpoint": "/path/to/dir/dir/endpoint",
+                    "dir/endpoint2/twitter": "/path/to/dir/dir/hello",
+                    "dir/endpoint2": "/path/to/dir/dir/index",
+                    endpoint: "/path/to/dir/endpoint",
+                    dir: "/path/to/dir/endpoint",
+                    "": "/path/to/dir"
                 });
 
                 stub.restore();

@@ -300,7 +300,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should ignore undefined elements', function (done) {
+            it("should ignore undefined elements", function (done) {
 
                 var obj = Model.toModel({
                     boolean: "N",
@@ -426,37 +426,37 @@ describe("DomainModel tests - using new", function () {
                 var Model = model.extend({
                     definition: {
                         simple: {
-                            type: 'string',
+                            type: "string",
                             value: null
                         }
                     }
                 });
 
                 var obj = new Model({
-                    simple: 'hello'
+                    simple: "hello"
                 });
 
                 expect(obj).to.be.instanceof(Model);
 
-                expect(obj.get('simple')).to.be.equal('hello');
+                expect(obj.get("simple")).to.be.equal("hello");
 
-                expect(obj.set('simple', 'test')).to.be.equal(obj);
-                expect(obj.get('simple')).to.be.equal('test');
+                expect(obj.set("simple", "test")).to.be.equal(obj);
+                expect(obj.get("simple")).to.be.equal("test");
 
-                expect(obj.set('simple')).to.be.equal(obj);
-                expect(obj.get('simple')).to.be.null;
+                expect(obj.set("simple")).to.be.equal(obj);
+                expect(obj.get("simple")).to.be.null;
 
                 done();
 
             });
 
-            it('should use the defined setter', function (done) {
+            it("should use the defined setter", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
                     definition: {
                         complex: {
-                            type: 'string',
+                            type: "string",
                             value: null
                         }
                     },
@@ -468,7 +468,7 @@ describe("DomainModel tests - using new", function () {
                             value = "test-" + value;
                         }
 
-                        this.set('complex', value, false);
+                        this.set("complex", value, false);
 
                         /* Wouldn't normally return on a setter, but allow functionality */
                         return true;
@@ -476,18 +476,18 @@ describe("DomainModel tests - using new", function () {
                 });
 
                 var obj = new Model({
-                    complex: 'hello'
+                    complex: "hello"
                 });
 
                 expect(obj).to.be.instanceof(Model);
 
-                expect(obj.get('complex')).to.be.equal('test-hello');
+                expect(obj.get("complex")).to.be.equal("test-hello");
 
-                expect(obj.set('complex', 'test')).to.be.true;
-                expect(obj.get('complex')).to.be.equal('test-test');
+                expect(obj.set("complex", "test")).to.be.true;
+                expect(obj.get("complex")).to.be.equal("test-test");
 
-                expect(obj.set('complex')).to.be.true;
-                expect(obj.get('complex')).to.be.null;
+                expect(obj.set("complex")).to.be.true;
+                expect(obj.get("complex")).to.be.null;
 
                 done();
 
@@ -499,7 +499,7 @@ describe("DomainModel tests - using new", function () {
                 var Model = model.extend({
                     definition: {
                         str: {
-                            type: 'enum',
+                            type: "enum",
                             enum: [
                                 "value1", "value2"
                             ],
@@ -633,7 +633,7 @@ describe("DomainModel tests - using new", function () {
                         integer: "2",
                         string: "string",
                         obj: {
-                            hello: 'world'
+                            hello: "world"
                         }
                     });
                 });
@@ -659,25 +659,27 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it("should return true when multiple params of same type are passed in including an object", function () {
+                it("should return true when multiple params of same type are passed in including an object",
+                    function () {
 
-                    var out = obj.where({
-                        string: "string",
-                        datetime: new Date(2010, 1, 7),
-                        obj: {
-                            hello: "world"
-                        }
-                    });
+                        var out = obj.where({
+                            string: "string",
+                            datetime: new Date(2010, 1, 7),
+                            obj: {
+                                hello: "world"
+                            }
+                        });
 
-                    expect(out).to.be.true;
+                        expect(out).to.be.true;
 
-                });
+                    }
+                );
 
                 it("should return false when objects don't match", function () {
 
                     var out = obj.where({
                         obj: {
-                            hello: 'worlds'
+                            hello: "worlds"
                         }
                     });
 
@@ -688,7 +690,7 @@ describe("DomainModel tests - using new", function () {
                 it("should return false when Date objects don't match", function () {
 
                     var out = obj.where({
-                        datetime: new Date('2010-02-06')
+                        datetime: new Date("2010-02-06")
                     });
 
                     expect(out).to.be.false;
@@ -701,12 +703,14 @@ describe("DomainModel tests - using new", function () {
                     })).to.be.true;
                 });
 
-                it("should return true when the input needs casting to the datatype with multiple where values", function () {
-                    expect(obj.where({
-                        float: "2.2",
-                        date: "2010-02-07"
-                    })).to.be.true;
-                });
+                it("should return true when the input needs casting to the datatype with multiple where values",
+                    function () {
+                        expect(obj.where({
+                            float: "2.2",
+                            date: "2010-02-07"
+                        })).to.be.true;
+                    }
+                );
 
                 it("should return true when an object that's not identical is received", function () {
                     expect(obj.where({
@@ -950,7 +954,7 @@ describe("DomainModel tests - using new", function () {
 
         describe("Primary keys", function () {
 
-            it('should set no primary key value', function (done) {
+            it("should set no primary key value", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -986,7 +990,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should set the primary key', function (done) {
+            it("should set the primary key", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -1017,7 +1021,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should set the primary key value', function (done) {
+            it("should set the primary key value", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -1054,7 +1058,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw error when more than one primary key is given', function (done) {
+            it("should throw error when more than one primary key is given", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -1112,7 +1116,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should create a mixed definition', function (done) {
+            it("should create a mixed definition", function (done) {
 
                 var obj = new Model({
                     mixed: "string"
@@ -1243,7 +1247,7 @@ describe("DomainModel tests - using new", function () {
 
         describe("Invalid datatypes", function () {
 
-            it('should throw an error when you create model with no type', function (done) {
+            it("should throw an error when you create model with no type", function (done) {
 
                 var fail = false;
 
@@ -1270,7 +1274,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw an error when you create model with no null type', function (done) {
+            it("should throw an error when you create model with no null type", function (done) {
 
                 var fail = false;
 
@@ -1299,7 +1303,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw an error when you create model with invalid data type', function (done) {
+            it("should throw an error when you create model with invalid data type", function (done) {
 
                 var fail = false;
 
@@ -1360,7 +1364,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should return the name when set', function (done) {
+            it("should return the name when set", function (done) {
 
                 var obj = new Model({
                     name: "Test",
@@ -1663,7 +1667,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should ignore undefined elements', function (done) {
+            it("should ignore undefined elements", function (done) {
 
                 var obj = Model.toModel({
                     boolean: "N",
@@ -1726,37 +1730,37 @@ describe("DomainModel tests - using new", function () {
                 var Model = model.extend({
                     definition: {
                         simple: {
-                            type: 'string',
+                            type: "string",
                             value: null
                         }
                     }
                 });
 
                 var obj = Model.create({
-                    simple: 'hello'
+                    simple: "hello"
                 });
 
                 expect(obj).to.be.instanceof(Model);
 
-                expect(obj.get('simple')).to.be.equal('hello');
+                expect(obj.get("simple")).to.be.equal("hello");
 
-                expect(obj.set('simple', 'test')).to.be.equal(obj);
-                expect(obj.get('simple')).to.be.equal('test');
+                expect(obj.set("simple", "test")).to.be.equal(obj);
+                expect(obj.get("simple")).to.be.equal("test");
 
-                expect(obj.set('simple')).to.be.equal(obj);
-                expect(obj.get('simple')).to.be.null;
+                expect(obj.set("simple")).to.be.equal(obj);
+                expect(obj.get("simple")).to.be.null;
 
                 done();
 
             });
 
-            it('should use the defined setter', function (done) {
+            it("should use the defined setter", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
                     definition: {
                         complex: {
-                            type: 'string',
+                            type: "string",
                             value: null
                         }
                     },
@@ -1768,7 +1772,7 @@ describe("DomainModel tests - using new", function () {
                             value = "test-" + value;
                         }
 
-                        this.set('complex', value, false);
+                        this.set("complex", value, false);
 
                         /* Wouldn't normally return on a setter, but allow functionality */
                         return true;
@@ -1776,18 +1780,18 @@ describe("DomainModel tests - using new", function () {
                 });
 
                 var obj = Model.create({
-                    complex: 'hello'
+                    complex: "hello"
                 });
 
                 expect(obj).to.be.instanceof(Model);
 
-                expect(obj.get('complex')).to.be.equal('test-hello');
+                expect(obj.get("complex")).to.be.equal("test-hello");
 
-                expect(obj.set('complex', 'test')).to.be.true;
-                expect(obj.get('complex')).to.be.equal('test-test');
+                expect(obj.set("complex", "test")).to.be.true;
+                expect(obj.get("complex")).to.be.equal("test-test");
 
-                expect(obj.set('complex')).to.be.true;
-                expect(obj.get('complex')).to.be.null;
+                expect(obj.set("complex")).to.be.true;
+                expect(obj.get("complex")).to.be.null;
 
                 done();
 
@@ -1799,7 +1803,7 @@ describe("DomainModel tests - using new", function () {
                 var Model = model.extend({
                     definition: {
                         str: {
-                            type: 'enum',
+                            type: "enum",
                             enum: [
                                 "value1", "value2"
                             ],
@@ -1901,7 +1905,7 @@ describe("DomainModel tests - using new", function () {
 
         describe("Primary keys", function () {
 
-            it('should set no primary key value', function (done) {
+            it("should set no primary key value", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -1937,7 +1941,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should set the primary key', function (done) {
+            it("should set the primary key", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -1968,7 +1972,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should set the primary key value', function (done) {
+            it("should set the primary key value", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -2005,7 +2009,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw error when more than one primary key is given', function (done) {
+            it("should throw error when more than one primary key is given", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -2063,7 +2067,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should create a mixed definition', function (done) {
+            it("should create a mixed definition", function (done) {
 
                 var obj = Model.create({
                     mixed: "string"
@@ -2194,7 +2198,7 @@ describe("DomainModel tests - using new", function () {
 
         describe("Invalid datatypes", function () {
 
-            it('should throw an error when you create model with no type', function (done) {
+            it("should throw an error when you create model with no type", function (done) {
 
                 var fail = false;
 
@@ -2221,7 +2225,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw an error when you create model with no null type', function (done) {
+            it("should throw an error when you create model with no null type", function (done) {
 
                 var fail = false;
 
@@ -2250,7 +2254,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw an error when you create model with invalid data type', function (done) {
+            it("should throw an error when you create model with invalid data type", function (done) {
 
                 var fail = false;
 
@@ -2311,7 +2315,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should return the name when set', function (done) {
+            it("should return the name when set", function (done) {
 
                 var obj = Model.create({
                     name: "Test",
@@ -2562,7 +2566,7 @@ describe("DomainModel tests - using new", function () {
             });
 
             expect(obj.toData()).to.be.eql({
-                some_name: "hello"
+                "some_name": "hello"
             });
 
         });
@@ -2571,7 +2575,7 @@ describe("DomainModel tests - using new", function () {
 
     describe("Validation check", function () {
 
-        describe('Single rule', function () {
+        describe("Single rule", function () {
 
             var Model;
 
@@ -2593,7 +2597,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should not throw an error when a string is provided', function (done) {
+            it("should not throw an error when a string is provided", function (done) {
 
                 var obj = new Model({
                     name: "Test Name"
@@ -2605,7 +2609,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should not throw an error when email not specified and not required', function (done) {
+            it("should not throw an error when email not specified and not required", function (done) {
 
                 var M = model.extend({
                     definition: {
@@ -2625,7 +2629,7 @@ describe("DomainModel tests - using new", function () {
 
                 expect(obj.validate()).to.be.true;
 
-                obj.set('email', 'notanemail');
+                obj.set("email", "notanemail");
 
                 var fail = false;
 
@@ -2658,7 +2662,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw error when string is null', function (done) {
+            it("should throw error when string is null", function (done) {
 
                 var obj = new Model();
 
@@ -2693,7 +2697,7 @@ describe("DomainModel tests - using new", function () {
 
         });
 
-        describe('Multiple keys, single rules on all', function () {
+        describe("Multiple keys, single rules on all", function () {
 
             var Model;
 
@@ -2723,11 +2727,11 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should validate both rules', function (done) {
+            it("should validate both rules", function (done) {
 
                 var obj = new Model({
-                    name: 'Test',
-                    emailAddress: 'test@test.com'
+                    name: "Test",
+                    emailAddress: "test@test.com"
                 });
 
                 expect(obj.validate()).to.be.true;
@@ -2736,10 +2740,10 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should fail to validate the first rule', function (done) {
+            it("should fail to validate the first rule", function (done) {
 
                 var obj = new Model({
-                    emailAddress: 'test@test.com'
+                    emailAddress: "test@test.com"
                 });
 
                 var fail = false;
@@ -2768,11 +2772,11 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should fail to validate the second rule', function (done) {
+            it("should fail to validate the second rule", function (done) {
 
                 var obj = new Model({
-                    name: 'Test',
-                    emailAddress: 'not@anemail'
+                    name: "Test",
+                    emailAddress: "not@anemail"
                 });
 
                 var fail = false;
@@ -2801,7 +2805,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should fail to validate both rules', function (done) {
+            it("should fail to validate both rules", function (done) {
 
                 var obj = new Model({
                     emailAddress: "noanemail.com",
@@ -2842,7 +2846,7 @@ describe("DomainModel tests - using new", function () {
 
         });
 
-        describe('Multiple keys, single rules on some', function () {
+        describe("Multiple keys, single rules on some", function () {
 
             var Model;
 
@@ -2869,7 +2873,7 @@ describe("DomainModel tests - using new", function () {
 
         });
 
-        describe('Multiple keys, multiple rules on all', function () {
+        describe("Multiple keys, multiple rules on all", function () {
 
             var Model;
 
@@ -2905,7 +2909,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should validate all rules', function (done) {
+            it("should validate all rules", function (done) {
 
                 var obj = new Model({
                     emailAddress1: "example@domain.com",
@@ -2918,7 +2922,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should fail all rules', function (done) {
+            it("should fail all rules", function (done) {
 
                 var obj = new Model({
                     emailAddress1: "f",
@@ -2962,7 +2966,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should fail one rule on one element', function (done) {
+            it("should fail one rule on one element", function (done) {
 
                 var obj = new Model({
                     emailAddress1: "f",
@@ -3045,7 +3049,7 @@ describe("DomainModel tests - using new", function () {
 
         });
 
-        describe('Validate rules that receive a single parameter', function () {
+        describe("Validate rules that receive a single parameter", function () {
 
             var Model;
 
@@ -3068,7 +3072,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should validate the model', function (done) {
+            it("should validate the model", function (done) {
 
                 var obj = new Model({
                     name: "Test1234"
@@ -3080,7 +3084,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw an error when not validated', function (done) {
+            it("should throw an error when not validated", function (done) {
 
                 var obj = new Model({
                     name: "Test"
@@ -3121,7 +3125,7 @@ describe("DomainModel tests - using new", function () {
 
         });
 
-        describe('Validate rules that receive multiple parameters', function () {
+        describe("Validate rules that receive multiple parameters", function () {
 
             var Model;
 
@@ -3147,7 +3151,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should validate the multi-parameter rule', function (done) {
+            it("should validate the multi-parameter rule", function (done) {
 
                 var obj = new Model({
                     name: "The name"
@@ -3159,7 +3163,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw an error if the name is too short', function (done) {
+            it("should throw an error if the name is too short", function (done) {
 
                 var obj = new Model({
                     name: "name"
@@ -3203,9 +3207,9 @@ describe("DomainModel tests - using new", function () {
 
         });
 
-        describe('Validate against custom validation rules', function () {
+        describe("Validate against custom validation rules", function () {
 
-            describe('No parameters passed', function () {
+            describe("No parameters passed", function () {
 
                 var Model;
 
@@ -3219,8 +3223,8 @@ describe("DomainModel tests - using new", function () {
                                 validation: [
                                     {
                                         rule: function (objModel, value) {
-                                            if (value === 'throw') {
-                                                throw new Error('THROWN_ERROR');
+                                            if (value === "throw") {
+                                                throw new Error("THROWN_ERROR");
                                             }
                                             return value === "Hello";
                                         }
@@ -3232,7 +3236,7 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should validate the custom rule', function (done) {
+                it("should validate the custom rule", function (done) {
 
                     var obj = new Model({
                         name: "Hello"
@@ -3244,7 +3248,7 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should throw an error when custom rule returns false', function (done) {
+                it("should throw an error when custom rule returns false", function (done) {
 
                     var obj = new Model({
                         name: "Potato"
@@ -3280,7 +3284,7 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should throw an error when custom rule throws error', function (done) {
+                it("should throw an error when custom rule throws error", function (done) {
 
                     var obj = new Model({
                         name: "throw"
@@ -3318,7 +3322,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            describe('Single parameter passed', function () {
+            describe("Single parameter passed", function () {
 
                 var Model;
 
@@ -3332,8 +3336,8 @@ describe("DomainModel tests - using new", function () {
                                 validation: [
                                     {
                                         rule: function (objModel, value, match) {
-                                            if (value === 'throw') {
-                                                throw new Error('THROWN_ERROR');
+                                            if (value === "throw") {
+                                                throw new Error("THROWN_ERROR");
                                             }
                                             return value === match;
                                         },
@@ -3346,7 +3350,7 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should validate the custom rule', function (done) {
+                it("should validate the custom rule", function (done) {
 
                     var obj = new Model({
                         name: "Hello"
@@ -3358,10 +3362,10 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should throw an error when the test returns false', function (done) {
+                it("should throw an error when the test returns false", function (done) {
 
                     var obj = new Model({
-                        name: 'false'
+                        name: "false"
                     });
 
                     var fail = false;
@@ -3396,10 +3400,10 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should throw an error when the validation method throws an error', function (done) {
+                it("should throw an error when the validation method throws an error", function (done) {
 
                     var obj = new Model({
-                        name: 'throw'
+                        name: "throw"
                     });
 
                     var fail = false;
@@ -3436,7 +3440,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            describe('Array of parameters passed', function () {
+            describe("Array of parameters passed", function () {
 
                 var Model;
 
@@ -3450,8 +3454,8 @@ describe("DomainModel tests - using new", function () {
                                 validation: [
                                     {
                                         rule: function (objModel, value, match, datatype) {
-                                            if (value === 'throw') {
-                                                throw new Error('THROWN_ERROR');
+                                            if (value === "throw") {
+                                                throw new Error("THROWN_ERROR");
                                             }
                                             return value === match && typeof value === datatype;
                                         },
@@ -3467,7 +3471,7 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should validate the custom rule', function (done) {
+                it("should validate the custom rule", function (done) {
 
                     var obj = new Model({
                         name: "Hello"
@@ -3479,10 +3483,10 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should throw an error when the validation function returns false', function (done) {
+                it("should throw an error when the validation function returns false", function (done) {
 
                     var obj = new Model({
-                        name: 'test'
+                        name: "test"
                     });
 
                     var fail = false;
@@ -3517,10 +3521,10 @@ describe("DomainModel tests - using new", function () {
 
                 });
 
-                it('should throw an error when the validation method throws an error', function (done) {
+                it("should throw an error when the validation method throws an error", function (done) {
 
                     var obj = new Model({
-                        name: 'throw'
+                        name: "throw"
                     });
 
                     var fail = false;
@@ -3559,7 +3563,7 @@ describe("DomainModel tests - using new", function () {
 
         });
 
-        describe('Matching another field', function () {
+        describe("Matching another field", function () {
 
             var Model;
 
@@ -3591,7 +3595,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should validate the model', function (done) {
+            it("should validate the model", function (done) {
 
                 var obj = new Model({
                     password: "tnetennba",
@@ -3604,7 +3608,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should fail when the password is to short', function (done) {
+            it("should fail when the password is to short", function (done) {
 
                 var obj = new Model({
                     password: "Moss",
@@ -3680,7 +3684,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should fail when both rules fail', function (done) {
+            it("should fail when both rules fail", function (done) {
 
                 var obj = new Model({
                     password: "Jen",
@@ -3731,7 +3735,7 @@ describe("DomainModel tests - using new", function () {
 
         describe("Invalid functions", function () {
 
-            it('should throw an error when function not in validation object', function (done) {
+            it("should throw an error when function not in validation object", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -3759,7 +3763,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal('minimumLength is not a validation function');
+                    expect(err.message).to.be.equal("minimumLength is not a validation function");
                 }
 
                 expect(obj).to.be.undefined;
@@ -3769,7 +3773,7 @@ describe("DomainModel tests - using new", function () {
 
             });
 
-            it('should throw an error when non-function given', function (done) {
+            it("should throw an error when non-function given", function (done) {
 
                 /* Define the model */
                 var Model = model.extend({
@@ -3797,7 +3801,7 @@ describe("DomainModel tests - using new", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal('[object Object] is not a function or string');
+                    expect(err.message).to.be.equal("[object Object] is not a function or string");
                 }
 
                 expect(obj).to.be.undefined;
@@ -4006,7 +4010,7 @@ describe("DomainModel tests - using new", function () {
                             message: "VALUE_REQUIRED",
                             value: null
                         }],
-                        collection_0_name: [{
+                        "collection_0_name": [{
                             message: "VALUE_LESS_THAN_MIN_LENGTH",
                             value: "",
                             additional: [
@@ -4051,7 +4055,7 @@ describe("DomainModel tests - using new", function () {
                             message: "VALUE_REQUIRED",
                             value: null
                         }],
-                        collection_0_name: [{
+                        "collection_0_name": [{
                             message: "VALUE_LESS_THAN_MIN_LENGTH",
                             value: "",
                             additional: [
@@ -4061,7 +4065,7 @@ describe("DomainModel tests - using new", function () {
                             message: "CUSTOM_VALIDATION_FAILED",
                             value: ""
                         }],
-                        collection_1_name: [{
+                        "collection_1_name": [{
                             message: "CUSTOM_VALIDATION_FAILED",
                             value: "2s"
                         }]
@@ -4188,11 +4192,11 @@ describe("DomainModel tests - using new", function () {
                             message: "VALUE_REQUIRED",
                             value: null
                         }],
-                        model_id: [{
+                        "model_id": [{
                             message: "VALUE_REQUIRED",
                             value: null
                         }],
-                        model_name: [{
+                        "model_name": [{
                             message: "VALUE_LESS_THAN_MIN_LENGTH",
                             value: "B",
                             additional: [
@@ -4305,8 +4309,8 @@ describe("DomainModel tests - using new", function () {
             });
 
             var obj = ParentModel.toModel({
-                _id: "str",
-                _sub_model: null
+                "_id": "str",
+                "_sub_model": null
             });
 
             expect(obj).to.be.instanceof(ParentModel);
@@ -4390,9 +4394,9 @@ describe("DomainModel tests - using new", function () {
             });
 
             var obj = ParentModel.toModel({
-                _id: "str",
-                _sub_model: {
-                    _id: "yay"
+                "_id": "str",
+                "_sub_model": {
+                    "_id": "yay"
                 }
             });
 
@@ -4473,7 +4477,7 @@ describe("DomainModel tests - using new", function () {
             });
 
             var obj = Model.toModel({
-                some_name: "yay",
+                "some_name": "yay",
                 nonData: "spank"
             });
 

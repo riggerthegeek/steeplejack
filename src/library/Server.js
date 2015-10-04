@@ -96,7 +96,7 @@ module.exports = Base.extend({
      *
      * @param {string} httpMethod
      * @param {string} route
-     * @param {string/array} fn
+     * @param {string|array} fn
      */
     addRoute: function (httpMethod, route, fn) {
 
@@ -215,7 +215,7 @@ module.exports = Base.extend({
      *
      * Set up a listener for the after event
      *
-     * @param fn
+     * @param {function} fn
      * @returns {exports}
      */
     after: function (fn) {
@@ -353,11 +353,11 @@ module.exports = Base.extend({
      * up one position (ie, data becomes req, req becomes
      * res, res becomes cb)
      *
-     * @param err
-     * @param data
-     * @param req
-     * @param res
-     * @param cb
+     * @param {object|function} err
+     * @param {object} data
+     * @param {object} req
+     * @param {object} res
+     * @param {function} cb
      * @returns {*}
      */
     outputHandler: function (err, data, req, res, cb) {
@@ -387,10 +387,10 @@ module.exports = Base.extend({
      * Sugar for the outputHandler method to resolve
      * a promise
      *
-     * @param obj
-     * @param req
-     * @param res
-     * @param cb
+     * @param {object} obj
+     * @param {object} req
+     * @param {object} res
+     * @param {function} cb
      * @returns {*}
      */
     outputPromise: function (obj, req, res, cb) {
@@ -412,7 +412,7 @@ module.exports = Base.extend({
      * Set up middleware to be ran at the start
      * of the stack.
      *
-     * @param fn
+     * @param {function} fn
      * @returns {exports}
      */
     pre: function (fn) {
@@ -429,7 +429,7 @@ module.exports = Base.extend({
      *
      * Starts up the server
      *
-     * @params {function} cb
+     * @param {function} cb
      * @returns {exports}
      */
     start: function (cb) {
@@ -462,7 +462,7 @@ module.exports = Base.extend({
      *
      * Sets a backlog for the HTTP listen method
      *
-     * @param backlog
+     * @param {number} backlog
      */
     setBacklog: function (backlog) {
         this._backlog = datatypes.setInt(backlog, null);
@@ -474,7 +474,7 @@ module.exports = Base.extend({
      *
      * Sets an IP for the HTTP listen method
      *
-     * @param backlog
+     * @param {string} ip
      */
     setIP: function (ip) {
         this._ip = datatypes.setString(ip, null);
@@ -486,7 +486,7 @@ module.exports = Base.extend({
      *
      * Sets a port for the HTTP listen method
      *
-     * @param backlog
+     * @param {number} port
      */
     setPort: function (port) {
         this._port = datatypes.setInt(port, null);
@@ -518,7 +518,7 @@ module.exports = Base.extend({
      * a function or an array of functions.  Sends as
      * individual functions.
      *
-     * @param input
+     * @param {function|array} input
      * @returns {exports}
      * @private
      */

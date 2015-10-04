@@ -1,4 +1,34 @@
 {
+  "excludeFiles": [
+    "node_modules/**",
+    "bower_components/**"
+  ],
+
+  "requireCurlyBraces": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "try",
+    "catch"
+  ],
+  "requireOperatorBeforeLineBreak": true,
+  "requireCamelCaseOrUpperCaseIdentifiers": true,
+  "maximumLineLength": {
+    "value": 121,
+    "allowComments": true,
+    "allowRegex": true
+  },
+  "validateIndentation": 4,
+  "validateQuoteMarks": "\"",
+
+  "disallowMultipleLineStrings": true,
+  "disallowMixedSpacesAndTabs": true,
+  "disallowTrailingWhitespace": true,
+  "disallowSpaceAfterPrefixUnaryOperators": true,
+  "disallowMultipleVarDecl": null,
+
   "requireSpaceAfterKeywords": [
     "if",
     "else",
@@ -8,25 +38,40 @@
     "switch",
     "return",
     "try",
-    "catch",
-    "finally"
+    "catch"
   ],
-  "requireCurlyBraces": [
-    "if",
-    "else",
-    "for",
-    "while",
-    "do",
-    "try",
-    "catch",
-    "case",
-    "default"
+  "requireSpaceBeforeBinaryOperators": [
+    "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", ">>>=",
+    "&=", "|=", "^=", "+=",
+
+    "+", "-", "*", "/", "%", "<<", ">>", ">>>", "&",
+    "|", "^", "&&", "||", "===", "==", ">=",
+    "<=", "<", ">", "!=", "!=="
   ],
-  "requireSpaceBeforeBlockStatements": true,
+  "requireSpaceAfterBinaryOperators": true,
   "requireSpacesInConditionalExpression": true,
-  "requireSpacesInFunctionExpression": {
-    "beforeOpeningRoundBrace": true,
-    "beforeOpeningCurlyBrace": true
+  "requireSpaceBeforeBlockStatements": true,
+  "requireLineFeedAtFileEnd": true,
+  "disallowSpacesInsideObjectBrackets": "all",
+  "disallowSpacesInsideArrayBrackets": "all",
+  "disallowSpacesInsideParentheses": true,
+
+  "jsDoc": {
+    "checkAnnotations": true,
+    "checkParamNames": true,
+    "requireParamTypes": true,
+    "checkReturnTypes": true,
+    "checkTypes": true
   },
-  "validateIndentation": 4
+
+  "disallowMultipleLineBreaks": false,
+
+  "disallowCommaBeforeLineBreak": null,
+  "disallowDanglingUnderscores": null,
+  "disallowEmptyBlocks": null,
+  "disallowTrailingComma": null,
+  "requireCommaBeforeLineBreak": null,
+  "requireDotNotation": null,
+  "requireMultipleVarDecl": null,
+  "requireParenthesesAroundIIFE": true
 }

@@ -373,7 +373,16 @@ describe("Injector test", function () {
 
             it("should process test dependencies wrapped in underscores", function () {
 
-                var target = function (_topLevel_, _topLevel2_, _$config_, __config_, topLevel, topLevel2, $config, _config) {
+                var target = function (
+                        _topLevel_,
+                        _topLevel2_,
+                        _$config_,
+                        __config_,
+                        topLevel,
+                        topLevel2,
+                        $config,
+                        _config
+                ) {
 
                     this.exec = _topLevel_;
                     this.exec2 = _topLevel2_;
@@ -470,14 +479,20 @@ describe("Injector test", function () {
 
             it("should process test dependencies wrapped in non-wrapping underscores", function () {
 
-                var target = function (_topLevel, topLevel2_, $_config, _$config) {
+                /* Use array to pass linting */
+                var target = [
+                    "_topLevel",
+                    "topLevel2_",
+                    "$_config",
+                    "_$config",
+                    function (topLevel, topLevel2, $config, $config2) {
 
-                    this.exec = _topLevel;
-                    this.exec2 = topLevel2_;
-                    this.exec3 = $_config;
-                    this.exec4 = _$config;
+                        this.exec = topLevel;
+                        this.exec2 = topLevel2;
+                        this.exec3 = $config;
+                        this.exec4 = $config2;
 
-                };
+                    }];
 
                 obj.register("_topLevel", function () {
                     return {
@@ -745,7 +760,8 @@ describe("Injector test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal("Component 'module' cannot be replaced as it's not currently registered");
+                    expect(err.message).to.be
+                        .equal("Component 'module' cannot be replaced as it's not currently registered");
 
                 } finally {
                     expect(fail).to.be.true;

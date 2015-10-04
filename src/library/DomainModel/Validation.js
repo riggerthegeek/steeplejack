@@ -3,8 +3,6 @@
  *
  * This handles the validation for the Definition
  * object
- *
- * @package DomainModel
  */
 
 "use strict";
@@ -83,7 +81,7 @@ var Validation = Base.extend(null, {
      *
      * @param {object} obj
      * @param {*} defaultValue
-     * @returns {function}
+     * @returns {function|null}
      */
     generateFunction: function (obj, defaultValue) {
 
@@ -165,7 +163,7 @@ var Validation = Base.extend(null, {
      * @param {object} objModel
      * @param {*} value
      * @param {string} key
-     * @returns {bool}
+     * @returns {boolean}
      */
     match: function (objModel, value, key) {
 

@@ -160,8 +160,8 @@ module.exports = Base.extend({
      * up.  It then returns an array of route
      * functions that can be used.
      *
-     * @param routeDir
-     * @returns Array
+     * @param {string} routeDir
+     * @returns {Array}
      */
     discoverRoutes: function (routeDir) {
 
@@ -218,7 +218,7 @@ module.exports = Base.extend({
      * is only run once and before the server starts,
      * it's acceptable.
      *
-     * @param parent
+     * @param {string} parent
      * @returns {object}
      */
     getRouteFiles: function (parent) {
