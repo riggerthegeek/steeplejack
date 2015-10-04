@@ -1,3 +1,7 @@
+# v1.2.1
+ - Added a `find` and `findLast` method.  Works the same as the [`find`](https://lodash.com/docs#find) and
+ [`findLast`](https://lodash.com/docs#findLast) methods on lodash.
+
 # v1.2.0
 
  - The dependency injector now accepts arrays - same syntax as AngularJS's DI
