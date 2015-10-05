@@ -45,7 +45,7 @@ module.exports = Exception.extend({
      * Add in a new error
      *
      * @param {string} key
-     * @param {*} value
+     * @param {string} value
      * @param {string} message
      * @param {*} additional
      */
