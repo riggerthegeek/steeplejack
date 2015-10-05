@@ -9,6 +9,10 @@ body {
 
 }
 
+a {
+    outline: none !important;
+}
+
 .site_content {
 
     @extend .container;

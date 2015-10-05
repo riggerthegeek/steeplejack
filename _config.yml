@@ -14,6 +14,7 @@ github: https://github.com/riggerthegeek/steeplejack
 github_src: /blob/master/
 gitter_url: https://gitter.im/riggerthegeek/steeplejack
 bugs_url: https://github.com/riggerthegeek/steeplejack/issues
+latest_version: 1.2.1
 
 gems:
   - jekyll-redirect-from
