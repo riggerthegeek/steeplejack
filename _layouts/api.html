@@ -84,6 +84,21 @@ layout: 'docs'
                         {{ method.name }}
                     </h5>
 
+                    <h5 class="returns">
+                        <strong>Returns:</strong>
+                        {% if method.returns %}
+                            {{ method.returns }}
+                        {% else %}
+
+                            {% if method.name contains '_construct(' %}
+                                this
+                            {% else %}
+                                undefined
+                            {% endif %}
+
+                        {% endif %}
+                    </h5>
+
                     <div class="description">
                         {{ method.desc | markdownify }}
                     </div>
