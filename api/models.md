@@ -50,6 +50,8 @@ description: |
     You can now call `obj.get("name")` and `obj.set("name")` which will call the custom methods
 
 extends:
+    url: /api/base/
+    name: Base
 api:
     -
         type: method

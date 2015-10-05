@@ -10,6 +10,8 @@ description: |
  need to concern themselves with getting the modules required.  It also means that testing is easier as you can passed
  an entirely stubbed version of the module that does what you need.
 extends:
+    url: /api/base/
+    name: Base
 api:
     -
         type: method

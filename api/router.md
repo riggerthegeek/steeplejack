@@ -7,6 +7,8 @@ section: api
 source: src/library/Router.js
 description: |
 extends:
+    url: /api/base/
+    name: Base
 api:
     -
         type: method
