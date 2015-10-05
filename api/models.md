@@ -13,11 +13,13 @@ api:
         items:
             -
                 name: method
+                returns:
                 desc: |
     -
         type: static
         items:
             -
                 name: method
+                returns:
                 desc: |
 ---
