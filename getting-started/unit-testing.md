@@ -56,7 +56,7 @@ illustration).
 
 There will be times when you want to stub a module - perhaps when you're testing a
 [Collection]({{ '/getting-started/models-and-collections' | prepend: site.baseurl }}), you'd want to ensure it
-calls certain methods on the Model.  We can easily achieve this by passing an object with th.
+calls certain methods on the Model.  We can easily achieve this by passing an object with the relevant name in.
 
     var $collection,
         $model;

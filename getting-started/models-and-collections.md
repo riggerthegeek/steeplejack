@@ -62,15 +62,15 @@ as the way we export functions from a file.  The rest is all down to how the
 simply, it takes away the need to `require` a file and traverse through directories to find it.
 
 The API docs cover everything in that, but there are two things you should to notice here.  First, is that a function
-is assign to `.__factory` - this tells the Dependency Injector how to to treat this file.  Second is that we've named
+is assigned to `.__factory` - this tells the Dependency Injector how to to treat this file.  Second is that we've named
 the function - this is so that the Dependency Injector knows what to call it.  An anonymous factory function will throw
 an error.
 
 ### Collections
 
-A collection is a collection of models, that's it.  If you think of your model as a single JSON object then a collection
-would be an array of those objects.  It ensures that the individual models are instances of the model 'class' and you
-can do useful things like filtering or sorting the data.
+A collection is a collection of models. As simple as that.  If you think of your model as a single JSON object then a
+collection would be an array of those objects.  It ensures that the individual models are instances of the model 'class'
+and you can do useful things like filtering or sorting the data.
 
 The collection definition is related to the model definition.  Create a folder called `/collections` and a file called
 `Products.js`.  Then define the collection file as follows:
@@ -87,10 +87,16 @@ The collection definition is related to the model definition.  Create a folder c
 
 All you have to define is the instance of the model that you want to use.
 
-Notice also how we've against added `.__factory` to the `module.exports` and that we've called this collection
+Notice also how we've again added `.__factory` to the `module.exports` and that we've called this collection
 'Products'.  The other thing you should notice is that the function has a parameter called `Product`.  This is the
 dependency injector wiring it all together behind the scenes without a single `require` in sight.  When we come to run
 this, you'll see that the `Product` defined in the model file is what's passed through to the `Products` collection.
+
+> This highlights one of the main advantages of Dependency Injection.  Because there is no hard link between the
+> model and collection, when we come to unit test it we can stub the model out and get it to do whatever we like. This
+> is because the collection is only interested that the model looks like a model, not that it necessarily is a model.
+> This reduces the [coupling](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29) between the two and
+> increasing what we can do with it.
 
 <a href="{{ '/getting-started/routing' | prepend: site.baseurl }}" class="prev_button">Routing</a>
 <a href="{{ '/getting-started/running-your-app' | prepend: site.baseurl }}" class="next_button">Running Your App</a>

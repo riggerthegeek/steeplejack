@@ -101,7 +101,7 @@ want to set an environment variable. When running a steeplejack app, it also lis
 > It's important to note that if you have both an environment variable and a command line argument set, the argument
 > will win.
 
-There's no config involved in the application for this, just add things to the run command. Let's try out command
+There's no config involved in the application for this, just add things to the run command. Let's try our command
 again `node app.js port=9999 db.password=wrongpassword`.  This gives:
 
     {

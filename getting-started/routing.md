@@ -32,7 +32,8 @@ Add in a `routeDir` parameter to tell the application where to look for route fi
 Now create a directory called `routes` in your project and then a file called `hello.js` inside that directory.  Your
 project will now look something like this.
 
-> The `routeDir` path is prepended with the result of `process.cwd()` so it should be relative to that path.
+> The `routeDir` path detects whether it's an absolute path that is received or a relative path.  If it's a relative
+path then it's is prepended with the result of `process.cwd()`.
 
 {% highlight bash %}
     .
@@ -43,14 +44,17 @@ project will now look something like this.
 
 {% endhighlight %}
 
-In the `hello.js` file, write the following (we'll go through what's happening shortly):
+In the `hello.js` file, write the following (we'll go through what's happening shortly, but it's creating a
+[Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)):
 
     module.exports = function ($outputHandler) {
         return {
             "/:name": {
                 get: function (req, res) {
-                    $outputHandler(null, {
-                        hello: req.params.name
+                    $outputHandler(function () {
+                        return {
+                            hello: req.params.name
+                        };
                     }, req, res);
                 }
             }

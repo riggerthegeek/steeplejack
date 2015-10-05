@@ -17,7 +17,7 @@ This controller will be known as the `$productService` to the dependency injecto
 
     module.exports.__factory = function $productService (Products) {
         return {
-            getProducts: function (cb) {
+            getProducts: function () {
                 var arr = new Products([{
                     name: "product 1",
                     price: "24"
@@ -26,10 +26,13 @@ This controller will be known as the `$productService` to the dependency injecto
                     price: "28.99"
                 }]);
 
-                cb(null, arr);
+                return arr;
             }
         };
     };
+
+> Due the way Promises work, we don't need to worry about return a callback.  Anything can be returned from this method
+> and it'll work correctly - a value, a Promise (if connecting to a database) or even throw an error.
 
 ### Route
 
@@ -40,9 +43,9 @@ this to it.
         return {
             "/": {
                 get: function (req, res) {
-                    $productService.getProducts(function (err, data) {
-                        $outputHandler(err, data, req, res);
-                    });
+                    $outputHandler(function () {
+                        return $productService.getProducts();
+                    }, req, res);
                 }
             }
         };
@@ -66,11 +69,13 @@ section to the factory method.
             routeDir: "routes"
         });
 
-> Like the `routeDir` path, the `modules` are prepended with the result of `process.cwd()`.
+> Like the `routeDir` path, the `modules` detect if it's an absolute path or a relative path - relative paths are
+> prepended with the result of `process.cwd()`.
 
 The modules accept an array.  As you can [glob](https://en.wikipedia.org/wiki/Glob_%28programming%29) these files, I'd
-suggest doing something like this that requires as little entries as possible.  In this example, it includes every file
-ending in `.js`, except those in the `routes` folder.
+suggest doing something like this that requires as few entries as possible.  In this example, it includes every file
+ending in `.js`, except those in the `routes` folder.  By writing a catch-all, you don't need to add to this every time
+you add a new file.
 
 ### Running
 
