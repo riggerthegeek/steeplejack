@@ -24,6 +24,16 @@ var datatypes = Base.datatypes;
 var Exception = require("../../error/Validation");
 
 
+/**
+ * Get Fn Name
+ *
+ * Gets the custom function name for the getters
+ * and setters
+ *
+ * @param {string} prefix
+ * @param {string} name
+ * @returns {string}
+ */
 var getFnName = function (prefix, name) {
     prefix = datatypes.setString(prefix, null);
     name = datatypes.setString(name, null);
