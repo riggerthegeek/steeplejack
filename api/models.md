@@ -55,14 +55,69 @@ api:
         type: method
         items:
             -
-                name: method
+                name: getColumnKeys()
+                returns: array
+                desc: Gets the keys and the column name  as an array of objects
+            -
+                name: getDefinition(key)
+                returns: object|null
+                desc: Gets the definition object for the given key
+            -
+                name: getPrimaryKey()
+                returns: string
+                desc: Gets the primary key
+            -
+                name: getPrimaryKeyValue
+                returns: mixed
+                desc: Gets the value of the primary key
+            -
+                name: get(key[, checkForCustom = true])
+                returns: mixed
+                desc: |
+                    Gets an individual parameter.  If there is a custom method set (ie, one call `getName` where Name
+                    is the key we're looking for) and we're looking for a custom method, it will go to that.  Otherwise,
+                    it will just return the value set to the model.
+            -
+                name: set(key, value[, checkForCustom = true])
                 returns:
                 desc: |
+                    Sets the value to the object. If there is a custom method set (ie, one call `setName` where Name
+                    is the key we're looking for) and we're looking for a custom method, it will go to that.  Otherwise,
+                    it will set the data based on the rules in the definition.
+            -
+                name: toData()
+                returns: object
+                desc: |
+                    Pushes the data to the database representation (ie, your `column` names)
     -
         type: static
         items:
             -
-                name: method
-                returns:
+                name: toModel(data)
+                returns: object
                 desc: |
+                    Pushes the data object into a model.  This will be the object that you're expecting to be returned
+                    from your data store - any column keys you have set up in the definition will be looked for in this
+                    call.
+
+                        var data = {
+                            key_1: "value1",
+                            key2: "value2"
+                        };
+
+                        var Model = steeplejack.Model.extend({
+                            definition: {
+                                key1: { // with column set
+                                    type: "string",
+                                    column: "key_1"
+                                },
+                                key2: { // with no column set
+                                    type: "string"
+                                }
+                            }
+                        });
+
+                        var obj = Model.toData(data);
+                        // this creates an instance of the model with "value1" set
+                        // to key1 and "value2" set to key2
 ---
