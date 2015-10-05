@@ -24,6 +24,18 @@ var datatypes = Base.datatypes;
 var Exception = require("../../error/Validation");
 
 
+var getFnName = function (prefix, name) {
+    prefix = datatypes.setString(prefix, null);
+    name = datatypes.setString(name, null);
+
+    if (prefix === null || name === null) {
+        return;
+    }
+
+    return prefix + name.charAt(0).toUpperCase() + name.slice(1);
+};
+
+
 /* Create the superclass */
 var DomainModel = Base.extend({
 
@@ -309,7 +321,7 @@ var DomainModel = Base.extend({
      */
     get: function getter (key, checkForCustom) {
 
-        var getFunc = DomainModel.getFnName("get", key);
+        var getFunc = getFnName("get", key);
         checkForCustom = datatypes.setBool(checkForCustom, true);
 
         if (checkForCustom === true && getFunc !== null && this[getFunc] && _.isFunction(this[getFunc])) {
@@ -347,7 +359,7 @@ var DomainModel = Base.extend({
             var defaults = definition.value;
 
             /* Search for a set function - makes it setKey() */
-            var setFunc = DomainModel.getFnName("set", key);
+            var setFunc = getFnName("set", key);
 
             if (checkForCustom === true && setFunc !== null && this[setFunc] && _.isFunction(this[setFunc])) {
 
@@ -671,18 +683,6 @@ var DomainModel = Base.extend({
 
 
 }, {
-
-
-    getFnName: function (prefix, name) {
-        prefix = datatypes.setString(prefix, null);
-        name = datatypes.setString(name, null);
-
-        if (prefix === null || name === null) {
-            return;
-        }
-
-        return prefix + name.charAt(0).toUpperCase() + name.slice(1);
-    },
 
 
     /**
