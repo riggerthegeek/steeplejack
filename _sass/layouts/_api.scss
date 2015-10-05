@@ -1,97 +1,62 @@
 .api_layout {
-//
-//    .anchor {
-//
-//        display: block;
-//        position: relative;
-//        top: -60px;
-//        visibility: hidden;
-//
-//    }
-//
-//    .toc {
-//
-//        @extend .list-unstyled;
-//        @extend .roboto-heavy;
-//
-//        margin: 0 auto 20px;
-//        padding: 0 50px;
-//
-//    }
-//
-//    h3 {
-//
-//        background: {
-//            color: $medium-grey;
-//        }
-//        padding: 10px;
-//        margin: 0;
-//        border: {
-//            bottom: 1px solid $medium-grey;
-//        }
-//
-//    }
-//
-//    .extends {
-//
-//        a {
-//
-//            display: inline-block;
-//            margin: {
-//                top: 20px;
-//                left: 50px;
-//                bottom: 20px;
-//            }
-//
-//        }
-//
-//    }
-//
-//    .api_docs {
-//
-//        .method {
-//
-//            margin: {
-//                top: 50px;
-//                bottom: 50px;
-//            }
-//            padding: {
-//                bottom: 50px;
-//            }
-//            border: {
-//                bottom: 1px solid $light-grey;
-//            }
-//
-//            &:last-child {
-//
-//                border: none;
-//                padding: {
-//                    bottom: 0;
-//                }
-//
-//            }
-//
-//            .description {
-//
-//                margin: {
-//                    left: 50px;
-//                }
-//
-//            }
-//
-//            .toTop {
-//
-//                margin: {
-//                    left: 50px;
-//                }
-//                font: {
-//                    size: 8pt;
-//                }
-//
-//            }
-//
-//        }
-//
-//    }
-//
+
+    .anchor {
+
+        display: block;
+        position: relative;
+        top: -($navbar-height + $navbar-padding-vertical);
+        visibility: hidden;
+
+    }
+
+    .toc {
+
+        @extend .list-unstyled;
+
+        margin: 0 auto 20px;
+        padding: 0 50px;
+
+    }
+
+    h3 {
+
+        padding: 10px;
+        margin: 0;
+
+    }
+
+    .extends {
+
+        a {
+
+            display: inline-block;
+            margin: {
+                top: 20px;
+                left: 50px;
+                bottom: 20px;
+            }
+
+        }
+
+    }
+
+    .api_docs {
+
+        .method {
+
+            @extend .panel;
+            @extend .panel-info;
+
+            .toTop {
+
+                @extend .btn;
+                @extend .btn-sm;
+                @extend .btn-default;
+
+            }
+
+        }
+
+    }
+
 }

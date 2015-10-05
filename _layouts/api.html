@@ -78,32 +78,39 @@ layout: 'docs'
 
             {% for method in section.items %}
                 <div class="method">
+
                     <a name="{{section.type}}_{{ method.name }}" class="anchor"></a>
 
-                    <h5>
-                        {{ method.name }}
-                    </h5>
-
-                    <h5 class="returns">
-                        <strong>Returns:</strong>
-                        {% if method.returns %}
-                            {{ method.returns }}
-                        {% else %}
-
-                            {% if method.name contains '_construct(' %}
-                                this
-                            {% else %}
-                                undefined
-                            {% endif %}
-
-                        {% endif %}
-                    </h5>
-
-                    <div class="description">
-                        {{ method.desc | markdownify }}
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            {{ method.name }}
+                        </h5>
                     </div>
 
-                    <a class="toTop" href="#top">Back to top</a>
+                    <div class="panel-body">
+
+                        <h5 class="returns">
+                            <strong>Returns:</strong>
+                            {% if method.returns %}
+                                {{ method.returns }}
+                            {% else %}
+
+                                {% if method.name contains '_construct(' %}
+                                    this
+                                {% else %}
+                                    undefined
+                                {% endif %}
+
+                            {% endif %}
+                        </h5>
+
+                        <div class="description">
+                            {{ method.desc | markdownify }}
+                        </div>
+
+                        <a class="toTop" href="#top">Back to top</a>
+
+                    </div>
                 </div>
             {% endfor %}
 
