@@ -19,6 +19,13 @@ img {
     @extend .img-responsive;
 }
 
+/* Pad the body */
+body {
+    padding: {
+        top: $navbar-height;
+    }
+}
+
 /* Code stuff */
 pre {
     padding: 0;
