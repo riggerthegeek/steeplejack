@@ -20,7 +20,7 @@ api:
                 returns: object
                 desc: |
                     Creates a clone of the object.  This will create a new instance of the same object, with the same
-                    data,prototypical and static methods.  The only thing that won't be the same is the instance.
+                    data, prototypical and static methods.  The only thing that won't be the same is the instance.
     -
         type: static
         items:
@@ -29,7 +29,7 @@ api:
                 returns: object
                 desc: |
                     This is a factory method that behaves identically to `new`. There is no advantage or disadvantage
-                    to using this over `new`, but is purely a convenience.
+                    to using this over `new`, but is purely a convenience method for people who prefer `.create()`.
             -
                 name: datatypes
                 returns: object
