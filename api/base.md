@@ -17,6 +17,7 @@ api:
         items:
             -
                 name: clone()
+                returns: object
                 desc: |
                     Creates a clone of the object.  This will create a new instance of the same object, with the same
                     data,prototypical and static methods.  The only thing that won't be the same is the instance.
@@ -25,17 +26,20 @@ api:
         items:
             -
                 name: create([argument1] [, argument2] [, ...])
+                returns: object
                 desc: |
                     This is a factory method that behaves identically to `new`. There is no advantage or disadvantage
                     to using this over `new`, but is purely a convenience.
             -
                 name: datatypes
+                returns: object
                 desc: |
                     This exposes the methods from the `.data` section of the
                     [datautils](https://github.com/riggerthegeek/datautils-js#data)
                     package
             -
                 name: extend([prototype] [, static])
+                returns: function
                 desc: |
                     Extends this object.  Both arguments are optional objects.  Anything sent to the `prototype` object
                     is attach to the object's prototype (ie, it's active once you've called `new`) and anything attached
@@ -75,6 +79,7 @@ api:
                         obj1._private(); // 'shhh'
             -
                 name: extendsConstructor(ChildClass [, ParentClass1] [, ParentClass2] [, ...])
+                returns: boolean
                 desc: |
                     Returns a `boolean` if the ChildClass extends any of the ParentClasses. This does not instantiate
                     any of the classes but looks in the `super_` parameter, so should be able to be used by both Node
@@ -94,6 +99,7 @@ api:
                         Base.extendsConstructor(Base, Error); // false
             -
                 name: validation
+                returns: object
                 desc: |
                     This exposes the methods from the `.validation` section of the
                     [datautils](https://github.com/riggerthegeek/datautils-js#validation)

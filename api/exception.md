@@ -28,6 +28,7 @@ api:
         items:
             -
                 name: extend([prototype] [, static])
+                returns: function
                 desc: |
                  This allows you to extend the `Exception` using `.extend`  This works in exactly the same was as the
                  [`Base.extend`](/api/base#static_extend([prototype] [, static])) method
