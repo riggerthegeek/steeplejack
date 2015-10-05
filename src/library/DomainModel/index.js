@@ -711,15 +711,16 @@ var DomainModel = Base.extend({
         var obj = new this();
 
         /* Get the definition */
-        var def = obj.getColumnKeys();
+        var definition = obj.getColumnKeys();
 
         /* Set the information to the model */
-        for (var i = 0; i < def.length; i++) {
-            var key = def[i].key;
-            var value = objData[def[i].column];
-            var type = obj.getDefinition(key).type;
+        _.each(definition, function (item) {
 
-            if (value !== obj.getDefinition(key).value && value !== undefined) {
+            var key = item.key;
+            var value = objData[item.column];
+            var type = this.getDefinition(key).type;
+
+            if (value !== this.getDefinition(key).value && value !== undefined) {
                 if (Base.extendsConstructor(type, Collection)) {
                     value = type.toModels(value).toJSON();
                 } else if (Base.extendsConstructor(type, DomainModel)) {
@@ -727,8 +728,9 @@ var DomainModel = Base.extend({
                 }
             }
 
-            obj.set(key, value);
-        }
+            this.set(key, value);
+
+        }, obj);
 
         return obj;
 
