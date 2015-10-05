@@ -39,3 +39,15 @@
     }
 
 }
+
+.improve_article {
+
+    @extend .btn;
+    @extend .btn-warning;
+    @extend .pull-right;
+
+    margin: {
+        top: -($padding-base-vertical);
+    }
+
+}
