@@ -22,7 +22,7 @@ img {
 /* Pad the body */
 body {
     padding: {
-        top: $navbar-height;
+        top: $navbar-height + $navbar-padding-vertical;
     }
 }
 
