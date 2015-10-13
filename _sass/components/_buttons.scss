@@ -44,10 +44,16 @@
 
     @extend .btn;
     @extend .btn-warning;
-    @extend .pull-right;
 
-    margin: {
-        top: -($padding-base-vertical);
+    @media (min-width: $screen-md-min) {
+
+        margin: {
+            top: -($padding-base-vertical);
+        }
+
+        /* Can't use .pull-right here */
+        float: right !important;
+
     }
 
 }
