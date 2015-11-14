@@ -114,6 +114,9 @@ module.exports = Base.extend({
         /* Create an injector */
         this._injector = new Injector();
 
+        /* Store injector in injector */
+        this._injector.registerSingleton("$injector", this._injector);
+
         /* Store config */
         this.getInjector().registerSingleton("$config", config);
 
