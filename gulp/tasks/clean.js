@@ -16,6 +16,11 @@ var gulp = require("gulp");
 /* Files */
 
 
+gulp.task("clean", [
+    "clean:ts"
+]);
+
+
 gulp.task("clean:ts", function () {
 
     return del([
