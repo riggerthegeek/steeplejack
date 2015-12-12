@@ -1,4 +1,11 @@
-/gulpfile.js
 /coverage/
+/gulp
+/node_modules
+/src
 /test/
+/typings
+
+/gulpfile.js
+/tsconfig.json
+/tsd.json
 .*
