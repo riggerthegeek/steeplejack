@@ -16,6 +16,7 @@ var ts = require("gulp-typescript");
 
 
 /* Files */
+var config = require("../config.json");
 var pkg = require("../../package.json");
 
 
@@ -26,15 +27,15 @@ gulp.task("compile", [
 
     var tsProject = ts.createProject("tsconfig.json");
 
-    var tsResult = gulp.src("src/**/*.ts")
+    var tsResult = gulp.src(config.files.ts)
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject));
 
-    tsResult.dts.pipe(gulp.dest("build"));
+    tsResult.dts.pipe(gulp.dest(config.dir.dist));
 
     return tsResult.js
         .pipe(sourcemaps.write("."))
-        .pipe(gulp.dest("build"));
+        .pipe(gulp.dest(config.dir.dist));
 
 });
 

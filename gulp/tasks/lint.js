@@ -18,6 +18,7 @@ var tslint = require("gulp-tslint");
 
 
 /* Files */
+var config = require("../config.json");
 
 
 gulp.task("lint", [
@@ -29,11 +30,7 @@ gulp.task("lint", [
 
 gulp.task("lint:js", function () {
 
-    return gulp.src([
-        "*.js",
-        "gulp/**/*.js",
-        "src/**/*.js"
-    ])
+    return gulp.src(config.files.js)
         .pipe(jscs())
         .pipe(jscs.reporter())
         .pipe(jshint())
@@ -45,10 +42,7 @@ gulp.task("lint:js", function () {
 
 gulp.task("lint:json", function () {
 
-    return gulp.src([
-        "*.json",
-        "src/**/*.json"
-    ])
+    return gulp.src(config.files.json)
         .pipe(jsonlint())
         .pipe(jsonlint.failAfterError())
         .pipe(jsonlint.reporter());
@@ -58,7 +52,7 @@ gulp.task("lint:json", function () {
 
 gulp.task("lint:ts", function () {
 
-    return gulp.src("src/**/*.ts")
+    return gulp.src(config.files.ts)
         .pipe(tslint())
         .pipe(tslint.report("prose", {
             reportLimit: 5
