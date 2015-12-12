@@ -120,6 +120,23 @@ module.exports = function (grunt) {
         },
 
 
+        mochaTest: {
+            options: {
+                reporter: "spec",
+                require: [
+                    require("ts-node/register"),
+                    "./<%= config.test %>/helpers/configureChai.js"
+                ],
+                ui: "bdd"
+            },
+            unittest: {
+                src: [
+                    "./<%= config.test %>/unit/**/*.test.ts"
+                ]
+            }
+        },
+
+
         ts: {
             src: {
                 options: {
@@ -196,6 +213,7 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask("unittest", "Executes the unit tests", [
+        "mochaTest:unittest"
     ]);
 
 
