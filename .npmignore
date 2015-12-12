@@ -1,9 +1,9 @@
 /coverage/
-/gulp
-/node_modules
-/src
+/gulp/
+/node_modules/
+/src/
 /test/
-/typings
+/typings/
 
 /gulpfile.js
 /tsconfig.json
