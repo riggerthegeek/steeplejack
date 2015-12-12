@@ -10,7 +10,9 @@
 
 /* Third-party modules */
 var gulp = require("gulp");
+var jscs = require("gulp-jscs");
 var jshint = require("gulp-jshint");
+var jsonlint = require("gulp-jsonlint");
 var stylish = require("jshint-stylish");
 var tslint = require("gulp-tslint");
 
@@ -20,6 +22,7 @@ var tslint = require("gulp-tslint");
 
 gulp.task("lint", [
     "lint:js",
+    "lint:json",
     "lint:ts"
 ]);
 
@@ -31,9 +34,24 @@ gulp.task("lint:js", function () {
         "gulp/**/*.js",
         "src/**/*.js"
     ])
+        .pipe(jscs())
+        .pipe(jscs.reporter())
         .pipe(jshint())
         .pipe(jshint.reporter(stylish))
         .pipe(jshint.reporter("fail"));
+
+});
+
+
+gulp.task("lint:json", function () {
+
+    return gulp.src([
+        "*.json",
+        "src/**/*.json"
+    ])
+        .pipe(jsonlint())
+        .pipe(jsonlint.failAfterError())
+        .pipe(jsonlint.reporter());
 
 });
 
