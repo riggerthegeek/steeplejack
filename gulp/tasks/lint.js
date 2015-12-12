@@ -19,6 +19,7 @@ var tslint = require("gulp-tslint");
 
 
 gulp.task("lint", [
+    "lint:js",
     "lint:ts"
 ]);
 
