@@ -40,4 +40,6 @@ node_modules
 /.sass-cache/
 /_site/
 *.lock
+/.tscache/
+/src/.baseDir.ts
 steeplejack.d.ts

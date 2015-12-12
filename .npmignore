@@ -1,3 +1,4 @@
+/.tscache/
 /coverage/
 /gulp/
 /node_modules/
@@ -5,7 +6,8 @@
 /test/
 /typings/
 
-/gulpfile.js
+/src/.baseDir.ts
+/Gruntfile.js
 /tsconfig.json
 /tsd.json
 .*
