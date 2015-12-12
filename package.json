@@ -11,6 +11,7 @@
   "dependencies": {},
   "devDependencies": {
     "del": "^2.2.0",
+    "dts-generator": "^1.6.3",
     "gulp": "^3.9.0",
     "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^2.0.0",
