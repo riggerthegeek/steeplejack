@@ -124,8 +124,7 @@ module.exports = function (grunt) {
             options: {
                 reporter: "spec",
                 require: [
-                    require("ts-node/register"),
-                    "./<%= config.test %>/helpers/configureChai.js"
+                    require("ts-node/register")
                 ],
                 ui: "bdd"
             },
