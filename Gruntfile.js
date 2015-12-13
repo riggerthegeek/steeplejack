@@ -16,6 +16,7 @@
 /* Third-party modules */
 var loader = require("load-grunt-tasks");
 var timer = require("grunt-timer");
+var ts = require("ts-node/register");
 
 
 /* Files */
@@ -33,11 +34,12 @@ module.exports = function (grunt) {
 
 
     /* Config params */
-    var config  = {
+    var config = {
+        coverage: "coverage", /* Location of coverage files */
         dist: "build", /* Location where distributable is built */
         src: "src", /* Location of the source files */
         test: "test", /* Location of the test files */
-        tmp: ".tmp" /* Temporary build files */
+        tmp: "tmp" /* Temporary build files */
     };
 
     /* Get the package.json file */
@@ -65,7 +67,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     src: [
+                        "./<%= config.coverage %>",
                         "./<%= config.dist %>",
+                        "./<%= config.src %>/.baseDir.ts",
                         "./<%= config.tmp %>"
                     ]
                 }]
@@ -123,14 +127,11 @@ module.exports = function (grunt) {
         mochaTest: {
             options: {
                 reporter: "spec",
-                require: [
-                    require("ts-node/register")
-                ],
                 ui: "bdd"
             },
             unittest: {
                 src: [
-                    "./<%= config.test %>/unit/**/*.test.ts"
+                    "./<%= config.test %>/unit/**/*.ts"
                 ]
             }
         },
