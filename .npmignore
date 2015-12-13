@@ -4,6 +4,7 @@
 /node_modules/
 /src/
 /test/
+/tmp/
 /typings/
 
 /src/.baseDir.ts
