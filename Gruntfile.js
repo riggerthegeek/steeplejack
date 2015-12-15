@@ -139,14 +139,10 @@ module.exports = function (grunt) {
 
         ts: {
             src: {
-                options: {
-                    declaration: true,
-                    module: "commonjs",
-                    sourceMap: true
-                },
                 src: [
                     "./<%= config.src %>/**/*.ts"
                 ],
+                tsconfig: true,
                 outDir: "./<%= config.dist %>"
             }
         },
