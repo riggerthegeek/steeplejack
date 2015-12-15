@@ -138,12 +138,30 @@ module.exports = function (grunt) {
 
 
         ts: {
-            src: {
+            options: {
+                declaration: true,
+                module: "commonjs",
+                moduleResolution: "node",
+                noImplicitAny: true,
+                preserveConstEnums: true,
+                removeComments: true,
+                sourceMap: true,
+                target: "es5"
+            },
+            all: {
+                outDir: "./<%= config.dist %>",
                 src: [
-                    "./<%= config.src %>/**/*.ts"
-                ],
-                tsconfig: true,
-                outDir: "./<%= config.dist %>"
+                    "**/*.ts",
+                    "!node_modules/**/*.ts"
+                ]
+            },
+            src: {
+                outDir: "./<%= config.dist %>",
+                src: [
+                    "**/*.ts",
+                    "!node_modules/**/*.ts",
+                    "!<%= config.test %>/**/*.ts"
+                ]
             }
         },
 
