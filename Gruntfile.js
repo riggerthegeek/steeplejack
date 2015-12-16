@@ -172,6 +172,27 @@ module.exports = function (grunt) {
                     "./<%= config.src %>/**/*.ts"
                 ]
             }
+        },
+
+
+        watch: {
+            options: {
+                atBegin: true,
+                dateFormat: function (time) {
+                    grunt.log.writeln("The task finished in " + time + "ms");
+                    grunt.log.writeln("Waiting for more changes…");
+                }
+            },
+            test: {
+                files: [
+                    "Gruntfile.js",
+                    "package.json",
+                    "./<%= config.src %>/**/*"
+                ],
+                tasks: [
+                    "test"
+                ]
+            }
         }
 
 
