@@ -187,7 +187,8 @@ module.exports = function (grunt) {
                 files: [
                     "Gruntfile.js",
                     "package.json",
-                    "./<%= config.src %>/**/*"
+                    "./<%= config.src %>/**/*",
+                    "./<%= config.test %>/**/*"
                 ],
                 tasks: [
                     "test"
