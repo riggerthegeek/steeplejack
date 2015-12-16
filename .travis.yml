@@ -1,0 +1,45 @@
+language: node_js
+node_js:
+- '5.2'
+- '5.1'
+- '5.0'
+- '4.2'
+- '4.1'
+- '4.0'
+- '0.12'
+- '0.10'
+- 'iojs'
+- 'iojs-v2.5.0'
+- 'iojs-v1.8.4'
+matrix:
+  fast_finish: true
+sudo: false
+env:
+  matrix:
+  - TZ=Etc/UTC
+  - TZ=America/Los_Angeles
+  global:
+    secure: Zh2Z8FyRQMFM5vez1OmIxVZ8s18K6qEzFa3C3g3XNYBxRQ4GzpSN8S3M0QjvnrrGi+XbMmdcV9DRYgOfGHqq55IamhLH9l5neTgPG3IqArRnWDLMulWRZrRznLACZCr1U0+z09WE+ndOCyfRWKNgkGaNdWRQhaQUZjEOevtqjvs=
+before_install:
+- node test/scripts/npm.js
+- npm install -g grunt-cli
+- date
+script:
+- grunt ci
+- grunt coveralls:src
+deploy:
+  provider: npm
+  email: simon@simonemms.com
+  api_key:
+    secure: sjeE2VqUFprtBzZk+q0CnIDwhWaLpkpqCxbBUl70D5yTu29Vrw0pKdwpmDGyH3nC9JOauKtS9xIIB4r7dWK0ijFEmbdsZRjpE1pcjyX9kFIVvjiSyYmhNg6S7UWvyeLQtbElrYKJHC69U4/6Pebk/7pcZ6p469XwccvKCnludDc=
+  on:
+    all_branches: true
+    tags: true
+    repo: riggerthegeek/steeplejack
+notifications:
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/d048e712b735c6cb4cf2
+    on_success: change
+    on_failure: always
+    on_start: false

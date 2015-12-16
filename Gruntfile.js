@@ -78,6 +78,16 @@ module.exports = function (grunt) {
         },
 
 
+        coveralls: {
+            options: {
+                force: false
+            },
+            src: {
+                src: "./<%= config.coverage %>/lcov.info"
+            }
+        },
+
+
         coverage: {
             check: {
                 options: {
@@ -258,7 +268,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("ci", "Runs the continuous integration tests", [
         "test",
-        "coverage"
+        "codecoverage"
     ]);
 
 
