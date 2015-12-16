@@ -151,16 +151,13 @@ module.exports = function (grunt) {
             all: {
                 outDir: "./<%= config.dist %>",
                 src: [
-                    "**/*.ts",
-                    "!node_modules/**/*.ts"
+                    "./<%= config.src %>/**/*.ts"
                 ]
             },
             src: {
                 outDir: "./<%= config.dist %>",
                 src: [
-                    "**/*.ts",
-                    "!node_modules/**/*.ts",
-                    "!<%= config.test %>/**/*.ts"
+                    "./<%= config.src %>/**/*.ts"
                 ]
             }
         },
@@ -202,7 +199,8 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask("coverage", "Runs the code coverage tests", [
-
+        "clean",
+        "ts:all"
     ]);
 
 
