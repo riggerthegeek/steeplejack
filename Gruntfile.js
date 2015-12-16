@@ -27,6 +27,7 @@ module.exports = function (grunt) {
 
     /* Load all grunt tasks */
     loader(grunt);
+    grunt.loadNpmTasks("remap-istanbul");
 
 
     /* Start the timer */
@@ -73,6 +74,21 @@ module.exports = function (grunt) {
                         "./<%= config.tmp %>"
                     ]
                 }]
+            }
+        },
+
+
+        coverage: {
+            check: {
+                options: {
+                    thresholds: {
+                        branches: 100,
+                        functions: 100,
+                        lines: 100,
+                        statements: 100
+                    },
+                    dir: "./<%= config.coverage %>"
+                }
             }
         },
 
@@ -124,6 +140,17 @@ module.exports = function (grunt) {
         },
 
 
+        "mocha_istanbul": {
+            generateReport: {
+                options: {
+                    recursive: true,
+                    root: "./<%= config.dist %>/src"
+                },
+                src: "./<%= config.dist %>/test/unit/**/*.js"
+            }
+        },
+
+
         mochaTest: {
             options: {
                 reporter: "spec",
@@ -133,6 +160,19 @@ module.exports = function (grunt) {
                 src: [
                     "./<%= config.test %>/unit/**/*.ts"
                 ]
+            }
+        },
+
+
+        remapIstanbul: {
+            dist: {
+                options: {
+                    reports: {
+                        "html": "./<%= config.coverage %>/lcov-report",
+                        "json": "./<%= config.coverage %>/coverage.json"
+                    }
+                },
+                src: "./<%= config.coverage %>/coverage.json"
             }
         },
 
@@ -151,7 +191,8 @@ module.exports = function (grunt) {
             all: {
                 outDir: "./<%= config.dist %>",
                 src: [
-                    "./<%= config.src %>/**/*.ts"
+                    "./<%= config.src %>/**/*.ts",
+                    "./<%= config.test %>/**/*.ts"
                 ]
             },
             src: {
@@ -226,9 +267,12 @@ module.exports = function (grunt) {
     ]);
 
 
-    grunt.registerTask("coverage", "Runs the code coverage tests", [
+    grunt.registerTask("codecoverage", "Runs the code coverage tests", [
         "clean",
-        "ts:all"
+        "ts:all",
+        "mocha_istanbul:generateReport",
+        "remapIstanbul:dist",
+        "coverage:check"
     ]);
 
 
