@@ -14,6 +14,7 @@
 
 
 /* Third-party modules */
+require("es6-collections");
 var loader = require("load-grunt-tasks");
 var timer = require("grunt-timer");
 var ts = require("ts-node/register");
