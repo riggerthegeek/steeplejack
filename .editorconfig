@@ -8,11 +8,6 @@ end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
-
-[*.js]
-quote_type = 'double'
-
-[*.ts]
 quote_type = 'double'
 
 [*.json]
@@ -20,6 +15,8 @@ indent_size = 2
 
 [*.yml]
 indent_size = 2
+
+quote_type = 'single'
 
 [*.jscsrc]
 indent_size = 2
