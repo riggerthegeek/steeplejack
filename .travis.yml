@@ -21,7 +21,6 @@ env:
   global:
     secure: Zh2Z8FyRQMFM5vez1OmIxVZ8s18K6qEzFa3C3g3XNYBxRQ4GzpSN8S3M0QjvnrrGi+XbMmdcV9DRYgOfGHqq55IamhLH9l5neTgPG3IqArRnWDLMulWRZrRznLACZCr1U0+z09WE+ndOCyfRWKNgkGaNdWRQhaQUZjEOevtqjvs=
 before_install:
-- node test/scripts/npm.js
 - npm install -g grunt-cli
 - date
 script:
