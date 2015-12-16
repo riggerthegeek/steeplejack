@@ -18,5 +18,8 @@ quote_type = 'double'
 [*.json]
 indent_size = 2
 
+[*.yml]
+indent_size = 2
+
 [*.jscsrc]
 indent_size = 2
