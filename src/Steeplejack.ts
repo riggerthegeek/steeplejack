@@ -18,10 +18,12 @@ import Base from "./lib/Base";
 
 export default class Steeplejack {
 
+    twat: number;
+
 
     constructor () {
 
-        let obj = new Base();
+        this.twat = Base.twat();
 
     }
 

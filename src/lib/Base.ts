@@ -14,9 +14,9 @@
 
 export default class Base {
 
-    constructor () {
+    static twat () {
 
-        console.log(3);
+        return 3;
 
     }
 

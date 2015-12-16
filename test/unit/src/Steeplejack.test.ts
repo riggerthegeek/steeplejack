@@ -19,9 +19,9 @@ describe("Steeplejack", () => {
 
     it("should", () => {
 
-        console.log(Steeplejack);
+        let obj = new Steeplejack();
 
-        expect(3).to.be.equal(3);
+        expect(obj.twat).to.be.equal(3);
 
     });
 
