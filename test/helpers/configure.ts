@@ -2,6 +2,9 @@
  * config
  */
 
+/// <reference path="../../typings/tsd.d.ts" />
+
+
 
 /* Node modules */
 
