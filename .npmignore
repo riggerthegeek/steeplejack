@@ -7,7 +7,7 @@
 /tmp/
 /typings/
 
-/src/.baseDir.ts
+.baseDir.ts
 /Gruntfile.js
 /tsconfig.json
 /tsd.json

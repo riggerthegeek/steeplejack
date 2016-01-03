@@ -15,7 +15,6 @@ indent_size = 2
 
 [*.yml]
 indent_size = 2
-
 quote_type = 'single'
 
 [*.jscsrc]

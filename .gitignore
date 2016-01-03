@@ -42,4 +42,4 @@ node_modules
 *.lock
 /.tscache/
 .baseDir.ts
-steeplejack.d.ts
+*.d.ts
