@@ -69,7 +69,7 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     src: [
-                        ".baseDir.ts",
+                        "**/.baseDir.ts",
                         "./<%= config.coverage %>",
                         "./<%= config.dist %>",
                         "./<%= config.tmp %>"
@@ -234,6 +234,17 @@ module.exports = function (grunt) {
                     grunt.log.writeln("The task finished in " + time + "ms");
                     grunt.log.writeln("Waiting for more changes…");
                 }
+            },
+            compile: {
+                files: [
+                    "Gruntfile.js",
+                    "package.json",
+                    "./<%= config.src %>/**/*",
+                    "./<%= config.test %>/**/*"
+                ],
+                tasks: [
+                    "compile"
+                ]
             },
             test: {
                 files: [
