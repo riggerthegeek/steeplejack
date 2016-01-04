@@ -196,6 +196,7 @@ module.exports = function (grunt) {
                 noImplicitAny: true,
                 preserveConstEnums: true,
                 removeComments: true,
+                rootDir: "./<%= config.src %>",
                 sourceMap: true,
                 target: "es5"
             },
