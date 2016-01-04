@@ -1,4 +1,8 @@
+/// <reference path="../../typings/tsd.d.ts" />
+
+
 /* Node modules */
+import * as http from "http";
 
 
 /* Third-party modules */
@@ -14,7 +18,7 @@
  * here to given consistency and allows for good
  * inheritance across all flavours of JavaScript.
  */
-export default class Base {
+export class Base {
 
 
     static extend (properties: {} = null, staticProperties: {} = null) {
