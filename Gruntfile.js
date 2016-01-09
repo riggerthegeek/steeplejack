@@ -155,9 +155,9 @@ module.exports = function (grunt) {
             generateReport: {
                 options: {
                     recursive: true,
-                    root: "./<%= config.dist %>/src"
+                    root: "./<%= config.tmp %>/compiled/src"
                 },
-                src: "./<%= config.dist %>/test/unit/**/*.js"
+                src: "./<%= config.tmp %>/compiled/test/unit/**/*.js"
             }
         },
 
@@ -190,24 +190,27 @@ module.exports = function (grunt) {
 
         ts: {
             options: {
+                compiler: "./node_modules/typescript/bin/tsc",
                 declaration: true,
                 module: "commonjs",
                 moduleResolution: "node",
                 noImplicitAny: true,
                 preserveConstEnums: true,
                 removeComments: true,
-                rootDir: "./<%= config.src %>",
                 sourceMap: true,
                 target: "es5"
             },
             all: {
-                outDir: "./<%= config.dist %>",
+                outDir: "./<%= config.tmp %>/compiled",
                 src: [
                     "./<%= config.src %>/**/*.ts",
                     "./<%= config.test %>/**/*.ts"
                 ]
             },
             src: {
+                options: {
+                    rootDir: "./<%= config.src %>"
+                },
                 outDir: "./<%= config.dist %>",
                 src: [
                     "./<%= config.src %>/**/*.ts"
