@@ -41,7 +41,8 @@ module.exports = function (grunt) {
         dist: "build", /* Location where distributable is built */
         src: "src", /* Location of the source files */
         test: "test", /* Location of the test files */
-        tmp: "tmp" /* Temporary build files */
+        tmp: "tmp", /* Temporary build files */
+        typings: "typings"
     };
 
     /* Get the package.json file */
@@ -72,7 +73,13 @@ module.exports = function (grunt) {
                         "**/.baseDir.ts",
                         "./<%= config.coverage %>",
                         "./<%= config.dist %>",
-                        "./<%= config.tmp %>"
+                        "./<%= config.tmp %>",
+                        "./*.js.map",
+                        "./!(Gruntfile)*.js",
+                        "./*.d.ts",
+                        "./!(<%= config.typings %>|node_modules)/**/*.js.map",
+                        "./!(<%= config.typings %>|node_modules)/**/*.js",
+                        "./!(<%= config.typings %>|node_modules)/**/*.d.ts"
                     ]
                 }]
             }
@@ -111,7 +118,8 @@ module.exports = function (grunt) {
             src: {
                 files: {
                     src: [
-                        "./<%= config.src %>/**/*.js"
+                        "./!(Gruntfile)*.js",
+                        "./!(<%= config.typings %>|node_modules)/**/*.js"
                     ]
                 }
             },
@@ -132,8 +140,8 @@ module.exports = function (grunt) {
             src: {
                 files: {
                     src: [
-                        "Gruntfile.js",
-                        "./<%= config.src %>/**/*.js"
+                        "./*.js",
+                        "./!(<%= config.typings %>|node_modules)/**/*.js"
                     ]
                 }
             }
@@ -144,7 +152,7 @@ module.exports = function (grunt) {
             src: {
                 src: [
                     "./*.json",
-                    "./<%= config.src %>/**/*.json",
+                    "./!(<%= config.typings %>|node_modules)/**/*.json",
                     "./<%= config.test %>/**/*.json"
                 ]
             }
@@ -155,7 +163,7 @@ module.exports = function (grunt) {
             generateReport: {
                 options: {
                     recursive: true,
-                    root: "./<%= config.tmp %>/compiled/src"
+                    root: "./<%= config.tmp %>/compiled"
                 },
                 src: "./<%= config.tmp %>/compiled/test/unit/**/*.js"
             }
@@ -203,17 +211,18 @@ module.exports = function (grunt) {
             all: {
                 outDir: "./<%= config.tmp %>/compiled",
                 src: [
-                    "./<%= config.src %>/**/*.ts",
+                    "*.ts",
+                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*.ts",
                     "./<%= config.test %>/**/*.ts"
                 ]
             },
             src: {
                 options: {
-                    rootDir: "./<%= config.src %>"
+                    rootDir: "./"
                 },
-                outDir: "./<%= config.dist %>",
                 src: [
-                    "./<%= config.src %>/**/*.ts"
+                    "*.ts",
+                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*.ts"
                 ]
             }
         },
@@ -225,7 +234,8 @@ module.exports = function (grunt) {
                     configuration: "tslint.json"
                 },
                 src: [
-                    "./<%= config.src %>/**/*.ts"
+                    "./*.ts",
+                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*.ts"
                 ]
             }
         },
@@ -241,9 +251,8 @@ module.exports = function (grunt) {
             },
             compile: {
                 files: [
-                    "Gruntfile.js",
-                    "package.json",
-                    "./<%= config.src %>/**/*",
+                    "*",
+                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
@@ -252,9 +261,8 @@ module.exports = function (grunt) {
             },
             test: {
                 files: [
-                    "Gruntfile.js",
-                    "package.json",
-                    "./<%= config.src %>/**/*",
+                    "*",
+                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
