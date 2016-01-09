@@ -38,8 +38,6 @@ module.exports = function (grunt) {
     /* Config params */
     var config = {
         coverage: "coverage", /* Location of coverage files */
-        dist: "build", /* Location where distributable is built */
-        src: "src", /* Location of the source files */
         test: "test", /* Location of the test files */
         tmp: "tmp", /* Temporary build files */
         typings: "typings"
@@ -72,7 +70,6 @@ module.exports = function (grunt) {
                     src: [
                         "**/.baseDir.ts",
                         "./<%= config.coverage %>",
-                        "./<%= config.dist %>",
                         "./<%= config.tmp %>",
                         "./*.js.map",
                         "./!(Gruntfile)*.js",
