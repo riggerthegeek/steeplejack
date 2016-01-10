@@ -319,6 +319,7 @@ module.exports = function (grunt) {
     grunt.registerTask("build", "Builds the distributable artifact", [
         "clean:dist",
         "test",
+        "clean",
         "compile"
     ]);
 
