@@ -276,7 +276,6 @@ module.exports = function (grunt) {
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
-                    "clean",
                     "compile"
                 ]
             },
@@ -287,7 +286,6 @@ module.exports = function (grunt) {
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
-                    "clean",
                     "test"
                 ]
             }
