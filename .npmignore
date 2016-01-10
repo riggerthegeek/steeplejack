@@ -9,7 +9,6 @@
 
 .baseDir.ts
 /Gruntfile.js
-/tsconfig.json
 /tsd.json
 *.tmp.txt
 .*
