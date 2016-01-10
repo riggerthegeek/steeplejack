@@ -63,7 +63,7 @@ describe("Base.extend ES5 test", function () {
 
         it("should allow extension of this class", function () {
 
-            let Child = Base.extend();
+            var Child = Base.extend();
 
             var obj = new Child();
 
@@ -146,7 +146,7 @@ describe("Base.extend ES5 test", function () {
 
         it("should allow further extension of a class and calling of parent methods", function () {
 
-            let Child = Base.extend({
+            var Child = Base.extend({
 
                 value: void 0,
 
@@ -160,7 +160,7 @@ describe("Base.extend ES5 test", function () {
 
             });
 
-            let Grandchild = Child.extend({
+            var Grandchild = Child.extend({
 
                 cValue: void 0,
 
@@ -174,7 +174,7 @@ describe("Base.extend ES5 test", function () {
 
             });
 
-            let obj = new Grandchild();
+            var obj = new Grandchild();
 
             expect(obj).to.be.instanceof(Grandchild)
                 .instanceof(Child)
