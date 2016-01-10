@@ -80,6 +80,7 @@ module.exports = function (grunt) {
                         "**/.baseDir.ts",
                         "./<%= config.coverage %>",
                         "./<%= config.tmp %>",
+                        "./*.tmp.txt",
                         "./*.js.map",
                         "./!(Gruntfile)*.js",
                         "./*.d.ts",
