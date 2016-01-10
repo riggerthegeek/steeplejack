@@ -45,6 +45,14 @@ export function extender (Constructor: any, prototypeProps: any = {}, staticProp
         throw new TypeError("The Constructor must be a function");
     }
 
+    if (_.isPlainObject(prototypeProps) === false) {
+        throw new TypeError("The prototype properties must be an object");
+    }
+
+    if (_.isPlainObject(staticProps) === false) {
+        throw new TypeError("The static properties must be an object");
+    }
+
     let MyClass: any;
     MyClass = function (...args: any[]) : void {
         return Constructor.apply(this, arguments);
@@ -81,7 +89,7 @@ export function extender (Constructor: any, prototypeProps: any = {}, staticProp
 
     MyClass.prototype = Object.create(Constructor.prototype);
 
-    if (prototypeProps) {
+    if (_.isEmpty(prototypeProps) === false) {
         _.extend(MyClass.prototype, prototypeProps);
     }
 

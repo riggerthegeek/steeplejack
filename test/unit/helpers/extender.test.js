@@ -31,9 +31,9 @@ describe("extender test", function () {
             void 0,
             {},
             []
-        ].forEach((Constructor) => {
+        ].forEach(function (Constructor) {
 
-            let fail = false;
+            var fail = false;
 
             try {
                 extender(Constructor);
@@ -54,20 +54,88 @@ describe("extender test", function () {
 
     });
 
-    it("should extend a Constructor with no properties", () => {
+    it("should throw an error if the prototypeProps is not an object", function () {
+
+        [
+            null,
+            true,
+            false,
+            2.3,
+            2,
+            "string",
+            function () {},
+            []
+        ].forEach(function (protoProps) {
+
+            var fail = false;
+
+            try {
+                extender(function () {}, protoProps);
+            } catch (err) {
+
+                fail = true;
+
+                expect(err).to.be.instanceof(TypeError);
+                expect(err.message).to.be.equal("The prototype properties must be an object");
+
+            } finally {
+
+                expect(fail).to.be.true;
+
+            }
+
+        });
+
+    });
+
+    it("should throw an error if the staticProps is not an object", function () {
+
+        [
+            null,
+            true,
+            false,
+            2.3,
+            2,
+            "string",
+            function () {},
+            []
+        ].forEach(function (staticProps) {
+
+            var fail = false;
+
+            try {
+                extender(function () {}, void 0, staticProps);
+            } catch (err) {
+
+                fail = true;
+
+                expect(err).to.be.instanceof(TypeError);
+                expect(err.message).to.be.equal("The static properties must be an object");
+
+            } finally {
+
+                expect(fail).to.be.true;
+
+            }
+
+        });
+
+    });
+
+    it("should extend a Constructor with no properties", function () {
 
         /* Not a realistic scenario, but could be done */
 
-        let Constructor = function () {
+        var Constructor = function () {
 
             this.fn1 = function () { return 2; };
 
         };
         Constructor.staticFn = function () { return 3; };
 
-        let Child = extender(Constructor);
+        var Child = extender(Constructor);
 
-        let obj = new Child();
+        var obj = new Child();
 
         expect(obj.super_).to.be.equal(Constructor.prototype);
 
@@ -84,22 +152,22 @@ describe("extender test", function () {
 
     });
 
-    it("should extend a Constructor with some properties", () => {
+    it("should extend a Constructor with some properties", function () {
 
-        let Constructor = function () {
+        var Constructor = function () {
 
             this.fn1 = function () { return 2; };
 
         };
         Constructor.staticFn = function () { return 3; };
 
-        let Child = extender(Constructor, {
+        var Child = extender(Constructor, {
             fn2: function () { return 4; }
         }, {
             staticFn1: function () { return 5; }
         });
 
-        let obj = new Child();
+        var obj = new Child();
 
         expect(obj.super_).to.be.equal(Constructor.prototype);
         expect(Child.staticFn1()).to.be.equal(5);
@@ -124,28 +192,28 @@ describe("extender test", function () {
 
     });
 
-    it("should extend an extended Constructor with some properties", () => {
+    it("should extend an extended Constructor with some properties", function () {
 
-        let Constructor = function () {
+        var Constructor = function () {
 
             this.fn1 = function () { return 2; };
 
         };
         Constructor.staticFn = function () { return 3; };
 
-        let Child = extender(Constructor, {
+        var Child = extender(Constructor, {
             fn2: function () { return 4; }
         }, {
             staticFn1: function () { return 5; }
         });
 
-        let Grandchild = extender(Child, {
+        var Grandchild = extender(Child, {
             fn3: function () { return 6; }
         }, {
             staticFn2: function () { return 7; }
         });
 
-        let obj = new Grandchild();
+        var obj = new Grandchild();
 
         expect(obj.super_).to.be.equal(Child.prototype);
         expect(obj.super_.super_).to.be.equal(Constructor.prototype);
