@@ -91,6 +91,11 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
+            tscache: {
+                files: [{
+                    src: ".tscache"
+                }]
+            },
             tmp: {
                 file: [{
                     src: [
@@ -320,7 +325,8 @@ module.exports = function (grunt) {
         "clean:dist",
         "test",
         "clean",
-        "compile"
+        "compile",
+        "clean:tscache"
     ]);
 
 
