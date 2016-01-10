@@ -44,3 +44,6 @@ node_modules
 .baseDir.ts
 *.tmp.txt
 *.d.ts
+*.js.map
+**/*.js
+!test/**/*.js
