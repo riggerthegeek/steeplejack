@@ -23,6 +23,42 @@ var expect = require("../../helpers/configure").expect;
 
 describe("Base.extend ES5 test", function () {
 
+    describe("#constructor", function () {
+
+        it("should call the _construct function when set", function () {
+
+            var called = false;
+
+            var Child = Base.extend({
+
+                _construct: function (arg1, arg2, arg3, arg4, arg5, arg6) {
+
+                    called = true;
+
+                    expect(arguments.length).to.be.equal(6);
+
+                    expect(arg1).to.be.equal("string");
+                    expect(arg2).to.be.equal(23);
+                    expect(arg3).to.be.true;
+                    expect(arg4).to.be.eql([]);
+                    expect(arg5).to.be.eql({});
+                    expect(arg6).to.be.a("function");
+
+                }
+
+            });
+
+            var obj = new Child("string", 23, true, [], {}, function () {});
+
+            expect(obj).to.be.instanceof(Base)
+                .to.be.instanceof(EventEmitter);
+
+            expect(called).to.be.true;
+
+        });
+
+    });
+
     describe("#extend", function () {
 
         it("should allow extension of this class", function () {
