@@ -4,7 +4,6 @@
   "description": "A NodeJS scaffolding framework",
   "main": "./Steeplejack",
   "scripts": {
-    "postinstall": "tsd install",
     "test": "grunt watch:test"
   },
   "author": "Simon Emms <simon@simonemms.com>",
