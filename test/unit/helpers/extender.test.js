@@ -1,5 +1,9 @@
 /**
  * extender.test
+ *
+ * Written in JS as it's difficult getting
+ * it to work in TypeScript as not designed
+ * that way.
  */
 
 "use strict";
