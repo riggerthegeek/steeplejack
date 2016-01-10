@@ -63,9 +63,9 @@ export class Base extends EventEmitter {
      *
      * @param {object} properties
      * @param {object} staticProperties
-     * @returns {*}
+     * @returns {Function}
      */
-    static extend (properties: Object = {}, staticProperties: Object = {}) {
+    static extend (properties: Object = {}, staticProperties: Object = {}) : Function {
         return extender(this, properties, staticProperties);
     }
 
