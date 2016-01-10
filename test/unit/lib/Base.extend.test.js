@@ -168,7 +168,7 @@ describe("Base.extend ES5 test", function () {
                     this.cValue = value;
                 },
 
-                getString () {
+                getString: function () {
                     return this.super_.getString.call(this);
                 }
 
