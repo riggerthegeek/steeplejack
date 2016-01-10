@@ -63,6 +63,9 @@ module.exports = function (grunt) {
         pkg: pkg,
 
 
+        ignorePaths: "<%= config.coverage %>|<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules",
+
+
         clean: {
             dist: {
                 files: [{
@@ -73,9 +76,9 @@ module.exports = function (grunt) {
                         "./*.js.map",
                         "./!(Gruntfile)*.js",
                         "./*.d.ts",
-                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js.map",
-                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js",
-                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.d.ts"
+                        "./!(<%= ignorePaths %>)/**/*.js.map",
+                        "./!(<%= ignorePaths %>)/**/*.js",
+                        "./!(<%= ignorePaths %>)/**/*.d.ts"
                     ]
                 }]
             },
@@ -133,7 +136,7 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         "./!(Gruntfile)*.js",
-                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js"
+                        "./!(<%= ignorePaths %>)/**/*.js"
                     ]
                 }
             },
@@ -155,7 +158,7 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         "./*.js",
-                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js"
+                        "./!(<%= ignorePaths %>)/**/*.js"
                     ]
                 }
             }
@@ -166,7 +169,7 @@ module.exports = function (grunt) {
             src: {
                 src: [
                     "./*.json",
-                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.json",
+                    "./!(<%= ignorePaths %>)/**/*.json",
                     "./<%= config.test %>/**/*.json"
                 ]
             }
@@ -223,10 +226,13 @@ module.exports = function (grunt) {
                 target: "es5"
             },
             all: {
+                options: {
+                    fast: "never"
+                },
                 outDir: "./<%= config.tmp %>/compiled",
                 src: [
                     "*.ts",
-                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.ts",
+                    "./!(<%= ignorePaths %>)/**/*.ts",
                     "./<%= config.test %>/**/*.ts"
                 ]
             },
@@ -236,7 +242,7 @@ module.exports = function (grunt) {
                 },
                 src: [
                     "*.ts",
-                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.ts"
+                    "./!(<%= ignorePaths %>)/**/*.ts"
                 ]
             }
         },
@@ -249,7 +255,7 @@ module.exports = function (grunt) {
                 },
                 src: [
                     "./*.ts",
-                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.ts"
+                    "./!(<%= ignorePaths %>)/**/*.ts"
                 ]
             }
         },
@@ -266,7 +272,7 @@ module.exports = function (grunt) {
             compile: {
                 files: [
                     "*",
-                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*",
+                    "./!(<%= ignorePaths %>)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
@@ -277,7 +283,7 @@ module.exports = function (grunt) {
             test: {
                 files: [
                     "*",
-                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*",
+                    "./!(<%= ignorePaths %>)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
@@ -320,6 +326,7 @@ module.exports = function (grunt) {
     grunt.registerTask("codecoverage", "Runs the code coverage tests", [
         "clean",
         "ts:all",
+        "copy:jsTest",
         "mocha_istanbul:generateReport",
         "remapIstanbul:dist",
         "coverage:check"
