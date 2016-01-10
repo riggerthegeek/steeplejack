@@ -39,7 +39,7 @@ import * as _ from "lodash";
  * @param {Object} staticProps
  * @returns {function(): *}
  */
-export function extender (Constructor: any, prototypeProps: any = {}, staticProps: any = {}) {
+export function extender (Constructor: Function, prototypeProps: Object = {}, staticProps: Object = {}) {
 
     if (_.isFunction(Constructor) === false) {
         throw new TypeError("The Constructor must be a function");
