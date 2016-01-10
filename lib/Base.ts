@@ -22,7 +22,7 @@ import {extender} from "../helpers/extender";
 export class Base extends EventEmitter {
 
 
-    __construct: Function;
+    protected __construct: Function;
 
 
     /**
@@ -34,7 +34,7 @@ export class Base extends EventEmitter {
      *
      * @param {*} args
      */
-    constructor(...args: any[]) {
+    public constructor(...args: any[]) {
 
         /* Call parent class */
         super();
@@ -56,7 +56,7 @@ export class Base extends EventEmitter {
      *
      * @returns {Object}
      */
-    clone () : any {
+    public clone () : any {
 
         let prototype = Object.getPrototypeOf(this);
 
@@ -98,7 +98,7 @@ export class Base extends EventEmitter {
      * @param {object} staticProperties
      * @returns {Function}
      */
-    static extend (properties: Object = {}, staticProperties: Object = {}) : Function {
+    public static extend (properties: Object = {}, staticProperties: Object = {}) : Function {
         return extender(this, properties, staticProperties);
     }
 
