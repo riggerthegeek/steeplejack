@@ -43,4 +43,5 @@ node_modules
 /.tscache/
 /typings/
 .baseDir.ts
+*.tmp.txt
 *.d.ts
