@@ -280,7 +280,9 @@ module.exports = function (grunt) {
             },
             compile: {
                 files: [
-                    "*",
+                    "*.ts",
+                    "*.js",
+                    "*.json",
                     "./!(<%= ignorePaths %>)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
@@ -290,7 +292,9 @@ module.exports = function (grunt) {
             },
             test: {
                 files: [
-                    "*",
+                    "*.ts",
+                    "*.js",
+                    "*.json",
                     "./!(<%= ignorePaths %>)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
