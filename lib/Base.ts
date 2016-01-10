@@ -22,7 +22,7 @@ import {extender} from "../helpers/extender";
 export class Base extends EventEmitter {
 
 
-    _construct: any;
+    __construct: Function;
 
 
     /**
@@ -40,8 +40,8 @@ export class Base extends EventEmitter {
         super();
 
         /* Call the ES5 constructor */
-        if (_.isFunction(this._construct)) {
-            this._construct(...args);
+        if (_.isFunction(this.__construct)) {
+            this.__construct(...args);
         }
 
 

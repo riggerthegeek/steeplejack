@@ -25,13 +25,13 @@ describe("Base.extend ES5 test", function () {
 
     describe("#constructor", function () {
 
-        it("should call the _construct function when set", function () {
+        it("should call the __construct function when set", function () {
 
             var called = false;
 
             var Child = Base.extend({
 
-                _construct: function (arg1, arg2, arg3, arg4, arg5, arg6) {
+                __construct: function (arg1, arg2, arg3, arg4, arg5, arg6) {
 
                     called = true;
 
@@ -114,7 +114,7 @@ describe("Base.extend ES5 test", function () {
 
             var Child = Base.extend({
 
-                _construct: function (values) {
+                __construct: function (values) {
                     if (values) {
                         for (var key in values) {
                             this.setValue(key, values[key]);
@@ -209,7 +209,7 @@ describe("Base.extend ES5 test", function () {
                 func2: function () {
                     return 3;
                 },
-                _construct: function (values) {
+                __construct: function (values) {
                     if (values) {
                         for (var key in values) {
                             this[key] = values[key];
