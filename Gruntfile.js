@@ -17,7 +17,6 @@
 require("es6-collections");
 var loader = require("load-grunt-tasks");
 var timer = require("grunt-timer");
-var ts = require("ts-node/register");
 
 
 /* Files */
@@ -74,10 +73,28 @@ module.exports = function (grunt) {
                         "./*.js.map",
                         "./!(Gruntfile)*.js",
                         "./*.d.ts",
-                        "./!(<%= config.typings %>|node_modules)/**/*.js.map",
-                        "./!(<%= config.typings %>|node_modules)/**/*.js",
-                        "./!(<%= config.typings %>|node_modules)/**/*.d.ts"
+                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js.map",
+                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js",
+                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.d.ts"
                     ]
+                }]
+            },
+            tmp: {
+                file: [{
+                    src: [
+                        "./<%= config.tmp %>"
+                    ]
+                }]
+            }
+        },
+
+
+        copy: {
+            jsTest: {
+                files: [{
+                    expand: true,
+                    src: "<%= config.test %>/**/*.js",
+                    dest: "./<%= config.tmp %>/compiled"
                 }]
             }
         },
@@ -116,7 +133,7 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         "./!(Gruntfile)*.js",
-                        "./!(<%= config.typings %>|node_modules)/**/*.js"
+                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js"
                     ]
                 }
             },
@@ -138,7 +155,7 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         "./*.js",
-                        "./!(<%= config.typings %>|node_modules)/**/*.js"
+                        "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.js"
                     ]
                 }
             }
@@ -149,7 +166,7 @@ module.exports = function (grunt) {
             src: {
                 src: [
                     "./*.json",
-                    "./!(<%= config.typings %>|node_modules)/**/*.json",
+                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.json",
                     "./<%= config.test %>/**/*.json"
                 ]
             }
@@ -174,7 +191,7 @@ module.exports = function (grunt) {
             },
             unittest: {
                 src: [
-                    "./<%= config.test %>/unit/**/*.ts"
+                    "./<%= config.tmp %>/compiled/test/unit/**/*.js"
                 ]
             }
         },
@@ -209,7 +226,7 @@ module.exports = function (grunt) {
                 outDir: "./<%= config.tmp %>/compiled",
                 src: [
                     "*.ts",
-                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*.ts",
+                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.ts",
                     "./<%= config.test %>/**/*.ts"
                 ]
             },
@@ -219,7 +236,7 @@ module.exports = function (grunt) {
                 },
                 src: [
                     "*.ts",
-                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*.ts"
+                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.ts"
                 ]
             }
         },
@@ -232,7 +249,7 @@ module.exports = function (grunt) {
                 },
                 src: [
                     "./*.ts",
-                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*.ts"
+                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*.ts"
                 ]
             }
         },
@@ -249,20 +266,22 @@ module.exports = function (grunt) {
             compile: {
                 files: [
                     "*",
-                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*",
+                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
+                    "clean",
                     "compile"
                 ]
             },
             test: {
                 files: [
                     "*",
-                    "./!(<%= config.test %>|<%= config.typings %>|node_modules)/**/*",
+                    "./!(<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules)/**/*",
                     "./<%= config.test %>/**/*"
                 ],
                 tasks: [
+                    "clean",
                     "test"
                 ]
             }
@@ -328,6 +347,9 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask("unittest", "Executes the unit tests", [
+        "clean:tmp",
+        "ts:all",
+        "copy:jsTest",
         "mochaTest:unittest"
     ]);
 
