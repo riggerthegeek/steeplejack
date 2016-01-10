@@ -34,7 +34,7 @@ export class Base extends EventEmitter {
      *
      * @param {*} args
      */
-    public constructor(...args: any[]) {
+    public constructor (...args: any[]) {
 
         /* Call parent class */
         super();
