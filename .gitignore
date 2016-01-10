@@ -41,7 +41,6 @@ node_modules
 /_site/
 *.lock
 /.tscache/
-/typings/
 .baseDir.ts
 *.tmp.txt
 *.d.ts
