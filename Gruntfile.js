@@ -77,7 +77,8 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     src: [
-                        "**/.baseDir.ts",
+                        "./.baseDir.ts",
+                        "./**/.baseDir.ts",
                         "./<%= config.coverage %>",
                         "./<%= config.tmp %>",
                         "./*.tmp.txt",
