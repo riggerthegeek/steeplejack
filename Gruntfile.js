@@ -63,7 +63,14 @@ module.exports = function (grunt) {
         pkg: pkg,
 
 
-        ignorePaths: "<%= config.coverage %>|<%= config.test %>|<%= config.tmp %>|<%= config.typings %>|node_modules",
+        ignorePaths: [
+            "*.tmp.txt",
+            "<%= config.coverage %>",
+            "<%= config.test %>",
+            "<%= config.tmp %>",
+            "<%= config.typings %>",
+            "node_modules"
+        ].join("|"),
 
 
         clean: {
