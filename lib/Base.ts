@@ -49,6 +49,39 @@ export class Base extends EventEmitter {
 
 
     /**
+     * Clone
+     *
+     * Clones the instance of the object, returning a
+     * new instance of the object with the same values.
+     *
+     * @returns {Object}
+     */
+    clone () : any {
+
+        let prototype = Object.getPrototypeOf(this);
+
+        let clonedObj = Object.create(prototype);
+
+        Object.getOwnPropertyNames(this)
+            .map((name) => {
+
+                let obj = _.clone((<any>this)[name]);
+
+                Object.defineProperty(clonedObj, name, {
+                    value: obj,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                });
+
+            });
+
+        return clonedObj;
+
+    }
+
+
+    /**
      * Extend
      *
      * Used for extending this class if using a

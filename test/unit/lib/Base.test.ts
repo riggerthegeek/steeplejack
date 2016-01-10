@@ -17,37 +17,98 @@ import {Base} from "../../../lib/Base";
 import {expect} from "../../helpers/configure";
 
 
+interface POJO {
+    [key:string]: any;
+}
+
+
 describe("Base class", function () {
 
     describe("Methods", function () {
 
-        describe("#constructor", function () {
+        describe("#clone", function () {
 
-            it("should call the _construct function when set", function () {
+            it("should clone the Base method and remain an instance", () => {
 
-                let called = false;
-                Base.prototype._construct = function (...args: any[]) {
+                let obj = new Base();
 
-                    called = true;
+                let clone = obj.clone();
 
-                    expect(args).to.be.an("array")
-                        .to.have.length(6);
+                expect(clone).to.be.an.instanceof(Base)
+                    .to.be.an.instanceof(EventEmitter)
+                    .to.not.be.equal(obj);
 
-                    expect(args[0]).to.be.equal("string");
-                    expect(args[1]).to.be.equal(23);
-                    expect(args[2]).to.be.true;
-                    expect(args[3]).to.be.eql([]);
-                    expect(args[4]).to.be.eql({});
-                    expect(args[5]).to.be.a("function");
+            });
 
-                };
+            it("should clone an extended Base method and remain an instance", () => {
 
-                let obj = new Base("string", 23, true, [], {}, function () {});
+                class Model extends Base {
 
-                expect(obj).to.be.instanceof(Base)
-                    .to.be.instanceof(EventEmitter);
+                    values: POJO;
 
-                expect(called).to.be.true;
+                    get constant () {
+                        return 23;
+                    }
+
+                    constructor (obj: POJO) {
+                        super();
+
+                        this.values = {};
+
+                        for (var key in obj) {
+                            this.setValue(key, obj[key]);
+                        }
+                    }
+
+                    _hidden () {
+                        return "hello";
+                    }
+
+                    getValues () {
+                        return this.values;
+                    }
+
+                    setValue (key: any, value: any) {
+                        this.values[key] = value;
+                        return true;
+                    }
+
+                }
+
+                var obj = new Model({
+                    key1: "val1"
+                });
+
+                var clone = obj.clone();
+
+                expect(clone).to.be.an.instanceof(Model)
+                    .to.be.an.instanceof(Base)
+                    .to.be.an.instanceof(EventEmitter)
+                    .to.be.not.equal(obj);
+
+                expect(clone.constant).to.be.equal(23);
+                expect(clone.values).to.be.eql({
+                    key1: "val1"
+                });
+                expect(clone.values).to.be.eql(obj.values)
+                    .to.not.be.equal(obj.values);
+                expect(clone.getValues()).to.be.eql(obj.getValues())
+                    .to.not.be.equal(obj.getValues());
+                expect(clone.setValue).to.be.equal(obj.setValue);
+                expect(clone._hidden).to.be.equal(obj._hidden);
+                expect(clone._hidden()).to.be.equal(obj._hidden());
+
+                clone.setValue("key2", "val2");
+                expect(obj.values).to.be.eql({
+                    key1: "val1"
+                });
+                expect(clone.values).to.be.eql({
+                    key1: "val1",
+                    key2: "val2"
+                });
+
+                /* Changing the values entirely now */
+                expect(clone.getValues()).to.not.be.eql(obj.getValues());
 
             });
 
