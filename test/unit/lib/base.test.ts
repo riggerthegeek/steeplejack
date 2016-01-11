@@ -17,11 +17,6 @@ import {Base} from "../../../lib/base";
 import {expect} from "../../helpers/configure";
 
 
-interface POJO {
-    [key:string]: any;
-}
-
-
 describe("Base class", function () {
 
     describe("Methods", function () {
@@ -44,13 +39,13 @@ describe("Base class", function () {
 
                 class Model extends Base {
 
-                    values: POJO;
+                    values: iObjectLiteral;
 
                     get constant () {
                         return 23;
                     }
 
-                    constructor (obj: POJO) {
+                    constructor (obj: iObjectLiteral) {
                         super();
 
                         this.values = {};
