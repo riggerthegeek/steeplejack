@@ -13,8 +13,8 @@
 
 /* Files */
 import {expect} from "../../helpers/configure";
-import {Base} from "../../../lib/Base";
-import {Plugin} from "../../../lib/Plugin";
+import {Base} from "../../../lib/base";
+import {Plugin} from "../../../lib/plugin";
 
 
 describe("Plugin test", function () {

@@ -13,7 +13,7 @@ import {EventEmitter} from "events";
 
 
 /* Files */
-import {Base} from "../../../lib/Base";
+import {Base} from "../../../lib/base";
 import {expect} from "../../helpers/configure";
 
 

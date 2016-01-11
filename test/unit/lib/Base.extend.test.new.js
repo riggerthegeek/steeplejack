@@ -17,7 +17,7 @@ var EventEmitter = require("events").EventEmitter;
 
 
 /* Files */
-var Base = require("../../../lib/Base").Base;
+var Base = require("../../../lib/base").Base;
 var expect = require("../../helpers/configure").expect;
 
 
