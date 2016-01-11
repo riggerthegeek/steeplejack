@@ -40,6 +40,16 @@ export abstract class Exception extends Error {
     public type: string;
 
 
+    /**
+     * Constructor
+     *
+     * Adds in a check for the _construct function,
+     * to be called if this class is created using
+     * the .extend() static method.
+     *
+     * @param {*} message
+     * @param {*} args
+     */
     public constructor (message: any = null, ...args: any[]) {
 
         /* Call the parent class */
