@@ -2,7 +2,7 @@
  * ValidationExceptionDetail
  */
 
-interface IValidationExceptionDetail {
+declare interface IValidationExceptionDetail {
     message: string;
     value: any;
     additional?: any;
