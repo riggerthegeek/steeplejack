@@ -6,11 +6,11 @@ node_js:
 - '4.2'
 - '4.1'
 - '4.0'
-- '0.12'
-- '0.10'
 - 'iojs'
 - 'iojs-v2.5.0'
 - 'iojs-v1.8.4'
+- '0.12'
+- '0.10'
 matrix:
   fast_finish: true
 sudo: false
