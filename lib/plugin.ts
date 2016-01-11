@@ -22,7 +22,7 @@ import * as _ from "lodash";
 
 
 /* Files */
-import {Base} from "./Base";
+import {Base} from "./base";
 
 
 export class Plugin extends Base {
