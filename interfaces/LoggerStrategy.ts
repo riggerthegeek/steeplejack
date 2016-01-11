@@ -10,5 +10,4 @@ interface ILoggerStrategy {
     info(message: string): any;
     debug(message: string): any;
     trace(message: string): any;
-    twat: string;
 }
