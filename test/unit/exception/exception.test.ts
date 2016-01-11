@@ -12,7 +12,7 @@
 
 
 /* Files */
-import {Exception} from "../../../exception";
+import {Exception} from "../../../exception/index";
 import {expect} from "../../helpers/configure";
 
 

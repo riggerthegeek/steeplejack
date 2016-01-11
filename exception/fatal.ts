@@ -14,7 +14,7 @@
 
 
 /* Files */
-import {Exception} from "./";
+import {Exception} from "./index";
 
 
 /**

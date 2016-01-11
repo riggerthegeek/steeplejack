@@ -16,7 +16,7 @@ import * as _ from "lodash";
 
 /* Files */
 import {Detail} from "./Detail";
-import {Exception} from "../";
+import {Exception} from "../index";
 
 
 /**

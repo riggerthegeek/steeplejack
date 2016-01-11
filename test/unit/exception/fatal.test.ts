@@ -13,7 +13,7 @@
 
 /* Files */
 import {FatalException} from "../../../exception/fatal";
-import {Exception} from "../../../exception";
+import {Exception} from "../../../exception/index";
 import {expect} from "../../helpers/configure";
 
 

@@ -14,8 +14,8 @@
 /* Files */
 
 
-import {ValidationException} from "../../../exception/validation";
-import {Exception} from "../../../exception";
+import {ValidationException} from "../../../exception/validation/index";
+import {Exception} from "../../../exception/index";
 import {expect} from "../../helpers/configure";
 
 
