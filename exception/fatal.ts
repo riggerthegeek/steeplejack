@@ -17,7 +17,7 @@
 import {Exception} from "./";
 
 
-export class Fatal extends Exception {
+export class FatalException extends Exception {
 
 
     get type () {

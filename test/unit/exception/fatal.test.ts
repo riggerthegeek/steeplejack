@@ -12,7 +12,7 @@
 
 
 /* Files */
-import {Fatal} from "../../../exception/fatal";
+import {FatalException} from "../../../exception/fatal";
 import {Exception} from "../../../exception";
 import {expect} from "../../helpers/configure";
 
@@ -23,9 +23,9 @@ describe("FatalException test", () => {
 
         it("should extend the Exception and Error classes", () => {
 
-            var obj = new Fatal("message");
+            var obj = new FatalException("message");
 
-            expect(obj).to.be.instanceof(Fatal)
+            expect(obj).to.be.instanceof(FatalException)
                 .to.be.instanceof(Exception)
                 .to.be.instanceof(Error);
 
