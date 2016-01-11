@@ -87,7 +87,7 @@ module.exports = function (grunt) {
                         "./*.d.ts",
                         "./!(<%= ignorePaths %>)/**/*.js.map",
                         "./!(<%= ignorePaths %>)/**/*.js",
-                        "./!(<%= ignorePaths %>)/**/*.d.ts"
+                        "./!(<%= ignorePaths %>|interfaces)/**/*.d.ts"
                     ]
                 }]
             },

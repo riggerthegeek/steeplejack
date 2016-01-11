@@ -2,6 +2,6 @@
  * ObjectLiteral
  */
 
-interface iObjectLiteral {
+interface IObjectLiteral {
     [key:string]: any;
 }
