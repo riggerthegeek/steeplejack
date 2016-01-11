@@ -39,13 +39,13 @@ describe("Base class", function () {
 
                 class Model extends Base {
 
-                    values: iObjectLiteral;
+                    values: IObjectLiteral;
 
                     get constant () {
                         return 23;
                     }
 
-                    constructor (obj: iObjectLiteral) {
+                    constructor (obj: IObjectLiteral) {
                         super();
 
                         this.values = {};
