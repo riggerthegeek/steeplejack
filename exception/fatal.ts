@@ -28,7 +28,7 @@ import {Exception} from "./";
 export class FatalException extends Exception {
 
 
-    get type () {
+    public get type () {
         return "FATAL";
     }
 
