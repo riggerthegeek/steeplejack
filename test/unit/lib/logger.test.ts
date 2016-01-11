@@ -18,13 +18,13 @@ import {Logger} from "../../../lib/logger";
 import {expect, sinon} from "../../helpers/configure";
 
 
-describe("Logger test", () => {
+describe("Logger test", function () {
 
-    describe("Methods", () => {
+    describe("Methods", function () {
 
         var obj: any,
             strategy: any;
-        beforeEach(() => {
+        beforeEach(function () {
 
             let methods = [
                 "fatal",
@@ -45,9 +45,9 @@ describe("Logger test", () => {
 
         });
 
-        describe("#getLogLevels", () => {
+        describe("#getLogLevels", function () {
 
-            it("should return the logging levels", () => {
+            it("should return the logging levels", function () {
 
                 expect(obj.getLogLevels()).to.be.eql([
                     "fatal",
@@ -62,15 +62,15 @@ describe("Logger test", () => {
 
         });
 
-        describe("#setLevel", () => {
+        describe("#setLevel", function () {
 
-            it("should default the level to error when not set", () => {
+            it("should default the level to error when not set", function () {
 
                 expect(obj.level).to.be.equal("error");
 
             });
 
-            it("should allow a string to be set", () => {
+            it("should allow a string to be set", function () {
 
                 obj.getLogLevels().forEach((level:string) => {
 
@@ -82,7 +82,7 @@ describe("Logger test", () => {
 
             });
 
-            it("should keep the existing logLevel if not in the getLogLevels method", () => {
+            it("should keep the existing logLevel if not in the getLogLevels method", function () {
 
                 expect(obj.level).to.be.equal("error");
 
@@ -102,9 +102,9 @@ describe("Logger test", () => {
 
         });
 
-        describe("#fatal", () => {
+        describe("#fatal", function () {
 
-            it("should send a fatal message", () => {
+            it("should send a fatal message", function () {
 
                 expect(obj.fatal("message")).to.be.equal(obj);
 
@@ -115,9 +115,9 @@ describe("Logger test", () => {
 
         });
 
-        describe("#error", () => {
+        describe("#error", function () {
 
-            it("should send a error message", () => {
+            it("should send a error message", function () {
 
                 expect(obj.error("message")).to.be.equal(obj);
 
@@ -128,9 +128,9 @@ describe("Logger test", () => {
 
         });
 
-        describe("#warn", () => {
+        describe("#warn", function () {
 
-            it("should send a warn message", () => {
+            it("should send a warn message", function () {
 
                 expect(obj.warn("message")).to.be.equal(obj);
 
@@ -141,9 +141,9 @@ describe("Logger test", () => {
 
         });
 
-        describe("#info", () => {
+        describe("#info", function () {
 
-            it("should send an info message", () => {
+            it("should send an info message", function () {
 
                 expect(obj.info("message")).to.be.equal(obj);
 
@@ -154,9 +154,9 @@ describe("Logger test", () => {
 
         });
 
-        describe("#debug", () => {
+        describe("#debug", function () {
 
-            it("should send a debug message", () => {
+            it("should send a debug message", function () {
 
                 expect(obj.debug("message")).to.be.equal(obj);
 
@@ -167,9 +167,9 @@ describe("Logger test", () => {
 
         });
 
-        describe("#trace", () => {
+        describe("#trace", function () {
 
-            it("should send a trace message", () => {
+            it("should send a trace message", function () {
 
                 expect(obj.trace("message")).to.be.equal(obj);
 
