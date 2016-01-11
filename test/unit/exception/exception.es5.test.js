@@ -108,9 +108,15 @@ describe("Exception ES5 test", function () {
 
         it("should receive an instance of error as message and use that for message and stack", function () {
 
+            var staticFn = function () {};
+
             var Child = Exception.extend({
 
                 type: "type"
+
+            }, {
+
+                staticFn: staticFn
 
             });
 
@@ -121,6 +127,7 @@ describe("Exception ES5 test", function () {
             expect(obj.message).to.be.equal("uh oh");
 
             expect(obj.stack).to.be.equal(err.stack);
+            expect(Child.staticFn).to.be.equal(staticFn);
 
         });
 
