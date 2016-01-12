@@ -10,7 +10,7 @@ declare module "datautils" {
         static setInstanceOf(input: any, instance: Function, def?: any) : any;
         static setInt(input: any, def?: any) : any;
         static setObject(input: any, def?: any) : any;
-        static setRegex(input: any, input: any, def?: any) : any;
+        static setRegex(regex: any, input: any, def?: any) : any;
         static setString(input:any, def?:any, values?:any):number;
     }
 }
