@@ -15,6 +15,7 @@ matrix:
   fast_finish: true
 sudo: false
 env:
+- CXX=g++-4.8
   matrix:
   - TZ=Etc/UTC
   - TZ=America/Los_Angeles
@@ -26,6 +27,12 @@ before_install:
 script:
 - grunt ci
 - grunt coveralls:src
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 deploy:
   provider: npm
   email: simon@simonemms.com
