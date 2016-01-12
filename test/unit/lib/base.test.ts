@@ -10,6 +10,7 @@ import {EventEmitter} from "events";
 
 
 /* Third-party modules */
+import {data as datatypes} from "datautils";
 
 
 /* Files */
@@ -104,6 +105,20 @@ describe("Base class", function () {
 
                 /* Changing the values entirely now */
                 expect(clone.getValues()).to.not.be.eql(obj.getValues());
+
+            });
+
+        });
+
+    });
+
+    describe("Static methods", function () {
+
+        describe("datatypes", function () {
+
+            it("should expose the datautils.data object", function () {
+
+                expect(Base.datatypes).to.be.equal(datatypes);
 
             });
 

@@ -13,6 +13,7 @@ import {EventEmitter} from "events";
 
 /* Third-party modules */
 import * as _ from "lodash";
+import {data as datatypes} from "datautils";
 
 
 /* Files */
@@ -78,6 +79,19 @@ export class Base extends EventEmitter {
 
         return clonedObj;
 
+    }
+
+
+    /**
+     * Datatypes
+     *
+     * Returns the data parameter from the
+     * datautils package
+     *
+     * @returns {"datautils".data}
+     */
+    static get datatypes () {
+        return datatypes;
     }
 
 
