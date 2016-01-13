@@ -414,7 +414,7 @@ describe("Model test", function () {
 
         });
 
-        describe("Getters and setters", function () {
+        describe("getters/setters", function () {
 
             it("should use the default setter", function () {
 
@@ -564,6 +564,65 @@ describe("Model test", function () {
 
             });
 
+
+        });
+
+        describe("#getColumnKeys", function () {
+
+            it("should return empty array when model has no definition", function () {
+
+                class Child extends Model {}
+
+                var obj = new Child();
+
+                expect(obj.getColumnKeys()).to.be.an("array")
+                    .to.be.empty;
+
+            });
+
+            it("should return the column keys", function () {
+
+                class MyModel extends Model {
+                    public static schema: any = {
+                        id: {
+                            type: "string"
+                        }
+                    };
+                }
+
+                class MyCollection extends Collection {
+                    public static model: any = MyModel;
+                }
+
+                class Element extends Model {
+                    public static schema: any = {
+                        id: {
+                            type: "string"
+                        },
+                        collection: {
+                            type: MyCollection
+                        },
+                        model: {
+                            type: MyModel
+                        }
+                    };
+                }
+
+                var obj = new Element();
+
+                expect(obj.getColumnKeys()).to.be.an("array")
+                    .to.be.eql([{
+                        key: "id",
+                        column: "id"
+                    }, {
+                        key: "collection",
+                        column: "collection"
+                    }, {
+                        key: "model",
+                        column: "model"
+                    }]);
+
+            });
 
         });
 
