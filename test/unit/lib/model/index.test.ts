@@ -299,6 +299,49 @@ describe("Model test", function () {
 
         });
 
+        describe("#toDb", function () {
+
+            it("should convert a submodel to it's data representation", function () {
+
+                class SubModel extends Model {
+                    public static schema: any = {
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        }
+                    };
+                }
+
+                class OtherModel extends Model {
+                    public static schema: any = {
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        },
+                        model: {
+                            type: SubModel
+                        }
+                    };
+                }
+
+                let obj = new OtherModel({
+                    id: "1234",
+                    model: {
+                        id: "2468"
+                    }
+                });
+
+                expect(obj.toDb()).to.be.eql({
+                    _id: "1234",
+                    model: {
+                        _id: "2468"
+                    }
+                });
+
+            });
+
+        });
+
     });
 
     describe("Static methods", function () {

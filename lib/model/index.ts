@@ -197,6 +197,11 @@ export abstract class Model extends Base {
 
                 let data: any = (<any>this)[key];
 
+                /* If it's an instance of the model, get the DB representation */
+                if (_.isObject(data) && _.isFunction(data.toDb)) {
+                    data = data.toDb();
+                }
+
                 result[column] = data;
 
             }
