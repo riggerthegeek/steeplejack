@@ -144,9 +144,9 @@ export abstract class Model extends Base {
      * live in here.
      *
      * @param {string} key
-     * @returns {any|null}
+     * @returns {Definition|null}
      */
-    public getDefinition (key: string = null) : IObjectLiteral {
+    public getDefinition (key: string = null) : Definition {
         return this._definition[key] || null;
     }
 
