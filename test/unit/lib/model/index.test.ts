@@ -215,7 +215,7 @@ describe("Model test", function () {
 
                 });
 
-                it.skip("should throw an error when no datatype set", function () {
+                it("should throw an error when no datatype set", function () {
 
                     class NewModel extends Model {
 
@@ -235,8 +235,7 @@ describe("Model test", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("DATATYPE_NOT_VALID");
-                        expect(err.type).to.be.null;
+                        expect(err.message).to.be.equal("Definition.type 'null' is not valid");
                     }
 
                     expect(fail).to.be.true;

@@ -67,7 +67,8 @@ export function modelSetter (definition: Definition, key: string) {
                         value = fn(value, defaultValue);
 
                     } else {
-                        /* Error */
+                        /* Unknown datatype */
+                        throw new TypeError(`Definition.type '${type}' is not valid`);
                     }
                     break;
             }
