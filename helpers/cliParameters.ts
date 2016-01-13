@@ -20,13 +20,13 @@ import * as _ from "lodash";
 import {coerce} from "./coerce";
 
 
-export function cliParameters (...input: string[]) : IObjectLiteral {
+export function cliParameters (...input: string[]) : any {
 
     if (_.isEmpty(input)) {
         return {};
     }
 
-    let obj: IObjectLiteral = {};
+    let obj: any = {};
 
     _.each(input, param => {
 

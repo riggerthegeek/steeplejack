@@ -292,10 +292,10 @@ export class Injector extends Base {
      * the same name multiple times will throw an error.
      *
      * @param {string} name
-     * @param {IObjectLitera;} instance
+     * @param {*} instance
      * @returns {Injector}
      */
-    public registerSingleton (name: string, instance: IObjectLiteral) : Injector {
+    public registerSingleton (name: string, instance: any) : Injector {
         return this._registerComponent(name, null, instance);
     }
 
