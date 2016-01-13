@@ -23,4 +23,9 @@ chai.use(sinonChai);
 
 export let expect = chai.expect;
 
-export {proxyquire, sinon};
+proxyquire.noCallThru();
+
+export {
+    proxyquire,
+    sinon
+};
