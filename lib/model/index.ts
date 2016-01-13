@@ -26,7 +26,7 @@ import {modelSetter} from "./modelSetter";
 export abstract class Model extends Base {
 
 
-    public _data: any = {};
+    protected _data: any = {};
 
 
     protected _definition: any = {};
