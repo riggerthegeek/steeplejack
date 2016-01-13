@@ -229,7 +229,7 @@ export abstract class Model extends Base {
             return this;
         }
 
-        let customFunc = getFnName("set", key);
+        let customFunc = getFnName("_set", key);
         let defaultValue = definition.value;
 
         if (_.isFunction((<any>this)[customFunc])) {
