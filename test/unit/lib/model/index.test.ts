@@ -296,6 +296,119 @@ describe("Model test", function () {
 
                 });
 
+                it("should define a model with definitions", function () {
+
+                    class Child extends Model {
+
+                        public static schema: any = {
+                            array: {
+                                type: "array"
+                            },
+                            boolean: {
+                                type: "boolean",
+                                value: false
+                            },
+                            datetime: {
+                                type: "date"
+                            },
+                            float: {
+                                type: "float"
+                            },
+                            integer: {
+                                type: "integer",
+                                column: "int"
+                            },
+                            object: {
+                                type: "object"
+                            },
+                            string: {
+                                type: "string"
+                            }
+                        };
+
+                    }
+
+                    var obj1 = new Child({
+                        array: [
+                            "an", "array of", ["stuff", 2]
+                        ],
+                        boolean: false,
+                        datetime: "2013-02-07 10:11:12",
+                        float: "2.3",
+                        integer: 89034,
+                        object: {
+                            an: "object", "with": "things", and: 2
+                        },
+                        string: "some string"
+                    });
+
+                    expect(obj1.getDefinition("array").getSetting("test")).to.be.undefined;
+
+                    expect(obj1).to.be.instanceof(Model);
+
+                    expect(obj1.toDb()).to.be.eql({
+                        array: [
+                            "an", "array of", ["stuff", 2]
+                        ],
+                        boolean: false,
+                        datetime: new Date(2013, 1, 7, 10, 11, 12),
+                        float: 2.3,
+                        int: 89034,
+                        object: {
+                            an: "object", "with": "things", and: 2
+                        },
+                        string: "some string"
+                    });
+
+                    expect(obj1.getData()).to.be.eql({
+                        array: [
+                            "an", "array of", ["stuff", 2]
+                        ],
+                        boolean: false,
+                        datetime: new Date(2013, 1, 7, 10, 11, 12),
+                        float: 2.3,
+                        integer: 89034,
+                        object: {
+                            an: "object", "with": "things", and: 2
+                        },
+                        string: "some string"
+                    });
+
+                    (<any>obj1).invalid = "a string";
+
+                    expect(obj1.getData()).to.be.eql({
+                        array: [
+                            "an", "array of", ["stuff", 2]
+                        ],
+                        boolean: false,
+                        datetime: new Date(2013, 1, 7, 10, 11, 12),
+                        float: 2.3,
+                        integer: 89034,
+                        object: {
+                            an: "object", "with": "things", and: 2
+                        },
+                        string: "some string"
+                    });
+
+                    (<any>obj1).integer = "12345";
+
+
+                    expect(obj1.getData()).to.be.eql({
+                        array: [
+                            "an", "array of", ["stuff", 2]
+                        ],
+                        boolean: false,
+                        datetime: new Date(2013, 1, 7, 10, 11, 12),
+                        float: 2.3,
+                        integer: 12345,
+                        object: {
+                            an: "object", "with": "things", and: 2
+                        },
+                        string: "some string"
+                    });
+
+                });
+
             });
 
         });
