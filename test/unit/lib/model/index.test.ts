@@ -11,6 +11,7 @@ import {EventEmitter} from "events";
 
 
 /* Third-party modules */
+import * as _ from "lodash";
 
 
 /* Files */
@@ -410,6 +411,159 @@ describe("Model test", function () {
                 });
 
             });
+
+        });
+
+        describe("Getters and setters", function () {
+
+            it("should use the default setter", function () {
+
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        simple: {
+                            type: "string",
+                            value: null
+                        }
+                    };
+                }
+
+                var obj = new Child({
+                    simple: "hello"
+                });
+
+                expect(obj).to.be.instanceof(Model)
+                    .instanceof(Child);
+
+                expect(obj.get("simple")).to.be.equal("hello");
+                expect((<any>obj).simple).to.be.equal("hello");
+
+                expect(obj.set("simple", "test")).to.be.equal(obj);
+                expect(obj.get("simple")).to.be.equal("test");
+                expect((<any>obj).simple).to.be.equal("test");
+
+                expect(obj.set("simple")).to.be.equal(obj);
+                expect(obj.get("simple")).to.be.null;
+                expect((<any>obj).simple).to.be.null;
+
+                (<any>obj).simple = "test";
+                expect(obj.get("simple")).to.be.equal("test");
+                expect((<any>obj).simple).to.be.equal("test");
+
+                (<any>obj).simple = void 0;
+                expect(obj.get("simple")).to.be.null;
+                expect((<any>obj).simple).to.be.null;
+
+            });
+
+            it("should use the defined setter", function () {
+
+                /* Define the model */
+                class Child extends Model {
+
+                    public static schema: any = {
+                        complex: {
+                            type: "string",
+                            value: null
+                        }
+                    };
+
+                    protected _setComplex (value: any, defaults: any) {
+
+                        if (_.isString(value) && value !== defaults) {
+                            value = "test-" + value;
+                        }
+
+                        return value;
+
+                    }
+                }
+
+
+                var obj = new Child({
+                    complex: "hello"
+                });
+
+                expect(obj).to.be.instanceof(Model)
+                    .instanceof(Child);
+
+                expect(obj.get("complex")).to.be.equal("test-hello");
+                expect((<any>obj).complex).to.be.equal("test-hello");
+
+                expect(obj.set("complex", "test")).to.be.equal(obj);
+                expect(obj.get("complex")).to.be.equal("test-test");
+                expect((<any>obj).complex).to.be.equal("test-test");
+
+                expect(obj.set("complex")).to.be.equal(obj);
+                expect(obj.get("complex")).to.be.null;
+                expect((<any>obj).complex).to.be.null;
+
+                (<any>obj).complex = "test";
+                expect(obj.get("complex")).to.be.equal("test-test");
+                expect((<any>obj).complex).to.be.equal("test-test");
+
+                (<any>obj).complex = void 0;
+                expect(obj.get("complex")).to.be.null;
+                expect((<any>obj).complex).to.be.null;
+
+            });
+
+            it("should only set a value if it's an enumerable value", function () {
+
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        str: {
+                            type: "enum",
+                            enum: [
+                                "value1", "value2"
+                            ],
+                            value: null
+                        }
+                    };
+                }
+
+                var obj1 = new Child({
+                    str: "value1"
+                });
+
+                expect(obj1.get("str")).to.be.equal("value1");
+                expect((<any>obj1).str).to.be.equal("value1");
+                obj1.set("str", "value2");
+                expect(obj1.get("str")).to.be.equal("value2");
+                expect((<any>obj1).str).to.be.equal("value2");
+                obj1.set("str", "value3");
+                expect(obj1.get("str")).to.be.null;
+                expect((<any>obj1).str).to.be.null;
+
+                var obj2 = new Child({
+                    str: "value2"
+                });
+
+                expect(obj2.get("str")).to.be.equal("value2");
+                expect((<any>obj2).str).to.be.equal("value2");
+                obj2.set("str", "value1");
+                expect(obj2.get("str")).to.be.equal("value1");
+                expect((<any>obj2).str).to.be.equal("value1");
+                obj2.set("str", "value3");
+                expect(obj2.get("str")).to.be.null;
+                expect((<any>obj2).str).to.be.null;
+
+                var obj3 = new Child({
+                    str: "value3"
+                });
+
+                expect(obj3.get("str")).to.be.null;
+                expect((<any>obj3).str).to.be.null;
+                obj3.set("str", "value1");
+                expect(obj3.get("str")).to.be.equal("value1");
+                expect((<any>obj3).str).to.be.equal("value1");
+                obj3.set("str", "value2");
+                expect(obj3.get("str")).to.be.equal("value2");
+                expect((<any>obj3).str).to.be.equal("value2");
+
+            });
+
 
         });
 

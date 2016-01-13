@@ -220,7 +220,7 @@ export abstract class Model extends Base {
      * @param {any} value
      * @returns {Model}
      */
-    public set (key: string, value: any) : Model {
+    public set (key: string, value: any = void 0) : Model {
 
         let definition = this.getDefinition(key);
 
@@ -235,6 +235,10 @@ export abstract class Model extends Base {
         if (_.isFunction((<any>this)[customFunc])) {
 
             value = (<any>this)[customFunc](value, defaultValue);
+
+            if (_.isUndefined(value)) {
+                value = defaultValue;
+            }
 
         } else {
 
