@@ -295,6 +295,18 @@ module.exports = function (grunt) {
                     "compile"
                 ]
             },
+            coverage: {
+                files: [
+                    "*.ts",
+                    "*.js",
+                    "*.json",
+                    "./!(<%= ignorePaths %>)/**/*",
+                    "./<%= config.test %>/**/*"
+                ],
+                tasks: [
+                    "codecoverage"
+                ]
+            },
             test: {
                 files: [
                     "*.ts",
