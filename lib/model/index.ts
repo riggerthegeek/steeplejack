@@ -19,8 +19,7 @@ import {data as datatypes} from "datautils";
 /* Files */
 import {Base} from "./../base";
 import {Definition} from "./definition";
-import {modelGetter} from "./modelGetter";
-import {modelSetter} from "./modelSetter";
+import {dataCasting, getFnName} from "./helpers";
 
 
 export abstract class Model extends Base {
@@ -72,26 +71,62 @@ export abstract class Model extends Base {
         /* Add in this schema */
         _.extend(schema, this.getSchema());
 
-        this._definition = _.reduce(schema, (result: any, schemaItem: IModelDefinition, key: string) => {
+        /* Written like this (not with _.reduce) as the setter needs to access the definition */
+        _.each(schema, (schemaItem: IModelDefinition, key: string) => {
 
             let definition = Definition.toDefinition(key, schemaItem);
 
-            result[key] = definition;
+            /* Set the definition to the class */
+            this._definition[key] = definition;
 
             /* Create the setters and getters */
             Object.defineProperty(this, key, {
                 configurable: false,
                 enumerable: true,
-                set: modelSetter(definition, key).bind(this),
-                get: modelGetter(definition, key).bind(this)
+                set: (value: any) => {
+                    return this.set(key, value);
+                },
+                get: () => {
+                    return this.get(key);
+                }
             });
 
             /* Set the default value */
             (<any>this)[key] = void 0;
 
-            return result;
-
         }, {});
+
+    }
+
+
+    /**
+     * Get
+     *
+     * Returns the data set to the key name
+     *
+     * @param {string} key
+     * @returns {any}
+     */
+    public get (key: string) : any {
+
+        let definition = this.getDefinition(key);
+
+        /* Look for a protected method first */
+        let customFunc = getFnName("_get", key);
+
+        if (_.isFunction((<any>this)[customFunc])) {
+
+            return (<any>this)[customFunc]();
+
+        } else {
+
+            if (_.has(this._data, key)) {
+                return this._data[key];
+            } else {
+                return definition.value;
+            }
+
+        }
 
     }
 
@@ -173,6 +208,82 @@ export abstract class Model extends Base {
      */
     public getSchema () :any {
         return (<any>this.constructor).schema;
+    }
+
+
+    /**
+     * Set
+     *
+     * Sets data to the desired key
+     *
+     * @param {string} key
+     * @param {any} value
+     * @returns {Model}
+     */
+    public set (key: string, value: any) : Model {
+
+        let definition = this.getDefinition(key);
+
+        if (definition === null) {
+            /* We don't know this key here */
+            return this;
+        }
+
+        let customFunc = getFnName("set", key);
+        let defaultValue = definition.value;
+
+        if (_.isFunction((<any>this)[customFunc])) {
+
+            value = (<any>this)[customFunc](value, defaultValue);
+
+        } else {
+
+            let type = definition.type;
+
+            /* Is the type a class? */
+            if (_.isFunction(type)) {
+
+                /* Yup - create an instance */
+                value = new type(value);
+
+            } else {
+
+                /* No - treat as string */
+                switch (type) {
+
+                    case "enum":
+                        value = datatypes.setEnum(value, definition.enum, defaultValue);
+                        break;
+
+                    case "mixed":
+                        if (_.isUndefined(value)) {
+                            value = defaultValue;
+                        }
+                        break;
+
+                    default:
+                        if (_.has(dataCasting, type)) {
+
+                            let fnName:string = (<any>dataCasting)[type];
+                            let fn:Function = (<any>datatypes)[fnName];
+
+                            value = fn(value, defaultValue);
+
+                        } else {
+                            /* Unknown datatype */
+                            throw new TypeError(`Definition.type '${type}' is not valid`);
+                        }
+                        break;
+                }
+
+            }
+
+        }
+
+        this._data[key] = value;
+
+        return this;
+
     }
 
 
