@@ -16,6 +16,7 @@ import {EventEmitter} from "events";
 /* Files */
 import {expect} from "../../../helpers/configure";
 import {Model} from "../../../../lib/model/index";
+import {Collection} from "../../../../lib/collection";
 import {Base} from "../../../../lib/base";
 
 
@@ -336,6 +337,49 @@ describe("Model test", function () {
                     model: {
                         _id: "2468"
                     }
+                });
+
+            });
+
+            it("should convert a collection to it's data representation", function () {
+
+                class SubModel extends Model {
+                    public static schema: any = {
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        }
+                    };
+                }
+
+                class SubCollection extends Collection {
+                    public static model: Function = SubModel;
+                }
+
+                class OtherModel extends Model {
+                    public static schema: any = {
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        },
+                        model: {
+                            type: SubCollection
+                        }
+                    }
+                }
+
+                var obj = new OtherModel({
+                    id: "1234",
+                    model: [{
+                        id: "2468"
+                    }]
+                });
+
+                expect(obj.toDb()).to.be.eql({
+                    _id: "1234",
+                    model: [{
+                        _id: "2468"
+                    }]
                 });
 
             });
