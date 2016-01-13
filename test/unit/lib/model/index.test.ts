@@ -44,7 +44,7 @@ describe("Model test", function () {
 
             describe("model with a schema", function () {
 
-                beforeEach(function () {
+                it("should create a model with a schema", function () {
 
                     class Child extends Model {
 
@@ -76,13 +76,7 @@ describe("Model test", function () {
 
                     }
 
-                    this.Child = Child;
-
-                });
-
-                it("should create a model with a schema", function () {
-
-                    var obj1 = new this.Child({
+                    var obj1 = new Child({
                         array: [
                             "an", "array of", ["stuff", 2]
                         ],
@@ -98,7 +92,7 @@ describe("Model test", function () {
 
                     expect(obj1.getDefinition("array").getSetting("test")).to.be.undefined;
 
-                    expect(obj1).to.be.instanceof(this.Child)
+                    expect(obj1).to.be.instanceof(Child)
                         .instanceof(Model)
                         .instanceof(Base);
 
@@ -130,7 +124,7 @@ describe("Model test", function () {
                         string: "some string"
                     });
 
-                    obj1.invalid = "a string";
+                    (<any>obj1).invalid = "a string";
 
                     expect(obj1.getData()).to.be.eql({
                         array: [
@@ -146,7 +140,7 @@ describe("Model test", function () {
                         string: "some string"
                     });
 
-                    obj1.integer = "12345";
+                    (<any>obj1).integer = "12345";
 
                     expect(obj1.getData()).to.be.eql({
                         array: [
@@ -166,9 +160,39 @@ describe("Model test", function () {
 
                 it("should return default values if nothing set", function () {
 
-                    var obj = new this.Child();
+                    class Child extends Model {
 
-                    expect(obj).to.be.instanceof(this.Child)
+                        public static schema: any = {
+                            array: {
+                                type: "array"
+                            },
+                            boolean: {
+                                type: "boolean",
+                                value: false
+                            },
+                            datetime: {
+                                type: "date"
+                            },
+                            float: {
+                                type: "float"
+                            },
+                            integer: {
+                                type: "integer",
+                                column: "int"
+                            },
+                            object: {
+                                type: "object"
+                            },
+                            string: {
+                                type: "string"
+                            }
+                        };
+
+                    }
+
+                    var obj = new Child();
+
+                    expect(obj).to.be.instanceof(Child)
                         .instanceof(Model)
                         .instanceof(Base);
 
@@ -183,65 +207,11 @@ describe("Model test", function () {
                     });
 
                     /* Check stuff can be set */
-                    obj.integer = "12345";
-                    expect(obj.integer).to.be.equal(12345);
+                    (<any>obj).integer = "12345";
+                    expect((<any>obj).integer).to.be.equal(12345);
 
-                    obj.boolean = "t";
-                    expect(obj.boolean).to.be.true;
-
-                });
-
-                it("should create a model from data", function () {
-
-                    var obj = this.Child.toModel({
-                        boolean: "1",
-                        datetime: "2013-02-07 10:20:30",
-                        float: "3",
-                        int: 4,
-                        string: "hello this is a string"
-                    });
-
-                    expect(obj).to.be.instanceof(this.Child)
-                        .instanceof(Model)
-                        .instanceof(Base);
-
-                    expect(obj.getData()).to.be.eql({
-                        array: null,
-                        boolean: true,
-                        datetime: new Date(2013, 1, 7, 10, 20, 30),
-                        float: 3,
-                        integer: 4,
-                        object: null,
-                        string: "hello this is a string"
-                    });
-
-                    /* Check stuff can be set */
-                    obj.integer =  "12345";
-                    expect(obj.integer).to.be.equal(12345);
-
-                    obj.boolean = 0;
-                    expect(obj.boolean).to.be.false;
-
-                });
-
-                it("should ignore undefined elements", function () {
-
-                    var obj = this.Child.toModel({
-                        boolean: "N",
-                        bool: true
-                    });
-
-                    expect(obj).to.be.instanceof(Model);
-
-                    expect(obj.getData()).to.be.eql({
-                        array: null,
-                        boolean: false,
-                        datetime: null,
-                        float: null,
-                        integer: null,
-                        object: null,
-                        string: null
-                    });
+                    (<any>obj).boolean = "t";
+                    expect((<any>obj).boolean).to.be.true;
 
                 });
 
@@ -274,6 +244,129 @@ describe("Model test", function () {
                 });
 
             });
+
+        });
+
+    });
+
+    describe("Static methods", function () {
+
+        describe("#toModel", function () {
+
+            it("should create a model from data", function () {
+
+                class Child extends Model {
+
+                    public static schema: any = {
+                        array: {
+                            type: "array"
+                        },
+                        boolean: {
+                            type: "boolean",
+                            value: false
+                        },
+                        datetime: {
+                            type: "date"
+                        },
+                        float: {
+                            type: "float"
+                        },
+                        integer: {
+                            type: "integer",
+                            column: "int"
+                        },
+                        object: {
+                            type: "object"
+                        },
+                        string: {
+                            type: "string"
+                        }
+                    };
+
+                }
+
+                var obj = Child.toModel({
+                    boolean: "1",
+                    datetime: "2013-02-07 10:20:30",
+                    float: "3",
+                    int: 4,
+                    string: "hello this is a string"
+                });
+
+                expect(obj).to.be.instanceof(Child)
+                    .instanceof(Model)
+                    .instanceof(Base);
+
+                expect(obj.getData()).to.be.eql({
+                    array: null,
+                    boolean: true,
+                    datetime: new Date(2013, 1, 7, 10, 20, 30),
+                    float: 3,
+                    integer: 4,
+                    object: null,
+                    string: "hello this is a string"
+                });
+
+                /* Check stuff can be set */
+                (<any>obj).integer =  "12345";
+                expect((<any>obj).integer).to.be.equal(12345);
+
+                (<any>obj).boolean = 0;
+                expect((<any>obj).boolean).to.be.false;
+
+            });
+
+            it("should ignore undefined elements", function () {
+
+                class Child extends Model {
+
+                    public static schema: any = {
+                        array: {
+                            type: "array"
+                        },
+                        boolean: {
+                            type: "boolean",
+                            value: false
+                        },
+                        datetime: {
+                            type: "date"
+                        },
+                        float: {
+                            type: "float"
+                        },
+                        integer: {
+                            type: "integer",
+                            column: "int"
+                        },
+                        object: {
+                            type: "object"
+                        },
+                        string: {
+                            type: "string"
+                        }
+                    };
+
+                }
+
+                var obj = Child.toModel({
+                    boolean: "N",
+                    bool: true
+                });
+
+                expect(obj).to.be.instanceof(Model);
+
+                expect(obj.getData()).to.be.eql({
+                    array: null,
+                    boolean: false,
+                    datetime: null,
+                    float: null,
+                    integer: null,
+                    object: null,
+                    string: null
+                });
+
+            });
+
 
         });
 
