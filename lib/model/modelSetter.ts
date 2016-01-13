@@ -46,31 +46,42 @@ export function modelSetter (definition: Definition, key: string) {
 
             let type = definition.type;
 
-            switch (type) {
+            /* Is the type a class? */
+            if (_.isFunction(type)) {
 
-                case "enum":
-                    value = datatypes.setEnum(value, definition.enum, defaultValue);
-                    break;
+                /* Yup - create an instance */
+                value = new type(value);
 
-                case "mixed":
-                    if (_.isUndefined(value)) {
-                        value = defaultValue;
-                    }
-                    break;
+            } else {
 
-                default:
-                    if (_.has(dataCasting, type)) {
+                /* No - treat as string */
+                switch (type) {
 
-                        let fnName:string = (<any>dataCasting)[type];
-                        let fn:Function = (<any>datatypes)[fnName];
+                    case "enum":
+                        value = datatypes.setEnum(value, definition.enum, defaultValue);
+                        break;
 
-                        value = fn(value, defaultValue);
+                    case "mixed":
+                        if (_.isUndefined(value)) {
+                            value = defaultValue;
+                        }
+                        break;
 
-                    } else {
-                        /* Unknown datatype */
-                        throw new TypeError(`Definition.type '${type}' is not valid`);
-                    }
-                    break;
+                    default:
+                        if (_.has(dataCasting, type)) {
+
+                            let fnName:string = (<any>dataCasting)[type];
+                            let fn:Function = (<any>datatypes)[fnName];
+
+                            value = fn(value, defaultValue);
+
+                        } else {
+                            /* Unknown datatype */
+                            throw new TypeError(`Definition.type '${type}' is not valid`);
+                        }
+                        break;
+                }
+
             }
 
         }

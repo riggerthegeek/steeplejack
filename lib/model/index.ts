@@ -26,10 +26,10 @@ import {modelSetter} from "./modelSetter";
 export abstract class Model extends Base {
 
 
-    protected _data: IObjectLiteral = {};
+    public _data: any = {};
 
 
-    protected _definition: IObjectLiteral = {};
+    protected _definition: any = {};
 
 
     protected _primaryKey: string = null;
@@ -43,7 +43,7 @@ export abstract class Model extends Base {
      *
      * @param {object} data
      */
-    public constructor (data: IObjectLiteral = {}) {
+    public constructor (data: any = {}) {
 
         super();
 
@@ -67,7 +67,7 @@ export abstract class Model extends Base {
      */
     protected _configureDefinition () {
 
-        let schema: IObjectLiteral = {};
+        let schema: any = {};
 
         /* Add in this schema */
         _.extend(schema, this.getSchema());
@@ -129,10 +129,22 @@ export abstract class Model extends Base {
      * This allows us to access the static
      * property set in the child.
      *
-     * @returns {IObjectLiteral}
+     * @returns {any}
      */
-    public getData () : IObjectLiteral {
-        return this._data;
+    public getData () : any {
+
+        return _.reduce(this._data, (result: any, data: any, key: string) => {
+
+            if (_.isObject(data) && _.isFunction(data.getData)) {
+                data = data.getData();
+            }
+
+            result[key] = data;
+
+            return result;
+
+        }, {});
+
     }
 
 
@@ -159,7 +171,7 @@ export abstract class Model extends Base {
      *
      * @returns {*}
      */
-    public getSchema () :IObjectLiteral {
+    public getSchema () :any {
         return (<any>this.constructor).schema;
     }
 
@@ -171,9 +183,9 @@ export abstract class Model extends Base {
      * representation object. This is an
      * object literal
      *
-     * @returns {IObjectLiteral}
+     * @returns {any}
      */
-    public toDb () : IObjectLiteral {
+    public toDb () : any {
 
         return _.reduce(this._definition, (result: any, definition: Definition, key: string) => {
 
@@ -203,10 +215,10 @@ export abstract class Model extends Base {
      * data in the same format that is returned
      * from the toDb() method
      *
-     * @param {IObjectLiteral} data
+     * @param {any} data
      * @returns {Model}
      */
-    static toModel (data: IObjectLiteral = {}) : Model {
+    static toModel (data: any = {}) : Model {
 
         /* Create a new instance of this model with default data */
         let model = Object.create(this.prototype);

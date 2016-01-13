@@ -242,6 +242,59 @@ describe("Model test", function () {
 
                 });
 
+                it("should pass a Model as a definition", function () {
+
+                    class MyModel extends Model {
+
+                        public static schema: any = {
+                            string: {
+                                type: "string"
+                            }
+                        };
+
+                    }
+
+                    class Child extends Model {
+
+                        public static schema: any = {
+                            id: {
+                                type: "integer",
+                                value: null
+                            },
+                            myModel: {
+                                type: MyModel,
+                                value: null
+                            }
+                        };
+
+                    }
+
+                    let myModel = {
+                        string: "some string"
+                    };
+
+                    let obj = new Child({
+                        id: "2",
+                        myModel: myModel
+                    });
+
+                    expect(obj).to.be.instanceof(Child)
+                        .instanceof(Model)
+                        .instanceof(Base);
+                    expect((<any>obj).id).to.be.equal(2);
+                    expect((<any>obj).myModel).to.be.instanceof(MyModel)
+                        .instanceof(Model)
+                        .instanceof(Base);
+
+                    expect(obj.getData()).to.be.eql({
+                        id: 2,
+                        myModel: {
+                            string: "some string"
+                        }
+                    });
+
+                });
+
             });
 
         });
