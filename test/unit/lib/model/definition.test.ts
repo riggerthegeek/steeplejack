@@ -80,9 +80,8 @@ describe("Model Definition", function () {
 
             });
 
-            it("should dispatch to the Validation.generateFunction method if object", function () {
+            it("should do nothing if object passed in", function () {
 
-                Validation.generateFunction.returns("fn1");
 
                 expect(obj.addValidation({
                     rule: "rule",
@@ -90,6 +89,21 @@ describe("Model Definition", function () {
                         1, 2, 3
                     ]
                 }));
+
+                expect(Validation.generateFunction).to.not.be.called;
+
+            });
+
+            it("should dispatch to the Validation.generateFunction method if array of objects", function () {
+
+                Validation.generateFunction.returns("fn1");
+
+                expect(obj.addValidation([{
+                    rule: "rule",
+                    param: [
+                        1, 2, 3
+                    ]
+                }]));
 
                 expect(Validation.generateFunction).to.be.calledOnce
                     .calledWith({

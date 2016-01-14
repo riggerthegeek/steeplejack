@@ -67,19 +67,17 @@ export class Definition implements IModelDefinition {
      * @returns {Definition}
      * @todo
      */
-    public addValidation (rule: any = null) : Definition {
+    public addValidation (rule: IDefinitionValidation[] = null) : Definition {
 
         if (_.isArray(rule)) {
 
             _.each(rule, item => {
-                this.addValidation(item);
+
+                let validateFn: any = Validation.generateFunction(item);
+
+                this.validation.push(validateFn);
+
             });
-
-        } else if (_.isObject(rule)) {
-
-            let validateFn: any = Validation.generateFunction(rule);
-
-            this.validation.push(validateFn);
 
         }
 
