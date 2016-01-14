@@ -16,8 +16,7 @@ import {data as datatypes} from "datautils";
 
 
 /* Files */
-//import {Validation} from "./validation";
-var {Validation} = require("./validation");
+import {Validation} from "./validation";
 
 
 export class Definition implements IModelDefinition {
@@ -111,7 +110,16 @@ export class Definition implements IModelDefinition {
     }
 
 
-    public static toDefinition (name: string, data: IModelDefinition): Definition {
+    /**
+     * To Definition
+     *
+     * Factory method to create the definition object
+     *
+     * @param {string} name
+     * @param {*} data
+     * @returns {Definition}
+     */
+    public static toDefinition (name: string, data: any): Definition {
 
         return new Definition({
             type: data.type,
