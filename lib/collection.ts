@@ -91,11 +91,11 @@ export abstract class Collection extends Base {
      *
      * @returns {Model[]}
      */
-    //public getData () : Model[] {
-    //    return _.map(this._data, (item: ICollectionData) => {
-    //        return item.model;
-    //    });
-    //}
+    public getData () : Model[] {
+        return _.map(this._data, (item: ICollectionData) => {
+            return item.model.getData();
+        });
+    }
 
 
     /**

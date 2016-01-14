@@ -1,3 +1,4 @@
+import {Definition} from "../../../../lib/model/definition";
 /**
  * model.test
  */
@@ -736,6 +737,230 @@ describe("Model test", function () {
 
         });
 
+        describe("#getData", function () {
+
+            it("should export to an object literal", function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        str: {
+                            type: "string",
+                            value: null
+                        },
+                        bool: {
+                            type: "boolean",
+                            value: false
+                        },
+                        obj: {
+                            type: "object",
+                            value: null
+                        }
+                    }
+                }
+
+                var obj = new Child({
+                    str: "hello",
+                    bool: true,
+                    obj: {
+                        hello: "world"
+                    }
+                });
+
+                expect(obj.getData()).to.not.be.instanceof(Model);
+                expect(obj.getData())
+                    .to.be.eql({
+                    str: "hello",
+                    bool: true,
+                    obj: {
+                        hello: "world"
+                    }
+                });
+
+            });
+
+            it("should export a Model instance", function () {
+
+                class SubModel extends Model {
+                    public static schema: any = {
+                        str: {
+                            type: "string",
+                            value: null
+                        },
+                        bool: {
+                            type: "boolean",
+                            value: false
+                        }
+                    };
+                }
+
+                class Child extends Model {
+                    public static schema: any = {
+                        str: {
+                            type: "string",
+                            value: null
+                        },
+                        bool: {
+                            type: "boolean",
+                            value: false
+                        },
+                        obj: {
+                            type: SubModel,
+                            value: null
+                        }
+                    }
+                }
+
+                var obj = new Child({
+                    str: "hello",
+                    bool: true,
+                    obj: {
+                        str: "world",
+                        bool: false
+                    }
+                });
+
+                expect(obj.getData()).to.not.be.instanceof(Model);
+
+                expect(obj.getData()).to.be.eql({
+                    str: "hello",
+                    bool: true,
+                    obj: {
+                        str: "world",
+                        bool: false
+                    }
+                });
+
+            });
+
+            it("should output a value that's an instance of Collection", function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        string: {
+                            type: "string",
+                            value: null
+                        }
+                    };
+                }
+
+                class Children extends Collection {
+                    public static model = Child;
+                }
+
+                class Test extends Model {
+                    public static schema: any = {
+                        str: {
+                            type: "string",
+                            value: null
+                        },
+                        collection: {
+                            type: Children,
+                            value: null
+                        }
+                    };
+                }
+
+                var obj = new Test({
+                    str: "hello",
+                    collection: [{
+                        string: "world"
+                    }]
+                });
+
+                expect(obj.get("str")).to.be.equal("hello");
+                expect(obj.get("collection")).to.be.instanceof(Children);
+
+                expect(obj.getData()).to.be.eql({
+                    str: "hello",
+                    collection: [{
+                        string: "world"
+                    }]
+                });
+
+            });
+
+            it("should allow an array to be added to a Collection", function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        string: {
+                            type: "string",
+                            value: null
+                        }
+                    };
+                }
+
+                class Children extends Collection {
+                    public static model = Child;
+                }
+
+                class Item extends Model {
+                    public static schema: any = {
+                        str: {
+                            type: "string",
+                            value: null
+                        },
+                        collection: {
+                            type: Children,
+                            value: null
+                        }
+                    };
+                }
+
+                var obj = new Item({
+                    str: "hello",
+                    collection: [{
+                        string: "world"
+                    }]
+                });
+
+                expect(obj.get("str")).to.be.equal("hello");
+                expect(obj.get("collection")).to.be.instanceof(Collection);
+
+                expect(obj.getData()).to.be.eql({
+                    str: "hello",
+                    collection: [{
+                        string: "world"
+                    }]
+                });
+
+            });
+
+        });
+
+        describe("#getDefinition", function () {
+
+            it("should return null if key not a string", function () {
+
+                class Child extends Model {
+
+                }
+
+                let obj = new Child();
+
+                expect(obj.getDefinition("date")).to.be.null;
+
+            });
+
+            it("should return null if key not a set definition", function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        string: {
+                            type: "string"
+                        }
+                    };
+                }
+
+                var obj = new Child();
+
+                expect(obj.getDefinition("string")).to.be.instanceof(Definition);
+                expect(obj.getDefinition("key")).to.be.null;
+
+            });
+
+        });
+
         describe("#toDb", function () {
 
             it("should convert a submodel to it's data representation", function () {
@@ -845,6 +1070,168 @@ describe("Model test", function () {
 
                 expect(obj.toDb()).to.be.eql({
                     _id: "12345"
+                });
+
+            });
+
+        });
+
+        describe("#where", function () {
+
+            var obj: any,
+                ChildModel: any;
+            beforeEach(function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        boolean: {
+                            type: "boolean",
+                            value: false
+                        },
+                        datetime: {
+                            type: "date"
+                        },
+                        float: {
+                            type: "float"
+                        },
+                        integer: {
+                            type: "integer",
+                            column: "int"
+                        },
+                        string: {
+                            type: "string"
+                        },
+                        obj: {
+                            type: "object"
+                        }
+                    }
+                }
+
+                ChildModel = Child;
+
+                obj = new ChildModel({
+                    boolean: "true",
+                    datetime: "2010-02-07",
+                    float: "2.2",
+                    integer: "2",
+                    string: "string",
+                    obj: {
+                        hello: "world"
+                    }
+                });
+
+            });
+
+            it("should return true when same type given and one param passed in", function () {
+
+                var out = obj.where({
+                    float: 2.2
+                });
+
+                expect(out).to.be.true;
+
+            });
+
+            it("should return true when multiple params of same type are passed in", function () {
+
+                var out = obj.where({
+                    float: 2.2,
+                    string: "string"
+                });
+
+                expect(out).to.be.true;
+
+            });
+
+            it("should return true when multiple params of same type are passed in including an object", function () {
+
+                var out = obj.where({
+                    string: "string",
+                    datetime: new Date(2010, 1, 7),
+                    obj: {
+                        hello: "world"
+                    }
+                });
+
+                expect(out).to.be.true;
+
+            });
+
+            it("should return false when objects don't match", function () {
+
+                var out = obj.where({
+                    obj: {
+                        hello: "worlds"
+                    }
+                });
+
+                expect(out).to.be.false;
+
+            });
+
+            it("should return false when Date objects don't match", function () {
+
+                var out = obj.where({
+                    datetime: new Date("2010-02-06")
+                });
+
+                expect(out).to.be.false;
+
+            });
+
+            it("should return true when the input needs casting to the datatype", function () {
+                expect(obj.where({
+                    float: "2.2"
+                })).to.be.true;
+            });
+
+            it("should return true when the input needs casting to the datatype with multiple where values", function () {
+                expect(obj.where({
+                    float: "2.2",
+                    date: "2010-02-07"
+                })).to.be.true;
+            });
+
+            it("should return true when an object that's not identical is received", function () {
+                expect(obj.where({
+                    date: new Date("2010-02-07")
+                })).to.be.true;
+            });
+
+            it("should always return false if the input object is empty", function () {
+
+                expect(obj.where({})).to.be.false;
+
+            });
+
+            it("should throw an error if non-object passed in", function () {
+
+                [
+                    [],
+                    null,
+                    "string",
+                    2.3,
+                    4,
+                    function () {},
+                    void 0
+                ].forEach(function (input) {
+
+                    var fail = false;
+
+                    try {
+                        obj.where(input);
+                    } catch (err) {
+
+                        fail = true;
+                        expect(err).to.be.instanceof(TypeError);
+                        expect(err.message).to.be.equal("Model.where properties must be an object");
+
+                    } finally {
+
+                        expect(fail).to.be.true;
+
+                    }
+
                 });
 
             });

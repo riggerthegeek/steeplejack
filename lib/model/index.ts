@@ -19,7 +19,11 @@ import {data as datatypes} from "datautils";
 /* Files */
 import {Base} from "./../base";
 import {Definition} from "./definition";
-import {dataCasting, getFnName} from "./helpers";
+import {
+    dataCasting,
+    getFnName,
+    scalarValues
+} from "./helpers";
 
 
 export abstract class Model extends Base {
@@ -331,6 +335,63 @@ export abstract class Model extends Base {
             return result;
 
         }, {});
+    }
+
+
+    /**
+     * Where
+     *
+     * Give it some properties and see if the model
+     * matches those values.
+     *
+     * If the data is an object, it casts the data
+     * to a string so that it can be matched.
+     *
+     * @param {object} properties
+     * @returns {boolean}
+     */
+    public where (properties: Object) : boolean {
+
+        /* Throw error if non-object */
+        if (_.isPlainObject(properties) === false) {
+            throw new TypeError("Model.where properties must be an object");
+        }
+
+        /* If there are no properties set, always return false */
+        if (_.isEmpty(properties)) {
+            return false;
+        }
+
+        /* Clone the model so we can use the setter without breaking the references */
+        let tmp = this.clone();
+
+        /* Create a target object - the values we want to check */
+        let target = _.reduce(properties, (result: any, value: any, key: string) => {
+
+            /* Set the value to the model so in the right format */
+            tmp.set(key, value);
+
+            value = scalarValues(tmp.get(key));
+
+            result[key] = value;
+
+            return result;
+
+        }, {});
+
+        /* Get the current values for each of the properties */
+        let current = _.reduce(properties, (result: any, value: any, key: string) => {
+
+            value = scalarValues(this.get(key));
+
+            result[key] = value;
+
+            return result;
+
+        }, {});
+
+        return _.isEqual(current, target);
+
     }
 
 
