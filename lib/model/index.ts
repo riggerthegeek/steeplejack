@@ -214,7 +214,13 @@ export abstract class Model extends Base {
     /**
      * Set
      *
-     * Sets data to the desired key
+     * Sets data to the desired key. If no value is
+     * received, it will set the default value.
+     *
+     * If there is a method called _setKey (eg, if
+     * key = "item", method called _setItem) on the
+     * concrete class, that will act as the setter.
+     * Otherwise, it uses simple datatype rules.
      *
      * @param {string} key
      * @param {any} value
