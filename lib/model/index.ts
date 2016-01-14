@@ -114,17 +114,18 @@ export abstract class Model extends Base {
         /* Look for a protected method first */
         let customFunc = getFnName("_get", key);
 
+        /* Get the current value */
+        let currentValue: any = (_.has(this._data, key)) ? this._data[key] : void 0;
+
         if (_.isFunction((<any>this)[customFunc])) {
 
-            return (<any>this)[customFunc]();
+            /* Use the custom function */
+            return (<any>this)[customFunc](currentValue);
 
         } else {
 
-            if (_.has(this._data, key)) {
-                return this._data[key];
-            } else {
-                return definition.value;
-            }
+            /* Just return the value */
+            return currentValue;
 
         }
 
@@ -193,7 +194,7 @@ export abstract class Model extends Base {
      * @param {string} key
      * @returns {Definition|null}
      */
-    public getDefinition (key: string = null) : Definition {
+    public getDefinition (key: string) : Definition {
         return this._definition[key] || null;
     }
 

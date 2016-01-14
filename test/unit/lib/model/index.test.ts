@@ -456,7 +456,26 @@ describe("Model test", function () {
 
             });
 
-            it("should use the defined setter", function () {
+            it("should return the default value", function () {
+
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        simple: {
+                            type: "string",
+                            value: null
+                        }
+                    };
+                }
+
+                let obj = new Child;
+
+                expect((<any>obj).simple).to.be.null;
+                expect(obj.get("simple")).to.be.null;
+
+            });
+
+            it("should use the custom setter", function () {
 
                 /* Define the model */
                 class Child extends Model {
@@ -505,6 +524,35 @@ describe("Model test", function () {
                 (<any>obj).complex = void 0;
                 expect(obj.get("complex")).to.be.null;
                 expect((<any>obj).complex).to.be.null;
+
+            });
+
+            it("should use the custom getter", function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        complex: {
+                            type: "string",
+                            value: null
+                        }
+                    };
+
+                    protected _getComplex (currentValue: any) {
+                        return `test-${currentValue}`;
+                    }
+                }
+
+                var obj = new Child({
+                    complex: "hello"
+                });
+
+                expect((<any>obj).complex).to.be.equal("test-hello");
+                expect(obj.get("complex")).to.be.equal("test-hello");
+
+                obj.set("complex", "value");
+
+                expect((<any>obj).complex).to.be.equal("test-value");
+                expect(obj.get("complex")).to.be.equal("test-value");
 
             });
 
@@ -564,8 +612,68 @@ describe("Model test", function () {
 
             });
 
-            it("should nicely handle a non-existent value, returning undefined");
+            it("should nicely handle a non-existent value, returning undefined", function () {
 
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        simple: {
+                            type: "string",
+                            value: null
+                        }
+                    };
+                }
+
+                let obj = new Child;
+
+                expect((<any>obj).missing).to.be.undefined;
+                expect(obj.get("missing")).to.be.undefined;
+
+                (<any>obj).missing = "hello";
+                expect(obj.set("missing", "hello")).to.be.equal(obj);
+
+            });
+
+            it("should allow a mixed setter to be set, unless undefined", function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        element: {
+                            type: "mixed"
+                        }
+                    };
+                }
+
+                let obj = new Child;
+
+                [
+                    null,
+                    "",
+                    false,
+                    {},
+                    [],
+                    0
+                ].forEach(value => {
+
+                    (<any>obj).element = value;
+
+                    expect(obj.get("element")).to.be.equal(value);
+
+                    obj.set("element", value);
+
+                    expect(obj.get("element")).to.be.equal(value);
+
+                });
+
+                expect(obj.set("element")).to.be.equal(obj);
+
+                expect(obj.get("element")).to.be.null;
+
+                (<any>obj).element = void 0;
+
+                expect(obj.get("element")).to.be.null;
+
+            });
 
         });
 
@@ -712,6 +820,35 @@ describe("Model test", function () {
 
             });
 
+            it("should ignore a column set to null", function () {
+
+                class Child extends Model {
+                    public static schema: any = {
+                        id: {
+                            type: "string",
+                            column: "_id"
+                        },
+                        value: {
+                            type: "string",
+                            column: null
+                        }
+                    }
+                }
+
+                let obj = new Child({
+                    id: "12345",
+                    value: "hello"
+                });
+
+                expect(obj.get("id")).to.be.equal("12345");
+                expect(obj.get("value")).to.be.equal("hello");
+
+                expect(obj.toDb()).to.be.eql({
+                    _id: "12345"
+                });
+
+            });
+
         });
 
     });
@@ -819,6 +956,54 @@ describe("Model test", function () {
                     boolean: "N",
                     bool: true
                 });
+
+                expect(obj).to.be.instanceof(Model);
+
+                expect(obj.getData()).to.be.eql({
+                    array: null,
+                    boolean: false,
+                    datetime: null,
+                    float: null,
+                    integer: null,
+                    object: null,
+                    string: null
+                });
+
+            });
+
+            it("should create a blank model if no data provided", function () {
+
+                class Child extends Model {
+
+                    public static schema: any = {
+                        array: {
+                            type: "array"
+                        },
+                        boolean: {
+                            type: "boolean",
+                            value: false
+                        },
+                        datetime: {
+                            type: "date"
+                        },
+                        float: {
+                            type: "float"
+                        },
+                        integer: {
+                            type: "integer",
+                            column: "int"
+                        },
+                        object: {
+                            type: "object"
+                        },
+                        string: {
+                            type: "string"
+                        }
+                    };
+
+                }
+
+                let obj = Child.toModel();
 
                 expect(obj).to.be.instanceof(Model);
 
