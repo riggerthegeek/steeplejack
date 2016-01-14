@@ -16,6 +16,8 @@ import {data as datatypes} from "datautils";
 
 
 /* Files */
+//import {Validation} from "./validation";
+var {Validation} = require("./validation");
 
 
 export class Definition implements IModelDefinition {
@@ -30,7 +32,9 @@ export class Definition implements IModelDefinition {
     public settings: any;
 
 
-    public constructor (options: IModelDefinition) {
+    public constructor (data: IModelDefinition = null) {
+
+        let options: any = _.isObject(data) ? data : {};
 
         let type: any = null;
         if (_.isString(options.type) || _.isFunction(options.type)) {
@@ -41,7 +45,7 @@ export class Definition implements IModelDefinition {
         this.value = _.isUndefined(options.value) ? null : _.cloneDeep(options.value);
         this.column = datatypes.setString(options.column, null);
         this.primaryKey = datatypes.setBool(options.primaryKey, false);
-        this.validation = null;
+        this.validation = [];
         this.enum = datatypes.setArray(options.enum, []);
         this.settings = datatypes.setObject(options.settings, {});
 
@@ -63,7 +67,7 @@ export class Definition implements IModelDefinition {
      * @returns {Definition}
      * @todo
      */
-    public addValidation (rule: any) : Definition {
+    public addValidation (rule: any = null) : Definition {
 
         if (_.isArray(rule)) {
 
@@ -71,7 +75,11 @@ export class Definition implements IModelDefinition {
                 this.addValidation(item);
             });
 
-            return this;
+        } else if (_.isObject(rule)) {
+
+            let validateFn: any = Validation.generateFunction(rule);
+
+            this.validation.push(validateFn);
 
         }
 
