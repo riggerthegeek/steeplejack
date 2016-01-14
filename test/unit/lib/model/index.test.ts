@@ -564,6 +564,8 @@ describe("Model test", function () {
 
             });
 
+            it("should nicely handle a non-existent value, returning undefined");
+
 
         });
 

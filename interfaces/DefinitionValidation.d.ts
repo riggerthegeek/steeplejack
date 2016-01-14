@@ -4,6 +4,6 @@
 
 
 declare interface IDefinitionValidation {
-    rule: string;
+    rule: any;
     param?: any[];
 }
