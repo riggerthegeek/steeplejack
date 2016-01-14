@@ -80,6 +80,10 @@ export abstract class Model extends Base {
 
             let definition = Definition.toDefinition(key, schemaItem);
 
+            if (definition.hasPrimaryKey()) {
+                this._setPrimaryKey(key);
+            }
+
             /* Set the definition to the class */
             this._definition[key] = definition;
 
@@ -100,6 +104,24 @@ export abstract class Model extends Base {
 
         }, {});
 
+    }
+
+
+    /**
+     * Set Primary Key
+     *
+     * Sets the primary key
+     *
+     * @param {string} key
+     * @private
+     */
+    protected _setPrimaryKey (key: string) {
+
+        if (this.getPrimaryKey() === null) {
+            this._primaryKey = key;
+        } else {
+            throw new Error("CANNOT_SET_MULTIPLE_PRIMARY_KEYS");
+        }
     }
 
 
@@ -200,6 +222,30 @@ export abstract class Model extends Base {
      */
     public getDefinition (key: string) : Definition {
         return this._definition[key] || null;
+    }
+
+
+    /**
+     * Get Primary Key
+     *
+     * Gets the primary key
+     *
+     * @return {string}
+     */
+    getPrimaryKey () {
+        return this._primaryKey;
+    }
+
+
+    /**
+     * Get Primary Key Value
+     *
+     * Gets the value of the primary key
+     *
+     * @returns {*}
+     */
+    getPrimaryKeyValue () {
+        return this.get(this.getPrimaryKey());
     }
 
 

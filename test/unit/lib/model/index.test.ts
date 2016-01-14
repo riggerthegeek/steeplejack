@@ -1238,6 +1238,144 @@ describe("Model test", function () {
 
         });
 
+        describe("Primary keys", function () {
+
+            it("should set no primary key value", function () {
+
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        dataId: {
+                            type: "integer",
+                            value: null,
+                            column: "id"
+                        },
+                        name: {
+                            type: "string"
+                        }
+                    };
+                }
+
+                var obj = new Child({
+                    dataId: 1,
+                    name: "Dave"
+                });
+
+                expect(obj.getPrimaryKey()).to.be.null;
+                expect(obj.getPrimaryKeyValue()).to.be.undefined;
+
+                var from = Child.toModel({
+                    id: 1,
+                    name: "Dave"
+                });
+
+                expect(from.getPrimaryKey()).to.be.null;
+                expect(from.getPrimaryKeyValue()).to.be.undefined;
+
+            });
+
+            it("should set the primary key", function () {
+
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        dataId: {
+                            type: "integer",
+                            value: null,
+                            column: "id",
+                            primaryKey: true
+                        },
+                        name: {
+                            type: "string"
+                        }
+                    };
+                }
+
+                var obj = new Child();
+
+                expect(obj.getPrimaryKey()).to.be.equal("dataId");
+                expect(obj.getPrimaryKeyValue()).to.be.null;
+
+                var from = Child.toModel();
+
+                expect(from.getPrimaryKey()).to.be.equal("dataId");
+                expect(from.getPrimaryKeyValue()).to.be.null;
+
+            });
+
+            it("should set the primary key value", function () {
+
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        dataId: {
+                            type: "integer",
+                            value: null,
+                            column: "id",
+                            primaryKey: true
+                        },
+                        name: {
+                            type: "string"
+                        }
+                    };
+                }
+
+                var obj = new Child({
+                    dataId: 1,
+                    name: "Dave"
+                });
+
+                expect(obj.getPrimaryKey()).to.be.equal("dataId");
+                expect(obj.getPrimaryKeyValue()).to.be.equal(1);
+
+                var from = Child.toModel({
+                    id: 1,
+                    name: "Dave"
+                });
+
+                expect(from.getPrimaryKey()).to.be.equal("dataId");
+                expect(from.getPrimaryKeyValue()).to.be.equal(1);
+
+            });
+
+            it("should throw error when more than one primary key is given", function () {
+
+                /* Define the model */
+                class Child extends Model {
+                    public static schema: any = {
+                        dataId: {
+                            type: "integer",
+                            value: null,
+                            column: "id",
+                            primaryKey: true
+                        },
+                        name: {
+                            type: "string",
+                            value: null,
+                            primaryKey: true
+                        }
+                    };
+                }
+
+                var fail = false;
+
+                try {
+                    new Child();
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Error);
+                    expect(err.message).to.be.equal("CANNOT_SET_MULTIPLE_PRIMARY_KEYS");
+
+                }
+
+                expect(fail).to.be.true;
+
+            });
+
+        });
+
     });
 
     describe("Static methods", function () {
