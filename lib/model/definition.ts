@@ -72,7 +72,7 @@ export class Definition implements IModelDefinition {
 
             _.each(rule, item => {
 
-                let validateFn: any = Validation.generateFunction(item);
+                let validateFn: any = Validation.generateFunction(item, this.value);
 
                 this.validation.push(validateFn);
 

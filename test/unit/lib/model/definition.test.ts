@@ -85,9 +85,9 @@ describe("Model Definition", function () {
                 });
 
                 expect(Validation.generateFunction).to.be.calledOnce
-                    .calledWith({
+                    .calledWithExactly({
                         rule: "string"
-                    });
+                    }, null);
 
                 expect(obj.validation).to.be.eql([
                     "fn"
@@ -146,9 +146,9 @@ describe("Model Definition", function () {
                 });
 
                 expect(Validation.generateFunction).to.be.calledOnce
-                    .calledWith({
+                    .calledWithExactly({
                         rule: "string"
-                    });
+                    }, value);
 
                 expect(obj.validation).to.be.eql([
                     "fn"
@@ -226,12 +226,12 @@ describe("Model Definition", function () {
                 }]));
 
                 expect(Validation.generateFunction).to.be.calledOnce
-                    .calledWith({
+                    .calledWithExactly({
                         rule: "rule",
                         param: [
                             1, 2, 3
                         ]
-                    });
+                    }, null);
 
                 expect(obj.validation).to.be.eql([
                     "fn1"
