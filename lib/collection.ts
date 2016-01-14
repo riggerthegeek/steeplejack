@@ -52,7 +52,7 @@ export abstract class Collection extends Base {
      * @param {any[]} data
      * @returns {Collection}
      */
-    public add (data: any[] = null) : Collection {
+    public add (data: any[]) : Collection {
 
         /* Ensure we've got an array */
         if (_.isArray(data)) {
@@ -62,13 +62,13 @@ export abstract class Collection extends Base {
                 let model: Model;
                 let ModelConstructor: any = this.getModel();
 
-                if (data instanceof ModelConstructor) {
-                    /* It's already an instance of the model */
-                    model = <Model>item;
-                } else {
-                    /* Convert the data into an instance of the model */
-                    model = new ModelConstructor(item);
-                }
+                //if (data instanceof ModelConstructor) {
+                //    /* It's already an instance of the model */
+                //    model = <Model>item;
+                //} else {
+                //    /* Convert the data into an instance of the model */
+                model = new ModelConstructor(item);
+                //}
 
                 this._data.push({
                     id: "string",
@@ -91,11 +91,11 @@ export abstract class Collection extends Base {
      *
      * @returns {Model[]}
      */
-    public getData () : Model[] {
-        return _.map(this._data, (item: ICollectionData) => {
-            return item.model;
-        });
-    }
+    //public getData () : Model[] {
+    //    return _.map(this._data, (item: ICollectionData) => {
+    //        return item.model;
+    //    });
+    //}
 
 
     /**
