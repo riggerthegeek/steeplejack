@@ -33,9 +33,9 @@ export abstract class Collection extends Base {
      *
      * Adds the data to the collection
      *
-     * @param {*} data
+     * @param {any[]} data
      */
-    public constructor (data: any = null) {
+    public constructor (data: any[] = null) {
 
         super();
 
@@ -49,36 +49,32 @@ export abstract class Collection extends Base {
      *
      * Adds in the data to the collection
      *
-     * @param {*} data
+     * @param {any[]} data
      * @returns {Collection}
      */
-    public add (data: any = null) : Collection {
+    public add (data: any[] = null) : Collection {
 
-        /* Are we receiving an array? */
+        /* Ensure we've got an array */
         if (_.isArray(data)) {
 
-            /* Yes - cycle through each one */
-            _.each(data, model => {
-                this.add(model);
-            });
+            _.each(data, item => {
 
-        } else if (_.isObject(data) && _.isEmpty(data) === false) {
+                let model: Model;
+                let ModelConstructor: any = this.getModel();
 
-            /* No, it's an object */
-            let model: Model;
-            let modelConst: any = this.getModel();
+                if (data instanceof ModelConstructor) {
+                    /* It's already an instance of the model */
+                    model = <Model>item;
+                } else {
+                    /* Convert the data into an instance of the model */
+                    model = new ModelConstructor(item);
+                }
 
-            if (data instanceof modelConst) {
-                /* Already an instance of the model */
-                model = data;
-            } else {
-                /* Convert the data into an instance of the model */
-                model = new modelConst(data);
-            }
+                this._data.push({
+                    id: "string",
+                    model: model
+                });
 
-            this._data.push({
-                id: "string",
-                model: model
             });
 
         }
