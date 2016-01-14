@@ -135,8 +135,6 @@ export abstract class Model extends Base {
      */
     public get (key: string) : any {
 
-        let definition = this.getDefinition(key);
-
         /* Look for a protected method first */
         let customFunc = getFnName("_get", key);
 
