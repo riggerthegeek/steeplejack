@@ -20,7 +20,7 @@ import {expect} from "../../../helpers/configure";
 import {Model} from "../../../../lib/model/index";
 import {Collection} from "../../../../lib/collection";
 import {Base} from "../../../../lib/base";
-
+import {ValidationException} from "../../../../exception/validation/index";
 
 describe("Model test", function () {
 
@@ -304,6 +304,70 @@ describe("Model test", function () {
                     expect((<any>obj).myModel).to.be.instanceof(MyModel)
                         .instanceof(Model)
                         .instanceof(Base);
+                    expect((<any>obj).myModel).to.not.be.equal(myModel);
+
+                    expect(obj.get("myModel")).to.not.be.equal(myModel);
+
+                    expect(obj.getData()).to.be.eql({
+                        id: 2,
+                        myModel: {
+                            string: "some string"
+                        }
+                    });
+
+                });
+
+                it("should pass a Model as a definition and keep instance", function () {
+
+                    class MyModel extends Model {
+
+                        protected _schema () {
+                            return {
+                                string: {
+                                    type: "string"
+                                }
+                            };
+                        }
+
+                    }
+
+                    class Child extends Model {
+
+                        protected _schema () {
+                            let obj: any = {
+                                id: {
+                                    type: "integer",
+                                    value: null
+                                },
+                                myModel: {
+                                    type: MyModel,
+                                    value: null
+                                }
+                            };
+                            return obj;
+                        }
+
+                    }
+
+                    let myModel = new MyModel({
+                        string: "some string"
+                    });
+
+                    let obj = new Child({
+                        id: "2",
+                        myModel: myModel
+                    });
+
+                    expect(obj).to.be.instanceof(Child)
+                        .instanceof(Model)
+                        .instanceof(Base);
+                    expect((<any>obj).id).to.be.equal(2);
+                    expect((<any>obj).myModel).to.be.instanceof(MyModel)
+                        .instanceof(Model)
+                        .instanceof(Base)
+                        .equal(myModel);
+
+                    expect(obj.get("myModel")).to.be.equal(myModel);
 
                     expect(obj.getData()).to.be.eql({
                         id: 2,
@@ -426,6 +490,57 @@ describe("Model test", function () {
                         },
                         string: "some string"
                     });
+
+                });
+
+                it("should extend model and schema", function () {
+
+                    /* Define the model */
+                    class Parent extends Model {
+                        protected _schema () {
+                            return {
+                                name: {
+                                    type: "string"
+                                }
+                            };
+                        }
+                    }
+
+                    class Child extends Parent {
+                        protected _schema () {
+                            return this._mergeSchemas(super._schema(), {
+                                jobTitle: {
+                                    type: "string"
+                                }
+                            });
+                        }
+                    }
+
+                    var obj1 = new Parent({
+                        name: "Name"
+                    });
+
+                    expect(obj1).to.be.instanceof(Model)
+                        .instanceof(Parent);
+                    expect(obj1.getData()).to.be.eql({
+                        name: "Name"
+                    });
+                    expect(obj1.get("name")).to.be.equal("Name");
+
+                    var obj2 = new Child({
+                        name: "Foo",
+                        jobTitle: "King"
+                    });
+
+                    expect(obj2).to.be.instanceof(Model)
+                        .instanceof(Parent)
+                        .instanceof(Child);
+                    expect(obj2.getData()).to.be.eql({
+                        name: "Foo",
+                        jobTitle: "King"
+                    });
+                    expect(obj2.get("name")).to.be.equal("Foo");
+                    expect(obj2.get("jobTitle")).to.be.equal("King");
 
                 });
 
@@ -584,6 +699,31 @@ describe("Model test", function () {
 
                 expect((<any>obj).complex).to.be.equal("test-value");
                 expect(obj.get("complex")).to.be.equal("test-value");
+
+            });
+
+            it("should use a custom get function", function () {
+
+                class Child extends Model {
+                    protected _schema () {
+                        let obj: any = {
+                            string: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
+                    protected _getString (value: any) {
+                        return `Hmmm. ${value}`;
+                    }
+                }
+
+                var obj = new Child({
+                    string: "Would you like a Jelly Baby my dear?"
+                });
+
+                expect(obj.get("string")).to.be.equal("Hmmm. Would you like a Jelly Baby my dear?");
 
             });
 
@@ -1349,6 +1489,1583 @@ describe("Model test", function () {
 
         });
 
+        describe("#validation", function () {
+
+            describe("Single rule", function () {
+
+                before(function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                name: {
+                                    type: "string",
+                                    validation: [{
+                                        rule: "required"
+                                    }]
+                                }
+                            };
+                        }
+                    }
+
+                    this.Child = Child;
+
+                });
+
+                it("should not throw an error when a string is provided", function () {
+
+                    var obj = new this.Child({
+                        name: "Test Name"
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should not throw an error when email not specified and not required", function () {
+
+                    class M extends Model {
+                        protected _schema () {
+                            let obj: any = {
+                                email: {
+                                    type: "string",
+                                    value: null,
+                                    validation: [
+                                        {
+                                            rule: "email"
+                                        }
+                                    ]
+                                }
+                            };
+                            return obj;
+                        }
+                    }
+
+                    var obj = new M();
+
+                    expect(obj.validate()).to.be.true;
+
+                    obj.set("email", "notanemail");
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+                        expect(err.message).to.be.equal("Model validation error");
+
+                        expect(err.getErrors()).to.be.eql({
+                            email: [
+                                {
+                                    message: "VALUE_NOT_EMAIL",
+                                    value: "notanemail"
+                                }
+                            ]
+                        });
+
+                    }
+
+                    expect(fail).to.be.true;
+
+                    obj.set("email", "test@test.com");
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should throw error when string is null", function () {
+
+                    var obj = new this.Child();
+
+                    expect(obj).to.be.instanceof(this.Child);
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            name: [
+                                {
+                                    message: "VALUE_REQUIRED",
+                                    value: null
+                                }
+                            ]
+                        });
+
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+            });
+
+            describe("Multiple keys, single rules on all", function () {
+
+                before(function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                name: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "required"
+                                        }
+                                    ]
+                                },
+                                emailAddress: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "email"
+                                        }
+                                    ]
+                                }
+                            };
+                        }
+                    }
+                    this.Child = Child;
+                });
+
+                it("should validate both rules", function () {
+
+                    var obj = new this.Child({
+                        name: "Test",
+                        emailAddress: "test@test.com"
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should fail to validate the first rule", function () {
+
+                    var obj = new this.Child({
+                        emailAddress: "test@test.com"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            name: [
+                                {
+                                    message: "VALUE_REQUIRED",
+                                    value: null
+                                }
+                            ]
+                        });
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+                it("should fail to validate the second rule", function () {
+
+                    var obj = new this.Child({
+                        name: "Test",
+                        emailAddress: "not@anemail"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            emailAddress: [
+                                {
+                                    message: "VALUE_NOT_EMAIL",
+                                    value: "not@anemail"
+                                }
+                            ]
+                        });
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+                it("should fail to validate both rules", function () {
+
+                    var obj = new this.Child({
+                        emailAddress: "noanemail.com",
+                        name: ""
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            name: [
+                                {
+                                    message: "VALUE_REQUIRED",
+                                    value: ""
+                                }
+                            ],
+                            emailAddress: [
+                                {
+                                    message: "VALUE_NOT_EMAIL",
+                                    value: "noanemail.com"
+                                }
+                            ]
+                        });
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+            });
+
+            describe("Multiple keys, multiple rules on all", function () {
+
+                before(function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                emailAddress1: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "required"
+                                        },
+                                        {
+                                            rule: "email"
+                                        }
+                                    ]
+                                },
+                                emailAddress2: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "required"
+                                        },
+                                        {
+                                            rule: "email"
+                                        }
+                                    ]
+                                }
+                            };
+                        }
+                    }
+
+                    this.Child = Child;
+
+                });
+
+                it("should validate all rules", function () {
+
+                    var obj = new this.Child({
+                        emailAddress1: "example@domain.com",
+                        emailAddress2: "test@test.com"
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should fail all rules", function () {
+
+                    var obj = new this.Child({
+                        emailAddress1: "f",
+                        emailAddress2: "testtest.com"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            emailAddress1: [
+                                {
+                                    message: "VALUE_NOT_EMAIL",
+                                    value: "f"
+                                }
+                            ],
+                            emailAddress2: [
+                                {
+                                    message: "VALUE_NOT_EMAIL",
+                                    value: "testtest.com"
+                                }
+                            ]
+                        });
+                    }
+
+                    expect(fail).to.be.true;
+
+                    obj.set("emailAddress1", "test@test.com");
+                    obj.set("emailAddress2", "test2@test.com");
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should fail one rule on one element", function () {
+
+                    var obj = new this.Child({
+                        emailAddress1: "f",
+                        emailAddress2: "testtest.com"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            emailAddress1: [
+                                {
+                                    message: "VALUE_NOT_EMAIL",
+                                    value: "f"
+                                }
+                            ],
+                            emailAddress2: [
+                                {
+                                    message: "VALUE_NOT_EMAIL",
+                                    value: "testtest.com"
+                                }
+                            ]
+                        });
+                    }
+
+                    expect(fail).to.be.true;
+
+                    obj.set("emailAddress1", "test@test.com");
+                    obj.set("emailAddress2", "test2@test.com");
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should fail on multiple errors on a single key", function () {
+
+                    var obj = new this.Child({
+                        emailAddress2: "test@test.com"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            emailAddress1: [
+                                {
+                                    message: "VALUE_REQUIRED",
+                                    value: null
+                                }
+                            ]
+                        });
+                    }
+
+                    expect(fail).to.be.true;
+
+                    obj.set("emailAddress1", "test@test.com");
+                    obj.set("emailAddress2", "test2@test.com");
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+            });
+
+            describe("Validate rules that receive a single parameter", function () {
+
+                before(function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                name: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "minLength",
+                                            param: [
+                                                5
+                                            ]
+                                        }
+                                    ]
+                                }
+                            };
+                        }
+                    }
+
+                    this.Child = Child;
+
+                });
+
+                it("should validate the model", function () {
+
+                    var obj = new this.Child({
+                        name: "Test1234"
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should throw an error when not validated", function () {
+
+                    var obj = new this.Child({
+                        name: "Test"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            name: [
+                                {
+                                    message: "VALUE_LESS_THAN_MIN_LENGTH",
+                                    value: "Test",
+                                    additional: [
+                                        5
+                                    ]
+                                }
+                            ]
+                        });
+                    }
+
+                    expect(fail).to.be.true;
+
+                    obj.set("name", "Test1234");
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+            });
+
+            describe("Validate rules that receive multiple parameters", function () {
+
+                before(function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                name: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "lengthBetween",
+                                            param: [
+                                                5,
+                                                10
+                                            ]
+                                        }
+                                    ]
+                                }
+                            };
+                        }
+                    }
+
+                    this.Child = Child;
+
+                });
+
+                it("should validate the multi-parameter rule", function () {
+
+                    var obj = new this.Child({
+                        name: "The name"
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should throw an error if the name is too short", function () {
+
+                    var obj = new this.Child({
+                        name: "name"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            name: [
+                                {
+                                    message: "VALUE_NOT_BETWEEN_MINLENGTH_AND_MAXLENGTH",
+                                    value: "name",
+                                    additional: [
+                                        5,
+                                        10
+                                    ]
+                                }
+                            ]
+                        });
+
+                    }
+
+                    expect(fail).to.be.true;
+
+                    obj.set("name", "The name");
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+            });
+
+            describe("Validate against custom validation rules", function () {
+
+                describe("No parameters passed", function () {
+
+                    before(function () {
+
+                        /* Define the model */
+                        class Child extends Model {
+                            protected _schema () {
+                                let obj: any = {
+                                    name: {
+                                        type: "string",
+                                        validation: [
+                                            {
+                                                rule: function (objModel: any, value: any) {
+                                                    if (value === "throw") {
+                                                        throw new Error("THROWN_ERROR");
+                                                    }
+                                                    return value === "Hello";
+                                                }
+                                            }
+                                        ]
+                                    }
+                                };
+                                return obj;
+                            }
+                        }
+
+                        this.Child = Child;
+
+                    });
+
+                    it("should validate the custom rule", function () {
+
+                        var obj = new this.Child({
+                            name: "Hello"
+                        });
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                    it("should throw an error when custom rule returns false", function () {
+
+                        var obj = new this.Child({
+                            name: "Potato"
+                        });
+
+                        var fail = false;
+
+                        try {
+                            obj.validate();
+                        } catch (err) {
+                            fail = true;
+
+                            expect(err).to.be.instanceof(ValidationException);
+
+                            expect(err.getErrors()).to.be.eql({
+                                name: [
+                                    {
+                                        message: "Custom model validation failed",
+                                        value: "Potato"
+                                    }
+                                ]
+                            });
+                        }
+
+                        expect(fail).to.be.true;
+
+                        obj.set("name", "Hello");
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                    it("should throw an error when custom rule throws error", function () {
+
+                        var obj = new this.Child({
+                            name: "throw"
+                        });
+
+                        var fail = false;
+
+                        try {
+                            obj.validate();
+                        } catch (err) {
+                            fail = true;
+
+                            expect(err).to.be.instanceof(ValidationException);
+
+                            expect(err.getErrors()).to.be.eql({
+                                name: [
+                                    {
+                                        message: "THROWN_ERROR",
+                                        value: "throw"
+                                    }
+                                ]
+                            });
+                        }
+
+                        expect(fail).to.be.true;
+
+                        obj.set("name", "Hello");
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                });
+
+                describe("Single parameter passed", function () {
+
+                    before(function () {
+
+                        /* Define the model */
+                        class Child extends Model {
+                            protected _schema () {
+                                return {
+                                    name: {
+                                        type: "string",
+                                        validation: [
+                                            {
+                                                rule: function (objModel: any, value: any, match: any) {
+                                                    if (value === "throw") {
+                                                        throw new Error("THROWN_ERROR");
+                                                    }
+                                                    return value === match;
+                                                },
+                                                param: "Hello"
+                                            }
+                                        ]
+                                    }
+                                };
+                            }
+                        }
+
+                        this.Child = Child;
+
+                    });
+
+                    it("should validate the custom rule", function () {
+
+                        var obj = new this.Child({
+                            name: "Hello"
+                        });
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                    it("should throw an error when the test returns false", function () {
+
+                        var obj = new this.Child({
+                            name: "false"
+                        });
+
+                        var fail = false;
+
+                        try {
+                            obj.validate();
+                        } catch (err) {
+
+                            fail = true;
+
+                            expect(err).to.be.instanceof(ValidationException);
+
+                            expect(err.getErrors()).to.be.eql({
+                                name: [
+                                    {
+                                        message: "Custom model validation failed",
+                                        value: "false"
+                                    }
+                                ]
+                            });
+
+                        }
+
+                        expect(fail).to.be.true;
+
+                        obj.set("name", "Hello");
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                    it("should throw an error when the validation method throws an error", function () {
+
+                        var obj = new this.Child({
+                            name: "throw"
+                        });
+
+                        var fail = false;
+
+                        try {
+                            obj.validate();
+                        } catch (err) {
+
+                            fail = true;
+
+                            expect(err).to.be.instanceof(ValidationException);
+
+                            expect(err.getErrors()).to.be.eql({
+                                name: [
+                                    {
+                                        message: "THROWN_ERROR",
+                                        value: "throw"
+                                    }
+                                ]
+                            });
+
+                        }
+
+                        expect(fail).to.be.true;
+
+                        obj.set("name", "Hello");
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                });
+
+                describe("Array of parameters passed", function () {
+
+                    before(function () {
+
+                        /* Define the model */
+                        class Child extends Model {
+                            protected _schema () {
+                                return {
+                                    name: {
+                                        type: "string",
+                                        validation: [
+                                            {
+                                                rule: function (objModel: any, value: any, match: any, datatype: any) {
+                                                    if (value === "throw") {
+                                                        throw new Error("THROWN_ERROR");
+                                                    }
+                                                    return value === match && typeof value === datatype;
+                                                },
+                                                param: [
+                                                    "Hello",
+                                                    "string"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                };
+                            }
+                        }
+
+                        this.Child = Child;
+
+                    });
+
+                    it("should validate the custom rule", function () {
+
+                        var obj = new this.Child({
+                            name: "Hello"
+                        });
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                    it("should throw an error when the validation function returns false", function () {
+
+                        var obj = new this.Child({
+                            name: "test"
+                        });
+
+                        var fail = false;
+
+                        try {
+                            obj.validate();
+                        } catch (err) {
+
+                            fail = true;
+
+                            expect(err).to.be.instanceof(ValidationException);
+
+                            expect(err.getErrors()).to.be.eql({
+                                name: [
+                                    {
+                                        message: "Custom model validation failed",
+                                        value: "test"
+                                    }
+                                ]
+                            });
+
+                        }
+
+                        expect(fail).to.be.true;
+
+                        obj.set("name", "Hello");
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                    it("should throw an error when the validation method throws an error", function () {
+
+                        var obj = new this.Child({
+                            name: "throw"
+                        });
+
+                        var fail = false;
+
+                        try {
+                            obj.validate();
+                        } catch (err) {
+
+                            fail = true;
+
+                            expect(err).to.be.instanceof(ValidationException);
+
+                            expect(err.getErrors()).to.be.eql({
+                                name: [
+                                    {
+                                        message: "THROWN_ERROR",
+                                        value: "throw"
+                                    }
+                                ]
+                            });
+
+                        }
+
+                        expect(fail).to.be.true;
+
+                        obj.set("name", "Hello");
+
+                        expect(obj.validate()).to.be.true;
+
+                    });
+
+                });
+
+            });
+
+            describe("Matching another field", function () {
+
+                before(function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                password: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "minLength",
+                                            param: [
+                                                8
+                                            ]
+                                        }
+                                    ]
+                                },
+                                password2: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "match",
+                                            param: "password"
+                                        }
+                                    ]
+                                }
+                            };
+                        }
+                    }
+
+                    this.Child = Child;
+                });
+
+                it("should validate the model", function () {
+
+                    var obj = new this.Child({
+                        password: "tnetennba",
+                        password2: "tnetennba"
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should fail when the password is to short", function () {
+
+                    var obj = new this.Child({
+                        password: "Moss",
+                        password2: "Moss"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            password: [
+                                {
+                                    message: "VALUE_LESS_THAN_MIN_LENGTH",
+                                    value: "Moss",
+                                    additional: [
+                                        8
+                                    ]
+                                }
+                            ]
+                        });
+
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+                it("should fail when the password doesn't match", function () {
+
+                    var obj = new this.Child({
+                        password: "MauriceMoss",
+                        password2: "RoyTrenneman"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            password2: [
+                                {
+                                    message: "VALUE_DOES_NOT_MATCH",
+                                    value: "RoyTrenneman",
+                                    additional: [
+                                        "MauriceMoss"
+                                    ]
+                                }
+                            ]
+                        });
+
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+                it("should fail when both rules fail", function () {
+
+                    var obj = new this.Child({
+                        password: "Jen",
+                        password2: "Roy"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            password: [
+                                {
+                                    message: "VALUE_LESS_THAN_MIN_LENGTH",
+                                    value: "Jen",
+                                    additional: [
+                                        8
+                                    ]
+                                }
+                            ],
+                            password2: [
+                                {
+                                    message: "VALUE_DOES_NOT_MATCH",
+                                    value: "Roy",
+                                    additional: [
+                                        "Jen"
+                                    ]
+                                }
+                            ]
+                        });
+
+                    }
+
+                    expect(fail).to.be.true;
+
+                });
+
+            });
+
+            describe("Invalid functions", function () {
+
+                it("should throw an error when function not in validation object", function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                str: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: "minimumLength",
+                                            param: [
+                                                8
+                                            ]
+                                        }
+                                    ]
+                                }
+                            };
+                        }
+                    }
+
+                    var fail = false;
+
+                    var obj: Child;
+                    try {
+                        obj = new Child({
+                            str: "some string"
+                        });
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(Error);
+                        expect(err.message).to.be.equal("'minimumLength' is not a validation function");
+                    }
+
+                    expect(obj).to.be.undefined;
+                    expect(fail).to.be.true;
+
+                });
+
+                it("should throw an error when non-function given", function () {
+
+                    /* Define the model */
+                    class Child extends Model {
+                        protected _schema () {
+                            return {
+                                str: {
+                                    type: "string",
+                                    validation: [
+                                        {
+                                            rule: {},
+                                            param: 8
+                                        }
+                                    ]
+                                }
+                            };
+                        }
+                    }
+
+                    var fail = false;
+
+                    var obj: Child;
+                    try {
+                        obj = new Child({
+                            str: "some string"
+                        });
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(Error);
+                        expect(err.message).to.be.equal("IDefinitionValidation.rule must be a function or a string, not a object");
+                    }
+
+                    expect(obj).to.be.undefined;
+                    expect(fail).to.be.true;
+
+                });
+
+                it("should validate when not all keys have validation", function () {
+
+                    class Child extends Model {
+                        protected _schema () {
+                            let obj: any = {
+                                id: {
+                                    type: "integer",
+                                    value: null
+                                },
+                                datetime: {
+                                    type: "date",
+                                    value: new Date()
+                                },
+                                postCode: {
+                                    type: "string",
+                                    value: null,
+                                    validation: [
+                                        {
+                                            rule: "regex",
+                                            param: [
+                                                new RegExp("^postcode$")
+                                            ]
+                                        },
+                                        {
+                                            rule: "required"
+                                        }
+                                    ]
+                                }
+                            };
+                            return obj;
+                        }
+
+                    }
+
+                    var fail = false;
+
+                    var obj = new Child({
+                        shipmentId: "1",
+                        postCode: "not a postcode"
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+
+                        expect(err.getErrors()).to.be.eql({
+                            postCode: [
+                                {
+                                    message: "VALUE_REGEX_FAILED_TO_MATCH",
+                                    value: "not a postcode",
+                                    additional: [
+                                        "/^postcode$/"
+                                    ]
+                                }
+                            ]
+                        });
+
+                    }
+
+                    expect(fail).to.be.true;
+
+                    obj.set("postCode", "postcode");
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+            });
+
+            describe("Collection", function () {
+
+                beforeEach(function () {
+
+                    class SubModel extends Model {
+                        protected _schema () {
+                            let obj: any = {
+                                id: {
+                                    type: "string",
+                                    validation: [{
+                                        rule: "required"
+                                    }]
+                                },
+                                name: {
+                                    type: "string",
+                                    validation: [{
+                                        rule: "minLength",
+                                        param: [2]
+                                    }, {
+                                        rule: function (objModel: any, value: any) {
+                                            return value === "Bob";
+                                        }
+                                    }]
+                                }
+                            };
+                            return obj;
+                        }
+
+                    }
+
+                    class SubCollection extends Collection {
+                        public static model = SubModel
+                    }
+
+                    class MyModel extends Model {
+                        protected _schema () {
+                            return {
+                                id: {
+                                    type: "string",
+                                    validation: [{
+                                        rule: "required"
+                                    }, {
+                                        rule: "minLength",
+                                        param: [5]
+                                    }]
+                                },
+                                collection: {
+                                    type: SubCollection,
+                                    validation: [{
+                                        rule: "required"
+                                    }, {
+                                        rule: "minLength",
+                                        param: [1]
+                                    }]
+                                }
+                            };
+                        }
+
+                    }
+
+                    this.SubModel = SubModel;
+                    this.SubCollection = SubCollection;
+                    this.MyModel = MyModel;
+
+                });
+
+                it("should validate a collection with no erroring models", function () {
+
+                    var obj = new this.MyModel({
+                        id: "12345",
+                        collection: [{
+                            id: "3333",
+                            name: "Bob"
+                        }]
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should validate a collection error", function () {
+
+                    var obj = new this.MyModel();
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err.getErrors()).to.be.eql({
+                            id: [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }],
+                            collection: [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }]
+                        });
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+                it("should validate a collection with one erroring model", function () {
+
+                    var obj = new this.MyModel({
+                        collection: [{
+                            id: "3333",
+                            name: ""
+                        }]
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+                        expect(err.message).to.be.equal("Model validation error");
+
+                        expect(err.getErrors()).to.be.eql({
+                            id: [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }],
+                            "collection_0_name": [{
+                                message: "VALUE_LESS_THAN_MIN_LENGTH",
+                                value: "",
+                                additional: [
+                                    2
+                                ]
+                            }, {
+                                message: "Custom model validation failed",
+                                value: ""
+                            }]
+                        })
+
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+                it("should validate a collection with multiple erroring models", function () {
+
+                    var obj = new this.MyModel({
+                        collection: [{
+                            id: "3333",
+                            name: ""
+                        }, {
+                            id: "4444",
+                            name: "2s"
+                        }]
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err).to.be.instanceof(ValidationException);
+                        expect(err.message).to.be.equal("Model validation error");
+
+                        expect(err.getErrors()).to.be.eql({
+                            id: [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }],
+                            "collection_0_name": [{
+                                message: "VALUE_LESS_THAN_MIN_LENGTH",
+                                value: "",
+                                additional: [
+                                    2
+                                ]
+                            }, {
+                                message: "Custom model validation failed",
+                                value: ""
+                            }],
+                            "collection_1_name": [{
+                                message: "Custom model validation failed",
+                                value: "2s"
+                            }]
+                        })
+
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+            });
+
+            describe("SubModels", function () {
+
+                beforeEach(function () {
+
+                    class SubModel extends Model {
+                        protected _schema () {
+                            return {
+                                id: {
+                                    type: "string",
+                                    validation: [{
+                                        rule: "required"
+                                    }]
+                                },
+                                name: {
+                                    type: "string",
+                                    validation: [{
+                                        rule: "minLength",
+                                        param: [
+                                            2
+                                        ]
+                                    }, {
+                                        rule: function (objModel: any, value: any) {
+                                            return value === "Bob";
+                                        }
+                                    }]
+                                }
+                            };
+                        }
+                    }
+
+
+                    class MyModel extends Model {
+                        protected _schema () {
+                            return {
+                                id: {
+                                    type: "string",
+                                    validation: [{
+                                        rule: "required"
+                                    }]
+                                },
+                                model: {
+                                    type: SubModel,
+                                    validation: [{
+                                        rule: "required"
+                                    }]
+                                }
+                            };
+                        }
+                    }
+
+                    this.SubModel = SubModel;
+                    this.MyModel = MyModel;
+                });
+
+                it("should validate a submodel with no errors", function () {
+
+                    var obj = new this.MyModel({
+                        id: "2468",
+                        model: {
+                            id: "12345",
+                            name: "Bob"
+                        }
+                    });
+
+                    expect(obj.validate()).to.be.true;
+
+                });
+
+                it("should validate a model with required submodel", function () {
+
+                    var obj = new this.MyModel({
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err.getErrors()).to.be.eql({
+                            id: [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }],
+                            model: [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }]
+                        });
+
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+                it("should validate a submodel with errors", function () {
+
+                    var obj = new this.MyModel({
+                        model: {
+                            name: "B"
+                        }
+                    });
+
+                    var fail = false;
+
+                    try {
+                        obj.validate();
+                    } catch (err) {
+                        fail = true;
+
+                        expect(err.getErrors()).to.be.eql({
+                            id: [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }],
+                            "model_id": [{
+                                message: "VALUE_REQUIRED",
+                                value: null
+                            }],
+                            "model_name": [{
+                                message: "VALUE_LESS_THAN_MIN_LENGTH",
+                                value: "B",
+                                additional: [
+                                    2
+                                ]
+                            }, {
+                                message: "Custom model validation failed",
+                                value: "B"
+                            }]
+                        });
+
+                    } finally {
+                        expect(fail).to.be.true;
+                    }
+
+                });
+
+            });
+
+        });
+
         describe("Primary keys", function () {
 
             it("should set no primary key value", function () {
@@ -1496,197 +3213,6 @@ describe("Model test", function () {
                 expect(fail).to.be.true;
 
             });
-
-        });
-
-        describe("Extending the model", function () {
-
-            it("should extend model and keep parent methods", function () {
-
-                /* Define the model */
-                class Parent extends Model {
-                    protected _schema () {
-                        return {
-                            name: {
-                                type: "string"
-                            }
-                        };
-                    }
-                }
-
-                class Child extends Parent {
-                    protected _schema () {
-                        return this._mergeSchemas(super._schema(), {
-                            jobTitle: {
-                                type: "string"
-                            }
-                        });
-                    }
-                }
-
-                var obj1 = new Parent({
-                    name: "Name"
-                });
-
-                expect(obj1).to.be.instanceof(Model)
-                    .instanceof(Parent);
-                expect(obj1.getData()).to.be.eql({
-                    name: "Name"
-                });
-                expect(obj1.get("name")).to.be.equal("Name");
-
-                var obj2 = new Child({
-                    name: "Foo",
-                    jobTitle: "King"
-                });
-
-                expect(obj2).to.be.instanceof(Model)
-                    .instanceof(Parent)
-                    .instanceof(Child);
-                expect(obj2.getData()).to.be.eql({
-                    name: "Foo",
-                    jobTitle: "King"
-                });
-                expect(obj2.get("name")).to.be.equal("Foo");
-                expect(obj2.get("jobTitle")).to.be.equal("King");
-
-            });
-
-            //it("should extend model and keep parent methods", function () {
-            //
-            //    /* Define the model */
-            //    var Model = model.extend({
-            //        definition: {
-            //            age: {
-            //                type: "float"
-            //            }
-            //        },
-            //        getAge: function one () {
-            //            return this.get("age", false);
-            //        }
-            //    });
-            //
-            //    var childModel = Model.extend({
-            //        definition: {
-            //            age: {
-            //                type: "integer"
-            //            }
-            //        },
-            //        getAge: function two () {
-            //            return String(this.get("age", false));
-            //        }
-            //    });
-            //
-            //    var obj1 = new Model({
-            //        age: "42"
-            //    });
-            //
-            //    var obj2 = new childModel({
-            //        age: "18"
-            //    });
-            //
-            //    expect(obj1).to.be.instanceof(Model);
-            //    expect(obj1.toObject()).to.be.eql({
-            //        age: 42
-            //    });
-            //    expect(obj1.getAge()).to.be.equal(42);
-            //
-            //    expect(obj2).to.be.instanceof(Model);
-            //    expect(obj2).to.be.instanceof(childModel);
-            //    expect(obj2.toObject()).to.be.eql({
-            //        age: 18
-            //    });
-            //    expect(obj2.getAge()).to.be.equal("18");
-            //
-            //    done();
-            //
-            //});
-            //
-            //it("should extend a model with no definition", function () {
-            //
-            //    /* Define the model */
-            //    var Model = model.extend({
-            //        getAge: function () {
-            //            return this.get("age", false);
-            //        },
-            //        getName: function () {
-            //            return this.get("name", false);
-            //        }
-            //    });
-            //
-            //    var childModel = Model.extend({
-            //        definition: {
-            //            age: {
-            //                type: "integer"
-            //            },
-            //            name: {
-            //                type: "string"
-            //            }
-            //        },
-            //        getName: function () {
-            //            return "Name: " + this.get("name", false);
-            //        }
-            //    });
-            //
-            //    var obj1 = new Model();
-            //
-            //    var obj2 = new childModel({
-            //        age: 26,
-            //        name: "Test"
-            //    });
-            //
-            //    expect(obj1).to.be instanceof(Model);
-            //    expect(obj1.toObject()).to.be.eql({});
-            //    expect(obj1.getAge()).to.be.undefined;
-            //
-            //    expect(obj2).to.be.instanceof(Model);
-            //    expect(obj2).to.be.instanceof(childModel);
-            //
-            //    expect(obj2.toObject()).to.be.eql({
-            //        age: 26,
-            //        name: "Test"
-            //    });
-            //    expect(obj2.getAge()).to.be.equal(26);
-            //    expect(obj2.getName()).to.be.equal("Name: Test");
-            //
-            //    done();
-            //
-            //});
-            //
-            //it("should ignore any columns that are set as null", function () {
-            //
-            //    /* Define the model */
-            //    var Model = model.extend({
-            //        definition: {
-            //            name: {
-            //                type: "string",
-            //                column: "some_name"
-            //            },
-            //            nonData: {
-            //                type: "string",
-            //                column: null
-            //            }
-            //        }
-            //    });
-            //
-            //    var obj = new Model({
-            //        name: "hello",
-            //        nonData: "world"
-            //    });
-            //
-            //    expect(obj.get("name")).to.be.equal("hello");
-            //    expect(obj.get("nonData")).to.be.equal("world");
-            //
-            //    expect(obj.toObject()).to.be.eql({
-            //        name: "hello",
-            //        nonData: "world"
-            //    });
-            //
-            //    expect(obj.toData()).to.be.eql({
-            //        "some_name": "hello"
-            //    });
-            //
-            //});
 
         });
 

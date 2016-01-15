@@ -17,6 +17,7 @@ import * as _ from "lodash";
 /* Files */
 import {Base} from "./base";
 import {Model} from "./model/index";
+import {ValidationException} from "../exception/validation/index";
 
 
 export abstract class Collection extends Base {
@@ -52,7 +53,7 @@ export abstract class Collection extends Base {
      * @param {any[]} data
      * @returns {Collection}
      */
-    public add (data: any[]) : Collection {
+    public add (data: any[] = null) : Collection {
 
         /* Ensure we've got an array */
         if (_.isArray(data)) {
@@ -62,13 +63,13 @@ export abstract class Collection extends Base {
                 let model: Model;
                 let ModelConstructor: any = this.getModel();
 
-                //if (data instanceof ModelConstructor) {
-                //    /* It's already an instance of the model */
-                //    model = <Model>item;
-                //} else {
-                //    /* Convert the data into an instance of the model */
-                model = new ModelConstructor(item);
-                //}
+                if (item instanceof ModelConstructor) {
+                    /* It's already an instance of the model */
+                    model = <Model>item;
+                } else {
+                    /* Convert the data into an instance of the model */
+                    model = new ModelConstructor(item);
+                }
 
                 this._data.push({
                     id: "string",
@@ -89,9 +90,9 @@ export abstract class Collection extends Base {
      *
      * Returns the models in order
      *
-     * @returns {Model[]}
+     * @returns {any[]}
      */
-    public getData () : Model[] {
+    public getData () : any[] {
         return _.map(this._data, (item: ICollectionData) => {
             return item.model.getData();
         });
@@ -123,6 +124,46 @@ export abstract class Collection extends Base {
         return _.map(this._data, (item: ICollectionData) => {
             return item.model.toDb();
         });
+    }
+
+
+    /**
+     * Validate
+     *
+     * Validates all the models in the collection.
+     *
+     * @returns {boolean}
+     */
+    validate () : boolean {
+
+        let collectionErr = new ValidationException("Collection validation error");
+
+        _.each(this._data, (item: ICollectionData, id: number) => {
+
+            try {
+                item.model.validate();
+            } catch (err) {
+
+                _.each(err.getErrors(), (list: any[], key: string) => {
+
+                    _.each(list, error => {
+
+                        collectionErr.addError(`${id}_${key}`, error.value, error.message, error.additional);
+
+                    });
+
+                });
+
+            }
+
+        });
+
+        if (collectionErr.hasErrors()) {
+            throw collectionErr;
+        }
+
+        return true;
+
     }
 
 

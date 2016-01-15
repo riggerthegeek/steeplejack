@@ -39,6 +39,17 @@ export class ValidationException extends Exception {
     }
 
 
+    /**
+     * Add Error
+     *
+     * Adds a new error to this error
+     *
+     * @param {string} key
+     * @param {*} value
+     * @param {string} message
+     * @param {*} additional
+     * @returns {ValidationException}
+     */
     public addError (key: string, value: any, message: string, additional: any = void 0) : ValidationException {
 
         /* If key not set, throw error */

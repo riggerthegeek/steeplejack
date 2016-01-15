@@ -19,6 +19,7 @@ import {data as datatypes} from "datautils";
 /* Files */
 import {Base} from "./../base";
 import {Definition} from "./definition";
+import {ValidationException} from "../../exception/validation/index";
 import {
     dataCasting,
     getFnName,
@@ -108,8 +109,6 @@ export abstract class Model extends Base {
      * @private
      */
     protected _configureDefinition () : void {
-
-        let schema: any = {};
 
         /* Written like this (not with _.reduce) as the setter needs to access the definition */
         _.each(this._schema(), (schemaItem: IModelDefinition, key: string) => {
@@ -357,8 +356,25 @@ export abstract class Model extends Base {
             /* Is the type a class? */
             if (_.isFunction(type)) {
 
-                /* Yup - create an instance */
-                value = new type(value);
+                /* Yup - is it already instance of the type? */
+
+                if (value instanceof type === false) {
+
+                    /* No - populate the instance if something set */
+                    let createNew = false;
+
+                    if (_.isArray(value)) {
+                        createNew = true;
+                    } else {
+                        value = datatypes.setObject(value, defaultValue);
+                        createNew = value !== defaultValue;
+                    }
+
+                    if (createNew) {
+                        value = new type(value);
+                    }
+
+                }
 
             } else {
 
@@ -434,6 +450,87 @@ export abstract class Model extends Base {
             return result;
 
         }, {});
+    }
+
+
+    /**
+     * Validate
+     *
+     * Validates the model against the validation
+     * rules.  It throws an error if it detects a
+     * violation of the rules. If the validation
+     * succeeds, it returns true.
+     *
+     * @returns {boolean}
+     */
+    public validate () {
+
+        /* Create a validation error - will put any errors here */
+        let validation = new ValidationException("Model validation error");
+
+        /* Run through each of the definitions for the validation rules */
+        _.each(this._definition, (definition: Definition, key: string) => {
+
+            /* Get the current value */
+            let value: any = this.get(key);
+
+            if (_.isObject(value) && _.isFunction(value.validate)) {
+
+                /* Collection or Model - validate that */
+                try {
+                    value.validate();
+                } catch (err) {
+
+                    _.each(err.getErrors(), (list: any[], errKey: string) => {
+
+                        _.each(list, error => {
+
+                            let name = [
+                                key,
+                                errKey
+                            ].join("_");
+
+                            validation.addError(name, error.value, error.message, error.additional);
+
+                        });
+
+                    });
+
+                }
+
+            }
+
+            /* If getData method exists, get the raw data */
+            if (_.isObject(value) && _.isFunction(value.getData)) {
+                //value = value.getData();
+            }
+
+            /* Cycle through the validation rules */
+            _.each(definition.validation, (rule: Function) => {
+
+                try {
+                    /* A validation function can throw error or return false */
+                    if (rule(this, value) === false) {
+                        /* Returned false - throw a simple error */
+                        throw new Error("Custom model validation failed");
+                    }
+                } catch (err) {
+                    /* Add the validation error */
+                    validation.addError(key, value, err.message, err.params);
+                }
+
+            });
+
+        });
+
+        if (validation.hasErrors()) {
+            /* Uh-oh, there's an error */
+            throw validation;
+        }
+
+        /* Return true to show we're happy */
+        return true;
+
     }
 
 

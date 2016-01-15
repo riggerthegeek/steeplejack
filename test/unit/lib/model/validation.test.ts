@@ -325,7 +325,7 @@ describe("Model validation test", function () {
                     fail = true;
 
                     expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal(`Value 'hello' does not match`);
+                    expect(err.message).to.be.equal("VALUE_DOES_NOT_MATCH");
                     expect(err.key).to.be.equal("hello");
                     expect(err.value).to.be.equal("mister");
                     expect(err.params).to.be.eql([

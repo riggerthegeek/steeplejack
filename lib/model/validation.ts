@@ -96,6 +96,9 @@ export class Validation {
 
         } else if (_.isString(rule)) {
 
+            /* Set the required status */
+            required = rule.toUpperCase() === "REQUIRED";
+
             if (rule === "match") {
                 /* Use the special match rule */
                 ruleFn = Validation.match;
@@ -146,7 +149,7 @@ export class Validation {
 
         if (matchValue !== value) {
 
-            let err: any = new Error(`Value '${key}' does not match`);
+            let err: any = new Error("VALUE_DOES_NOT_MATCH");
             err.key = key;
             err.value = value;
             err.params = [
