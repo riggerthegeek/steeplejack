@@ -27,10 +27,12 @@ describe("Model validation test", function () {
             it("should return true when it's not required and is the default value", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        name: {
-                            type: "string"
-                        }
+                    protected _schema () {
+                        return {
+                            name: {
+                                type: "string"
+                            }
+                        };
                     }
                 }
 
@@ -45,10 +47,12 @@ describe("Model validation test", function () {
             it("should return a function with default arguments set", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        name: {
-                            type: "string"
-                        }
+                    protected _schema () {
+                        return {
+                            name: {
+                                type: "string"
+                            }
+                        };
                     }
                 }
 
@@ -76,10 +80,12 @@ describe("Model validation test", function () {
             it("should run with some params", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        name: {
-                            type: "string"
-                        }
+                    protected _schema () {
+                        return {
+                            name: {
+                                type: "string"
+                            }
+                        };
                     }
                 }
 
@@ -251,10 +257,12 @@ describe("Model validation test", function () {
                     expect(fn).to.be.a("function");
 
                     class Child extends Model {
-                        public static schema: any = {
-                            email: {
-                                type: "string"
-                            }
+                        protected _schema () {
+                            return {
+                                email: {
+                                    type: "string"
+                                }
+                            };
                         };
                     }
 
@@ -275,10 +283,12 @@ describe("Model validation test", function () {
             it("should return true when value matches the model value", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string"
-                        }
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string"
+                            }
+                        };
                     }
                 }
 
@@ -293,10 +303,12 @@ describe("Model validation test", function () {
             it("should throw an error when the values don't match", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        hello: {
-                            type: "string"
-                        }
+                    protected _schema () {
+                        return {
+                            hello: {
+                                type: "string"
+                            }
+                        };
                     }
                 }
 

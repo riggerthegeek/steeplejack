@@ -38,7 +38,7 @@ export abstract class Model extends Base {
     protected _primaryKey: string = null;
 
 
-    public static schema: any = {};
+    protected abstract _schema () : any;
 
 
     /**
@@ -68,15 +68,12 @@ export abstract class Model extends Base {
      *
      * @private
      */
-    protected _configureDefinition () {
+    protected _configureDefinition () : void {
 
         let schema: any = {};
 
-        /* Add in this schema */
-        _.extend(schema, this.getSchema());
-
         /* Written like this (not with _.reduce) as the setter needs to access the definition */
-        _.each(schema, (schemaItem: IModelDefinition, key: string) => {
+        _.each(this._schema(), (schemaItem: IModelDefinition, key: string) => {
 
             let definition = Definition.toDefinition(key, schemaItem);
 
@@ -103,6 +100,25 @@ export abstract class Model extends Base {
             (<any>this)[key] = void 0;
 
         }, {});
+
+    }
+
+
+    /**
+     * Merge Schemas
+     *
+     * Helper to merge together two schemas
+     *
+     * @param {object} parent
+     * @param {object} child
+     * @returns {Object}
+     * @private
+     */
+    protected _mergeSchemas (parent: any, child: any) : any {
+
+        let schema: Object = _.extend(parent, child);
+
+        return schema;
 
     }
 
@@ -256,7 +272,7 @@ export abstract class Model extends Base {
      * @returns {*}
      */
     public getSchema () :any {
-        return (<any>this.constructor).schema;
+        return this._schema();
     }
 
 
