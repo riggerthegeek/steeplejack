@@ -1,4 +1,3 @@
-import {Definition} from "../../../../lib/model/definition";
 /**
  * model.test
  */
@@ -17,6 +16,7 @@ import * as _ from "lodash";
 
 /* Files */
 import {expect} from "../../../helpers/configure";
+import {Definition} from "../../../../lib/model/definition";
 import {Model} from "../../../../lib/model/index";
 import {Collection} from "../../../../lib/collection";
 import {Base} from "../../../../lib/base";
