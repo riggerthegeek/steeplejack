@@ -6710,65 +6710,207 @@ declare module _ {
     //_.indexBy
     interface LoDashStatic {
         /**
-        * Creates an object composed of keys generated from the results of running each element
-        * of the collection through the given callback. The corresponding value of each key is
-        * the last element responsible for generating the key. The callback is bound to thisArg
-        * and invoked with three arguments; (value, index|key, collection).
-        *
-        * If a property name is provided for callback the created "_.pluck" style callback will
-        * return the property value of the given element.
-        *
-        * If an object is provided for callback the created "_.where" style callback will return
-        * true for elements that have the properties of the given object, else false.
-        * @param collection The collection to iterate over.
-        * @param callback The function called per iteration.
-        * @param thisArg The this binding of callback.
-        * @return Returns the composed aggregate object.
-        **/
-        indexBy<T>(
-            list: Array<T>,
-            iterator: ListIterator<T, any>,
-            context?: any): Dictionary<T>;
-
-        /**
-        * @see _.indexBy
-        **/
-        indexBy<T>(
-            list: List<T>,
-            iterator: ListIterator<T, any>,
-            context?: any): Dictionary<T>;
-
-        /**
-        * @see _.indexBy
-        * @param pluckValue _.pluck style callback
-        **/
-        indexBy<T>(
-            collection: Array<T>,
-            pluckValue: string): Dictionary<T>;
-
-        /**
-        * @see _.indexBy
-        * @param pluckValue _.pluck style callback
-        **/
+         * Creates an object composed of keys generated from the results of running each element of collection through
+         * iteratee. The corresponding value of each key is the last element responsible for generating the key. The
+         * iteratee function is bound to thisArg and invoked with three arguments:
+         * (value, index|key, collection).
+         *
+         * If a property name is provided for iteratee the created _.property style callback returns the property
+         * value of the given element.
+         *
+         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * elements that have a matching property value, else false.
+         *
+         * If an object is provided for iteratee the created _.matches style callback returns true for elements that
+         * have the properties of the given object, else false.
+         *
+         * @param collection The collection to iterate over.
+         * @param iteratee The function invoked per iteration.
+         * @param thisArg The this binding of iteratee.
+         * @return Returns the composed aggregate object.
+         */
         indexBy<T>(
             collection: List<T>,
-            pluckValue: string): Dictionary<T>;
+            iteratee?: ListIterator<T, any>,
+            thisArg?: any
+        ): Dictionary<T>;
 
         /**
-        * @see _.indexBy
-        * @param whereValue _.where style callback
-        **/
-        indexBy<W, T>(
-            collection: Array<T>,
-            whereValue: W): Dictionary<T>;
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            collection: NumericDictionary<T>,
+            iteratee?: NumericDictionaryIterator<T, any>,
+            thisArg?: any
+        ): Dictionary<T>;
 
         /**
-        * @see _.indexBy
-        * @param whereValue _.where style callback
-        **/
-        indexBy<W, T>(
-            collection: List<T>,
-            whereValue: W): Dictionary<T>;
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            collection: Dictionary<T>,
+            iteratee?: DictionaryIterator<T, any>,
+            thisArg?: any
+        ): Dictionary<T>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            collection: List<T>|NumericDictionary<T>|Dictionary<T>,
+            iteratee?: string,
+            thisArg?: any
+        ): Dictionary<T>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<W extends Object, T>(
+            collection: List<T>|NumericDictionary<T>|Dictionary<T>,
+            iteratee?: W
+        ): Dictionary<T>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            collection: List<T>|NumericDictionary<T>|Dictionary<T>,
+            iteratee?: Object
+        ): Dictionary<T>;
+    }
+
+    interface LoDashImplicitWrapper<T> {
+        /**
+         * @see _.indexBy
+         */
+        indexBy(
+            iteratee?: ListIterator<T, any>,
+            thisArg?: any
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+    }
+
+    interface LoDashImplicitArrayWrapper<T> {
+        /**
+         * @see _.indexBy
+         */
+        indexBy(
+            iteratee?: ListIterator<T, any>,
+            thisArg?: any
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy(
+            iteratee?: string,
+            thisArg?: any
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<W extends Object>(
+            iteratee?: W
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+    }
+
+    interface LoDashImplicitObjectWrapper<T> {
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            iteratee?: ListIterator<T, any>|NumericDictionaryIterator<T, any>|DictionaryIterator<T, any>,
+            thisArg?: any
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            iteratee?: string,
+            thisArg?: any
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<W extends Object, T>(
+            iteratee?: W
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            iteratee?: Object
+        ): LoDashImplicitObjectWrapper<Dictionary<T>>;
+    }
+
+    interface LoDashExplicitWrapper<T> {
+        /**
+         * @see _.indexBy
+         */
+        indexBy(
+            iteratee?: ListIterator<T, any>,
+            thisArg?: any
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
+    }
+
+    interface LoDashExplicitArrayWrapper<T> {
+        /**
+         * @see _.indexBy
+         */
+        indexBy(
+            iteratee?: ListIterator<T, any>,
+            thisArg?: any
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy(
+            iteratee?: string,
+            thisArg?: any
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<W extends Object>(
+            iteratee?: W
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
+    }
+
+    interface LoDashExplicitObjectWrapper<T> {
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            iteratee?: ListIterator<T, any>|NumericDictionaryIterator<T, any>|DictionaryIterator<T, any>,
+            thisArg?: any
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            iteratee?: string,
+            thisArg?: any
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<W extends Object, T>(
+            iteratee?: W
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
+
+        /**
+         * @see _.indexBy
+         */
+        indexBy<T>(
+            iteratee?: Object
+        ): LoDashExplicitObjectWrapper<Dictionary<T>>;
     }
 
     //_.invoke
@@ -8450,66 +8592,211 @@ declare module _ {
     //_.sortByOrder
     interface LoDashStatic {
         /**
-        * This method is like "_.sortByAll" except that it allows specifying the sort orders of the
-        * iteratees to sort by. If orders is unspecified, all values are sorted in ascending order.
-        * Otherwise, a value is sorted in ascending order if its corresponding order is "asc", and
-        * descending if "desc".
-        *
-        * If a property name is provided for an iteratee the created "_.property" style callback
-        * returns the property value of the given element.
-        *
-        * If an object is provided for an iteratee the created "_.matches" style callback returns
-        * true for elements that have the properties of the given object, else false.
-        *
-        * @param collection The collection to iterate over.
-        * @param callback The function called per iteration.
-        * @param thisArg The this binding of callback.
-        * @return A new array of sorted elements.
-        **/
-        sortByOrder<T>(
-            collection: Array<T>,
-            iteratees: (ListIterator<T, any>|string|Object)[],
-            orders?: boolean[]): T[];
+         * This method is like _.sortByAll except that it allows specifying the sort orders of the iteratees to sort
+         * by. If orders is unspecified, all values are sorted in ascending order. Otherwise, a value is sorted in
+         * ascending order if its corresponding order is "asc", and descending if "desc".
+         *
+         * If a property name is provided for an iteratee the created _.property style callback returns the property
+         * value of the given element.
+         *
+         * If an object is provided for an iteratee the created _.matches style callback returns true for elements
+         * that have the properties of the given object, else false.
+         *
+         * @param collection The collection to iterate over.
+         * @param iteratees The iteratees to sort by.
+         * @param orders The sort orders of iteratees.
+         * @return Returns the new sorted array.
+         */
+        sortByOrder<W extends Object, T>(
+            collection: List<T>,
+            iteratees: ListIterator<T, any>|string|W|(ListIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): T[];
 
         /**
-        * @see _.sortByOrder
-        **/
+         * @see _.sortByOrder
+         */
         sortByOrder<T>(
             collection: List<T>,
-            iteratees: (ListIterator<T, any>|string|Object)[],
-            orders?: boolean[]): T[];
+            iteratees: ListIterator<T, any>|string|Object|(ListIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): T[];
 
         /**
-        * @see _.sortByOrder
-        **/
-        sortByOrder<T>(
-            collection: Array<T>,
-            iteratees: (ListIterator<T, any>|string|Object)[],
-            orders?: string[]): T[];
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            collection: NumericDictionary<T>,
+            iteratees: NumericDictionaryIterator<T, any>|string|W|(NumericDictionaryIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): T[];
 
         /**
-        * @see _.sortByOrder
-        **/
+         * @see _.sortByOrder
+         */
         sortByOrder<T>(
-            collection: List<T>,
-            iteratees: (ListIterator<T, any>|string|Object)[],
-            orders?: string[]): T[];
+            collection: NumericDictionary<T>,
+            iteratees: NumericDictionaryIterator<T, any>|string|Object|(NumericDictionaryIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): T[];
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            collection: Dictionary<T>,
+            iteratees: DictionaryIterator<T, any>|string|W|(DictionaryIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): T[];
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<T>(
+            collection: Dictionary<T>,
+            iteratees: DictionaryIterator<T, any>|string|Object|(DictionaryIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): T[];
+    }
+
+    interface LoDashImplicitWrapper<T> {
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder(
+            iteratees: ListIterator<T, any>|string|(ListIterator<T, any>|string)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
     }
 
     interface LoDashImplicitArrayWrapper<T> {
         /**
-        * @see _.sortByOrder
-        **/
-        sortByOrder(
-            iteratees: (ListIterator<T, any>|string|Object)[],
-            orders?: boolean[]): LoDashImplicitArrayWrapper<T>;
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object>(
+            iteratees: ListIterator<T, any>|string|W|(ListIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
+    }
+
+    interface LoDashImplicitObjectWrapper<T> {
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            iteratees: ListIterator<T, any>|string|W|(ListIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
 
         /**
-        * @see _.sortByOrder
-        **/
+         * @see _.sortByOrder
+         */
+        sortByOrder<T>(
+            iteratees: ListIterator<T, any>|string|Object|(ListIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            iteratees: NumericDictionaryIterator<T, any>|string|W|(NumericDictionaryIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<T>(
+            iteratees: NumericDictionaryIterator<T, any>|string|Object|(NumericDictionaryIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            iteratees: DictionaryIterator<T, any>|string|W|(DictionaryIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<T>(
+            iteratees: DictionaryIterator<T, any>|string|Object|(DictionaryIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashImplicitArrayWrapper<T>;
+    }
+
+    interface LoDashExplicitWrapper<T> {
+        /**
+         * @see _.sortByOrder
+         */
         sortByOrder(
-            iteratees: (ListIterator<T, any>|string|Object)[],
-            orders?: string[]): LoDashImplicitArrayWrapper<T>;
+            iteratees: ListIterator<T, any>|string|(ListIterator<T, any>|string)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
+    }
+
+    interface LoDashExplicitArrayWrapper<T> {
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object>(
+            iteratees: ListIterator<T, any>|string|W|(ListIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
+    }
+
+    interface LoDashExplicitObjectWrapper<T> {
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            iteratees: ListIterator<T, any>|string|W|(ListIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<T>(
+            iteratees: ListIterator<T, any>|string|Object|(ListIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            iteratees: NumericDictionaryIterator<T, any>|string|W|(NumericDictionaryIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<T>(
+            iteratees: NumericDictionaryIterator<T, any>|string|Object|(NumericDictionaryIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<W extends Object, T>(
+            iteratees: DictionaryIterator<T, any>|string|W|(DictionaryIterator<T, any>|string|W)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
+
+        /**
+         * @see _.sortByOrder
+         */
+        sortByOrder<T>(
+            iteratees: DictionaryIterator<T, any>|string|Object|(DictionaryIterator<T, any>|string|Object)[],
+            orders?: boolean|string|(boolean|string)[]
+        ): LoDashExplicitArrayWrapper<T>;
     }
 
     //_.where
@@ -10217,6 +10504,7 @@ declare module _ {
         /**
          * Checks if value is an Error, EvalError, RangeError, ReferenceError, SyntaxError, TypeError, or URIError
          * object.
+         *
          * @param value The value to check.
          * @return Returns true if value is an error object, else false.
          */
@@ -10228,6 +10516,13 @@ declare module _ {
          * @see _.isError
          */
         isError(): boolean;
+    }
+
+    interface LoDashExplicitWrapperBase<T, TWrapper> {
+        /**
+         * @see _.isError
+         */
+        isError(): LoDashExplicitWrapper<boolean>;
     }
 
     //_.isFinite
@@ -10460,6 +10755,13 @@ declare module _ {
         isPlainObject(): boolean;
     }
 
+    interface LoDashExplicitWrapperBase<T, TWrapper> {
+        /**
+         * see _.isPlainObject
+         */
+        isPlainObject(): LoDashExplicitWrapper<boolean>;
+    }
+
     //_.isRegExp
     interface LoDashStatic {
         /**
@@ -10626,12 +10928,7 @@ declare module _ {
          * @param value The value to convert.
          * @return Returns the converted array.
          */
-        toArray(value: string): string[];
-
-        /**
-         * @see _.toArray
-         */
-        toArray<T>(value: List<T>|Dictionary<T>): T[];
+        toArray<T>(value: List<T>|Dictionary<T>|NumericDictionary<T>): T[];
 
         /**
          * @see _.toArray
@@ -10641,12 +10938,7 @@ declare module _ {
         /**
          * @see _.toArray
          */
-        toArray<TValue>(value: TValue): any[];
-
-        /**
-         * @see _.toArray
-         */
-        toArray(value?: any): any[];
+        toArray<TResult>(value?: any): TResult[];
     }
 
     interface LoDashImplicitWrapper<T> {
@@ -10668,6 +10960,27 @@ declare module _ {
          * @see _.toArray
          */
         toArray<TResult>(): LoDashImplicitArrayWrapper<TResult>;
+    }
+
+    interface LoDashExplicitWrapper<T> {
+        /**
+         * @see _.toArray
+         */
+        toArray<TResult>(): LoDashExplicitArrayWrapper<TResult>;
+    }
+
+    interface LoDashExplicitArrayWrapper<T> {
+        /**
+         * @see _.toArray
+         */
+        toArray(): LoDashExplicitArrayWrapper<T>;
+    }
+
+    interface LoDashExplicitObjectWrapper<T> {
+        /**
+         * @see _.toArray
+         */
+        toArray<TResult>(): LoDashExplicitArrayWrapper<TResult>;
     }
 
     //_.toPlainObject
@@ -11461,18 +11774,29 @@ declare module _ {
         /**
          * Creates an object that inherits from the given prototype object. If a properties object is provided its own
          * enumerable properties are assigned to the created object.
+         *
          * @param prototype The object to inherit from.
          * @param properties The properties to assign to the object.
          * @return Returns the new object.
          */
-        create<TResult extends {}>(prototype: Object, properties?: Object): TResult;
+        create<T extends Object, U extends Object>(
+            prototype: T,
+            properties?: U
+        ): T & U;
     }
 
     interface LoDashImplicitObjectWrapper<T> {
         /**
          * @see _.create
          */
-        create<TResult extends {}>(properties?: Object): LoDashImplicitObjectWrapper<TResult>;
+        create<U extends Object>(properties?: U): LoDashImplicitObjectWrapper<T & U>;
+    }
+
+    interface LoDashExplicitObjectWrapper<T> {
+        /**
+         * @see _.create
+         */
+        create<U extends Object>(properties?: U): LoDashExplicitObjectWrapper<T & U>;
     }
 
     //_.defaults
@@ -12653,40 +12977,40 @@ declare module _ {
          * @param thisArg The this binding of customizer.
          * @return Returns object.
          */
-        merge<TObject, TSource, TResult>(
+        merge<TObject, TSource>(
             object: TObject,
             source: TSource,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): TResult;
+        ): TObject & TSource;
 
         /**
          * @see _.merge
          */
-        merge<TObject, TSource1, TSource2, TResult>(
+        merge<TObject, TSource1, TSource2>(
             object: TObject,
             source1: TSource1,
             source2: TSource2,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): TResult;
+        ): TObject & TSource1 & TSource2;
 
         /**
          * @see _.merge
          */
-        merge<TObject, TSource1, TSource2, TSource3, TResult>(
+        merge<TObject, TSource1, TSource2, TSource3>(
             object: TObject,
             source1: TSource1,
             source2: TSource2,
             source3: TSource3,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): TResult;
+        ): TObject & TSource1 & TSource2 & TSource3;
 
         /**
          * @see _.merge
          */
-        merge<TObject, TSource1, TSource2, TSource3, TSource4, TResult>(
+        merge<TObject, TSource1, TSource2, TSource3, TSource4>(
             object: TObject,
             source1: TSource1,
             source2: TSource2,
@@ -12694,13 +13018,13 @@ declare module _ {
             source4: TSource4,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): TResult;
+        ): TObject & TSource1 & TSource2 & TSource3 & TSource4; 
 
         /**
          * @see _.merge
          */
-        merge<TObject, TResult>(
-            object: TObject,
+        merge<TResult>(
+            object: any,
             ...otherArgs: any[]
         ): TResult;
     }
@@ -12709,44 +13033,44 @@ declare module _ {
         /**
          * @see _.merge
          */
-        merge<TSource, TResult>(
+        merge<TSource>(
             source: TSource,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): LoDashImplicitObjectWrapper<TResult>;
+        ): LoDashImplicitObjectWrapper<T & TSource>;
 
         /**
          * @see _.merge
          */
-        merge<TSource1, TSource2, TResult>(
+        merge<TSource1, TSource2>(
             source1: TSource1,
             source2: TSource2,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): LoDashImplicitObjectWrapper<TResult>;
+        ): LoDashImplicitObjectWrapper<T & TSource1 & TSource2>;
 
         /**
          * @see _.merge
          */
-        merge<TSource1, TSource2, TSource3, TResult>(
+        merge<TSource1, TSource2, TSource3>(
             source1: TSource1,
             source2: TSource2,
             source3: TSource3,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): LoDashImplicitObjectWrapper<TResult>;
+        ): LoDashImplicitObjectWrapper<T & TSource1 & TSource2 & TSource3>;
 
         /**
          * @see _.merge
          */
-        merge<TSource1, TSource2, TSource3, TSource4, TResult>(
+        merge<TSource1, TSource2, TSource3, TSource4>(
             source1: TSource1,
             source2: TSource2,
             source3: TSource3,
             source4: TSource4,
             customizer?: MergeCustomizer,
             thisArg?: any
-        ): LoDashImplicitObjectWrapper<TResult>;
+        ): LoDashImplicitObjectWrapper<T & TSource1 & TSource2 & TSource3 & TSource4>;
 
         /**
          * @see _.merge

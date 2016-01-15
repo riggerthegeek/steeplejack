@@ -6,25 +6,25 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "mocha/mocha.d.ts": {
-      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
+      "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     },
     "chai/chai.d.ts": {
-      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
+      "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     },
     "proxyquire/proxyquire.d.ts": {
-      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
+      "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     },
     "sinon-chai/sinon-chai.d.ts": {
-      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
+      "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     },
     "sinon/sinon.d.ts": {
-      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
+      "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     },
     "node/node.d.ts": {
-      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
+      "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     },
     "lodash/lodash.d.ts": {
-      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+      "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     }
   }
 }
