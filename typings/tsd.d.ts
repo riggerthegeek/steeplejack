@@ -5,4 +5,3 @@
 /// <reference path="proxyquire/proxyquire.d.ts" />
 /// <reference path="sinon-chai/sinon-chai.d.ts" />
 /// <reference path="sinon/sinon.d.ts" />
-/// <reference path="datautils/datautils.d.ts" />
