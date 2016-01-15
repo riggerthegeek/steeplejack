@@ -29,15 +29,54 @@ import {
 export abstract class Model extends Base {
 
 
+    /**
+     * Data
+     *
+     * This is where the raw model data lives. Ignore
+     * this and use the get/set methods to access
+     * it.
+     *
+     * @type {{}}
+     * @private
+     */
     protected _data: any = {};
 
 
+    /**
+     * Definition
+     *
+     * This is your definition objects that control
+     * how the model behaves.
+     *
+     * @type {{}}
+     * @private
+     */
     protected _definition: any = {};
 
 
+    /**
+     * Primary Key
+     *
+     * Defines the primary key on the model. This
+     * is optional.
+     *
+     * @type {null}
+     * @private
+     */
     protected _primaryKey: string = null;
 
 
+    /**
+     * Schema
+     *
+     * This must return a schema object which
+     * defines how our model looks and behaves. If
+     * you wish to extend a model to create another
+     * model, then merge your parent schema with
+     * this schema using the _mergeSchemas method.
+     *
+     * @private
+     */
     protected abstract _schema () : any;
 
 
@@ -271,8 +310,8 @@ export abstract class Model extends Base {
      *
      * @returns {*}
      */
-    public getSchema () :any {
-        return this._schema();
+    public getSchema () : any {
+        return this._schema() || {};
     }
 
 

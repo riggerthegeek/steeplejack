@@ -31,7 +31,11 @@ describe("Model test", function () {
             it("should define a model with no schema", function () {
 
                 /* Extend the model */
-                class Child extends Model { }
+                class Child extends Model {
+                    protected _schema () {
+
+                    }
+                }
 
                 let obj = new Child();
 
@@ -51,31 +55,33 @@ describe("Model test", function () {
 
                     class Child extends Model {
 
-                        public static schema: any = {
-                            array: {
-                                type: "array"
-                            },
-                            boolean: {
-                                type: "boolean",
-                                value: false
-                            },
-                            datetime: {
-                                type: "date"
-                            },
-                            float: {
-                                type: "float"
-                            },
-                            integer: {
-                                type: "integer",
-                                column: "int"
-                            },
-                            object: {
-                                type: "object"
-                            },
-                            string: {
-                                type: "string"
-                            }
-                        };
+                        protected _schema () {
+                            return {
+                                array: {
+                                    type: "array"
+                                },
+                                boolean: {
+                                    type: "boolean",
+                                    value: false
+                                },
+                                datetime: {
+                                    type: "date"
+                                },
+                                float: {
+                                    type: "float"
+                                },
+                                integer: {
+                                    type: "integer",
+                                    column: "int"
+                                },
+                                object: {
+                                    type: "object"
+                                },
+                                string: {
+                                    type: "string"
+                                }
+                            };
+                        }
 
                     }
 
@@ -165,31 +171,33 @@ describe("Model test", function () {
 
                     class Child extends Model {
 
-                        public static schema: any = {
-                            array: {
-                                type: "array"
-                            },
-                            boolean: {
-                                type: "boolean",
-                                value: false
-                            },
-                            datetime: {
-                                type: "date"
-                            },
-                            float: {
-                                type: "float"
-                            },
-                            integer: {
-                                type: "integer",
-                                column: "int"
-                            },
-                            object: {
-                                type: "object"
-                            },
-                            string: {
-                                type: "string"
-                            }
-                        };
+                        protected _schema () {
+                            return {
+                                array: {
+                                    type: "array"
+                                },
+                                boolean: {
+                                    type: "boolean",
+                                    value: false
+                                },
+                                datetime: {
+                                    type: "date"
+                                },
+                                float: {
+                                    type: "float"
+                                },
+                                integer: {
+                                    type: "integer",
+                                    column: "int"
+                                },
+                                object: {
+                                    type: "object"
+                                },
+                                string: {
+                                    type: "string"
+                                }
+                            };
+                        }
 
                     }
 
@@ -222,10 +230,13 @@ describe("Model test", function () {
 
                     class NewModel extends Model {
 
-                        public static schema: any = {
-                            key: {
-                                value: null
-                            }
+                        protected _schema () {
+                            let obj: any = {
+                                key: {
+                                    value: null
+                                }
+                            };
+                            return obj;
                         }
 
                     }
@@ -249,26 +260,31 @@ describe("Model test", function () {
 
                     class MyModel extends Model {
 
-                        public static schema: any = {
-                            string: {
-                                type: "string"
-                            }
-                        };
+                        protected _schema () {
+                            return {
+                                string: {
+                                    type: "string"
+                                }
+                            };
+                        }
 
                     }
 
                     class Child extends Model {
 
-                        public static schema: any = {
-                            id: {
-                                type: "integer",
-                                value: null
-                            },
-                            myModel: {
-                                type: MyModel,
-                                value: null
-                            }
-                        };
+                        protected _schema () {
+                            let obj: any = {
+                                id: {
+                                    type: "integer",
+                                    value: null
+                                },
+                                myModel: {
+                                    type: MyModel,
+                                    value: null
+                                }
+                            };
+                            return obj;
+                        }
 
                     }
 
@@ -302,31 +318,33 @@ describe("Model test", function () {
 
                     class Child extends Model {
 
-                        public static schema: any = {
-                            array: {
-                                type: "array"
-                            },
-                            boolean: {
-                                type: "boolean",
-                                value: false
-                            },
-                            datetime: {
-                                type: "date"
-                            },
-                            float: {
-                                type: "float"
-                            },
-                            integer: {
-                                type: "integer",
-                                column: "int"
-                            },
-                            object: {
-                                type: "object"
-                            },
-                            string: {
-                                type: "string"
-                            }
-                        };
+                        protected _schema () {
+                            return {
+                                array: {
+                                    type: "array"
+                                },
+                                boolean: {
+                                    type: "boolean",
+                                    value: false
+                                },
+                                datetime: {
+                                    type: "date"
+                                },
+                                float: {
+                                    type: "float"
+                                },
+                                integer: {
+                                    type: "integer",
+                                    column: "int"
+                                },
+                                object: {
+                                    type: "object"
+                                },
+                                string: {
+                                    type: "string"
+                                }
+                            };
+                        }
 
                     }
 
@@ -421,12 +439,15 @@ describe("Model test", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        simple: {
-                            type: "string",
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            simple: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var obj = new Child({
@@ -461,12 +482,15 @@ describe("Model test", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        simple: {
-                            type: "string",
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            simple: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 let obj = new Child;
@@ -481,12 +505,15 @@ describe("Model test", function () {
                 /* Define the model */
                 class Child extends Model {
 
-                    public static schema: any = {
-                        complex: {
-                            type: "string",
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            complex: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
 
                     protected _setComplex (value: any, defaults: any) {
 
@@ -531,12 +558,15 @@ describe("Model test", function () {
             it("should use the custom getter", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        complex: {
-                            type: "string",
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            complex: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
 
                     protected _getComplex (currentValue: any) {
                         return `test-${currentValue}`;
@@ -561,15 +591,18 @@ describe("Model test", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        str: {
-                            type: "enum",
-                            enum: [
-                                "value1", "value2"
-                            ],
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            str: {
+                                type: "enum",
+                                enum: [
+                                    "value1", "value2"
+                                ],
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var obj1 = new Child({
@@ -613,16 +646,46 @@ describe("Model test", function () {
 
             });
 
+            it("should clone a defaulted array value", function () {
+
+                let arr: any = [
+                    "hello"
+                ];
+
+                class Child extends Model {
+                    protected _schema () {
+                        return {
+                            array: {
+                                type: "array",
+                                value: arr
+                            }
+                        };
+                    }
+                }
+
+                var obj = new Child();
+
+                expect(obj.get("array")).to.be.an("array")
+                    .to.be.eql([
+                        "hello"
+                    ])
+                    .to.not.be.equal(arr);
+
+            });
+
             it("should nicely handle a non-existent value, returning undefined", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        simple: {
-                            type: "string",
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            simple: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 let obj = new Child;
@@ -638,11 +701,13 @@ describe("Model test", function () {
             it("should allow a mixed setter to be set, unless undefined", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        element: {
-                            type: "mixed"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            element: {
+                                type: "mixed"
+                            }
+                        };
+                    }
                 }
 
                 let obj = new Child;
@@ -682,7 +747,11 @@ describe("Model test", function () {
 
             it("should return empty array when model has no definition", function () {
 
-                class Child extends Model {}
+                class Child extends Model {
+                    protected _schema () {
+                        return {};
+                    }
+                }
 
                 var obj = new Child();
 
@@ -694,11 +763,13 @@ describe("Model test", function () {
             it("should return the column keys", function () {
 
                 class MyModel extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string"
+                            }
+                        };
+                    }
                 }
 
                 class MyCollection extends Collection {
@@ -706,17 +777,19 @@ describe("Model test", function () {
                 }
 
                 class Element extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string"
-                        },
-                        collection: {
-                            type: MyCollection
-                        },
-                        model: {
-                            type: MyModel
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string"
+                            },
+                            collection: {
+                                type: MyCollection
+                            },
+                            model: {
+                                type: MyModel
+                            }
+                        };
+                    }
                 }
 
                 var obj = new Element();
@@ -742,19 +815,22 @@ describe("Model test", function () {
             it("should export to an object literal", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        str: {
-                            type: "string",
-                            value: null
-                        },
-                        bool: {
-                            type: "boolean",
-                            value: false
-                        },
-                        obj: {
-                            type: "object",
-                            value: null
-                        }
+                    protected _schema () {
+                        let obj: any ={
+                            str: {
+                                type: "string",
+                                value: null
+                            },
+                            bool: {
+                                type: "boolean",
+                                value: false
+                            },
+                            obj: {
+                                type: "object",
+                                value: null
+                            }
+                        };
+                        return obj;
                     }
                 }
 
@@ -781,32 +857,38 @@ describe("Model test", function () {
             it("should export a Model instance", function () {
 
                 class SubModel extends Model {
-                    public static schema: any = {
-                        str: {
-                            type: "string",
-                            value: null
-                        },
-                        bool: {
-                            type: "boolean",
-                            value: false
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            str: {
+                                type: "string",
+                                value: null
+                            },
+                            bool: {
+                                type: "boolean",
+                                value: false
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 class Child extends Model {
-                    public static schema: any = {
-                        str: {
-                            type: "string",
-                            value: null
-                        },
-                        bool: {
-                            type: "boolean",
-                            value: false
-                        },
-                        obj: {
-                            type: SubModel,
-                            value: null
-                        }
+                    protected _schema () {
+                        let obj: any = {
+                            str: {
+                                type: "string",
+                                value: null
+                            },
+                            bool: {
+                                type: "boolean",
+                                value: false
+                            },
+                            obj: {
+                                type: SubModel,
+                                value: null
+                            }
+                        };
+                        return obj;
                     }
                 }
 
@@ -835,12 +917,15 @@ describe("Model test", function () {
             it("should output a value that's an instance of Collection", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        string: {
-                            type: "string",
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            string: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 class Children extends Collection {
@@ -848,16 +933,19 @@ describe("Model test", function () {
                 }
 
                 class Test extends Model {
-                    public static schema: any = {
-                        str: {
-                            type: "string",
-                            value: null
-                        },
-                        collection: {
-                            type: Children,
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            str: {
+                                type: "string",
+                                value: null
+                            },
+                            collection: {
+                                type: Children,
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var obj = new Test({
@@ -882,12 +970,15 @@ describe("Model test", function () {
             it("should allow an array to be added to a Collection", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        string: {
-                            type: "string",
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            string: {
+                                type: "string",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 class Children extends Collection {
@@ -895,16 +986,19 @@ describe("Model test", function () {
                 }
 
                 class Item extends Model {
-                    public static schema: any = {
-                        str: {
-                            type: "string",
-                            value: null
-                        },
-                        collection: {
-                            type: Children,
-                            value: null
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            str: {
+                                type: "string",
+                                value: null
+                            },
+                            collection: {
+                                type: Children,
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var obj = new Item({
@@ -933,7 +1027,9 @@ describe("Model test", function () {
             it("should return null if key not a string", function () {
 
                 class Child extends Model {
+                    protected _schema () {
 
+                    }
                 }
 
                 let obj = new Child();
@@ -945,11 +1041,13 @@ describe("Model test", function () {
             it("should return null if key not a set definition", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        string: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            string: {
+                                type: "string"
+                            }
+                        };
+                    }
                 }
 
                 var obj = new Child();
@@ -966,24 +1064,28 @@ describe("Model test", function () {
             it("should convert a submodel to it's data representation", function () {
 
                 class SubModel extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string",
-                            column: "_id"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string",
+                                column: "_id"
+                            }
+                        };
+                    }
                 }
 
                 class OtherModel extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string",
-                            column: "_id"
-                        },
-                        model: {
-                            type: SubModel
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string",
+                                column: "_id"
+                            },
+                            model: {
+                                type: SubModel
+                            }
+                        };
+                    }
                 }
 
                 let obj = new OtherModel({
@@ -1005,12 +1107,14 @@ describe("Model test", function () {
             it("should convert a collection to it's data representation", function () {
 
                 class SubModel extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string",
-                            column: "_id"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string",
+                                column: "_id"
+                            }
+                        };
+                    }
                 }
 
                 class SubCollection extends Collection {
@@ -1018,14 +1122,16 @@ describe("Model test", function () {
                 }
 
                 class OtherModel extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string",
-                            column: "_id"
-                        },
-                        model: {
-                            type: SubCollection
-                        }
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string",
+                                column: "_id"
+                            },
+                            model: {
+                                type: SubCollection
+                            }
+                        };
                     }
                 }
 
@@ -1048,15 +1154,18 @@ describe("Model test", function () {
             it("should ignore a column set to null", function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        id: {
-                            type: "string",
-                            column: "_id"
-                        },
-                        value: {
-                            type: "string",
-                            column: null
-                        }
+                    protected _schema () {
+                        let obj: any = {
+                            id: {
+                                type: "string",
+                                column: "_id"
+                            },
+                            value: {
+                                type: "string",
+                                column: null
+                            }
+                        };
+                        return obj;
                     }
                 }
 
@@ -1083,27 +1192,29 @@ describe("Model test", function () {
             beforeEach(function () {
 
                 class Child extends Model {
-                    public static schema: any = {
-                        boolean: {
-                            type: "boolean",
-                            value: false
-                        },
-                        datetime: {
-                            type: "date"
-                        },
-                        float: {
-                            type: "float"
-                        },
-                        integer: {
-                            type: "integer",
-                            column: "int"
-                        },
-                        string: {
-                            type: "string"
-                        },
-                        obj: {
-                            type: "object"
-                        }
+                    protected _schema () {
+                        return {
+                            boolean: {
+                                type: "boolean",
+                                value: false
+                            },
+                            datetime: {
+                                type: "date"
+                            },
+                            float: {
+                                type: "float"
+                            },
+                            integer: {
+                                type: "integer",
+                                column: "int"
+                            },
+                            string: {
+                                type: "string"
+                            },
+                            obj: {
+                                type: "object"
+                            }
+                        };
                     }
                 }
 
@@ -1244,16 +1355,19 @@ describe("Model test", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        dataId: {
-                            type: "integer",
-                            value: null,
-                            column: "id"
-                        },
-                        name: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            dataId: {
+                                type: "integer",
+                                value: null,
+                                column: "id"
+                            },
+                            name: {
+                                type: "string"
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var obj = new Child({
@@ -1278,17 +1392,20 @@ describe("Model test", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        dataId: {
-                            type: "integer",
-                            value: null,
-                            column: "id",
-                            primaryKey: true
-                        },
-                        name: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            dataId: {
+                                type: "integer",
+                                value: null,
+                                column: "id",
+                                primaryKey: true
+                            },
+                            name: {
+                                type: "string"
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var obj = new Child();
@@ -1307,17 +1424,20 @@ describe("Model test", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        dataId: {
-                            type: "integer",
-                            value: null,
-                            column: "id",
-                            primaryKey: true
-                        },
-                        name: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            dataId: {
+                                type: "integer",
+                                value: null,
+                                column: "id",
+                                primaryKey: true
+                            },
+                            name: {
+                                type: "string"
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var obj = new Child({
@@ -1342,19 +1462,22 @@ describe("Model test", function () {
 
                 /* Define the model */
                 class Child extends Model {
-                    public static schema: any = {
-                        dataId: {
-                            type: "integer",
-                            value: null,
-                            column: "id",
-                            primaryKey: true
-                        },
-                        name: {
-                            type: "string",
-                            value: null,
-                            primaryKey: true
-                        }
-                    };
+                    protected _schema () {
+                        let obj: any = {
+                            dataId: {
+                                type: "integer",
+                                value: null,
+                                column: "id",
+                                primaryKey: true
+                            },
+                            name: {
+                                type: "string",
+                                value: null,
+                                primaryKey: true
+                            }
+                        };
+                        return obj;
+                    }
                 }
 
                 var fail = false;
@@ -1376,6 +1499,197 @@ describe("Model test", function () {
 
         });
 
+        describe("Extending the model", function () {
+
+            it("should extend model and keep parent methods", function () {
+
+                /* Define the model */
+                class Parent extends Model {
+                    protected _schema () {
+                        return {
+                            name: {
+                                type: "string"
+                            }
+                        };
+                    }
+                }
+
+                class Child extends Parent {
+                    protected _schema () {
+                        return this._mergeSchemas(super._schema(), {
+                            jobTitle: {
+                                type: "string"
+                            }
+                        });
+                    }
+                }
+
+                var obj1 = new Parent({
+                    name: "Name"
+                });
+
+                expect(obj1).to.be.instanceof(Model)
+                    .instanceof(Parent);
+                expect(obj1.getData()).to.be.eql({
+                    name: "Name"
+                });
+                expect(obj1.get("name")).to.be.equal("Name");
+
+                var obj2 = new Child({
+                    name: "Foo",
+                    jobTitle: "King"
+                });
+
+                expect(obj2).to.be.instanceof(Model)
+                    .instanceof(Parent)
+                    .instanceof(Child);
+                expect(obj2.getData()).to.be.eql({
+                    name: "Foo",
+                    jobTitle: "King"
+                });
+                expect(obj2.get("name")).to.be.equal("Foo");
+                expect(obj2.get("jobTitle")).to.be.equal("King");
+
+            });
+
+            //it("should extend model and keep parent methods", function () {
+            //
+            //    /* Define the model */
+            //    var Model = model.extend({
+            //        definition: {
+            //            age: {
+            //                type: "float"
+            //            }
+            //        },
+            //        getAge: function one () {
+            //            return this.get("age", false);
+            //        }
+            //    });
+            //
+            //    var childModel = Model.extend({
+            //        definition: {
+            //            age: {
+            //                type: "integer"
+            //            }
+            //        },
+            //        getAge: function two () {
+            //            return String(this.get("age", false));
+            //        }
+            //    });
+            //
+            //    var obj1 = new Model({
+            //        age: "42"
+            //    });
+            //
+            //    var obj2 = new childModel({
+            //        age: "18"
+            //    });
+            //
+            //    expect(obj1).to.be.instanceof(Model);
+            //    expect(obj1.toObject()).to.be.eql({
+            //        age: 42
+            //    });
+            //    expect(obj1.getAge()).to.be.equal(42);
+            //
+            //    expect(obj2).to.be.instanceof(Model);
+            //    expect(obj2).to.be.instanceof(childModel);
+            //    expect(obj2.toObject()).to.be.eql({
+            //        age: 18
+            //    });
+            //    expect(obj2.getAge()).to.be.equal("18");
+            //
+            //    done();
+            //
+            //});
+            //
+            //it("should extend a model with no definition", function () {
+            //
+            //    /* Define the model */
+            //    var Model = model.extend({
+            //        getAge: function () {
+            //            return this.get("age", false);
+            //        },
+            //        getName: function () {
+            //            return this.get("name", false);
+            //        }
+            //    });
+            //
+            //    var childModel = Model.extend({
+            //        definition: {
+            //            age: {
+            //                type: "integer"
+            //            },
+            //            name: {
+            //                type: "string"
+            //            }
+            //        },
+            //        getName: function () {
+            //            return "Name: " + this.get("name", false);
+            //        }
+            //    });
+            //
+            //    var obj1 = new Model();
+            //
+            //    var obj2 = new childModel({
+            //        age: 26,
+            //        name: "Test"
+            //    });
+            //
+            //    expect(obj1).to.be instanceof(Model);
+            //    expect(obj1.toObject()).to.be.eql({});
+            //    expect(obj1.getAge()).to.be.undefined;
+            //
+            //    expect(obj2).to.be.instanceof(Model);
+            //    expect(obj2).to.be.instanceof(childModel);
+            //
+            //    expect(obj2.toObject()).to.be.eql({
+            //        age: 26,
+            //        name: "Test"
+            //    });
+            //    expect(obj2.getAge()).to.be.equal(26);
+            //    expect(obj2.getName()).to.be.equal("Name: Test");
+            //
+            //    done();
+            //
+            //});
+            //
+            //it("should ignore any columns that are set as null", function () {
+            //
+            //    /* Define the model */
+            //    var Model = model.extend({
+            //        definition: {
+            //            name: {
+            //                type: "string",
+            //                column: "some_name"
+            //            },
+            //            nonData: {
+            //                type: "string",
+            //                column: null
+            //            }
+            //        }
+            //    });
+            //
+            //    var obj = new Model({
+            //        name: "hello",
+            //        nonData: "world"
+            //    });
+            //
+            //    expect(obj.get("name")).to.be.equal("hello");
+            //    expect(obj.get("nonData")).to.be.equal("world");
+            //
+            //    expect(obj.toObject()).to.be.eql({
+            //        name: "hello",
+            //        nonData: "world"
+            //    });
+            //
+            //    expect(obj.toData()).to.be.eql({
+            //        "some_name": "hello"
+            //    });
+            //
+            //});
+
+        });
+
     });
 
     describe("Static methods", function () {
@@ -1386,31 +1700,33 @@ describe("Model test", function () {
 
                 class Child extends Model {
 
-                    public static schema: any = {
-                        array: {
-                            type: "array"
-                        },
-                        boolean: {
-                            type: "boolean",
-                            value: false
-                        },
-                        datetime: {
-                            type: "date"
-                        },
-                        float: {
-                            type: "float"
-                        },
-                        integer: {
-                            type: "integer",
-                            column: "int"
-                        },
-                        object: {
-                            type: "object"
-                        },
-                        string: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            array: {
+                                type: "array"
+                            },
+                            boolean: {
+                                type: "boolean",
+                                value: false
+                            },
+                            datetime: {
+                                type: "date"
+                            },
+                            float: {
+                                type: "float"
+                            },
+                            integer: {
+                                type: "integer",
+                                column: "int"
+                            },
+                            object: {
+                                type: "object"
+                            },
+                            string: {
+                                type: "string"
+                            }
+                        };
+                    }
 
                 }
 
@@ -1449,31 +1765,33 @@ describe("Model test", function () {
 
                 class Child extends Model {
 
-                    public static schema: any = {
-                        array: {
-                            type: "array"
-                        },
-                        boolean: {
-                            type: "boolean",
-                            value: false
-                        },
-                        datetime: {
-                            type: "date"
-                        },
-                        float: {
-                            type: "float"
-                        },
-                        integer: {
-                            type: "integer",
-                            column: "int"
-                        },
-                        object: {
-                            type: "object"
-                        },
-                        string: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            array: {
+                                type: "array"
+                            },
+                            boolean: {
+                                type: "boolean",
+                                value: false
+                            },
+                            datetime: {
+                                type: "date"
+                            },
+                            float: {
+                                type: "float"
+                            },
+                            integer: {
+                                type: "integer",
+                                column: "int"
+                            },
+                            object: {
+                                type: "object"
+                            },
+                            string: {
+                                type: "string"
+                            }
+                        };
+                    }
 
                 }
 
@@ -1500,31 +1818,33 @@ describe("Model test", function () {
 
                 class Child extends Model {
 
-                    public static schema: any = {
-                        array: {
-                            type: "array"
-                        },
-                        boolean: {
-                            type: "boolean",
-                            value: false
-                        },
-                        datetime: {
-                            type: "date"
-                        },
-                        float: {
-                            type: "float"
-                        },
-                        integer: {
-                            type: "integer",
-                            column: "int"
-                        },
-                        object: {
-                            type: "object"
-                        },
-                        string: {
-                            type: "string"
-                        }
-                    };
+                    protected _schema () {
+                        return {
+                            array: {
+                                type: "array"
+                            },
+                            boolean: {
+                                type: "boolean",
+                                value: false
+                            },
+                            datetime: {
+                                type: "date"
+                            },
+                            float: {
+                                type: "float"
+                            },
+                            integer: {
+                                type: "integer",
+                                column: "int"
+                            },
+                            object: {
+                                type: "object"
+                            },
+                            string: {
+                                type: "string"
+                            }
+                        };
+                    }
 
                 }
 
