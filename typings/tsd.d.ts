@@ -6,3 +6,6 @@
 /// <reference path="sinon-chai/sinon-chai.d.ts" />
 /// <reference path="sinon/sinon.d.ts" />
 /// <reference path="../node_modules/datautils/datautils.d.ts" />
+/// <reference path="node-uuid/node-uuid-base.d.ts" />
+/// <reference path="node-uuid/node-uuid-cjs.d.ts" />
+/// <reference path="node-uuid/node-uuid.d.ts" />
