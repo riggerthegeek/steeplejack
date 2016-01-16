@@ -272,6 +272,10 @@ describe("Collection test", function () {
 
                 expect(obj.getCount()).to.be.equal(0);
 
+                expect(obj.add()).to.be.equal(obj);
+
+                expect(obj.getCount()).to.be.equal(0);
+
             });
 
         });
@@ -385,6 +389,10 @@ describe("Collection test", function () {
                 expect(obj.addOne([{
                     boolean: true
                 }])).to.be.equal(obj);
+
+                expect(obj.getCount()).to.be.equal(0);
+
+                expect(obj.addOne()).to.be.equal(obj);
 
                 expect(obj.getCount()).to.be.equal(0);
 
