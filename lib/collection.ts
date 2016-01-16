@@ -313,7 +313,7 @@ export abstract class Collection extends Base {
      *
      * @returns {boolean}
      */
-    validate () : boolean {
+    public validate () : boolean {
 
         let collectionErr = new ValidationException("Collection validation error");
 

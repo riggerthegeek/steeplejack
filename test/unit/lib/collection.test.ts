@@ -609,6 +609,189 @@ describe("Collection test", function () {
 
         });
 
+        describe("#toDb", function () {
+
+            it("should return the db version", function () {
+
+                var obj = new this.Children([{
+                    boolean: "true",
+                    datetime: "2010-02-07",
+                    float: "2.3",
+                    integer: "2",
+                    string: "string"
+                }, {
+                    boolean: "true",
+                    datetime: "2010-02-07",
+                    float: "2.3",
+                    integer: "2",
+                    string: "string"
+                }]);
+
+                expect(obj.toDb()).to.be.eql([{
+                    boolean: true,
+                    datetime: new Date(2010, 1, 7),
+                    float: 2.3,
+                    int: 2,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date(2010, 1, 7),
+                    float: 2.3,
+                    int: 2,
+                    string: "string"
+                }]);
+
+            });
+
+            it("should return an empty array if nothing set", function () {
+
+                var obj = new this.Children();
+
+                expect(obj.toDb()).to.be.eql([]);
+
+            });
+
+        });
+
+        describe("#validate", function () {
+
+            let obj: any;
+            beforeEach(function () {
+
+                class User extends Model {
+                    protected _schema () {
+                        return {
+                            id: {
+                                type: "string",
+                                validation: [{
+                                    rule: "required"
+                                }]
+                            },
+                            emailAddress: {
+                                type: "string",
+                                validation: [{
+                                    rule: "required"
+                                }, {
+                                    rule: "email"
+                                }, {
+                                    rule: "minLength",
+                                    param: [
+                                        3
+                                    ]
+                                }]
+                            }
+                        };
+                    }
+                }
+
+                class Users extends Collection {
+                    protected _model () {
+                        return User;
+                    }
+                }
+
+                obj = new Users;
+
+                this.User = User;
+                this.Users = Users;
+
+            });
+
+            it("should validate all models", function () {
+
+                obj.add([{
+                    id: "12345",
+                    emailAddress: "test@testington.com"
+                }]);
+
+                expect(obj.validate()).to.be.true;
+
+            });
+
+            it("should fail validation for a single reason", function () {
+
+                let fail = false;
+
+                obj.add([{}]);
+
+                try {
+                    obj.validate();
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(ValidationException);
+                    expect(err.message).to.be.equal("Collection validation error");
+
+                    expect(err.getErrors()).to.be.eql({
+                        "0_id": [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        "0_emailAddress": [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }]
+                    });
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should fail validation for a multiple reasons", function () {
+
+                let fail = false;
+
+                obj.add([{
+                    emailAddress: "u"
+                }, {
+
+                }]);
+
+                try {
+                    obj.validate();
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(ValidationException);
+                    expect(err.message).to.be.equal("Collection validation error");
+
+                    expect(err.getErrors()).to.be.eql({
+                        "0_id": [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        "0_emailAddress": [{
+                            message: "VALUE_NOT_EMAIL",
+                            value: "u"
+                        }, {
+                            message: "VALUE_LESS_THAN_MIN_LENGTH",
+                            value: "u",
+                            additional: [
+                                3
+                            ]
+                        }],
+                        "1_id": [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }],
+                        "1_emailAddress": [{
+                            message: "VALUE_REQUIRED",
+                            value: null
+                        }]
+                    });
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+        });
+
     });
 
 });
