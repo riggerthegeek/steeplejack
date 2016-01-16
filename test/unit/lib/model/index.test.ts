@@ -22,6 +22,7 @@ import {Collection} from "../../../../lib/collection";
 import {Base} from "../../../../lib/base";
 import {ValidationException} from "../../../../exception/validation/index";
 
+
 describe("Model test", function () {
 
     describe("Methods", function () {
@@ -913,7 +914,9 @@ describe("Model test", function () {
                 }
 
                 class MyCollection extends Collection {
-                    public static model: any = MyModel;
+                    protected _model () {
+                        return MyModel;
+                    }
                 }
 
                 class Element extends Model {
@@ -1069,7 +1072,9 @@ describe("Model test", function () {
                 }
 
                 class Children extends Collection {
-                    public static model = Child;
+                    protected _model () {
+                        return Child;
+                    }
                 }
 
                 class Test extends Model {
@@ -1122,7 +1127,9 @@ describe("Model test", function () {
                 }
 
                 class Children extends Collection {
-                    public static model = Child;
+                    protected _model () {
+                        return Child;
+                    }
                 }
 
                 class Item extends Model {
@@ -1258,7 +1265,9 @@ describe("Model test", function () {
                 }
 
                 class SubCollection extends Collection {
-                    public static model: Function = SubModel;
+                    protected _model () {
+                        return SubModel;
+                    }
                 }
 
                 class OtherModel extends Model {
@@ -2754,7 +2763,9 @@ describe("Model test", function () {
                     }
 
                     class SubCollection extends Collection {
-                        public static model = SubModel
+                        protected _model () {
+                            return SubModel;
+                        }
                     }
 
                     class MyModel extends Model {
