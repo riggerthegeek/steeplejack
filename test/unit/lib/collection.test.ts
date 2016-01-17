@@ -609,6 +609,250 @@ describe("Collection test", function () {
 
         });
 
+        describe("#limit", function () {
+
+            var obj: any,
+                raw: any;
+            beforeEach(function () {
+
+                raw = [{
+                    boolean: true,
+                    datetime: new Date("2010-02-07"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date("2010-02-08"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date("2010-02-09"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }];
+
+                obj = new this.Children(raw);
+            });
+
+            it("should throw an error when no limit is provided", function () {
+
+                var fail = false;
+
+                try {
+                    obj.limit();
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Collection.limit must be a positive integer");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                }
+
+            });
+
+            it("should throw an error when no limit is below 0", function () {
+
+                var fail = false;
+
+                try {
+                    obj.limit(-1);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Collection.limit must be a positive integer");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                }
+
+            });
+
+            it("should return no items when limit is 0", function () {
+
+                expect(obj.limit(0)).to.be.equal(obj);
+
+                expect(obj.getData()).to.be.eql([]);
+
+            });
+
+            it("should return the correct number of items specified", function () {
+
+                for (var i = 1; i < 3; i++) {
+
+                    var newObj = obj.clone();
+
+                    expect(newObj.limit(i)).to.be.equal(newObj);
+
+                    expect(newObj.getData()).to.be.eql(raw.slice(0, i));
+
+                }
+
+            });
+
+            it("should return all items when the limit is greater than the count", function () {
+
+                expect(obj.limit(3)).to.be.equal(obj);
+
+                expect(obj.getData()).to.be.eql(raw);
+
+            });
+
+            it("should ignore offset if below 0", function () {
+
+                expect(obj.limit(3, -1)).to.be.equal(obj);
+
+                expect(obj.getData()).to.be.eql(raw);
+
+            });
+
+            it("should offset the number of items", function () {
+
+                for (var i = 0; i < 3; i++) {
+
+                    var newObj = obj.clone();
+
+                    expect(newObj.limit(1, i)).to.be.equal(newObj);
+
+                    expect(newObj.getData()).to.be.eql([
+                        raw[i]
+                    ]);
+
+                }
+
+            });
+
+            it("should do another offset test", function () {
+
+                expect(obj.limit(2, 1)).to.be.equal(obj);
+
+                expect(obj.getData()).to.be.eql([
+                    raw[1],
+                    raw[2]
+                ]);
+
+            });
+
+        });
+
+        describe("#removeById", function () {
+
+            var obj: any,
+                raw: any;
+            beforeEach(function () {
+
+                raw = [{
+                    boolean: true,
+                    datetime: new Date("2010-02-07"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date("2010-02-08"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date("2010-02-09"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }];
+
+                obj = new this.Children(raw);
+
+                expect(obj.getCount()).to.be.equal(3);
+            });
+
+            it("should remove false if nothing removed", function () {
+
+                expect(obj.removeById(uuid.v4())).to.be.false;
+                expect(obj.removeById("string")).to.be.false;
+
+                expect(obj.getCount()).to.be.equal(3);
+
+            });
+
+            it("should remove true if removed", function () {
+
+                let ids = obj.getIds();
+
+                expect(obj.removeById(ids[0])).to.be.true;
+
+                expect(obj.getCount()).to.be.equal(2);
+
+                expect(obj.removeById(ids[1])).to.be.true;
+
+                expect(obj.getCount()).to.be.equal(1);
+
+                expect(obj.removeById(ids[2])).to.be.true;
+
+                expect(obj.getCount()).to.be.equal(0);
+
+            });
+
+        });
+
+        describe("#reset", function () {
+
+            it("should return false when data is empty", function () {
+
+                var obj = new this.Children();
+
+                expect(obj.reset()).to.be.false;
+
+            });
+
+            it("should return true when data not empty", function () {
+
+                var obj = new this.Children([
+                    {
+                        boolean: "true",
+                        date: "2010-02-07",
+                        float: "2.3",
+                        integer: "2",
+                        string: "string"
+                    },
+                    {
+                        boolean: "true",
+                        date: "2010-02-08",
+                        float: "2.3",
+                        integer: "2",
+                        string: "string"
+                    },
+                    {
+                        boolean: "true",
+                        date: "2010-02-09",
+                        float: "2.3",
+                        integer: "2",
+                        string: "string"
+                    }
+                ]);
+
+                expect(obj.reset()).to.be.true;
+
+                expect(obj.getCount()).to.be.equal(0);
+
+                expect(obj.reset()).to.be.false;
+
+            });
+
+        });
+
         describe("#toDb", function () {
 
             it("should return the db version", function () {

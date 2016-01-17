@@ -12,6 +12,7 @@
 
 /* Third-party modules */
 import * as _ from "lodash";
+import {data as datatypes} from "datautils";
 import * as uuid from "node-uuid";
 
 
@@ -292,6 +293,110 @@ export abstract class Collection extends Base {
 
 
     /**
+     * Get IDs
+     *
+     * Gets all the IDs in order
+     *
+     * @returns {string[]}
+     */
+    public getIds () : string[] {
+        return _.map(this.getAll(), (item: ICollectionData) => {
+            return item.id;
+        });
+    }
+
+
+    /**
+     * Limit
+     *
+     * Limits in the same way as MySQL limits.  The first
+     * is the limit, which is the maximum number of items
+     * we can keep.  The second is the offset, which is
+     * the number of items we pad.
+     *
+     * On a collection with 5 items, limit(2, 2) will
+     * only keep the data at position 2 and 3, dropping
+     *
+     * 0, 1 and 4 out.
+     * @param {number} limit
+     * @param {number} offset
+     * @returns {Collection}
+     */
+    public limit (limit: number, offset: number = 0) : Collection {
+
+        limit = datatypes.setInt(limit, null);
+
+        if (limit === null || limit < 0) {
+            throw new TypeError("Collection.limit must be a positive integer");
+        }
+
+        if (limit === 0) {
+            /* Get rid of everything */
+            this.reset();
+        } else if (limit < this.getCount()) {
+
+            /* Get the keys in the data */
+            let keys = this.getIds();
+
+            /* Slice the keys */
+            let endKey = limit + offset;
+
+            /* Work out which keys to remove */
+            let removeKeys = _.difference(keys, keys.slice(offset, endKey));
+
+            _.each(removeKeys, (key: string) => {
+                this.removeById(key);
+            });
+
+        }
+
+        return this;
+
+    }
+
+
+    /**
+     * Reset
+     *
+     * Resets the collection back to it's original (empty)
+     * state
+     *
+     * @returns {boolean}
+     */
+    public reset () : boolean {
+
+        if (_.isEmpty(this._data)) {
+            /* Nothing to do - it's already empty */
+            return false;
+        }
+
+        this._data = [];
+
+        return _.isEmpty(this._data);
+
+    }
+
+
+    /**
+     * Remove By ID
+     *
+     * Removes the model by the ID
+     *
+     * @param {string} id
+     * @returns {boolean}
+     */
+    public removeById (id: string) : boolean {
+
+        let removed = _.remove(this._data, (data: ICollectionData) => {
+            return id === data.id;
+        });
+
+        return _.size(removed) > 0;
+
+    }
+
+
+    /**
      * To Db
      *
      * Returns the database representation of
@@ -344,6 +449,13 @@ export abstract class Collection extends Base {
         return true;
 
     }
+
+
+    //public static toModels() {
+    //
+    //    return 2;
+    //
+    //}
 
 
 }
