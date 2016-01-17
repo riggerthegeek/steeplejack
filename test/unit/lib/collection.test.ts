@@ -9,6 +9,7 @@
 
 
 /* Third-party modules */
+import * as _ from "lodash";
 import * as uuid from "node-uuid";
 
 
@@ -1306,7 +1307,7 @@ describe("Collection test", function () {
                 expect(obj.getCount()).to.be.equal(3);
             });
 
-            it("should remove false if nothing removed", function () {
+            it("should return false if nothing removed", function () {
 
                 expect(obj.removeById(uuid.v4())).to.be.false;
                 expect(obj.removeById("string")).to.be.false;
@@ -1315,7 +1316,7 @@ describe("Collection test", function () {
 
             });
 
-            it("should remove true if removed", function () {
+            it("should return true if removed", function () {
 
                 let ids = obj.getIds();
 
@@ -1328,6 +1329,68 @@ describe("Collection test", function () {
                 expect(obj.getCount()).to.be.equal(1);
 
                 expect(obj.removeById(ids[2])).to.be.true;
+
+                expect(obj.getCount()).to.be.equal(0);
+
+            });
+
+        });
+
+        describe("#removeByModel", function () {
+
+            var obj: any,
+                raw: any;
+            beforeEach(function () {
+
+                raw = [{
+                    boolean: true,
+                    datetime: new Date("2010-02-07"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date("2010-02-08"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date("2010-02-09"),
+                    float: 2.3,
+                    integer: 2,
+                    string: "string"
+                }];
+
+                obj = new this.Children(raw);
+
+                expect(obj.getCount()).to.be.equal(3);
+            });
+
+            it("should return false if nothing removed", function () {
+
+                expect(obj.removeByModel(new this.Child)).to.be.false;
+
+                expect(obj.getCount()).to.be.equal(3);
+
+            });
+
+            it("should return true if removed", function () {
+
+                let models = _.reduce(obj.getAll(), (result: Model[], data: ICollectionData) => {
+                    result.push(data.model);
+                    return result;
+                }, []);
+
+                expect(obj.removeByModel(models[0])).to.be.true;
+
+                expect(obj.getCount()).to.be.equal(2);
+
+                expect(obj.removeByModel(models[1])).to.be.true;
+
+                expect(obj.getCount()).to.be.equal(1);
+
+                expect(obj.removeByModel(models[2])).to.be.true;
 
                 expect(obj.getCount()).to.be.equal(0);
 
@@ -1376,6 +1439,927 @@ describe("Collection test", function () {
                 expect(obj.getCount()).to.be.equal(0);
 
                 expect(obj.reset()).to.be.false;
+
+            });
+
+        });
+
+        describe("sorting", function () {
+
+            var champs: any;
+            beforeEach(function () {
+
+                /* Define a driver model */
+                class Driver extends Model {
+                    protected _schema () {
+                        let obj: any;
+                        obj = {
+                            id: {
+                                type: "integer",
+                                value: null
+                            },
+                            firstName: {
+                                type: "string",
+                                value: null
+                            },
+                            lastName: {
+                                type: "string",
+                                value: null
+                            },
+                            team: {
+                                type: "string",
+                                value: null
+                            },
+                            dateOfBirth: {
+                                type: "date",
+                                value: null
+                            },
+                            championYears: {
+                                type: "array",
+                                value: null
+                            }
+                        };
+                        return obj;
+                    }
+
+                    public setChampionYears (value: any, def: any) {
+                        if (value instanceof Array) {
+                            _.each(value, function (val) {
+                                this.setChampionYears(val, def);
+                            }, this);
+                        } else {
+                            value = Base.datatypes.setInt(value, null);
+
+                            if (value !== null && _.indexOf(this.get("championYears"), value) === -1) {
+
+                                if (this.get("championYears") === null) {
+                                    this._data.championYears = [];
+                                }
+
+                                this._data.championYears.push(value);
+                            }
+                        }
+                    }
+                }
+
+                class Champions extends Collection {
+                    protected _model () {
+                        return Driver;
+                    }
+                }
+
+                champs = new Champions([
+                    {
+                        id: 1,
+                        firstName: "Sebastian",
+                        lastName: "Vettel",
+                        dateOfBirth: "1987-07-03",
+                        team: "Red Bull",
+                        championYears: [
+                            2010,
+                            2011,
+                            2012,
+                            2013
+                        ]
+                    },
+                    {
+                        id: 2,
+                        firstName: "Jenson",
+                        lastName: "Button",
+                        dateOfBirth: "1980-01-19",
+                        team: "McLaren",
+                        championYears: [
+                            2009
+                        ]
+                    },
+                    {
+                        id: 0,
+                        firstName: "Lewis",
+                        lastName: "Hamilton",
+                        dateOfBirth: "1985-01-07",
+                        team: "Mercedes",
+                        championYears: [
+                            2008
+                        ]
+                    },
+                    {
+                        id: 4,
+                        firstName: "james",
+                        lastName: "hunt",
+                        dateOfBirth: "1947-08-29",
+                        team: "mclaren",
+                        championYears: [
+                            1976
+                        ]
+                    },
+                    {
+                        id: 3,
+                        firstName: "Nico",
+                        lastName: "Rosberg",
+                        dateOfBirth: "1985-06-27",
+                        team: "Mercedes",
+                        championYears: null
+                    }
+                ]);
+
+                expect(champs).to.be.an.instanceof(Champions);
+
+                expect(champs.getByKey(0).get("firstName")).to.be.equal("Sebastian");
+                expect(champs.getByKey(1).get("firstName")).to.be.equal("Jenson");
+                expect(champs.getByKey(2).get("firstName")).to.be.equal("Lewis");
+                expect(champs.getByKey(3).get("firstName")).to.be.equal("james");
+                expect(champs.getByKey(4).get("firstName")).to.be.equal("Nico");
+
+                this.Driver = Driver;
+                this.Champions = Champions;
+            });
+
+            describe("#sort", function () {
+
+                it("should allow me to write a sort function", function () {
+
+                    var arr = _.reduce(champs.getAll(), (result: any[], data: ICollectionData) => {
+                        result.push(data.model);
+                        return result;
+                    }, []);
+
+                    var result = champs.sort((a: any, b: any) => {
+
+                        expect(a).to.be.an("object")
+                            .to.have.keys([
+                            "id", "model"
+                        ]);
+                        expect(a.id).to.be.a("string");
+                        expect(champs.getById(a.id)).to.be.an("object");
+
+                        expect(b).to.be.an("object")
+                            .to.have.keys([
+                            "id", "model"
+                        ]);
+                        expect(b.id).to.be.a("string");
+                        expect(champs.getById(b.id)).to.be.an("object");
+
+                        /* Confirm that a contains a model */
+                        var includedA = _.some(arr, function (model) {
+                            return model === a.model;
+
+                        });
+                        expect(includedA).to.be.true;
+                        expect(a.model).to.be.instanceof(this.Driver);
+
+                        /* Confirm that b contains a model */
+                        var includedB = _.some(arr, function (model) {
+                            return model === b.model;
+
+                        });
+                        expect(includedB).to.be.true;
+                        expect(b.model).to.be.instanceof(this.Driver);
+
+                        /* Sort by last name */
+                        if (a.model.get("lastName") < b.model.get("lastName")) {
+                            return -1;
+                        } else if (a.model.get("lastName") > b.model.get("lastName")) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+
+                    });
+
+                    /* Hunt comes after Jenson now as he's in lower case */
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        },
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should throw an error when a function not received", function () {
+
+                    [
+                        null,
+                        undefined,
+                        new Date(),
+                        {},
+                        [],
+                        "string",
+                        2.3,
+                        4
+                    ].forEach(function (input) {
+
+                        var fail = false;
+
+                        try {
+                            champs.sort(input);
+                        } catch (err) {
+                            fail = true;
+
+                            expect(err).to.be.instanceof(TypeError);
+                            expect(err.message).to.be.equal("Collection.sort must receive a function");
+                        } finally {
+                            expect(fail).to.be.true;
+                        }
+
+                    });
+
+                });
+
+            });
+
+            describe.skip("#sortBy", function () {
+
+                it("should sort by key in ascending order without specifying order", function () {
+
+                    var result = champs.sortBy("firstName");
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should sort by key in ascending order by specifying order", function () {
+
+                    var result = champs.sortBy("firstName", "asc");
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should sort by descending order", function () {
+
+                    var result = champs.sortBy("firstName", "DeSc");
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should sort by one key with duplicate data with nothing else - ascending", function () {
+
+                    var result = champs.sortBy("team", "ASC");
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should sort by one key with duplicate data with nothing else - descending", function () {
+
+                    var result = champs.sortBy("team", "DESC");
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should sort by two keys", function () {
+
+                    var result = champs.sortBy({
+                        team: "ASC",
+                        lastName: "ASC"
+                    });
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should sort by an integer", function () {
+
+                    var result = champs.sortBy("id");
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should sort by an integer descending", function () {
+
+                    var result = champs.sortBy("id", "DESC");
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should receive an array of keys and sort in ascending order", function () {
+
+                    var result = champs.sortBy([
+                        "firstName"
+                    ]);
+
+                    expect(result).to.be.equal(champs);
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        },
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        }
+                    ]);
+
+                });
+
+                it("should not pass in a non-string in the array", function () {
+
+                    var result = champs.sortBy([
+                        {}
+                    ]);
+
+                    expect(champs.getData()).to.be.eql([
+                        {
+                            id: 1,
+                            firstName: "Sebastian",
+                            lastName: "Vettel",
+                            team: "Red Bull",
+                            dateOfBirth: new Date(1987, 6, 3),
+                            championYears: [
+                                2010,
+                                2011,
+                                2012,
+                                2013
+                            ]
+                        },
+                        {
+                            id: 2,
+                            firstName: "Jenson",
+                            lastName: "Button",
+                            team: "McLaren",
+                            dateOfBirth: new Date(1980, 0, 19),
+                            championYears: [
+                                2009
+                            ]
+                        },
+                        {
+                            id: 0,
+                            firstName: "Lewis",
+                            lastName: "Hamilton",
+                            team: "Mercedes",
+                            dateOfBirth: new Date(1985, 0, 7),
+                            championYears: [
+                                2008
+                            ]
+                        },
+                        {
+                            id: 4,
+                            firstName: "james",
+                            lastName: "hunt",
+                            team: "mclaren",
+                            dateOfBirth: new Date(1947, 7, 29),
+                            championYears: [
+                                1976
+                            ]
+                        },
+                        {
+                            id: 3,
+                            firstName: "Nico",
+                            lastName: "Rosberg",
+                            dateOfBirth: new Date(1985, 5, 27),
+                            team: "Mercedes",
+                            championYears: null
+                        }
+                    ]);
+
+                });
+
+                it("should throw an error with non-string, array or object", function () {
+
+                        [
+                            undefined,
+                            function () {
+                            },
+                            null
+                        ].forEach(function (input) {
+
+                            var fail = false;
+
+                            try {
+                                var result = champs.sortBy(input);
+                            } catch (err) {
+                                fail = true;
+
+                                expect(err).to.be.instanceof(SyntaxError);
+                                expect(err.message).to.be
+                                    .equal("Collection.sortBy must receive string, object or array");
+                            } finally {
+                                expect(fail).to.be.true;
+                            }
+
+                        });
+
+                    });
 
             });
 

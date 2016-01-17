@@ -198,7 +198,7 @@ export abstract class Collection extends Base {
      */
     public find (properties : Object) : Model {
 
-        var result: Model = null;
+        let result: Model = null;
 
         this.each((model: Model) => {
             if (result === null && model.where(properties)) {
@@ -223,7 +223,7 @@ export abstract class Collection extends Base {
      */
     public findLast (properties : Object) : Model {
 
-        var result: Model = null;
+        let result: Model = null;
 
         this.eachRight((model: Model) => {
             if (result === null && model.where(properties)) {
@@ -536,14 +536,56 @@ export abstract class Collection extends Base {
     }
 
 
-    public removeByModel (model: Model) : boolean {
+    /**
+     * Remove By Model
+     *
+     * Removes the given model
+     *
+     * @param {Model} removeModel
+     * @returns {boolean}
+     */
+    public removeByModel (removeModel: Model) : boolean {
 
-        return false;
+        let removed = false;
+
+        _.each(this._data, (model: Model, id: string) => {
+            if (removeModel === model) {
+                removed = this.removeById(id);
+            }
+
+        });
+
+        return removed;
 
     }
 
 
-    public sort (fn: Function) : Collection {
+    /**
+     * Sort
+     *
+     * Sort by the given sortation function
+     *
+     * @param {function} fn
+     * @returns {Collection}
+     */
+    public sort (fn: (a: any, b: any) => number) : Collection {
+
+        if (_.isFunction(fn) === false) {
+            throw new TypeError("Collection.sort must receive a function");
+        }
+
+        /* Get the array with everything */
+        let sorted = this.getAll();
+
+        /* Sort the array by the values */
+        sorted.sort(fn);
+
+        /* Change the order array */
+        this._order = _.reduce(sorted, (result: string[], data: ICollectionData) => {
+            result.push(data.id);
+
+            return result;
+        }, []);
 
         return this;
 
