@@ -25,7 +25,10 @@ import {ValidationException} from "../exception/validation/index";
 export abstract class Collection extends Base {
 
 
-    protected _data: ICollectionData[] = [];
+    protected _data: any = {};
+
+
+    protected _order: string[] = [];
 
 
     protected abstract _model () : Object;
@@ -94,10 +97,9 @@ export abstract class Collection extends Base {
             }
 
             /* Add to the collection */
-            this._data.push({
-                id: uuid.v4(),
-                model: model
-            });
+            let id = uuid.v4();
+            this._order.push(id);
+            this._data[id] = model;
 
         }
 
@@ -122,8 +124,10 @@ export abstract class Collection extends Base {
             throw new TypeError("iterator must be a function");
         }
 
-        _.each(this.getAll(), (data: ICollectionData) => {
-            return iterator.call(thisArg, data.model, data.id, this.getAll());
+        let collection = this.getAll();
+
+        _.each(collection, (data: ICollectionData) => {
+            return iterator.call(thisArg, data.model, data.id, collection);
         });
 
         return this;
@@ -147,8 +151,10 @@ export abstract class Collection extends Base {
             throw new TypeError("iterator must be a function");
         }
 
-        _.eachRight(this.getAll(), (data: ICollectionData) => {
-            return iterator.call(thisArg, data.model, data.id, this.getAll());
+        let collection = this.getAll();
+
+        _.eachRight(collection, (data: ICollectionData) => {
+            return iterator.call(thisArg, data.model, data.id, collection);
         });
 
         return this;
@@ -156,7 +162,23 @@ export abstract class Collection extends Base {
     }
 
 
+    /**
+     * Filter
+     *
+     * Anything that matches is removed from the
+     * collection.  This is the opposite of where().
+     *
+     * @param {object} properties
+     * @returns {Collection}
+     */
     public filter (properties : Object) : Collection {
+
+        this.each((model: Model, id: string) => {
+            if (model.where(properties)) {
+                /* Remove this from the collection */
+                this.removeById(id);
+            }
+        });
 
         return this;
 
@@ -185,7 +207,12 @@ export abstract class Collection extends Base {
      * @returns {ICollectionData[]}
      */
     public getAll () : ICollectionData[] {
-        return this._data;
+        return _.map(this._order, (id: string) => {
+            return {
+                id,
+                model: this._data[id]
+            };
+        });
     }
 
 
@@ -441,7 +468,8 @@ export abstract class Collection extends Base {
             return false;
         }
 
-        this._data = [];
+        this._data = {};
+        this._order = [];
 
         return _.isEmpty(this._data);
 
@@ -458,11 +486,15 @@ export abstract class Collection extends Base {
      */
     public removeById (id: string) : boolean {
 
-        let removed = _.remove(this._data, (data: ICollectionData) => {
-            return id === data.id;
-        });
+        if (_.has(this._data, id)) {
+            delete this._data[id];
+            _.remove(this._order, orderId => {
+                return orderId === id;
+            });
+            return true;
+        }
 
-        return _.size(removed) > 0;
+        return false;
 
     }
 
