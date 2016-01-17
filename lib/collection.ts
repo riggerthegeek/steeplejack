@@ -715,7 +715,26 @@ export abstract class Collection extends Base {
     }
 
 
+    /**
+     * Where
+     *
+     * Performs a where query on the collection.  Removes
+     * anything that doesn't meet the criteria from the
+     * collection.  This is the opposite of filter().
+     *
+     * @param {object} properties
+     * @returns {Collection}
+     */
     public where (properties : Object) : Collection {
+
+        this.each((model: Model, id: string) => {
+
+            if (model.where(properties) === false) {
+                /* Remove from the collection */
+                this.removeById(id);
+            }
+
+        });
 
         return this;
 

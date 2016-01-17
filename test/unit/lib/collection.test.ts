@@ -2443,6 +2443,282 @@ describe("Collection test", function () {
 
         });
 
+        describe("#where", function () {
+
+            describe("single property", function () {
+
+                it("should return a single result", function () {
+
+                    var orig = def.clone();
+
+                    var out = def.where({
+                        float: 2.2
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(1);
+                    expect(orig.getByKey(0)).to.be.equal(out.getByKey(0));
+
+                });
+
+                it("should return multiple results", function () {
+
+                    var orig = def.clone();
+
+                    var out = def.where({
+                        float: 2.3
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(2);
+                    expect(orig.getByKey(1)).to.be.equal(out.getByKey(0));
+                    expect(orig.getByKey(2)).to.be.equal(out.getByKey(1));
+
+                });
+
+                it("should return no results", function () {
+
+                    var out = def.where({
+                        float: "nothing"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(0);
+
+                });
+
+                it("should search an instance of an object and return one result", function () {
+
+                    var out = def.where({
+                        datetime: new Date(2010, 1, 7)
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(1);
+
+                });
+
+                it("should search an instance of an object and return multiple results", function () {
+
+                    /* Change the third collection object */
+                    def.getByKey(2).set("datetime", "2010-02-08");
+
+                    var out = def.where({
+                        datetime: new Date(2010, 1, 8)
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(2);
+
+                });
+
+                it("should search an instance of an object and return nothing", function () {
+
+                    var out = def.where({
+                        datetime: new Date("2010-02-01")
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(0);
+
+                });
+
+                it("should cast to the datatype and return one result", function () {
+
+                    var out = def.where({
+                        float: "2.2"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(1);
+
+                });
+
+                it("should cast to the datatype and return multiple results", function () {
+
+                    var out = def.where({
+                        float: "2.3"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(2);
+
+                });
+
+                it("should cast to the datatype and return no results", function () {
+
+                    var out = def.where({
+                        float: "2"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(0);
+
+                });
+
+            });
+
+            describe("multiple properties", function () {
+
+                it("should return a single result", function () {
+
+                    var orig = def.clone();
+
+                    var out = def.where({
+                        float: 2.2,
+                        string: "string"
+                    });
+
+                    expect(out).to.be.instanceof(Collection)
+                        .to.be.equal(def);
+                    expect(out.getCount()).to.be.equal(1);
+                    expect(orig.getByKey(0)).to.be.equal(out.getByKey(0));
+
+                });
+
+            });
+
+            it("should return multiple results", function () {
+
+                var orig = def.clone();
+
+                var out = def.where({
+                    float: 2.3,
+                    string: "string"
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(2);
+                expect(orig.getByKey(1)).to.be.equal(out.getByKey(0));
+                expect(orig.getByKey(2)).to.be.equal(out.getByKey(1));
+
+            });
+
+            it("should return no results", function () {
+
+                var out = def.where({
+                    float: 2.3,
+                    string: "nothing"
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(0);
+
+            });
+
+            it("should search an instance of an object and return one result", function () {
+
+                var out = def.where({
+                    float: 2.2,
+                    integer: 2
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(1);
+
+            });
+
+            it("should search an instance of an object and return multiple results", function () {
+
+                var out = def.where({
+                    float: 2.3,
+                    integer: 2
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(2);
+
+            });
+
+            it("should search an instance of an object and return nothing", function () {
+
+                var out = def.where({
+                    float: 2.1,
+                    integer: 2
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(0);
+
+            });
+
+            it("should cast to the datatype and return one result", function () {
+
+                var out = def.where({
+                    integer: "2",
+                    datetime: "2010-02-07"
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(1);
+
+            });
+
+            it("should cast to the datatype and return multiple results", function () {
+
+                /* Change the third collection object */
+                def.getByKey(2).set("datetime", "2010-02-08");
+
+                var out = def.where({
+                    integer: "2",
+                    datetime: "2010-02-08"
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(2);
+
+            });
+
+            it("should cast to the datatype and return no results", function () {
+
+                var out = def.where({
+                    integer: "2",
+                    datetime: "2010-02-10"
+                });
+
+                expect(out).to.be.instanceof(Collection)
+                    .to.be.equal(def);
+                expect(out.getCount()).to.be.equal(0);
+
+            });
+
+            it("should throw an error if non-object passed in", function () {
+
+                var fail = false;
+
+                try {
+                    def.where();
+                } catch (err) {
+
+                    fail = true;
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Model.where properties must be an object");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                }
+            });
+
+        });
+
     });
 
 });
