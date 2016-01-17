@@ -2721,4 +2721,119 @@ describe("Collection test", function () {
 
     });
 
+    describe("Static methods", function () {
+
+        describe("#toModels", function () {
+
+            it("should convert an array of database objects into a collection model", function () {
+
+                var obj = this.Children.toModels([{
+                    boolean: true,
+                    datetime: new Date(2010, 1, 7),
+                    float: 2.3,
+                    int: 3,
+                    string: "string"
+                }, {
+                    boolean: true,
+                    datetime: new Date(2010, 1, 8),
+                    float: 2.3,
+                    int: 2,
+                    string: "string"
+                }]);
+
+                expect(obj).to.be.instanceof(Collection)
+                    .instanceof(this.Children);
+
+                expect(obj.getCount()).to.be.equal(2);
+                expect(obj.getByKey(0)).to.be.instanceof(Model);
+                expect(obj.getByKey(1)).to.be.instanceof(Model);
+
+                expect(obj.getData()).to.be.eql([
+                    {
+                        boolean: true,
+                        datetime: new Date(2010, 1, 7),
+                        float: 2.3,
+                        integer: 3,
+                        string: "string"
+                    },
+                    {
+                        boolean: true,
+                        datetime: new Date(2010, 1, 8),
+                        float: 2.3,
+                        integer: 2,
+                        string: "string"
+                    }
+                ]);
+
+            });
+
+            it("should not push some rubbish object to a model", function () {
+
+                var obj = this.Children.toModels([{}]);
+
+                expect(obj).to.be.instanceof(Collection)
+                    .instanceof(this.Children);
+
+                expect(obj.getCount()).to.be.equal(0);
+
+            });
+
+            it("should not push some rubbish array to a model", function () {
+
+                var obj = this.Children.toModels([
+                    {},
+                    null,
+                    Date,
+                    function () {
+                    },
+                    "string",
+                    2.3,
+                    4,
+                    true,
+                    false,
+                    undefined,
+                    Infinity,
+                    NaN,
+                    []
+                ]);
+
+                expect(obj).to.be.instanceof(Collection)
+                    .instanceof(this.Children);
+
+                expect(obj.getCount()).to.be.equal(0);
+
+            });
+
+            it("should not push a non-array or non-object to a model", function () {
+
+                [
+                    null,
+                    Date,
+                    function () {
+                    },
+                    "string",
+                    2.3,
+                    4,
+                    true,
+                    false,
+                    undefined,
+                    Infinity,
+                    NaN
+                ].forEach((input) => {
+
+                    var obj = this.Children.toModels(input);
+
+                    expect(obj).to.be.instanceof(Collection)
+                        .instanceof(this.Children);
+
+                    expect(obj.getCount()).to.be.equal(0);
+
+                });
+
+            });
+
+        });
+
+    });
+
 });

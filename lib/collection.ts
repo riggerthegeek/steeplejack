@@ -87,7 +87,7 @@ export abstract class Collection extends Base {
         if (_.isObject(data) && _.isArray(data) === false) {
 
             let model:Model;
-            let ModelConstructor:any = this._model();
+            let ModelConstructor: any = this._model();
 
             if (data instanceof ModelConstructor) {
                 /* It's already an instance of the model */
@@ -443,6 +443,18 @@ export abstract class Collection extends Base {
 
 
     /**
+     * Get Model
+     *
+     * Gets the model constructor
+     *
+     * @returns {Object}
+     */
+    public getModel () : Object {
+        return this._model();
+    }
+
+
+    /**
      * Limit
      *
      * Limits in the same way as MySQL limits.  The first
@@ -741,11 +753,30 @@ export abstract class Collection extends Base {
     }
 
 
+    /**
+     * To Models
+     *
+     * Creates an instance of the collection object and
+     * populates it with the model.toModel method. This
+     * can be used to convert a data store result into
+     * a collection of models
+     *
+     * @param {any[]) data
+     * @returns {Collection}
+     */
     public static toModels(data : any[] = null) : Collection {
 
         /* Create a new instance of this collection with default data */
         let collection = Object.create(this.prototype);
         this.apply(collection, []);
+
+        _.each(data, item => {
+            if (_.isObject(item) && _.isEmpty(item) === false) {
+                let model = collection.getModel().toModel(item);
+
+                collection.addOne(model);
+            }
+        });
 
         return collection;
 
