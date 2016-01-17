@@ -500,13 +500,8 @@ export abstract class Model extends Base {
 
             }
 
-            /* If getData method exists, get the raw data */
-            if (_.isObject(value) && _.isFunction(value.getData)) {
-                //value = value.getData();
-            }
-
             /* Cycle through the validation rules */
-            _.each(definition.validation, (rule: Function) => {
+            _.each(definition.validation, (rule : Function) => {
 
                 try {
                     /* A validation function can throw error or return false */
@@ -615,7 +610,6 @@ export abstract class Model extends Base {
 
             let key = item.key;
             let value = data[item.column];
-            let type = model.getDefinition(key).type;
 
             model[key] = value;
 
