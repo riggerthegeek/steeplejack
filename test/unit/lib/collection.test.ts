@@ -1716,11 +1716,13 @@ describe("Collection test", function () {
 
             });
 
-            describe.skip("#sortBy", function () {
+            describe("#sortBy", function () {
 
-                it("should sort by key in ascending order without specifying order", function () {
+                it("should sort by key in ascending order", function () {
 
-                    var result = champs.sortBy("firstName");
+                    var result = champs.sortBy({
+                        firstName: "AsC"
+                    });
 
                     expect(result).to.be.equal(champs);
                     expect(champs.getData()).to.be.eql([
@@ -1779,9 +1781,11 @@ describe("Collection test", function () {
 
                 });
 
-                it("should sort by key in ascending order by specifying order", function () {
+                it("should sort by key in ascending order by specifying invalid order", function () {
 
-                    var result = champs.sortBy("firstName", "asc");
+                    var result = champs.sortBy({
+                        firstName: "bumtitty"
+                    });
 
                     expect(result).to.be.equal(champs);
                     expect(champs.getData()).to.be.eql([
@@ -1842,7 +1846,9 @@ describe("Collection test", function () {
 
                 it("should sort by descending order", function () {
 
-                    var result = champs.sortBy("firstName", "DeSc");
+                    var result = champs.sortBy({
+                        firstName: "DeSc"
+                    });
 
                     expect(result).to.be.equal(champs);
                     expect(champs.getData()).to.be.eql([
@@ -1903,7 +1909,9 @@ describe("Collection test", function () {
 
                 it("should sort by one key with duplicate data with nothing else - ascending", function () {
 
-                    var result = champs.sortBy("team", "ASC");
+                    var result = champs.sortBy({
+                        team: "ASC"
+                    });
 
                     expect(result).to.be.equal(champs);
                     expect(champs.getData()).to.be.eql([
@@ -1964,7 +1972,9 @@ describe("Collection test", function () {
 
                 it("should sort by one key with duplicate data with nothing else - descending", function () {
 
-                    var result = champs.sortBy("team", "DESC");
+                    var result = champs.sortBy({
+                        team: "DESC"
+                    });
 
                     expect(result).to.be.equal(champs);
                     expect(champs.getData()).to.be.eql([
@@ -2089,7 +2099,9 @@ describe("Collection test", function () {
 
                 it("should sort by an integer", function () {
 
-                    var result = champs.sortBy("id");
+                    var result = champs.sortBy({
+                        id: "asc"
+                    });
 
                     expect(result).to.be.equal(champs);
                     expect(champs.getData()).to.be.eql([
@@ -2150,7 +2162,9 @@ describe("Collection test", function () {
 
                 it("should sort by an integer descending", function () {
 
-                    var result = champs.sortBy("id", "DESC");
+                    var result = champs.sortBy({
+                        id: "desc"
+                    });
 
                     expect(result).to.be.equal(champs);
                     expect(champs.getData()).to.be.eql([
@@ -2204,131 +2218,6 @@ describe("Collection test", function () {
                             championYears: [
                                 2008
                             ]
-                        }
-                    ]);
-
-                });
-
-                it("should receive an array of keys and sort in ascending order", function () {
-
-                    var result = champs.sortBy([
-                        "firstName"
-                    ]);
-
-                    expect(result).to.be.equal(champs);
-                    expect(champs.getData()).to.be.eql([
-                        {
-                            id: 4,
-                            firstName: "james",
-                            lastName: "hunt",
-                            team: "mclaren",
-                            dateOfBirth: new Date(1947, 7, 29),
-                            championYears: [
-                                1976
-                            ]
-                        },
-                        {
-                            id: 2,
-                            firstName: "Jenson",
-                            lastName: "Button",
-                            team: "McLaren",
-                            dateOfBirth: new Date(1980, 0, 19),
-                            championYears: [
-                                2009
-                            ]
-                        },
-                        {
-                            id: 0,
-                            firstName: "Lewis",
-                            lastName: "Hamilton",
-                            team: "Mercedes",
-                            dateOfBirth: new Date(1985, 0, 7),
-                            championYears: [
-                                2008
-                            ]
-                        },
-                        {
-                            id: 3,
-                            firstName: "Nico",
-                            lastName: "Rosberg",
-                            dateOfBirth: new Date(1985, 5, 27),
-                            team: "Mercedes",
-                            championYears: null
-                        },
-                        {
-                            id: 1,
-                            firstName: "Sebastian",
-                            lastName: "Vettel",
-                            team: "Red Bull",
-                            dateOfBirth: new Date(1987, 6, 3),
-                            championYears: [
-                                2010,
-                                2011,
-                                2012,
-                                2013
-                            ]
-                        }
-                    ]);
-
-                });
-
-                it("should not pass in a non-string in the array", function () {
-
-                    var result = champs.sortBy([
-                        {}
-                    ]);
-
-                    expect(champs.getData()).to.be.eql([
-                        {
-                            id: 1,
-                            firstName: "Sebastian",
-                            lastName: "Vettel",
-                            team: "Red Bull",
-                            dateOfBirth: new Date(1987, 6, 3),
-                            championYears: [
-                                2010,
-                                2011,
-                                2012,
-                                2013
-                            ]
-                        },
-                        {
-                            id: 2,
-                            firstName: "Jenson",
-                            lastName: "Button",
-                            team: "McLaren",
-                            dateOfBirth: new Date(1980, 0, 19),
-                            championYears: [
-                                2009
-                            ]
-                        },
-                        {
-                            id: 0,
-                            firstName: "Lewis",
-                            lastName: "Hamilton",
-                            team: "Mercedes",
-                            dateOfBirth: new Date(1985, 0, 7),
-                            championYears: [
-                                2008
-                            ]
-                        },
-                        {
-                            id: 4,
-                            firstName: "james",
-                            lastName: "hunt",
-                            team: "mclaren",
-                            dateOfBirth: new Date(1947, 7, 29),
-                            championYears: [
-                                1976
-                            ]
-                        },
-                        {
-                            id: 3,
-                            firstName: "Nico",
-                            lastName: "Rosberg",
-                            dateOfBirth: new Date(1985, 5, 27),
-                            team: "Mercedes",
-                            championYears: null
                         }
                     ]);
 
@@ -2337,22 +2226,28 @@ describe("Collection test", function () {
                 it("should throw an error with non-string, array or object", function () {
 
                         [
-                            undefined,
+                            void 0,
                             function () {
                             },
+                            [],
+                            "string",
+                            2.3,
+                            4,
+                            true,
+                            false,
                             null
                         ].forEach(function (input) {
 
                             var fail = false;
 
                             try {
-                                var result = champs.sortBy(input);
+                                champs.sortBy(input);
                             } catch (err) {
                                 fail = true;
 
-                                expect(err).to.be.instanceof(SyntaxError);
+                                expect(err).to.be.instanceof(TypeError);
                                 expect(err.message).to.be
-                                    .equal("Collection.sortBy must receive string, object or array");
+                                    .equal("Collection.sortBy must receive an object of keys and directions");
                             } finally {
                                 expect(fail).to.be.true;
                             }

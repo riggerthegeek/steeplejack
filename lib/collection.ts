@@ -19,6 +19,7 @@ import * as uuid from "node-uuid";
 /* Files */
 import {Base} from "./base";
 import {Model} from "./model/index";
+import {sortAsc, sortDesc} from "../helpers/sorting";
 import {ValidationException} from "../exception/validation/index";
 
 
@@ -563,7 +564,9 @@ export abstract class Collection extends Base {
     /**
      * Sort
      *
-     * Sort by the given sortation function
+     * Sort by the given sortation function. This
+     * works in the same way as the Array.prototype.sort
+     * method.
      *
      * @param {function} fn
      * @returns {Collection}
@@ -592,9 +595,67 @@ export abstract class Collection extends Base {
     }
 
 
-    public sortBy (params : Object, order : string = "ASC") : Collection {
+    /**
+     * Sort By
+     *
+     * This sorts by a key (or keys) in the model. The
+     * params should be an object, with the key as the
+     * key and the direction as the value.  The acceptable
+     * direction values are "ASC" or "DESC".  This works
+     * in broadly the same way as MySQLs sorting.
+     *
+     * @param {object} properties
+     * @returns {Collection}
+     */
+    public sortBy (properties : ISortProperty ) : Collection {
 
-        return this;
+        if (_.isPlainObject(properties) === false) {
+            throw new TypeError("Collection.sortBy must receive an object of keys and directions");
+        }
+
+        /* Build a search object */
+        let search = _.reduce(properties, (result: any, order: string, key: string) => {
+
+            /* Default to ascending */
+            result[key] = order.toUpperCase() === "DESC" ? sortDesc : sortAsc;
+
+            return result;
+
+        }, {});
+
+        /* Dispatch to the sort method */
+        return this.sort((a: ICollectionData, b: ICollectionData) => {
+
+            let keys = _.keys(search);
+            let keyLength = keys.length;
+            let forEnd = keyLength - 1;
+
+            for (var i = 0; i < keyLength; i++) {
+
+                /* Decide what we're searching by - go in search object order */
+                var key = keys[i];
+
+                /* Get the value from the model */
+                let value1 = a.model.get(key);
+                let value2 = b.model.get(key);
+
+                if (_.isString(value1)) {
+                    value1 = value1.toLowerCase();
+                }
+                if (_.isString(value2)) {
+                    value2 = value2.toLowerCase();
+                }
+
+                if (value1 === value2 && i !== forEnd) {
+                    /* Equal and not final sort key - things to do */
+                    break;
+                } else {
+                    return search[key](value1, value2);
+                }
+
+            }
+
+        });
 
     }
 
