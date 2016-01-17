@@ -900,6 +900,34 @@ describe("Collection test", function () {
 
         });
 
+        describe("#findLast", function () {
+
+            it("should return a unique object", function () {
+
+                expect(def.findLast({
+                    float: 2.2
+                })).to.be.equal(def.getByKey(0));
+
+            });
+
+            it("should return the last of a non-unique object", function () {
+
+                expect(def.findLast({
+                    float: 2.3
+                })).to.be.equal(def.getByKey(2));
+
+            });
+
+            it("should return null if nothing matches", function () {
+
+                expect(def.findLast({
+                    float: 2.4
+                })).to.be.null;
+
+            });
+
+        });
+
         describe("#getAll", function () {
 
             it("should return all the models", function () {

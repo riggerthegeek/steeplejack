@@ -211,9 +211,27 @@ export abstract class Collection extends Base {
     }
 
 
+    /**
+     * Find Last
+     *
+     * Opposite of find method.  This performs a
+     * reverse search on the collection, finding
+     * the last matching model.
+     *
+     * @param {object} properties
+     * @returns {Model}
+     */
     public findLast (properties : Object) : Model {
 
-        return null;
+        var result: Model = null;
+
+        this.eachRight((model: Model) => {
+            if (result === null && model.where(properties)) {
+                result = model;
+            }
+        });
+
+        return result;
 
     }
 
