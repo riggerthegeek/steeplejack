@@ -131,7 +131,16 @@ export abstract class Collection extends Base {
     }
 
 
-
+    /**
+     * Each Right
+     *
+     * Cycles through each model in the collection backwards
+     * and runs the iterator function on it.
+     *
+     * @param {function} iterator
+     * @param {object} thisArg
+     * @returns {Collection}
+     */
     public eachRight (iterator : Function, thisArg: Object = null) : Collection {
 
         if (_.isFunction(iterator) === false) {
