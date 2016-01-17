@@ -641,7 +641,7 @@ describe("Collection test", function () {
 
                 });
 
-                it("should search an instance of an defect and filter one result", function () {
+                it("should search an instance of an object and filter one result", function () {
 
                     var out = def.filter({
                         datetime: new Date(2010, 1, 7)
@@ -653,9 +653,9 @@ describe("Collection test", function () {
 
                 });
 
-                it("should search an instance of an defect and filter multiple results", function () {
+                it("should search an instance of an object and filter multiple results", function () {
 
-                    /* Change the third collection defect */
+                    /* Change the third collection object */
                     def.getByKey(2)
                         .set("datetime", "2010-02-08");
 
@@ -669,7 +669,7 @@ describe("Collection test", function () {
 
                 });
 
-                it("should search an instance of an defect and filter nothing", function () {
+                it("should search an instance of an object and filter nothing", function () {
 
                     var out = def.filter({
                         datetime: new Date("2010-02-01")
@@ -769,7 +769,7 @@ describe("Collection test", function () {
 
             });
 
-            it("should search an instance of an defect and filter one result", function () {
+            it("should search an instance of an object and filter one result", function () {
 
                 var out = def.filter({
                     float: 2.2,
@@ -782,7 +782,7 @@ describe("Collection test", function () {
 
             });
 
-            it("should search an instance of an defect and filter multiple results", function () {
+            it("should search an instance of an object and filter multiple results", function () {
 
                 var out = def.filter({
                     float: 2.3,
@@ -795,7 +795,7 @@ describe("Collection test", function () {
 
             });
 
-            it("should search an instance of an defect and filter nothing", function () {
+            it("should search an instance of an object and filter nothing", function () {
 
                 var out = def.filter({
                     float: 2.1,
@@ -868,6 +868,34 @@ describe("Collection test", function () {
                     expect(fail).to.be.true;
 
                 }
+            });
+
+        });
+
+        describe("#find", function () {
+
+            it("should return a unique object", function () {
+
+                expect(def.find({
+                    float: 2.2
+                })).to.be.equal(def.getByKey(0));
+
+            });
+
+            it("should return the first of a non-unique object", function () {
+
+                expect(def.find({
+                    float: 2.3
+                })).to.be.equal(def.getByKey(1));
+
+            });
+
+            it("should return null if nothing matches", function () {
+
+                expect(def.find({
+                    float: 2.4
+                })).to.be.null;
+
             });
 
         });

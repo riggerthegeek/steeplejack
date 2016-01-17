@@ -185,9 +185,28 @@ export abstract class Collection extends Base {
     }
 
 
+    /**
+     * Find
+     *
+     * Similar to the where method, except that this
+     * returns the first model that returns a match.
+     * This may mean that there are additional things
+     * that would match.
+     *
+     * @param {object} properties
+     * @returns {null}
+     */
     public find (properties : Object) : Model {
 
-        return null;
+        var result: Model = null;
+
+        this.each((model: Model) => {
+            if (result === null && model.where(properties)) {
+                result = model;
+            }
+        });
+
+        return result;
 
     }
 
