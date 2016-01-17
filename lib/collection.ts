@@ -107,6 +107,59 @@ export abstract class Collection extends Base {
 
 
     /**
+     * Each
+     *
+     * Cycles through each model in the collection and
+     * runs the iterator function on it.
+     *
+     * @param {function} iterator
+     * @param {object} thisArg
+     * @returns {Collection}
+     */
+    public each (iterator : Function, thisArg: Object = null) : Collection {
+
+        if (_.isFunction(iterator) === false) {
+            throw new TypeError("iterator must be a function");
+        }
+
+        _.each(this.getAll(), (data: ICollectionData) => {
+            return iterator.call(thisArg, data.model, data.id, this.getAll());
+        });
+
+        return this;
+
+    }
+
+
+    public eachRight (iterator : Function) : Collection {
+
+        return this;
+
+    }
+
+
+    public filter (properties : Object) : Collection {
+
+        return this;
+
+    }
+
+
+    public find (properties : Object) : Model {
+
+        return null;
+
+    }
+
+
+    public findLast (properties : Object) : Model {
+
+        return null;
+
+    }
+
+
+    /**
      * Get All
      *
      * Returns the data array
@@ -396,6 +449,27 @@ export abstract class Collection extends Base {
     }
 
 
+    public removeByModel (model: Model) : boolean {
+
+        return false;
+
+    }
+
+
+    public sort (fn: Function) : Collection {
+
+        return this;
+
+    }
+
+
+    public sortBy (params : Object, order : string = "ASC") : Collection {
+
+        return this;
+
+    }
+
+
     /**
      * To Db
      *
@@ -451,11 +525,22 @@ export abstract class Collection extends Base {
     }
 
 
-    //public static toModels() {
-    //
-    //    return 2;
-    //
-    //}
+    public where (properties : Object) : Collection {
+
+        return this;
+
+    }
+
+
+    public static toModels(data : any[] = null) : Collection {
+
+        /* Create a new instance of this collection with default data */
+        let collection = Object.create(this.prototype);
+        this.apply(collection, []);
+
+        return collection;
+
+    }
 
 
 }

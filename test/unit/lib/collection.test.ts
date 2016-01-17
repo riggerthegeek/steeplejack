@@ -26,6 +26,7 @@ const UUID_V4 = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F
 
 describe("Collection test", function () {
 
+    let def: any;
     beforeEach(function () {
 
         class Child extends Model {
@@ -57,6 +58,32 @@ describe("Collection test", function () {
                 return Child;
             }
         }
+
+        def = new Children([
+            {
+                boolean: "true",
+                datetime: "2010-02-07",
+                float: "2.2",
+                integer: "2",
+                string: "string"
+            },
+            {
+                boolean: "true",
+                datetime: "2010-02-08",
+                float: "2.3",
+                integer: "2",
+                string: "string"
+            },
+            {
+                boolean: "true",
+                datetime: "2010-02-09",
+                float: "2.3",
+                integer: "2",
+                string: "string"
+            }
+        ]);
+
+        expect(def.getCount()).to.be.equal(3);
 
         this.Child = Child;
         this.Children = Children;
@@ -395,6 +422,79 @@ describe("Collection test", function () {
                 expect(obj.addOne()).to.be.equal(obj);
 
                 expect(obj.getCount()).to.be.equal(0);
+
+            });
+
+        });
+
+        describe("#each", function () {
+
+            it("should run the each method", function () {
+
+                var x = 0;
+
+                var out = def.each(function (model: any) {
+                    expect(model).to.be.equal(def.getByKey(x++));
+                });
+
+                expect(x).to.be.equal(3);
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should set the scope to global if thisArg not set", function () {
+
+                var self = this;
+                var out = def.each(function () {
+                    expect(this).to.not.be.equal(self);
+                });
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should receive a function and set the scope with the second parameter to this", function () {
+
+                var self = this;
+
+                var out = def.each(function () {
+                    expect(this).to.be.equal(self);
+                }, this);
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should set the scope to a different object", function () {
+
+                var out = def.each(function () {
+                    expect(this.fn).to.be.a("function");
+                    expect(this.id).to.be.equal(12345);
+                }, {
+                    fn: function () {
+                    },
+                    id: 12345
+                });
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should throw an error when a non-function received", function () {
+
+                var fail = false;
+
+                try {
+                    def.each("string");
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("iterator must be a function");
+                }
+
+                expect(fail).to.be.true;
 
             });
 
