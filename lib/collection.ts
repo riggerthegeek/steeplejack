@@ -131,7 +131,16 @@ export abstract class Collection extends Base {
     }
 
 
-    public eachRight (iterator : Function) : Collection {
+
+    public eachRight (iterator : Function, thisArg: Object = null) : Collection {
+
+        if (_.isFunction(iterator) === false) {
+            throw new TypeError("iterator must be a function");
+        }
+
+        _.eachRight(this.getAll(), (data: ICollectionData) => {
+            return iterator.call(thisArg, data.model, data.id, this.getAll());
+        });
 
         return this;
 

@@ -433,8 +433,16 @@ describe("Collection test", function () {
 
                 var x = 0;
 
-                var out = def.each(function (model: any) {
-                    expect(model).to.be.equal(def.getByKey(x++));
+                let keys = def.getIds();
+
+                var out = def.each(function (model: any, id: string, obj: any[]) {
+
+                    expect(model).to.be.equal(def.getByKey(x));
+                    expect(id).to.be.equal(keys[x]);
+                    expect(obj).to.be.equal(def.getAll());
+
+                    x++;
+
                 });
 
                 expect(x).to.be.equal(3);
@@ -487,6 +495,87 @@ describe("Collection test", function () {
 
                 try {
                     def.each("string");
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("iterator must be a function");
+                }
+
+                expect(fail).to.be.true;
+
+            });
+
+        });
+
+        describe("#eachRight", function () {
+
+            it("should run the eachRight method", function () {
+
+                var x = 3;
+
+                let keys = def.getIds();
+
+                var out = def.eachRight(function (model: any, id: string, obj: any[]) {
+
+                    x--;
+
+                    expect(model).to.be.equal(def.getByKey(x));
+                    expect(id).to.be.equal(keys[x]);
+                    expect(obj).to.be.equal(def.getAll());
+
+                });
+
+                expect(x).to.be.equal(0);
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should set the scope to global if thisArg not set", function () {
+
+                var self = this;
+                var out = def.eachRight(function () {
+                    expect(this).to.not.be.equal(self);
+                });
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should receive a function and set the scope with the second parameter to this", function () {
+
+                var self = this;
+
+                var out = def.eachRight(function () {
+                    expect(this).to.be.equal(self);
+                }, this);
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should set the scope to a different object", function () {
+
+                var out = def.eachRight(function () {
+                    expect(this.fn).to.be.a("function");
+                    expect(this.id).to.be.equal(12345);
+                }, {
+                    fn: function () {
+                    },
+                    id: 12345
+                });
+
+                expect(out).to.be.equal(def);
+
+            });
+
+            it("should throw an error when a non-function received", function () {
+
+                var fail = false;
+
+                try {
+                    def.eachRight("string");
                 } catch (err) {
                     fail = true;
 
