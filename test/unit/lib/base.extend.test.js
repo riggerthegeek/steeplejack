@@ -21,6 +21,136 @@ var Base = require("../../../lib/base").Base;
 var expect = require("../../helpers/configure").expect;
 
 
+describe("Base.extend Coffee test", function () {
+
+    // Compiled on http://js2.coffee/
+    it("should allow extension of this class", function () {
+
+        var Child,
+            extend = function(child, parent) {
+                for (var key in parent) {
+                    if (hasProp.call(parent, key)) {
+                        child[key] = parent[key];
+                    }
+                }
+                function ctor() {
+                    this.constructor = child;
+                }
+                ctor.prototype = parent.prototype;
+                child.prototype = new ctor();
+                child.__super__ = parent.prototype;
+                return child;
+            },
+            hasProp = {}.hasOwnProperty;
+
+        Child = (function(superClass) {
+            extend(Child, superClass);
+
+            function Child() {
+                return Child.__super__.constructor.apply(this, arguments);
+            }
+
+            return Child;
+
+        })(Base);
+
+        var obj = new Child();
+
+        expect(obj).to.be.instanceof(Child)
+            .instanceof(Base)
+            .instanceof(EventEmitter);
+
+    });
+
+});
+
+
+describe("Base.extend ES6 test", function () {
+
+    // Compile on https://babeljs.io/repl
+    it("should allow extension of this class", function () {
+
+        var _get = function get(_x, _x2, _x3) {
+            var _again = true;
+            _function: while (_again) {
+                var object = _x,
+                    property = _x2,
+                    receiver = _x3;
+                _again = false;
+                if (object === null) {
+                    object = Function.prototype;
+                }
+                var desc = Object.getOwnPropertyDescriptor(object, property);
+                if (desc === undefined) {
+                    var parent = Object.getPrototypeOf(object);
+                    if (parent === null) {
+                        return undefined;
+                    } else {
+                        _x = parent;
+                        _x2 = property;
+                        _x3 = receiver;
+                        _again = true;
+                        desc = parent = undefined;
+                        continue _function;
+                    }
+                } else if ("value" in desc) {
+                    return desc.value;
+                } else {
+                    var getter = desc.get;
+                    if (getter === undefined) {
+                        return undefined;
+                    }
+                    return getter.call(receiver);
+                }
+            }
+        };
+
+        function _classCallCheck(instance, Constructor) {
+            if (!(instance instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function");
+            }
+        }
+
+        function _inherits(subClass, superClass) {
+            if (typeof superClass !== "function" && superClass !== null) {
+                throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+            }
+            subClass.prototype = Object.create(superClass && superClass.prototype, {
+                constructor: {
+                    value: subClass,
+                    enumerable: false,
+                    writable: true,
+                    configurable: true
+                }
+            });
+            if (superClass) {
+                Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+            }
+        }
+
+        var Child = (function (_Base) {
+            _inherits(Child, _Base);
+
+            function Child() {
+                _classCallCheck(this, Child);
+
+                _get(Object.getPrototypeOf(Child.prototype), "constructor", this).apply(this, arguments);
+            }
+
+            return Child;
+        })(Base);
+
+        var obj = new Child();
+
+        expect(obj).to.be.instanceof(Child)
+            .instanceof(Base)
+            .instanceof(EventEmitter);
+
+    });
+
+});
+
+
 describe("Base.extend ES5 test", function () {
 
     describe("#constructor", function () {
