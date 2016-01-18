@@ -67,7 +67,7 @@ describe("Base.extend Coffee test", function () {
 
 describe("Base.extend ES6 test", function () {
 
-    // Compile on https://babeljs.io/repl
+    // Compiled on https://babeljs.io/repl
     it("should allow extension of this class", function () {
 
         var _get = function get(_x, _x2, _x3) {
