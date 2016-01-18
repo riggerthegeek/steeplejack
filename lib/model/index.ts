@@ -20,11 +20,9 @@ import {data as datatypes} from "datautils";
 import {Base} from "./../base";
 import {Definition} from "./definition";
 import {ValidationException} from "../../exception/validation/index";
-import {
-    dataCasting,
-    getFnName,
-    scalarValues
-} from "./helpers";
+import {dataCasting} from "../../helpers/dataCasting";
+import {getFnName} from "../../helpers/getFnName";
+import {scalarValues} from "../../helpers/scalarValues";
 
 
 export abstract class Model extends Base {
