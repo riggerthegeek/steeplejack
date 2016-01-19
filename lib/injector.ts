@@ -46,6 +46,14 @@ let construct = (constructor: Function, args: any[]) : any => {
 };
 
 
+let isES5Class = (target: any) : boolean => {
+    return _.has(target, [
+        "prototype",
+        "_construct"
+    ]);
+};
+
+
 export class Injector extends Base {
 
 
@@ -81,32 +89,42 @@ export class Injector extends Base {
         }
 
         let dependencies: any[];
+        let fn: Function;
 
-        if (_.isFunction (target)) {
-
-            /* Find the arguments in the function */
-            let text: string = target.toString();
-
-            dependencies = text.match(FN_ARGS)[1]
-                .split(",");
-
-        } else {
+        if (_.isFunction (target) === false) {
 
             /* Take from the array - last element must be a function */
             dependencies = _.cloneDeep(target);
 
             /* Set the function as the target */
-            target = dependencies.pop();
+            fn = dependencies.pop();
 
-            if (_.isFunction(target) === false) {
+            if (isES5Class(fn)) {
+                fn = fn.prototype._construct;
+            }
+
+            if (_.isFunction(fn) === false) {
                 throw new SyntaxError("No constructor function in injector array");
             }
+
+        } else {
+
+            if (isES5Class(target)) {
+                fn = target.prototype._construct;
+            } else {
+                fn = target;
+            }
+
+            let text = fn.toString();
+
+            dependencies = text.match(FN_ARGS)[1]
+                .split(",");
 
         }
 
         return {
             dependencies: dependencies,
-            target: target
+            target: fn
         };
 
     }
