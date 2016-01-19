@@ -642,10 +642,10 @@ export abstract class Collection extends Base {
             let keyLength = keys.length;
             let forEnd = keyLength - 1;
 
-            for (var i = 0; i < keyLength; i++) {
+            for (let integer = 0; integer < keyLength; integer++) {
 
                 /* Decide what we're searching by - go in search object order */
-                var key = keys[i];
+                let key = keys[integer];
 
                 /* Get the value from the model */
                 let value1 = a.model.get(key);
@@ -658,7 +658,7 @@ export abstract class Collection extends Base {
                     value2 = value2.toLowerCase();
                 }
 
-                if (value1 === value2 && i !== forEnd) {
+                if (value1 === value2 && integer !== forEnd) {
                     /* Equal and not final sort key - things to do */
                     break;
                 } else {

@@ -9,4 +9,3 @@
 /// <reference path="node-uuid/node-uuid-base.d.ts" />
 /// <reference path="node-uuid/node-uuid-cjs.d.ts" />
 /// <reference path="node-uuid/node-uuid.d.ts" />
-/// <reference path="es6-promise/es6-promise.d.ts" />
