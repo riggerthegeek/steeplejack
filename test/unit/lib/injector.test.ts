@@ -43,166 +43,353 @@ describe("Injector library", function () {
             obj = new Injector();
         });
 
-        it("should process test dependencies wrapped in underscores", function () {
+        describe("function", function () {
 
-            var target = function (
-                _topLevel_: any,
-                _topLevel2_: any,
-                _$config_: any,
-                __config_: any,
-                topLevel: any,
-                topLevel2: any,
-                $config: any,
-                _config: any
-            ) {
+            it("should process test dependencies wrapped in underscores", function () {
 
-                this.exec = _topLevel_;
-                this.exec2 = _topLevel2_;
-                this.exec3 = _$config_;
-                this.exec4 = __config_;
+                var target = function (_topLevel_:any,
+                                       _topLevel2_:any,
+                                       _$config_:any,
+                                       __config_:any,
+                                       topLevel:any,
+                                       topLevel2:any,
+                                       $config:any,
+                                       _config:any) {
 
-                this.match = _topLevel_ === topLevel;
-                this.match2 = _topLevel2_ === topLevel2;
-                this.match3 = _$config_ === $config;
-                this.match4 = __config_ === _config;
+                    this.exec = _topLevel_;
+                    this.exec2 = _topLevel2_;
+                    this.exec3 = _$config_;
+                    this.exec4 = __config_;
 
-            };
+                    this.match = _topLevel_ === topLevel;
+                    this.match2 = _topLevel2_ === topLevel2;
+                    this.match3 = _$config_ === $config;
+                    this.match4 = __config_ === _config;
 
-            obj.registerFactory("topLevel", function () {
-                    return {
-                        key: "value"
-                    };
-                })
-                .registerFactory("topLevel2", function () {
-                    return {
-                        key: "value2"
-                    };
-                })
-                .registerFactory("$config", function () {
-                    return {
-                        key: "value3"
-                    };
-                })
-                .registerFactory("_config", function () {
-                    return {
-                        key: "value4"
-                    };
+                };
+
+                obj.registerFactory("topLevel", function () {
+                        return {
+                            key: "value"
+                        };
+                    })
+                    .registerFactory("topLevel2", function () {
+                        return {
+                            key: "value2"
+                        };
+                    })
+                    .registerFactory("$config", function () {
+                        return {
+                            key: "value3"
+                        };
+                    })
+                    .registerFactory("_config", function () {
+                        return {
+                            key: "value4"
+                        };
+                    });
+
+                var objTarget = obj.process(target, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
                 });
 
-            var objTarget = obj.process(target, true);
+                expect(objTarget.match).to.be.true;
 
-            expect(objTarget.exec).to.be.eql({
-                key: "value"
-            });
-
-            expect(objTarget.match).to.be.true;
-
-            expect(objTarget.exec2).to.be.eql({
-                key: "value2"
-            });
-
-            expect(objTarget.match2).to.be.true;
-
-            expect(objTarget.exec3).to.be.eql({
-                key: "value3"
-            });
-
-            expect(objTarget.match3).to.be.true;
-
-            expect(objTarget.exec4).to.be.eql({
-                key: "value4"
-            });
-
-            expect(objTarget.match4).to.be.true;
-
-        });
-
-        it("should process alnum dependencies with no underscores", function () {
-
-            var target = function (topLevel: any, topLevel2: any) {
-
-                this.exec = topLevel;
-                this.exec2 = topLevel2;
-
-            };
-
-            obj.registerFactory("topLevel", function () {
-                    return {
-                        key: "value"
-                    }
-                })
-                .registerFactory("topLevel2", function () {
-                    return {
-                        key: "value2"
-                    }
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
                 });
 
-            var objTarget = obj.process(target, true);
+                expect(objTarget.match2).to.be.true;
 
-            expect(objTarget.exec).to.be.eql({
-                key: "value"
+                expect(objTarget.exec3).to.be.eql({
+                    key: "value3"
+                });
+
+                expect(objTarget.match3).to.be.true;
+
+                expect(objTarget.exec4).to.be.eql({
+                    key: "value4"
+                });
+
+                expect(objTarget.match4).to.be.true;
+
             });
 
-            expect(objTarget.exec2).to.be.eql({
-                key: "value2"
-            });
+            it("should process alnum dependencies with no underscores", function () {
 
-        });
-
-        it("should process test dependencies wrapped in non-wrapping underscores", function () {
-
-            /* Use array to pass linting */
-            var target = [
-                "_topLevel",
-                "topLevel2_",
-                "$_config",
-                "_$config",
-                function (topLevel: any, topLevel2: any, $config: any, $config2: any) {
+                var target = function (topLevel:any, topLevel2:any) {
 
                     this.exec = topLevel;
                     this.exec2 = topLevel2;
-                    this.exec3 = $config;
-                    this.exec4 = $config2;
 
-                }];
+                };
 
-            obj.registerFactory("_topLevel", function () {
-                    return {
-                        key: "value"
-                    }
-                })
-                .registerFactory("topLevel2_", function () {
-                    return {
-                        key: "value2"
-                    }
-                })
-                .registerFactory("$_config", function () {
-                    return {
-                        key: "value3"
-                    }
-                })
-                .registerFactory("_$config", function () {
-                    return {
-                        key: "value4"
-                    }
+                obj.registerFactory("topLevel", function () {
+                        return {
+                            key: "value"
+                        }
+                    })
+                    .registerFactory("topLevel2", function () {
+                        return {
+                            key: "value2"
+                        }
+                    });
+
+                var objTarget = obj.process(target, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
                 });
 
-            var objTarget = obj.process(target, true);
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
 
-            expect(objTarget.exec).to.be.eql({
-                key: "value"
             });
 
-            expect(objTarget.exec2).to.be.eql({
-                key: "value2"
+            it("should process test dependencies wrapped in non-wrapping underscores", function () {
+
+                /* Use array to pass linting */
+                var target = [
+                    "_topLevel",
+                    "topLevel2_",
+                    "$_config",
+                    "_$config",
+                    function (topLevel:any, topLevel2:any, $config:any, $config2:any) {
+
+                        this.exec = topLevel;
+                        this.exec2 = topLevel2;
+                        this.exec3 = $config;
+                        this.exec4 = $config2;
+
+                    }];
+
+                obj.registerFactory("_topLevel", function () {
+                        return {
+                            key: "value"
+                        }
+                    })
+                    .registerFactory("topLevel2_", function () {
+                        return {
+                            key: "value2"
+                        }
+                    })
+                    .registerFactory("$_config", function () {
+                        return {
+                            key: "value3"
+                        }
+                    })
+                    .registerFactory("_$config", function () {
+                        return {
+                            key: "value4"
+                        }
+                    });
+
+                var objTarget = obj.process(target, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
+                });
+
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
+
+                expect(objTarget.exec3).to.be.eql({
+                    key: "value3"
+                });
+
+                expect(objTarget.exec4).to.be.eql({
+                    key: "value4"
+                });
+
             });
 
-            expect(objTarget.exec3).to.be.eql({
-                key: "value3"
+        });
+
+        describe("class", function () {
+
+            it("should process test dependencies wrapped in underscores", function () {
+
+                class target {
+                    public exec: any;
+                    public exec2: any;
+                    public exec3: any;
+                    public exec4: any;
+                    public match: any;
+                    public match2: any;
+                    public match3: any;
+                    public match4: any;
+                    constructor(_topLevel_:any,
+                                _topLevel2_:any,
+                                _$config_:any,
+                                __config_:any,
+                                topLevel:any,
+                                topLevel2:any,
+                                $config:any,
+                                _config:any) {
+
+                        this.exec = _topLevel_;
+                        this.exec2 = _topLevel2_;
+                        this.exec3 = _$config_;
+                        this.exec4 = __config_;
+
+                        this.match = _topLevel_ === topLevel;
+                        this.match2 = _topLevel2_ === topLevel2;
+                        this.match3 = _$config_ === $config;
+                        this.match4 = __config_ === _config;
+
+                    }
+                }
+
+                obj.registerFactory("topLevel", function () {
+                        return {
+                            key: "value"
+                        };
+                    })
+                    .registerFactory("topLevel2", function () {
+                        return {
+                            key: "value2"
+                        };
+                    })
+                    .registerFactory("$config", function () {
+                        return {
+                            key: "value3"
+                        };
+                    })
+                    .registerFactory("_config", function () {
+                        return {
+                            key: "value4"
+                        };
+                    });
+
+                var objTarget = obj.process(target, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
+                });
+
+                expect(objTarget.match).to.be.true;
+
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
+
+                expect(objTarget.match2).to.be.true;
+
+                expect(objTarget.exec3).to.be.eql({
+                    key: "value3"
+                });
+
+                expect(objTarget.match3).to.be.true;
+
+                expect(objTarget.exec4).to.be.eql({
+                    key: "value4"
+                });
+
+                expect(objTarget.match4).to.be.true;
+
             });
 
-            expect(objTarget.exec4).to.be.eql({
-                key: "value4"
+            it("should process alnum dependencies with no underscores", function () {
+
+                class target {
+                    public exec: any;
+                    public exec2: any;
+                    constructor (topLevel:any, topLevel2:any) {
+                        this.exec = topLevel;
+                        this.exec2 = topLevel2;
+                    }
+                }
+
+                obj.registerFactory("topLevel", function () {
+                        return {
+                            key: "value"
+                        }
+                    })
+                    .registerFactory("topLevel2", function () {
+                        return {
+                            key: "value2"
+                        }
+                    });
+
+                var objTarget = obj.process(target, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
+                });
+
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
+
+            });
+
+            it("should process test dependencies wrapped in non-wrapping underscores", function () {
+
+                /* Use array to pass linting */
+                var target = [
+                    "_topLevel",
+                    "topLevel2_",
+                    "$_config",
+                    "_$config",
+                    class MyClass {
+                        public exec: any;
+                        public exec2: any;
+                        public exec3: any;
+                        public exec4: any;
+                        constructor (topLevel:any, topLevel2:any, $config:any, $config2:any) {
+
+                            this.exec = topLevel;
+                            this.exec2 = topLevel2;
+                            this.exec3 = $config;
+                            this.exec4 = $config2;
+
+                        }
+                    }
+                ];
+
+                obj.registerFactory("_topLevel", function () {
+                        return {
+                            key: "value"
+                        }
+                    })
+                    .registerFactory("topLevel2_", function () {
+                        return {
+                            key: "value2"
+                        }
+                    })
+                    .registerFactory("$_config", function () {
+                        return {
+                            key: "value3"
+                        }
+                    })
+                    .registerFactory("_$config", function () {
+                        return {
+                            key: "value4"
+                        }
+                    });
+
+                var objTarget = obj.process(target, true);
+
+                expect(objTarget.exec).to.be.eql({
+                    key: "value"
+                });
+
+                expect(objTarget.exec2).to.be.eql({
+                    key: "value2"
+                });
+
+                expect(objTarget.exec3).to.be.eql({
+                    key: "value3"
+                });
+
+                expect(objTarget.exec4).to.be.eql({
+                    key: "value4"
+                });
+
             });
 
         });
@@ -220,147 +407,311 @@ describe("Injector library", function () {
 
             describe("dependencies gotten from the function", function () {
 
-                it("should process a target that has no dependencies", function () {
+                describe("function", function () {
 
-                    var target = function () {
-                    };
+                    it("should process a target that has no dependencies", function () {
 
-                    expect(obj.process(target)).to.be.instanceof(target);
+                        var target = function () {
+                        };
 
-                });
+                        expect(obj.process(target)).to.be.instanceof(target);
 
-                it("should process a target that has a top-level dependency", function () {
-
-                    var target = function (topLevel: any) {
-
-                        this.exec = topLevel;
-
-                    };
-
-                    obj.registerSingleton("topLevel", function () {
-                        return "hello";
-                    });
-                    obj.registerSingleton("ignore", function () {
-                        throw new Error("ignored");
                     });
 
-                    let objTarget = obj.process(target);
-                    expect(objTarget).to.be.instanceof(target);
-                    expect(objTarget.exec()).to.be.equal("hello");
+                    it("should process a target that has a top-level dependency", function () {
 
-                });
+                        var target = function (topLevel:any) {
 
-                it("should process a target that has a multiple top-level dependencies", function () {
+                            this.exec = topLevel;
 
-                    var target = function (topLevel: any, otherFunc: any) {
+                        };
 
-                        this.exec = topLevel;
-                        this.otherFunc = otherFunc;
+                        obj.registerSingleton("topLevel", function () {
+                            return "hello";
+                        });
+                        obj.registerSingleton("ignore", function () {
+                            throw new Error("ignored");
+                        });
 
-                    };
+                        let objTarget = obj.process(target);
+                        expect(objTarget).to.be.instanceof(target);
+                        expect(objTarget.exec()).to.be.equal("hello");
 
-                    obj.registerSingleton("topLevel", function () {
-                        return "hello";
-                    });
-                    obj.registerSingleton("otherFunc", function () {
-                        return "otherFunc";
-                    });
-
-                    var objTarget = obj.process(target);
-                    expect(objTarget).to.be.instanceof(target);
-                    expect(objTarget.exec()).to.be.equal("hello");
-                    expect(objTarget.otherFunc()).to.be.equal("otherFunc");
-
-                });
-
-                it("should get a constructor dependency", function () {
-
-                    var target = function (topLevel: any) {
-
-                        this.exec = topLevel;
-
-                    };
-
-                    obj.registerFactory("topLevel", function () {
-                        return {
-                            key: "value"
-                        }
                     });
 
-                    var objTarget = obj.process(target);
+                    it("should process a target that has a multiple top-level dependencies", function () {
 
-                    expect(objTarget.exec).to.be.eql({
-                        key: "value"
-                    });
+                        var target = function (topLevel:any, otherFunc:any) {
 
-                });
+                            this.exec = topLevel;
+                            this.otherFunc = otherFunc;
 
-                it("should process stacked dependencies", function () {
+                        };
 
-                    var target = function (topLevel: any) {
+                        obj.registerSingleton("topLevel", function () {
+                            return "hello";
+                        });
+                        obj.registerSingleton("otherFunc", function () {
+                            return "otherFunc";
+                        });
 
-                        this.exec = topLevel;
-
-                    };
-
-                    obj.registerFactory("topLevel", function (bottomLevel: any) {
-                        return bottomLevel;
-                    });
-                    obj.registerSingleton("bottomLevel", function () {
-                        return "lowerLevel";
-                    });
-
-                    var objTarget = obj.process(target);
-
-                    expect(objTarget.exec()).to.be.equal("lowerLevel");
-
-                });
-
-                it("should replace underscored variables if it's a test", function () {
-
-                    var target = function (_topLevel_: any) {
-
-                        this.exec = _topLevel_;
-
-                    };
-
-                    obj.registerFactory("topLevel", function (bottomLevel: any) {
-                        return bottomLevel;
-                    });
-                    obj.registerSingleton("bottomLevel", function () {
-                        return "lowerLevel";
-                    });
-
-                    var objTarget = obj.process(target, true);
-
-                    expect(objTarget.exec()).to.be.equal("lowerLevel");
-
-                });
-
-                it("should throw an error if dependency is missing", function () {
-
-                    var target = function (topLevel: any, otherFunc: any) {
-
-                        this.exec = topLevel;
-                        this.otherFunc = otherFunc;
-
-                    };
-
-                    obj.registerSingleton("topLevel", function () {
-                        return "hello";
-                    });
-
-                    var fail = false;
-                    try {
                         var objTarget = obj.process(target);
-                    } catch (err) {
-                        fail = true;
+                        expect(objTarget).to.be.instanceof(target);
+                        expect(objTarget.exec()).to.be.equal("hello");
+                        expect(objTarget.otherFunc()).to.be.equal("otherFunc");
 
-                        expect(err).to.be.instanceof(Error);
-                        expect(err.message).to.be.equal("Missing dependency: otherFunc");
-                    }
+                    });
 
-                    expect(fail).to.be.true;
+                    it("should get a constructor dependency", function () {
+
+                        var target = function (topLevel:any) {
+
+                            this.exec = topLevel;
+
+                        };
+
+                        obj.registerFactory("topLevel", function () {
+                            return {
+                                key: "value"
+                            }
+                        });
+
+                        var objTarget = obj.process(target);
+
+                        expect(objTarget.exec).to.be.eql({
+                            key: "value"
+                        });
+
+                    });
+
+                    it("should process stacked dependencies", function () {
+
+                        var target = function (topLevel:any) {
+
+                            this.exec = topLevel;
+
+                        };
+
+                        obj.registerFactory("topLevel", function (bottomLevel:any) {
+                            return bottomLevel;
+                        });
+                        obj.registerSingleton("bottomLevel", function () {
+                            return "lowerLevel";
+                        });
+
+                        var objTarget = obj.process(target);
+
+                        expect(objTarget.exec()).to.be.equal("lowerLevel");
+
+                    });
+
+                    it("should replace underscored variables if it's a test", function () {
+
+                        var target = function (_topLevel_:any) {
+
+                            this.exec = _topLevel_;
+
+                        };
+
+                        obj.registerFactory("topLevel", function (bottomLevel:any) {
+                            return bottomLevel;
+                        });
+                        obj.registerSingleton("bottomLevel", function () {
+                            return "lowerLevel";
+                        });
+
+                        var objTarget = obj.process(target, true);
+
+                        expect(objTarget.exec()).to.be.equal("lowerLevel");
+
+                    });
+
+                    it("should throw an error if dependency is missing", function () {
+
+                        var target = function (topLevel:any, otherFunc:any) {
+
+                            this.exec = topLevel;
+                            this.otherFunc = otherFunc;
+
+                        };
+
+                        obj.registerSingleton("topLevel", function () {
+                            return "hello";
+                        });
+
+                        var fail = false;
+                        try {
+                            var objTarget = obj.process(target);
+                        } catch (err) {
+                            fail = true;
+
+                            expect(err).to.be.instanceof(Error);
+                            expect(err.message).to.be.equal("Missing dependency: otherFunc");
+                        }
+
+                        expect(fail).to.be.true;
+
+                    });
+
+                });
+
+                describe("class", function () {
+
+                    it("should process a target that has no dependencies", function () {
+
+                        class Target {
+                            constructor () {
+                            }
+                        }
+
+                        expect(obj.process(Target)).to.be.instanceof(Target);
+
+                    });
+
+                    it("should process a target that has a top-level dependency", function () {
+
+                        class Target {
+                            public exec: any;
+                            constructor (topLevel: any) {
+                                this.exec = topLevel;
+                            }
+                        }
+
+                        obj.registerSingleton("topLevel", function () {
+                            return "hello";
+                        });
+                        obj.registerSingleton("ignore", function () {
+                            throw new Error("ignored");
+                        });
+
+                        let objTarget = obj.process(Target);
+                        expect(objTarget).to.be.instanceof(Target);
+                        expect(objTarget.exec()).to.be.equal("hello");
+
+                    });
+
+                    it("should process a target that has a multiple top-level dependencies", function () {
+
+                        class Target {
+                            public exec: any;
+                            public otherFunc : any;
+                            constructor(topLevel:any, otherFunc:any) {
+
+                                this.exec = topLevel;
+                                this.otherFunc = otherFunc;
+                            }
+                        }
+
+                        obj.registerSingleton("topLevel", function () {
+                            return "hello";
+                        });
+                        obj.registerSingleton("otherFunc", function () {
+                            return "otherFunc";
+                        });
+
+                        var objTarget = obj.process(Target);
+                        expect(objTarget).to.be.instanceof(Target);
+                        expect(objTarget.exec()).to.be.equal("hello");
+                        expect(objTarget.otherFunc()).to.be.equal("otherFunc");
+
+                    });
+
+                    it("should get a constructor dependency", function () {
+
+                        class Target {
+                            exec: any;
+                            constructor (topLevel: any) {
+                                this.exec = topLevel;
+                            }
+                        }
+
+                        obj.registerFactory("topLevel", function () {
+                            return {
+                                key: "value"
+                            }
+                        });
+
+                        var objTarget = obj.process(Target);
+
+                        expect(objTarget.exec).to.be.eql({
+                            key: "value"
+                        });
+
+                    });
+
+                    it("should process stacked dependencies", function () {
+
+                        class Target {
+                            public exec: any;
+                            constructor (topLevel: any) {
+                                this.exec = topLevel;
+                            }
+                        }
+
+                        obj.registerFactory("topLevel", function (bottomLevel: any) {
+                            return bottomLevel;
+                        });
+                        obj.registerSingleton("bottomLevel", function () {
+                            return "lowerLevel";
+                        });
+
+                        var objTarget = obj.process(Target);
+
+                        expect(objTarget.exec()).to.be.equal("lowerLevel");
+
+                    });
+
+                    it("should replace underscored variables if it's a test", function () {
+
+                        class Target {
+                            public exec: any;
+                            constructor (_topLevel_: any) {
+                                this.exec = _topLevel_;
+                            }
+                        }
+
+                        obj.registerFactory("topLevel", function (bottomLevel: any) {
+                            return bottomLevel;
+                        });
+                        obj.registerSingleton("bottomLevel", function () {
+                            return "lowerLevel";
+                        });
+
+                        var objTarget = obj.process(Target, true);
+
+                        expect(objTarget.exec()).to.be.equal("lowerLevel");
+
+                    });
+
+                    it("should throw an error if dependency is missing", function () {
+
+                        class Target {
+                            public exec:any;
+                            public otherFunc:any;
+
+                            constructor(topLevel:any, otherFunc:any) {
+                                this.exec = topLevel;
+                                this.otherFunc = otherFunc;
+                            }
+                        }
+
+                        obj.registerSingleton("topLevel", function () {
+                            return "hello";
+                        });
+
+                        var fail = false;
+                        try {
+                            var objTarget = obj.process(Target);
+                        } catch (err) {
+                            fail = true;
+
+                            expect(err).to.be.instanceof(Error);
+                            expect(err.message).to.be.equal("Missing dependency: otherFunc");
+                        }
+
+                        expect(fail).to.be.true;
+
+                    });
 
                 });
 
