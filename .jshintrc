@@ -51,11 +51,9 @@
     "validthis": false,
     "noyield": false,
 
-    "browser": true,
+    "browser": false,
     "node": true,
 
     "globals": {
-        "angular": false,
-        "$": false
     }
 }
