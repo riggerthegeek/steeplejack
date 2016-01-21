@@ -2,7 +2,7 @@
  * definition.test
  */
 
-/// <reference path="../../../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 
 "use strict";
 
@@ -14,7 +14,7 @@
 
 
 /* Files */
-import {expect, proxyquire, sinon} from "../../../helpers/configure";
+import {expect, proxyquire, sinon} from "../../helpers/configure";
 
 
 describe("Model Definition", function () {
@@ -27,7 +27,7 @@ describe("Model Definition", function () {
             generateFunction: sinon.stub()
         };
 
-        Definition = proxyquire("../../lib/model/definition", {
+        Definition = proxyquire("../../lib/definition", {
             "./validation": {
                 Validation: Validation
             }

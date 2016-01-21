@@ -3,7 +3,7 @@ import {data} from "datautils";
  * model
  */
 
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 
 "use strict";
 
@@ -17,12 +17,12 @@ import {data as datatypes} from "datautils";
 
 
 /* Files */
-import {Base} from "./../base";
+import {Base} from "./base";
 import {Definition} from "./definition";
-import {ValidationException} from "../../exception/validation/index";
-import {dataCasting} from "../../helpers/dataCasting";
-import {getFnName} from "../../helpers/getFnName";
-import {scalarValues} from "../../helpers/scalarValues";
+import {ValidationException} from "../exception/validation/index";
+import {dataCasting} from "../helpers/dataCasting";
+import {getFnName} from "../helpers/getFnName";
+import {scalarValues} from "../helpers/scalarValues";
 
 
 export abstract class Model extends Base {

@@ -15,8 +15,8 @@ import * as uuid from "node-uuid";
 
 /* Files */
 import {expect} from "../../helpers/configure";
-import {Definition} from "../../../lib/model/definition";
-import {Model} from "../../../lib/model/index";
+import {Definition} from "../../../lib/definition";
+import {Model} from "../../../lib/model";
 import {Collection} from "../../../lib/collection";
 import {Base} from "../../../lib/base";
 import {ValidationException} from "../../../exception/validation/index";

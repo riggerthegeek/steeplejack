@@ -2,7 +2,7 @@
  * validation
  */
 
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 
 "use strict";
 
@@ -16,7 +16,7 @@ import {validation} from "datautils";
 
 
 /* Files */
-import {Model} from "./index";
+import {Model} from "./model";
 
 
 export class Validation {

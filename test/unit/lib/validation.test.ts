@@ -13,9 +13,9 @@
 
 
 /* Files */
-import {expect, sinon} from "../../../helpers/configure";
-import {Model} from "../../../../lib/model/index";
-import {Validation} from "../../../../lib/model/validation";
+import {expect, sinon} from "../../helpers/configure";
+import {Model} from "../../../lib/model";
+import {Validation} from "../../../lib/validation";
 
 
 describe("Model validation test", function () {
