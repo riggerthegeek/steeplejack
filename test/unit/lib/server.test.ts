@@ -45,6 +45,8 @@ describe("Server tests", function () {
 
             gzipResponse () : void { }
 
+            outputHandler (err: any, data: any, req: Object, res: Object) { }
+
             start () {
                 return new Promise(function (resolve: any) {
                     resolve();
@@ -659,6 +661,64 @@ describe("Server tests", function () {
 
         });
 
+        describe("#outputHandler", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.stub = sinon.stub(this.serverStrategy, "outputHandler");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should dispatch to the strategy, resolving a promise", function () {
+
+                let req = {req: true, hello: () => { }};
+                let res = {res: true, hello: () => { }};
+
+                this.stub.returns("output");
+
+                return obj.outputHandler(() => {
+                    return "result";
+                }, req, res).then((data) => {
+
+                    expect(data).to.be.equal("output");
+
+                    expect(this.stub).to.be.calledOnce
+                        .calledWithExactly(null, "result", req, res);
+
+                });
+
+            });
+
+            it("should dispatch to the strategy, rejecting a promise", function () {
+
+                let req = {req: true, hello: () => { }};
+                let res = {res: true, hello: () => { }};
+
+                this.stub.returns("output");
+
+                let error = new Error("oooops");
+
+                return obj.outputHandler(() => {
+                    throw error;
+                }, req, res).catch((err) => {
+
+                    expect(err).to.be.equal(error);
+
+                    expect(this.stub).to.be.calledOnce
+                        .calledWithExactly(error, null, req, res);
+
+                });
+
+            });
+
+        });
+
         describe("#start", function () {
 
             it("should start a server with just the port", function () {
@@ -666,6 +726,7 @@ describe("Server tests", function () {
                 class Strategy implements IServerStrategy {
                     addRoute (httpMethod: string, route: string, fn: Function) {}
                     getServer () : Object { return {}; }
+                    outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
                         return new Promise(function (resolve: any) {
                             return resolve({
@@ -702,6 +763,7 @@ describe("Server tests", function () {
                 class Strategy implements IServerStrategy {
                     addRoute (httpMethod: string, route: string, fn: Function) {}
                     getServer () : Object { return {}; }
+                    outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
                         return new Promise(function (resolve: any) {
                             return resolve({
@@ -740,6 +802,7 @@ describe("Server tests", function () {
                 class Strategy implements IServerStrategy {
                     addRoute (httpMethod: string, route: string, fn: Function) {}
                     getServer () : Object { return {}; }
+                    outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
                         return Bluebird.try(() => {
                             return {

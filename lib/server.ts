@@ -16,6 +16,7 @@
 
 /* Third-party modules */
 import * as _ from "lodash";
+let Promise = require("bluebird");
 
 
 /* Files */
@@ -295,9 +296,36 @@ export class Server extends Base {
      *
      * @returns {exports}
      */
-    gzipResponse () : Server {
+    public gzipResponse () : Server {
         this._strategy.gzipResponse();
         return this;
+    }
+
+
+    /**
+     * Output Handler
+     *
+     * Handles the output, dispatching to the strategy
+     * so it displays the output correctly. This invokes
+     * the given function as a promise and then handles
+     * what it returns. This is how the router should
+     * start going to the application tier and beyond.
+     *
+     * @param {function} fn
+     * @param {object} req
+     * @param {object} res
+     * @returns {Thenable<U>|Promise<U>|Promise<T>}
+     */
+    public outputHandler (fn: Function, req: Object, res: Object) : Promise<string> {
+
+        return Promise.try(fn)
+            .then((data: any) => {
+                return this._strategy.outputHandler(null, data, req, res);
+            })
+            .catch((err: any) => {
+                return this._strategy.outputHandler(err, null, req, res);
+            });
+
     }
 
 
