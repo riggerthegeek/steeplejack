@@ -92,6 +92,27 @@ export class Server extends Base {
 
 
     /**
+     * Accept Parser
+     *
+     * Makes the server use the accept parse.  If
+     * options are not an array, uses the default
+     * restify options.  Returns this to make the
+     * method chainable.
+     *
+     * If it's in strict mode then it must match
+     * the accept header exactly.
+     *
+     * @param {*} options
+     * @param {boolean} strict
+     * @returns {Server}
+     */
+    public acceptParser (options: any, strict: boolean = false) {
+        this._strategy.acceptParser(options, strict);
+        return this;
+    }
+
+
+    /**
      * Add Route
      *
      * Adds a single route to the stack

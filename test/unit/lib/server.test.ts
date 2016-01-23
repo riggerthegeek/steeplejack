@@ -25,7 +25,9 @@ describe("Server tests", function () {
 
     beforeEach(function () {
         class Strategy implements IServerStrategy {
-            addRoute (httpMethod: string, route: string, fn: Function) {}
+            acceptParser (options: any, strict: boolean) { }
+
+            addRoute (httpMethod: string, route: string, fn: Function) { }
 
             start () {
                 return new Promise(function (resolve: any) {
@@ -69,6 +71,40 @@ describe("Server tests", function () {
                 } finally {
                     expect(fail).to.be.true;
                 }
+
+            });
+
+        });
+
+        describe("#acceptParser", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "acceptParser");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should send to strategy acceptParser method", function () {
+
+                expect(obj.acceptParser("options")).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly("options", false);
+
+            });
+
+            it("should send to strategy acceptParser method in strict mode", function () {
+
+                expect(obj.acceptParser("options", true)).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly("options", true);
 
             });
 
