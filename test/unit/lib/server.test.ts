@@ -31,6 +31,8 @@ describe("Server tests", function () {
 
             after (fn: Function) { }
 
+            bodyParser () { }
+
             start () {
                 return new Promise(function (resolve: any) {
                     resolve();
@@ -497,6 +499,31 @@ describe("Server tests", function () {
                     expect(this.spy).to.not.be.called;
 
                 }
+
+            });
+
+        });
+
+        describe("#bodyParser", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "bodyParser");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should defer to the strategy method", function () {
+
+                expect(obj.bodyParser()).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly();
 
             });
 

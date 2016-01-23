@@ -230,6 +230,12 @@ export class Server extends Base {
     }
 
 
+    public bodyParser () : Server {
+        this._strategy.bodyParser();
+        return this;
+    }
+
+
     /**
      * Start
      *
