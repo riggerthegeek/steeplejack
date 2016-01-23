@@ -33,6 +33,8 @@ describe("Server tests", function () {
 
             bodyParser () { }
 
+            close () { }
+
             start () {
                 return new Promise(function (resolve: any) {
                     resolve();
@@ -521,6 +523,31 @@ describe("Server tests", function () {
             it("should defer to the strategy method", function () {
 
                 expect(obj.bodyParser()).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly();
+
+            });
+
+        });
+
+        describe("#close", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "close");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should defer to the strategy method", function () {
+
+                expect(obj.close()).to.be.equal(obj);
 
                 expect(this.spy).to.be.calledOnce
                     .calledWithExactly();

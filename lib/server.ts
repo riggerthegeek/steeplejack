@@ -230,8 +230,29 @@ export class Server extends Base {
     }
 
 
+    /**
+     * Body Parser
+     *
+     * Allows the server to receive the HTTP body. Returns
+     * this to make it chainable.
+     *
+     * @returns {Server}
+     */
     public bodyParser () : Server {
         this._strategy.bodyParser();
+        return this;
+    }
+
+
+    /**
+     * Close
+     *
+     * Closes the server
+     *
+     * @returns {Server}
+     */
+    public close () : Server {
+        this._strategy.close();
         return this;
     }
 
