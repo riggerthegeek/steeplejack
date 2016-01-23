@@ -12,7 +12,6 @@
 
 /* Third-party modules */
 import * as _ from "lodash";
-let Promise = require("bluebird");
 
 
 /* Files */
