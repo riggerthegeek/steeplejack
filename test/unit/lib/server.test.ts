@@ -43,6 +43,8 @@ describe("Server tests", function () {
                 }
             }
 
+            gzipResponse () : void { }
+
             start () {
                 return new Promise(function (resolve: any) {
                     resolve();
@@ -626,6 +628,31 @@ describe("Server tests", function () {
                 expect(obj.getServer()).to.be.equal("server");
 
                 expect(this.stub).to.be.calledOnce
+                    .calledWithExactly();
+
+            });
+
+        });
+
+        describe("#gzipResponse", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "gzipResponse");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should dispatch to the strategy", function () {
+
+                expect(obj.gzipResponse()).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
                     .calledWithExactly();
 
             });

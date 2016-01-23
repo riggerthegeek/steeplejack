@@ -11,5 +11,6 @@ declare interface IServerStrategy {
     close?: () => void;
     enableCORS?: (origins: string[], addHeaders: string[]) => void;
     getServer: () => Object;
+    gzipResponse?: () => void;
     start: (port: number, hostname: string, backlog: number) => Promise<string>;
 }

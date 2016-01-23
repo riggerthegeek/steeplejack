@@ -288,6 +288,20 @@ export class Server extends Base {
 
 
     /**
+     * GZIP Response
+     *
+     * Makes the response GZIP compressed.  Returns
+     * this to make it chainable.
+     *
+     * @returns {exports}
+     */
+    gzipResponse () : Server {
+        this._strategy.gzipResponse();
+        return this;
+    }
+
+
+    /**
      * Start
      *
      * Starts up the server, returning a promise
