@@ -180,8 +180,6 @@ describe("Server tests", function () {
 
                     var fn = function () {};
 
-                    expect(obj.addRoute(method, "/route", fn)).to.be.equal(obj);
-
                     var httpMethod = method.toUpperCase();
 
                     /* Check delete and options have been shortened */
@@ -190,6 +188,19 @@ describe("Server tests", function () {
                     } else if (httpMethod === "OPTS") {
                         httpMethod = "OPTIONS";
                     }
+
+                    let emitted = false;
+
+                    obj.once("routeAdded", (emittedMethod: string, emittedRoute: string) => {
+                        emitted = true;
+
+                        expect(emittedMethod).to.be.equal(httpMethod);
+                        expect(emittedRoute).to.be.equal("/route");
+                    });
+
+                    expect(obj.addRoute(method, "/route", fn)).to.be.equal(obj);
+
+                    expect(emitted).to.be.true;
 
                     expect(this.spy).to.be.callCount(++i)
                         .calledWithExactly(httpMethod, "/route", fn);
@@ -223,8 +234,6 @@ describe("Server tests", function () {
                         function () {}
                     ];
 
-                    expect(obj.addRoute(method, "/route", fn)).to.be.equal(obj);
-
                     var httpMethod = method.toUpperCase();
 
                     /* Check delete and options have been shortened */
@@ -233,6 +242,19 @@ describe("Server tests", function () {
                     } else if (httpMethod === "OPTS") {
                         httpMethod = "OPTIONS";
                     }
+
+                    let emitted = false;
+
+                    obj.once("routeAdded", (emittedMethod: string, emittedRoute: string) => {
+                        emitted = true;
+
+                        expect(emittedMethod).to.be.equal(httpMethod);
+                        expect(emittedRoute).to.be.equal("/route");
+                    });
+
+                    expect(obj.addRoute(method, "/route", fn)).to.be.equal(obj);
+
+                    expect(emitted).to.be.true;
 
                     expect(this.spy).to.be.callCount(++i)
                         .calledWithExactly(httpMethod, "/route", fn);
@@ -245,16 +267,37 @@ describe("Server tests", function () {
 
                 var fn = function () {};
 
+                let methods = [
+                    "GET",
+                    "POST",
+                    "PUT",
+                    "DELETE",
+                    "HEAD",
+                    "PATCH",
+                    "OPTIONS"
+                ];
+
+                let emitted: string[] = [];
+                let count = 0;
+                obj.on("routeAdded", (emittedMethod: string, emittedRoute: string) => {
+
+                    emitted.push(emittedMethod);
+                    expect(emittedRoute).to.be.equal("/route");
+                    count++;
+
+                });
+
                 expect(obj.addRoute("all", "/route", fn)).to.be.equal(obj);
 
-                expect(this.spy).to.be.callCount(7)
-                    .calledWithExactly("GET", "/route", fn)
-                    .calledWithExactly("POST", "/route", fn)
-                    .calledWithExactly("PUT", "/route", fn)
-                    .calledWithExactly("DELETE", "/route", fn)
-                    .calledWithExactly("HEAD", "/route", fn)
-                    .calledWithExactly("PATCH", "/route", fn)
-                    .calledWithExactly("OPTIONS", "/route", fn);
+                expect(count).to.be.equal(methods.length);
+
+                expect(emitted.sort()).to.be.eql(methods.sort()); /* We don't care about order, just values */
+
+                expect(this.spy).to.be.callCount(methods.length);
+
+                methods.forEach((method) => {
+                    expect(this.spy).to.be.calledWithExactly(method, "/route", fn);
+                });
 
             });
 

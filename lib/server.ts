@@ -143,6 +143,9 @@ export class Server extends Base {
 
         }
 
+        /* Emit the route for logging */
+        this.emit("routeAdded", httpMethod, route);
+
         /* Send to the strategy */
         this._strategy.addRoute(httpMethod, route, fn);
 
