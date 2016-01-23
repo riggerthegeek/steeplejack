@@ -11,6 +11,7 @@
 
 
 /* Third-party modules */
+let Bluebird = require("bluebird");
 import {Promise} from "es6-promise";
 
 
@@ -72,7 +73,42 @@ describe("Server tests", function () {
 
         describe("#start", function () {
 
-            it("should start a server, returning a promise", function () {
+            it("should start a server with just the port", function () {
+
+                class Strategy implements IServerStrategy {
+
+                    start (port: number, hostname: string, backlog: number) {
+                        return new Promise(function (resolve: any) {
+                            return resolve({
+                                port,
+                                hostname,
+                                backlog
+                            });
+                        });
+                    }
+
+                }
+
+                let obj = new Server({
+                    port: 3200
+                }, new Strategy());
+
+                return obj.start()
+                    .then((result: Object) => {
+
+                        expect(result).to.be.eql({
+                            port: 3200,
+                            backlog: void 0,
+                            hostname: void 0
+                        });
+
+                        return result;
+
+                    });
+
+            });
+
+            it("should start a server, returning an ES6 promise", function () {
 
                 class Strategy implements IServerStrategy {
 
@@ -95,13 +131,51 @@ describe("Server tests", function () {
                 }, new Strategy());
 
                 return obj.start()
-                    .then((result: string) => {
+                    .then((result: Object) => {
 
                         expect(result).to.be.eql({
                             port: 8080,
                             backlog: 1000,
                             hostname: "192.168.0.100"
                         });
+
+                        return result;
+
+                    });
+
+            });
+
+            it("should start a server, returning a Bluebird promise", function () {
+
+                class Strategy implements IServerStrategy {
+
+                    start (port: number, hostname: string, backlog: number) {
+                        return Bluebird.try(() => {
+                            return {
+                                bPort: port,
+                                bHostname: hostname,
+                                bBacklog: backlog
+                            };
+                        });
+                    }
+
+                }
+
+                let obj = new Server({
+                    port: 9999,
+                    backlog: 4200,
+                    hostname: "193.168.0.100"
+                }, new Strategy());
+
+                return obj.start()
+                    .then((result: Object) => {
+
+                        expect(result).to.be.eql({
+                            bPort: 9999,
+                            bBacklog: 4200,
+                            bHostname: "193.168.0.100"
+                        });
+
 
                         return result;
 
