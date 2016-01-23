@@ -320,6 +320,100 @@ describe("Server tests", function () {
 
         });
 
+        describe("#addRoutes", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "addRoute");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should go through an objects of objects, passing to the strategy", function () {
+
+                var fn1 = function () {};
+                var fn2 = function () {};
+                var fn3 = function () {};
+                var fn4 = function () {};
+
+                var arr = [fn3, fn4];
+
+                var routes: IAddRoutes = {
+                    "/test": {
+                        get: fn1,
+                        post: fn2
+                    },
+                    "/test/example": {
+                        del: arr
+                    }
+                };
+
+                let count = 0;
+                let emitted: string[] = [];
+                obj.on("routeAdded", (emittedMethod: string, emittedRoute: string) => {
+
+                    emitted.push(emittedMethod);
+                    if (emittedMethod === "DELETE") {
+                        expect(emittedRoute).to.be.equal("/test/example");
+                    } else {
+                        expect(emittedRoute).to.be.equal("/test");
+                    }
+                    count++;
+
+                });
+
+                expect(obj.addRoutes(routes)).to.be.equal(obj);
+
+                expect(count).to.be.equal(3);
+
+                expect(this.spy).to.be.calledThrice
+                    .calledWith("GET", "/test", fn1)
+                    .calledWith("POST", "/test", fn2)
+                    .calledWith("DELETE", "/test/example", arr);
+
+            });
+
+            it("should not parse an object of non-objects", function () {
+
+                var routes: any = {
+                    "/test1": function () {},
+                    "/test2": [2],
+                    "/test3": null,
+                    "/test4": true,
+                    "/test5": false,
+                    "/test6": 2.3
+                };
+
+                let count = 0;
+                obj.on("routeAdded", () => {
+                    count++;
+                });
+
+                expect(obj.addRoutes(routes)).to.be.equal(obj);
+
+                expect(count).to.be.equal(0);
+
+                expect(this.spy).to.not.be.called;
+
+            });
+
+            it("should not pass a non-object", function () {
+
+                var routes: any = [];
+
+                obj.addRoutes(routes);
+
+                expect(this.spy).to.not.be.called;
+
+            });
+
+        });
+
         describe("#start", function () {
 
             it("should start a server with just the port", function () {

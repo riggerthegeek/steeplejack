@@ -155,6 +155,42 @@ export class Server extends Base {
 
 
     /**
+     * Add Routes
+     *
+     * Takes the route object and adds to the
+     * server instance
+     *
+     * @param {object} routes
+     * @returns {Server}
+     */
+    public addRoutes (routes: IAddRoutes) : Server {
+
+        if (_.isPlainObject(routes)) {
+
+            /* Cycle through and add in the routes */
+            _.each(routes, (methods: any, route: string) => {
+
+                if (_.isPlainObject(methods)) {
+
+                    /* Add the HTTP verbs and endpoints */
+                    _.each(methods, (fn:Function | Function[], method:string) => {
+
+                        this.addRoute(method, route, fn);
+
+                    });
+
+                }
+
+            });
+
+        }
+
+        return this;
+
+    }
+
+
+    /**
      * Start
      *
      * Starts up the server, returning a promise
