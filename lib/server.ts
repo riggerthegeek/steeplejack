@@ -106,7 +106,7 @@ export class Server extends Base {
      * @param {boolean} strict
      * @returns {Server}
      */
-    public acceptParser (options: any, strict: boolean = false) {
+    public acceptParser (options: any, strict: boolean = false) : Server {
         this._strategy.acceptParser(options, strict);
         return this;
     }
@@ -208,6 +208,25 @@ export class Server extends Base {
 
         return this;
 
+    }
+
+
+    /**
+     * After
+     *
+     * This function is run at the end of the
+     * functional chain.
+     *
+     * @param {function} fn
+     * @returns {Server}
+     */
+    public after (fn: Function) : Server {
+        if (_.isFunction(fn) === false) {
+            throw new TypeError("Server.after must receive a function");
+        }
+
+        this._strategy.after(fn);
+        return this;
     }
 
 
