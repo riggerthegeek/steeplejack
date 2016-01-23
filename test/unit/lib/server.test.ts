@@ -35,6 +35,8 @@ describe("Server tests", function () {
 
             close () { }
 
+            enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
+
             start () {
                 return new Promise(function (resolve: any) {
                     resolve();
@@ -551,6 +553,47 @@ describe("Server tests", function () {
 
                 expect(this.spy).to.be.calledOnce
                     .calledWithExactly();
+
+            });
+
+        });
+
+        describe("#enableCORS", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "enableCORS");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should defer with the default params", function () {
+
+                expect(obj.enableCORS()).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly(["*"], []);
+
+            });
+
+            it("should defer to the _enableClose method", function () {
+
+                var origins = [
+                    "http://example.com"
+                ];
+                var addHeaders = [
+                    "auth"
+                ];
+
+                expect(obj.enableCORS(origins, addHeaders)).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly(origins, addHeaders);
 
             });
 

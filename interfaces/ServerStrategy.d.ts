@@ -9,5 +9,6 @@ declare interface IServerStrategy {
     after?: (fn: Function) => void;
     bodyParser?: () => void;
     close?: () => void;
+    enableCORS?: (origins: string[], addHeaders: string[]) => void;
     start: (port: number, hostname: string, backlog: number) => Promise<string>;
 }

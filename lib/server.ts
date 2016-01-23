@@ -257,6 +257,12 @@ export class Server extends Base {
     }
 
 
+    public enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) : Server {
+        this._strategy.enableCORS(origins, addHeaders);
+        return this;
+    }
+
+
     /**
      * Start
      *
