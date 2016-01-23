@@ -37,6 +37,12 @@ describe("Server tests", function () {
 
             enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
 
+            getServer () : Object {
+                return {
+                    method: function () {}
+                }
+            }
+
             start () {
                 return new Promise(function (resolve: any) {
                     resolve();
@@ -599,12 +605,40 @@ describe("Server tests", function () {
 
         });
 
+        describe("#getServer", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.stub = sinon.stub(this.serverStrategy, "getServer");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should get the server instance", function () {
+
+                this.stub.returns("server");
+
+                expect(obj.getServer()).to.be.equal("server");
+
+                expect(this.stub).to.be.calledOnce
+                    .calledWithExactly();
+
+            });
+
+        });
+
         describe("#start", function () {
 
             it("should start a server with just the port", function () {
 
                 class Strategy implements IServerStrategy {
                     addRoute (httpMethod: string, route: string, fn: Function) {}
+                    getServer () : Object { return {}; }
                     start (port: number, hostname: string, backlog: number) {
                         return new Promise(function (resolve: any) {
                             return resolve({
@@ -640,6 +674,7 @@ describe("Server tests", function () {
 
                 class Strategy implements IServerStrategy {
                     addRoute (httpMethod: string, route: string, fn: Function) {}
+                    getServer () : Object { return {}; }
                     start (port: number, hostname: string, backlog: number) {
                         return new Promise(function (resolve: any) {
                             return resolve({
@@ -677,6 +712,7 @@ describe("Server tests", function () {
 
                 class Strategy implements IServerStrategy {
                     addRoute (httpMethod: string, route: string, fn: Function) {}
+                    getServer () : Object { return {}; }
                     start (port: number, hostname: string, backlog: number) {
                         return Bluebird.try(() => {
                             return {

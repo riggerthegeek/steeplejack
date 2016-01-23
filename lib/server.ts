@@ -257,9 +257,33 @@ export class Server extends Base {
     }
 
 
+    /**
+     * Enable CORS
+     *
+     * Enables cross-origin resource sharing.  This should
+     * be done with care as can lead to a major security
+     * vulnerability.
+     *
+     * @link http://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+     * @param {string[]} origins
+     * @param {string[]} addHeaders
+     * @returns {Server}
+     */
     public enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) : Server {
         this._strategy.enableCORS(origins, addHeaders);
         return this;
+    }
+
+
+    /**
+     * Get Server
+     *
+     * Gets the server instance
+     *
+     * @returns {object}
+     */
+    public getServer () : Object {
+        return this._strategy.getServer();
     }
 
 

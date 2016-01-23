@@ -10,5 +10,6 @@ declare interface IServerStrategy {
     bodyParser?: () => void;
     close?: () => void;
     enableCORS?: (origins: string[], addHeaders: string[]) => void;
+    getServer: () => Object;
     start: (port: number, hostname: string, backlog: number) => Promise<string>;
 }
