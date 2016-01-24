@@ -316,7 +316,7 @@ export class Server extends Base {
      * @param {object} res
      * @returns {Thenable<U>|Promise<U>|Promise<T>}
      */
-    public outputHandler (fn: Function, req: Object, res: Object) : Promise<string> {
+    public outputHandler (fn: Function, req: Object, res: Object) {
 
         return Promise.try(fn)
             .then((data: any) => {
@@ -336,7 +336,7 @@ export class Server extends Base {
      *
      * @returns {Promise}
      */
-    public start () : Promise<string> {
+    public start () {
 
         return this._strategy.start(this._options.port, this._options.hostname, this._options.backlog);
 

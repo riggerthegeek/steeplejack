@@ -47,7 +47,7 @@ describe("Server tests", function () {
 
             outputHandler (err: any, data: any, req: Object, res: Object) { }
 
-            start () {
+            start () : Promise<string> {
                 return new Promise(function (resolve: any) {
                     resolve();
                 });
@@ -675,7 +675,7 @@ describe("Server tests", function () {
 
             });
 
-            it("should dispatch to the strategy, resolving a promise", function () {
+            it("should dispatch to the strategy, resolving a promise", function (done: any) {
 
                 let req = {req: true, hello: () => { }};
                 let res = {res: true, hello: () => { }};
@@ -684,18 +684,53 @@ describe("Server tests", function () {
 
                 return obj.outputHandler(() => {
                     return "result";
-                }, req, res).then((data) => {
+                }, req, res)
+                    .then((data: any) => {
 
-                    expect(data).to.be.equal("output");
+                        expect(data).to.be.equal("output");
 
-                    expect(this.stub).to.be.calledOnce
-                        .calledWithExactly(null, "result", req, res);
+                        expect(this.stub).to.be.calledOnce
+                            .calledWithExactly(null, "result", req, res);
 
-                });
+                    })
+                    .finally(done);
 
             });
 
-            it("should dispatch to the strategy, rejecting a promise", function () {
+            it("should dispatch to the strategy, intercepting a promise", function (done) {
+
+                let req = {req: true, hello: () => { }};
+                let res = {res: true, hello: () => { }};
+
+                this.stub.returns("output");
+
+                return obj.outputHandler(() => {
+                    return new Promise((resolve) => {
+                        resolve("result");
+                    })
+                        .then((output: any) => {
+
+                            expect(output).to.be.equal("result");
+
+                            expect(this.stub).to.not.be.called;
+
+                            return output;
+
+                        });
+                }, req, res)
+                    .then((data: any) => {
+
+                        expect(data).to.be.equal("output");
+
+                        expect(this.stub).to.be.calledOnce
+                            .calledWithExactly(null, "result", req, res);
+
+                    })
+                    .finally(done);
+
+            });
+
+            it("should dispatch to the strategy, rejecting a promise", function (done: any) {
 
                 let req = {req: true, hello: () => { }};
                 let res = {res: true, hello: () => { }};
@@ -706,14 +741,16 @@ describe("Server tests", function () {
 
                 return obj.outputHandler(() => {
                     throw error;
-                }, req, res).catch((err) => {
+                }, req, res)
+                    .catch((err: any) => {
 
-                    expect(err).to.be.equal(error);
+                        expect(err).to.be.equal(error);
 
-                    expect(this.stub).to.be.calledOnce
-                        .calledWithExactly(error, null, req, res);
+                        expect(this.stub).to.be.calledOnce
+                            .calledWithExactly(error, null, req, res);
 
-                });
+                    })
+                    .finally(done);
 
             });
 
@@ -797,7 +834,7 @@ describe("Server tests", function () {
 
             });
 
-            it("should start a server, returning a Bluebird promise", function () {
+            it("should start a server, returning a Bluebird promise", function (done: any) {
 
                 class Strategy implements IServerStrategy {
                     addRoute (httpMethod: string, route: string, fn: Function) {}
@@ -833,7 +870,8 @@ describe("Server tests", function () {
 
                         return result;
 
-                    });
+                    })
+                    .finally(done);
 
             });
 

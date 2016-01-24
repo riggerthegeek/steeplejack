@@ -13,5 +13,5 @@ declare interface IServerStrategy {
     getServer: () => Object;
     gzipResponse?: () => void;
     outputHandler: (err: any, data: any, request: Object, result: Object) => any;
-    start: (port: number, hostname: string, backlog: number) => Promise<string>;
+    start: (port: number, hostname: string, backlog: number) => any;
 }
