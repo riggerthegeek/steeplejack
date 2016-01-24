@@ -31,6 +31,8 @@ describe("Server tests", function () {
 
             after (fn: Function) { }
 
+            before (fn: Function) { }
+
             bodyParser () { }
 
             close () { }
@@ -505,6 +507,56 @@ describe("Server tests", function () {
 
                     expect(err).to.be.instanceof(TypeError);
                     expect(err.message).to.be.equal("Server.after must receive a function");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.spy).to.not.be.called;
+
+                }
+
+            });
+
+        });
+
+        describe("#before", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "before");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should send through to the before method", function () {
+
+                var fn = function () { };
+
+                expect(obj.before(fn)).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWith(fn);
+
+            });
+
+            it("should throw an error if a non-function received", function () {
+
+                var fail = false;
+
+                try {
+                    obj.before(null);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Server.before must receive a function");
 
                 } finally {
 

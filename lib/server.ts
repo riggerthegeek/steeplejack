@@ -232,6 +232,25 @@ export class Server extends Base {
 
 
     /**
+     * Before
+     *
+     * This function is run at the start of
+     * the functional chain.
+     *
+     * @param {function} fn
+     * @returns {Server}
+     */
+    public before (fn: Function) : Server {
+        if (_.isFunction(fn) === false) {
+            throw new TypeError("Server.before must receive a function");
+        }
+
+        this._strategy.before(fn);
+        return this;
+    }
+
+
+    /**
      * Body Parser
      *
      * Allows the server to receive the HTTP body. Returns
