@@ -60,7 +60,6 @@ describe("Server tests", function () {
             uncaughtException (fn: Function) { }
 
             use (fn: Function | Function[]) { }
-
         }
 
         this.DefaultStrategy = Strategy;
@@ -854,6 +853,16 @@ describe("Server tests", function () {
             it("should start a server with just the port", function () {
 
                 class Strategy implements IServerStrategy {
+                    acceptParser (options: any, strict: boolean) { }
+                    after (fn: Function) { }
+                    before (fn: Function) { }
+                    bodyParser () { }
+                    close () { }
+                    enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
+                    gzipResponse () : void { }
+                    queryParser () : void { }
+                    uncaughtException (fn: Function) { }
+                    use (fn: Function | Function[]) { }
                     addRoute (httpMethod: string, route: string, fn: Function) {}
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
@@ -891,6 +900,16 @@ describe("Server tests", function () {
             it("should start a server, returning an ES6 promise", function () {
 
                 class Strategy implements IServerStrategy {
+                    acceptParser (options: any, strict: boolean) { }
+                    after (fn: Function) { }
+                    before (fn: Function) { }
+                    bodyParser () { }
+                    close () { }
+                    enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
+                    gzipResponse () : void { }
+                    queryParser () : void { }
+                    uncaughtException (fn: Function) { }
+                    use (fn: Function | Function[]) { }
                     addRoute (httpMethod: string, route: string, fn: Function) {}
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
@@ -930,6 +949,16 @@ describe("Server tests", function () {
             it("should start a server, returning a Bluebird promise", function (done: any) {
 
                 class Strategy implements IServerStrategy {
+                    acceptParser (options: any, strict: boolean) { }
+                    after (fn: Function) { }
+                    before (fn: Function) { }
+                    bodyParser () { }
+                    close () { }
+                    enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
+                    gzipResponse () : void { }
+                    queryParser () : void { }
+                    uncaughtException (fn: Function) { }
+                    use (fn: Function | Function[]) { }
                     addRoute (httpMethod: string, route: string, fn: Function) {}
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
