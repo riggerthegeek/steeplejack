@@ -189,7 +189,7 @@ describe("Steeplejack test", function () {
                 this.router.discoverRoutes.returns(routesObj);
 
                 var app = this.Steeplejack.app({
-                    routes: "route/dir"
+                    routes: "route/dir/**/*"
                 });
 
                 expect(app).to.be.instanceof(this.Steeplejack);
@@ -199,7 +199,7 @@ describe("Steeplejack test", function () {
                 expect(app.routes).to.be.equal(routesObj);
 
                 expect(this.router.discoverRoutes).to.be.calledOnce
-                    .calledWith(path.join(process.cwd(), "route/dir"));
+                    .calledWith(path.join(process.cwd(), "route/dir/**/*"));
 
             });
 
@@ -210,7 +210,7 @@ describe("Steeplejack test", function () {
                 this.router.discoverRoutes.returns(routesObj);
 
                 var app = this.Steeplejack.app({
-                    routes: "/route/dir"
+                    routes: "/route/dir/**/*"
                 });
 
                 expect(app).to.be.instanceof(this.Steeplejack);
@@ -220,7 +220,7 @@ describe("Steeplejack test", function () {
                 expect(app.routes).to.be.equal(routesObj);
 
                 expect(this.router.discoverRoutes).to.be.calledOnce
-                    .calledWith(path.join("/route/dir"));
+                    .calledWith(path.join("/route/dir/**/*"));
 
             });
 
