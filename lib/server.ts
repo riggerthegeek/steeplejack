@@ -349,6 +349,24 @@ export class Server extends Base {
 
 
     /**
+     * Query Parser
+     *
+     * Parses the query strings.  The mapParams option
+     * allows you to decide if you want to map req.query
+     * to req.params - false by default.  Returns this
+     * to make it chainable.
+     *
+     * @param {boolean} mapParams
+     * @returns {Server}
+     */
+    public queryParser (mapParams: boolean = false) : Server {
+        this._strategy.queryParser(mapParams);
+        return this;
+
+    }
+
+
+    /**
      * Start
      *
      * Starts up the server, returning a promise

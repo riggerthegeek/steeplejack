@@ -49,6 +49,8 @@ describe("Server tests", function () {
 
             outputHandler (err: any, data: any, req: Object, res: Object) { }
 
+            queryParser () : void { }
+
             start () : Promise<string> {
                 return new Promise(function (resolve: any) {
                     resolve();
@@ -803,6 +805,40 @@ describe("Server tests", function () {
 
                     })
                     .finally(done);
+
+            });
+
+        });
+
+        describe("#queryParser", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "queryParser");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should dispatch to the strategy", function () {
+
+                expect(obj.queryParser()).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly(false);
+
+            });
+
+            it("should dispatch to the strategy - set mapParams to true", function () {
+
+                expect(obj.queryParser(true)).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly(true);
 
             });
 
