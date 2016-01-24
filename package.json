@@ -13,6 +13,7 @@
     "datautils": "^3.1.3",
     "lodash": "^4.0.0",
     "node-uuid": "^1.4.7",
+    "path-is-absolute": "^1.0.0",
     "yargs": "^3.32.0"
   },
   "devDependencies": {
