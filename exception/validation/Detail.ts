@@ -27,7 +27,7 @@ export class Detail {
     public value: any;
 
 
-    public constructor({message, value, additional}) {
+    public constructor ({message, value, additional}) {
 
         this.message = message;
         this.value = value;
