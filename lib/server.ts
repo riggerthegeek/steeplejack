@@ -380,4 +380,23 @@ export class Server extends Base {
     }
 
 
+    /**
+     * Uncaught Exception
+     *
+     * Listens for uncaught exceptions
+     *
+     * @param {function} fn
+     * @returns {Server}
+     */
+    public uncaughtException (fn: Function) : Server {
+        if (_.isFunction(fn) === false) {
+            throw new TypeError("Server.uncaughtException must receive a function");
+        }
+
+        this._strategy.uncaughtException(fn);
+
+        return this;
+    }
+
+
 }

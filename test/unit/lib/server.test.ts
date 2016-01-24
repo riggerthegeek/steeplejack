@@ -56,6 +56,8 @@ describe("Server tests", function () {
                     resolve();
                 });
             }
+
+            uncaughtException (fn: Function) { }
         }
 
         this.DefaultStrategy = Strategy;
@@ -960,6 +962,56 @@ describe("Server tests", function () {
 
                     })
                     .finally(done);
+
+            });
+
+        });
+
+        describe("#uncaughtException", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "uncaughtException");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should send through to the uncaughtException method", function () {
+
+                var fn = function () { };
+
+                expect(obj.uncaughtException(fn)).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWith(fn);
+
+            });
+
+            it("should throw an error if a non-function received", function () {
+
+                var fail = false;
+
+                try {
+                    obj.uncaughtException(null);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Server.uncaughtException must receive a function");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.spy).to.not.be.called;
+
+                }
 
             });
 
