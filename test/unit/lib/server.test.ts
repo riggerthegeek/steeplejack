@@ -58,6 +58,9 @@ describe("Server tests", function () {
             }
 
             uncaughtException (fn: Function) { }
+
+            use (fn: Function | Function[]) { }
+
         }
 
         this.DefaultStrategy = Strategy;
@@ -1004,6 +1007,69 @@ describe("Server tests", function () {
 
                     expect(err).to.be.instanceof(TypeError);
                     expect(err.message).to.be.equal("Server.uncaughtException must receive a function");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.spy).to.not.be.called;
+
+                }
+
+            });
+
+        });
+
+        describe("#use", function () {
+
+            let obj: Server;
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "use");
+
+                obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should do one function", function () {
+
+                var fn = function () { };
+
+                expect(obj.use(fn)).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly(fn);
+
+            });
+
+            it("should do an array of functions", function () {
+
+                var fn1 = function () { };
+                var fn2 = function () { };
+
+                expect(obj.use([fn1, fn2])).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledTwice
+                    .calledWithExactly(fn1)
+                    .calledWithExactly(fn2);
+
+            });
+
+            it("should throw an error when a non-function sent", function () {
+
+                var fail = false;
+
+                try {
+                    obj.use(null);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Server.use must receive a function or array of functions");
 
                 } finally {
 

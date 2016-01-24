@@ -399,4 +399,26 @@ export class Server extends Base {
     }
 
 
+    public use (fn: Function | Function[]) : Server {
+
+        if (_.isArray(fn)) {
+
+            _.each(fn, item => {
+                this.use(item);
+            });
+
+        } else if (_.isFunction(fn)) {
+
+            this._strategy.use(fn);
+
+        } else {
+
+            throw new TypeError("Server.use must receive a function or array of functions");
+        }
+
+        return this;
+
+    }
+
+
 }

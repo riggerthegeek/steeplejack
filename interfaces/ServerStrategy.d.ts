@@ -17,4 +17,5 @@ declare interface IServerStrategy {
     queryParser?: (mapParser: boolean) => void;
     start: (port: number, hostname: string, backlog: number) => any;
     uncaughtException?: (fn: Function) => void;
+    use?: (fn: Function | Function[]) => void;
 }
