@@ -19,6 +19,7 @@ import * as yargs from "yargs";
 
 /* Files */
 import {Base} from "./lib/base";
+import {Injector} from "./lib/injector";
 import {Router} from "./lib/router";
 import {cliParameters} from "./helpers/cliParameters";
 import {replaceEnvVars} from "./helpers/replaceEnvVars";
@@ -35,6 +36,9 @@ export class Steeplejack extends Base {
      * @type {{}}
      */
     public config: Object = {};
+
+
+    public injector: Injector;
 
 
     /**
@@ -96,11 +100,23 @@ export class Steeplejack extends Base {
      * @param modules
      * @param routes
      */
-    public constructor (config: Object, modules: any[], routes: string) {
+    public constructor (config: Object = {}, modules: any[] = [], routes: string = null) {
 
         super();
 
-        this.config = config;
+        /* Store the config */
+        if (_.isObject(config)) {
+            this.config = config;
+        }
+
+        /* Create the injector */
+        this.injector = new Injector();
+
+        /* Store injector instance in injector */
+        this.injector.registerSingleton("$injector", this.injector);
+
+        /* Store config */
+        this.injector.registerSingleton("$config", this.config);
 
         /* Add in the modules */
         _.each(modules, module => {

@@ -22,9 +22,40 @@ import {
 } from "../helpers/configure";
 import {Steeplejack} from "../../steeplejack";
 import {Base} from "../../lib/base";
+import {Injector} from "../../lib/injector";
 
 
 describe("Steeplejack test", function () {
+
+    describe("Methods", function () {
+
+        describe("#constructor", function () {
+
+            it("should register the config to the IOC container", function () {
+
+                var obj = new Steeplejack({
+                    config: "value"
+                });
+
+                expect(obj).to.be.instanceof(Steeplejack)
+                    .instanceof(Base);
+
+                expect(obj.injector).to.be.instanceof(Injector);
+
+                /* Check injector registered to itself */
+                expect(obj.injector.getComponent("$injector").instance).to.be.equal(obj.injector);
+
+                /* Check config registered */
+                expect(obj.injector.getComponent("$config").instance).to.be.eql({
+                    config: "value"
+                });
+
+            });
+
+        });
+
+
+    });
 
     describe("Static methods", function () {
 
