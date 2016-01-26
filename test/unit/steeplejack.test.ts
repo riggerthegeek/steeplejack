@@ -71,7 +71,8 @@ describe("Steeplejack test", function () {
                 };
 
                 this.router = {
-                    discoverRoutes: sinon.stub()
+                    discoverRoutes: sinon.stub(),
+                    getFileList: sinon.stub()
                 };
 
                 this.Steeplejack = proxyquire("../../steeplejack", {
@@ -217,20 +218,28 @@ describe("Steeplejack test", function () {
 
                 let routesObj = {hello: "world"};
 
-                this.router.discoverRoutes.returns(routesObj);
+                this.router.getFileList.returns(routesObj);
+                this.router.discoverRoutes.returns({
+                    foo: "bar"
+                });
 
                 var app = this.Steeplejack.app({
-                    routes: "route/dir/**/*"
+                    routesDir: "route/dir"
                 });
 
                 expect(app).to.be.instanceof(this.Steeplejack);
 
                 expect(app.config).to.be.eql({});
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.equal(routesObj);
+                expect(app.routes).to.be.eql({
+                    foo: "bar"
+                });
+
+                expect(this.router.getFileList).to.be.calledOnce
+                    .calledWithExactly(path.join(process.cwd(), "route/dir"), "**/*.js");
 
                 expect(this.router.discoverRoutes).to.be.calledOnce
-                    .calledWith(path.join(process.cwd(), "route/dir/**/*"));
+                    .calledWithExactly(routesObj);
 
             });
 
@@ -238,20 +247,29 @@ describe("Steeplejack test", function () {
 
                 let routesObj = {spam: "eggs"};
 
-                this.router.discoverRoutes.returns(routesObj);
+                this.router.getFileList.returns(routesObj);
+                this.router.discoverRoutes.returns({
+                    food: "bard"
+                });
 
                 var app = this.Steeplejack.app({
-                    routes: "/route/dir/**/*"
+                    routesDir: "/route/dir",
+                    routesGlob: "**/*.es6"
                 });
 
                 expect(app).to.be.instanceof(this.Steeplejack);
 
                 expect(app.config).to.be.eql({});
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.equal(routesObj);
+                expect(app.routes).to.be.eql({
+                    food: "bard"
+                });
+
+                expect(this.router.getFileList).to.be.calledOnce
+                    .calledWithExactly("/route/dir", "**/*.es6");
 
                 expect(this.router.discoverRoutes).to.be.calledOnce
-                    .calledWith(path.join("/route/dir/**/*"));
+                    .calledWithExactly(routesObj);
 
             });
 

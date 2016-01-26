@@ -7,5 +7,6 @@ declare interface IAppFactory {
     config: Object;
     env: Object;
     modules: any[];
-    routes: string;
+    routesDir: string;
+    routesGlob: string;
 }

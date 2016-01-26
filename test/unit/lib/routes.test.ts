@@ -185,9 +185,9 @@ describe("Router test", function () {
 
                 });
 
-                it("should get the routes with the default glob", function () {
+                it("should get the routes with a defined glob - **/*.js", function () {
 
-                    let files = Router.getFileList(process.cwd() + "/test/routes");
+                    let files = Router.getFileList(process.cwd() + "/test/routes", "**/*.js");
 
                     let obj = Router.discoverRoutes(files);
 
@@ -223,9 +223,9 @@ describe("Router test", function () {
 
         describe("#getFileList", function () {
 
-            it("should get the routes with the default glob - **/*.js", function () {
+            it("should get the routes with the defined glob - **/*.js", function () {
 
-                let arr = Router.getFileList(process.cwd() + "/test/routes");
+                let arr = Router.getFileList(process.cwd() + "/test/routes", "**/*.js");
 
                 expect(arr).to.be.eql([{
                     name: "child/route.js",

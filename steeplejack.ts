@@ -96,11 +96,17 @@ export class Steeplejack extends Base {
      * be loaded automatically. Like the modules, this should
      * be a glob pattern.
      *
-     * @param config
-     * @param modules
-     * @param routes
+     * @param {object} config
+     * @param {any[]} modules
+     * @param {string} routesDir
+     * @param {string} routesGlob
      */
-    public constructor (config: Object = {}, modules: any[] = [], routes: string = null) {
+    public constructor (
+        config: Object = {},
+        modules: any[] = [],
+        routesDir: string = null,
+        routesGlob: string = "**/*.js"
+    ) {
 
         super();
 
@@ -124,12 +130,15 @@ export class Steeplejack extends Base {
         });
 
         /* Configure the routes - pass in the absolute path */
-        if (routes) {
-            if (isAbsolute(routes) === false) {
-                routes = path.join(process.cwd(), routes);
+        if (routesDir) {
+            if (isAbsolute(routesDir) === false) {
+                routesDir = path.join(process.cwd(), routesDir);
             }
 
-            //this.routes = Router.discoverRoutes(routes);
+            /* Get the route files */
+            let routeFiles = Router.getFileList(routesDir, routesGlob);
+
+            this.routes = Router.discoverRoutes(routeFiles);
         }
 
     }
@@ -160,12 +169,14 @@ export class Steeplejack extends Base {
         config = {},
         env = {},
         modules = [],
-        routes = null
+        routesDir = null,
+        routesGlob = void 0
     } : IAppFactory = {
         config: {},
         env: {},
         modules: [],
-        routes: null
+        routesDir: null,
+        routesGlob: void 0
     }) : Steeplejack {
 
         /* Pull in the parameters from the command line */
@@ -177,7 +188,7 @@ export class Steeplejack extends Base {
         /* Merge config and command line arguments */
         config = _.merge(config, cliArgs);
 
-        return new Steeplejack(config, modules, routes);
+        return new Steeplejack(config, modules, routesDir, routesGlob);
 
     }
 

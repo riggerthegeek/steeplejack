@@ -87,7 +87,7 @@ export class Router extends Base {
      * @param {string} routeGlob
      * @returns {IRouteFiles[]}
      */
-    public static getFileList (routeDir: string, routeGlob: string = "**/*.js") : IRouteFiles[] {
+    public static getFileList (routeDir: string, routeGlob: string) : IRouteFiles[] {
 
         /* Build the routes up */
         let routes = path.join(routeDir, routeGlob);
