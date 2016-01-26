@@ -129,7 +129,7 @@ export class Steeplejack extends Base {
                 routes = path.join(process.cwd(), routes);
             }
 
-            this.routes = Router.discoverRoutes(routes);
+            //this.routes = Router.discoverRoutes(routes);
         }
 
     }
