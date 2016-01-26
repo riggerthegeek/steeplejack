@@ -31,6 +31,40 @@ describe("Steeplejack test", function () {
 
         describe("#constructor", function () {
 
+            it("should create with no input", function () {
+
+                let obj = new Steeplejack();
+
+                expect(obj).to.be.instanceof(Steeplejack)
+                    .instanceof(Base);
+
+                expect(obj.injector).to.be.instanceof(Injector);
+
+                /* Check injector registered to itself */
+                expect(obj.injector.getComponent("$injector").instance).to.be.equal(obj.injector);
+
+                /* Check config registered */
+                expect(obj.injector.getComponent("$config").instance).to.be.eql({});
+
+            });
+
+            it("should ignore a non-object config", function () {
+
+                let obj = new Steeplejack(null);
+
+                expect(obj).to.be.instanceof(Steeplejack)
+                    .instanceof(Base);
+
+                expect(obj.injector).to.be.instanceof(Injector);
+
+                /* Check injector registered to itself */
+                expect(obj.injector.getComponent("$injector").instance).to.be.equal(obj.injector);
+
+                /* Check config registered */
+                expect(obj.injector.getComponent("$config").instance).to.be.eql({});
+
+            });
+
             it("should register the config to the IOC container", function () {
 
                 var obj = new Steeplejack({
