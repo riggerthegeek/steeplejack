@@ -21,7 +21,7 @@
       "commit": "7577a2f4c134790891c52affdacdae99d802571b"
     },
     "node/node.d.ts": {
-      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+      "commit": "7b3d5a6ea5acda4a81f71309f1cc62354e63b681"
     },
     "lodash/lodash.d.ts": {
       "commit": "7577a2f4c134790891c52affdacdae99d802571b"
@@ -43,6 +43,12 @@
     },
     "yargs/yargs.d.ts": {
       "commit": "7fffbd3e040a93c244777e3be04cd6223ac69301"
+    },
+    "glob/glob.d.ts": {
+      "commit": "7b3d5a6ea5acda4a81f71309f1cc62354e63b681"
+    },
+    "minimatch/minimatch.d.ts": {
+      "commit": "7b3d5a6ea5acda4a81f71309f1cc62354e63b681"
     }
   }
 }
