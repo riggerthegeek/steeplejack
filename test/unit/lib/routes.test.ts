@@ -17,10 +17,213 @@ import * as _ from "lodash";
 
 /* Files */
 import {expect, proxyquire} from "../../helpers/configure";
+import {Base} from "../../../lib/base";
 import {Router} from "../../../lib/router";
 
 
 describe("Router test", function () {
+
+    describe("Methods", function () {
+
+        describe("#constructor", function () {
+
+            it("should create an instance with no routes", function () {
+
+                let obj = new Router();
+
+                expect(obj).to.be.instanceof(Router)
+                    .instanceof(Base);
+
+                expect(obj.getRoutes()).to.be.eql({});
+
+            });
+
+            it("should create an instance with some routes", function () {
+
+                let fn = () => {
+                };
+
+                let obj = new Router({
+                    "/": {
+                        get: [fn]
+                    },
+                    test: {
+                        get: fn,
+                        post: fn
+                    }
+                });
+
+                expect(obj.getRoutes()).to.be.eql({
+                    "/": {
+                        get: [fn]
+                    },
+                    "/test": {
+                        get: fn,
+                        post: fn
+                    }
+                });
+
+            });
+
+        });
+
+        describe("#addRoute", function () {
+
+            let obj: Router,
+                fn: Function;
+            beforeEach(function () {
+                obj = new Router;
+                fn = () => {};
+            });
+
+            it("should add in a single route", function () {
+
+                obj.addRoute({
+                    "/path": {
+                        get: fn
+                    }
+                });
+
+                expect(obj.getRoutes()).to.be.eql({
+                    "/path": {
+                        get: fn
+                    }
+                });
+
+            });
+
+            it("should add in a series of single routes", function () {
+
+                obj.addRoute({
+                    "/path": {
+                        get: fn
+                    }
+                });
+
+                expect(obj.getRoutes()).to.be.eql({
+                    "/path": {
+                        get: fn
+                    }
+                });
+
+                obj.addRoute({
+                    "/path": {
+                        post: fn
+                    }
+                });
+
+                expect(obj.getRoutes()).to.be.eql({
+                    "/path": {
+                        get: fn,
+                        post: fn
+                    }
+                });
+
+            });
+
+            it("should add paths with inconsistent slashes", function () {
+
+                obj.addRoute({
+                    path: {
+                        "//innerPath": {
+                            "\\finalPath": {
+                                get: fn
+                            }
+                        }
+                    },
+                    otherPath: {
+                        innerPath: {
+                            post: fn
+                        }
+                    }
+                });
+
+                expect(obj.getRoutes()).to.be.eql({
+                    "/path/innerPath/finalPath": {
+                        get: fn
+                    },
+                    "/otherPath/innerPath": {
+                        post: fn
+                    }
+                });
+
+            });
+
+            it("should add paths that doesn't have nested paths", function () {
+
+                obj.addRoute({
+                    "path/innerPath": {
+                        get: fn
+                    },
+                    "path/otherPath": {
+                        get: fn
+                    }
+                });
+
+                expect(obj.getRoutes()).to.be.eql({
+                    "/path/innerPath": {
+                        get: fn
+                    },
+                    "/path/otherPath": {
+                        get: fn
+                    }
+                });
+
+            });
+
+            it("should receive a non-alphanumeric - Express variable handling", function () {
+
+                obj.addRoute({
+                    "path/innerPath/:id": {
+                        get: fn
+                    },
+                    "path/otherPath": {
+                        get: fn
+                    }
+                });
+
+                expect(obj.getRoutes()).to.be.eql({
+                    "/path/innerPath/:id": {
+                        get: fn
+                    },
+                    "/path/otherPath": {
+                        get: fn
+                    }
+                });
+
+            });
+
+            it("should throw an error when trying to overwrite a route", function () {
+
+                obj.addRoute({
+                    path: {
+                        get: fn
+                    }
+                });
+
+                var fail = false;
+
+                try {
+                    obj.addRoute({
+                        path: {
+                            get: fn
+                        }
+                    });
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.route).to.be.equal("/path");
+                    expect(err.key).to.be.equal("get");
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+        });
+
+    });
 
     describe("Static methods", function () {
 
