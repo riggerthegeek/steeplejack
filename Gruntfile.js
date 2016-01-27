@@ -110,7 +110,7 @@ module.exports = function (grunt) {
             jsTest: {
                 files: [{
                     expand: true,
-                    src: "<%= config.test %>/**/*.js",
+                    src: "<%= config.test %>/**/*.{js,json}",
                     dest: "./<%= config.tmp %>/compiled"
                 }]
             }
@@ -365,6 +365,13 @@ module.exports = function (grunt) {
 
     grunt.registerTask("default", [
         "build"
+    ]);
+
+
+    grunt.registerTask("integrationtest", "Run a simple end-to-end stack", [
+        "clean:tmp",
+        "ts:all",
+        "copy:jsTest"
     ]);
 
 
