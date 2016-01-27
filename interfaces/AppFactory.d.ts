@@ -4,9 +4,9 @@
 
 
 declare interface IAppFactory {
-    config: Object;
-    env: Object;
-    modules: any[];
-    routesDir: string;
-    routesGlob: string;
+    config?: Object;
+    env?: Object;
+    modules?: any[];
+    routesDir?: string;
+    routesGlob?: string;
 }
