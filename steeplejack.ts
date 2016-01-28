@@ -25,6 +25,7 @@ import {cliParameters} from "./helpers/cliParameters";
 import {replaceEnvVars} from "./helpers/replaceEnvVars";
 
 
+
 export class Steeplejack extends Base {
 
 
@@ -48,7 +49,7 @@ export class Steeplejack extends Base {
      *
      * @type {Array}
      */
-    public modules: any[] = [];
+    public modules: string[] | IPlugin[] = [];
 
 
     /**
@@ -103,7 +104,7 @@ export class Steeplejack extends Base {
      */
     public constructor (
         config: Object = {},
-        modules: any[] = [],
+        modules: string[] | IPlugin[] = [],
         routesDir: string = null,
         routesGlob: string = "**/*.js"
     ) {
@@ -144,7 +145,7 @@ export class Steeplejack extends Base {
     }
 
 
-    public addModule (module: any) : Steeplejack {
+    public addModule (module: string | IPlugin) : Steeplejack {
 
         return this;
 
