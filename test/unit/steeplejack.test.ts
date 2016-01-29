@@ -23,6 +23,8 @@ import {
 import {Steeplejack} from "../../steeplejack";
 import {Base} from "../../lib/base";
 import {Injector} from "../../lib/injector";
+import {Plugin} from "../../lib/plugin";
+import {Server} from "../../lib/server";
 
 
 describe("Steeplejack test", function () {
@@ -40,7 +42,7 @@ describe("Steeplejack test", function () {
 
                 expect(obj.injector).to.be.instanceof(Injector);
 
-                /* Check injector registered to itself */
+                /* Check injector registered to itthis */
                 expect(obj.injector.getComponent("$injector").instance).to.be.equal(obj.injector);
 
                 /* Check config registered */
@@ -57,7 +59,7 @@ describe("Steeplejack test", function () {
 
                 expect(obj.injector).to.be.instanceof(Injector);
 
-                /* Check injector registered to itself */
+                /* Check injector registered to itthis */
                 expect(obj.injector.getComponent("$injector").instance).to.be.equal(obj.injector);
 
                 /* Check config registered */
@@ -76,7 +78,7 @@ describe("Steeplejack test", function () {
 
                 expect(obj.injector).to.be.instanceof(Injector);
 
-                /* Check injector registered to itself */
+                /* Check injector registered to itthis */
                 expect(obj.injector.getComponent("$injector").instance).to.be.equal(obj.injector);
 
                 /* Check config registered */
@@ -88,6 +90,424 @@ describe("Steeplejack test", function () {
 
         });
 
+        describe("#addModule", function () {
+
+            beforeEach(function () {
+
+                this.glob = {
+                    sync: sinon.stub()
+                };
+
+                this.Steeplejack = proxyquire("../../steeplejack", {
+                    glob: this.glob
+                }).Steeplejack;
+
+                this.obj = new this.Steeplejack();
+
+            });
+
+            it("should register a single string", function () {
+
+                this.glob.sync.returns([
+                    "/path/to/module1",
+                    "/path/to/module2"
+                ]);
+
+                this.obj.addModule("module1");
+
+                expect(this.obj.modules).to.be.eql([
+                    "/path/to/module1",
+                    "/path/to/module2"
+                ]);
+
+                expect(this.glob.sync).to.be.calledOnce
+                    .calledWith(path.join(process.cwd(), "module1"));
+
+            });
+
+            it("should register many modules", function () {
+
+                this.glob.sync.onCall(0).returns([
+                    "/path/to/module1",
+                    "/path/to/module1a"
+                ]);
+
+                this.glob.sync.onCall(1).returns([
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b"
+                ]);
+
+                this.glob.sync.onCall(2).returns([
+                    "/path/to/module3"
+                ]);
+
+                this.glob.sync.onCall(3).returns([
+                    "/module4"
+                ]);
+
+                [
+                    "module1",
+                    "module2",
+                    "module3",
+                    "/module4" // absolute path
+                ].forEach(module => {
+                    expect(this.obj.addModule(module)).to.be.equal(this.obj);
+                });
+
+                expect(this.obj.modules).to.be.eql([
+                    "/path/to/module1",
+                    "/path/to/module1a",
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b",
+                    "/path/to/module3",
+                    "/module4"
+                ]);
+
+                expect(this.glob.sync).to.be.callCount(4)
+                    .calledWith(path.join(process.cwd(), "module1"))
+                    .calledWith(path.join(process.cwd(), "module2"))
+                    .calledWith(path.join(process.cwd(), "module3"))
+                    .calledWith(path.join("/module4"));
+
+            });
+
+            it("should throw an error if a non-string is passed in with the array", function () {
+
+                var fail = false;
+
+                try {
+                    this.obj.addModule(2);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be
+                        .equal("Steeplejack.addModule can only accept a string or a Plugin instance");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.glob.sync).to.not.be.called;
+
+                }
+
+            });
+
+            it("should allow registration of a single Plugin", function () {
+
+                var plugin = new Plugin();
+
+                expect(this.obj.addModule(plugin)).to.be.equal(this.obj);
+
+                expect(this.glob.sync).to.not.be.called;
+
+            });
+
+            it("should allow registration of mixed Plugins and files", function () {
+
+                var plugin1 = new Plugin([
+                    "plugin1-1",
+                    "plugin1-2"
+                ]);
+                var plugin2 = new Plugin([
+                    "plugin2-1",
+                    "plugin2-2",
+                    "plugin2-3",
+                    {}
+                ]);
+
+                this.glob.sync.onCall(0).returns([
+                    "/path/to/module1",
+                    "/path/to/module1a"
+                ]);
+
+                this.glob.sync.onCall(1).returns([
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b"
+                ]);
+
+                this.glob.sync.onCall(2).returns([
+                    "/path/to/module3"
+                ]);
+
+                [
+                    plugin1,
+                    "module1",
+                    "module2",
+                    plugin2,
+                    "module3"
+                ].forEach(module => {
+                    expect(this.obj.addModule(module)).to.be.equal(this.obj);
+                });
+
+                expect(this.obj.modules).to.be.eql([
+                    "plugin1-1",
+                    "plugin1-2",
+                    "/path/to/module1",
+                    "/path/to/module1a",
+                    "/path/to/module2",
+                    "/path/to/module2a",
+                    "/path/to/module2b",
+                    "plugin2-1",
+                    "plugin2-2",
+                    "plugin2-3",
+                    {},
+                    "/path/to/module3"
+                ]);
+
+                expect(this.glob.sync).to.be.calledThrice
+                    .calledWith(path.join(process.cwd(), "module1"))
+                    .calledWith(path.join(process.cwd(), "module2"))
+                    .calledWith(path.join(process.cwd(), "module3"));
+
+            });
+
+        });
+
+        describe("#createOutputHandler", function () {
+
+            it("should register the method to the IOC container - result", function (done) {
+
+                var obj = new Steeplejack();
+
+                class Strategy implements IServerStrategy {
+                    acceptParser: (options: any, strict: boolean) => void;
+                    addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
+                    after: (fn: Function) => void;
+                    before: (fn: Function) => void;
+                    bodyParser: () => void;
+                    close: () => void;
+                    enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getServer: () => Object;
+                    gzipResponse: () => void;
+                    //outputHandler: (err: any, data: any, request: Object, result: Object) => any;
+                    queryParser: (mapParser: boolean) => void;
+                    start: (port: number, hostname: string, backlog: number) => any;
+                    uncaughtException: (fn: Function) => void;
+                    use: (fn: Function | Function[]) => void;
+
+                    outputHandler (err: any, data: any, request: Object, result: Object) : any {
+                        return {
+                            err,
+                            data,
+                            request,
+                            result
+                        };
+                    }
+                }
+
+                let server = new Server({
+                    port: 3000
+                }, new Strategy());
+
+                let handler = obj.createOutputHandler(server);
+
+                expect(handler).to.be.a("function");
+
+                let req = {hello:"req"};
+                let res = {hello:"res"};
+
+                /* Ensure it exits at finally */
+                handler(() => {
+                    return "result";
+                }, req, res)
+                    .then((result: any) => {
+
+                        expect(result).to.be.eql({
+                            err: null,
+                            data: "result",
+                            request: req,
+                            result: res
+                        });
+
+                    })
+                    .finally(done);
+
+            });
+
+            it("should register the method to the IOC container - err", function (done) {
+
+                var obj = new Steeplejack();
+
+                class Strategy implements IServerStrategy {
+                    acceptParser: (options: any, strict: boolean) => void;
+                    addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
+                    after: (fn: Function) => void;
+                    before: (fn: Function) => void;
+                    bodyParser: () => void;
+                    close: () => void;
+                    enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getServer: () => Object;
+                    gzipResponse: () => void;
+                    //outputHandler: (err: any, data: any, request: Object, result: Object) => any;
+                    queryParser: (mapParser: boolean) => void;
+                    start: (port: number, hostname: string, backlog: number) => any;
+                    uncaughtException: (fn: Function) => void;
+                    use: (fn: Function | Function[]) => void;
+
+                    outputHandler (err: any, data: any, request: Object, result: Object) : any {
+                        throw {
+                            err,
+                            data,
+                            request,
+                            result
+                        };
+                    }
+                }
+
+                let server = new Server({
+                    port: 3000
+                }, new Strategy());
+
+                let handler = obj.createOutputHandler(server);
+
+                expect(handler).to.be.a("function");
+
+                let req = {hello:"req"};
+                let res = {hello:"res"};
+
+                /* Ensure it exits at finally */
+                handler(() => {
+                    throw new Error("oh dear");
+                }, req, res)
+                    .then(() => {
+                        throw new Error("invalid");
+                    })
+                    .catch((err: any) => {
+
+                        expect(err).to.have.keys([
+                            "err",
+                            "data",
+                            "request",
+                            "result"
+                        ]);
+
+                        expect(err.err).to.be.instanceof(Error);
+                        expect(err.err.message).to.be.equal("oh dear");
+                        expect(err.data).to.be.null;
+                        expect(err.request).to.be.equal(req);
+                        expect(err.result).to.be.equal(res);
+
+                    })
+                    .finally(done);
+
+            });
+
+        });
+
+        describe("#run", function () {
+
+            beforeEach(function () {
+
+                this.modules = {
+                    module1: {
+                        factory: {
+                            factory: () => {},
+                            name: "mod1"
+                        }
+                    },
+                    module2: {
+                        singleton: {
+                            singleton: {
+                                hello: "world"
+                            },
+                            name: "mod2"
+                        }
+                    }
+                };
+
+                this.Steeplejack = proxyquire("../../steeplejack", {
+                    module1: this.modules.module1,
+                    module2: this.modules.module2
+                }).Steeplejack;
+
+                this.obj = new this.Steeplejack({
+                    config: "value"
+                });
+
+                this.createOutputHandler = sinon.stub(this.obj, "createOutputHandler");
+
+                this.server = {
+                    addRoutes: sinon.spy(),
+                    close: sinon.spy(),
+                    outputHandler: sinon.spy(),
+                    start: sinon.stub()
+                };
+
+                this.getComponent = sinon.stub();
+                this.registerSingleton = sinon.spy();
+                this.registerFactory = sinon.spy();
+                this.process = sinon.stub()
+                    .returns(this.server);
+
+                this.obj.injector = {
+                    getComponent: this.getComponent,
+                    registerSingleton: this.registerSingleton,
+                    registerFactory: this.registerFactory,
+                    process: this.process
+                };
+
+            });
+
+            it.only("should run the steeplejack server successfully - create $outputHandler", function (done) {
+
+                /* Put in the modules and routes manually */
+                this.obj.modules = [
+                    "module1",
+                    "module2"
+                ];
+
+                this.obj.routes = {
+                    "/route": "routeFn"
+                };
+
+                /* Wait for the start emitter */
+                this.obj.on("start", (inst: Steeplejack) => {
+
+                    expect(inst).to.be.equal(this.obj);
+
+                    /* Emit close event */
+                    this.obj.emit("close");
+
+                    expect(this.server.close).to.be.calledOnce;
+
+                    done();
+
+                });
+
+                this.server.start.resolves();
+
+                var createServer = function () {};
+
+                this.getComponent.returns(null);
+
+                expect(this.obj.run(createServer)).to.be.equal(this.obj);
+
+                expect(this.createOutputHandler).to.be.calledOnce
+                    .calledWithExactly(this.server);
+
+                expect(this.registerFactory).to.be.calledOnce
+                    .calledWith(this.modules.module1.name, this.modules.modul1.factory);
+
+                expect(this.process).to.be.calledTwice
+                    .calledWithExactly(createServer)
+                    .calledWithExactly("routeFn");
+
+                expect(this.registerSingleton).to.be.calledTwice
+                    .calledWithExactly("$server", this.server);
+                // @todo
+
+                expect(this.getComponent).to.be.calledOnce
+                    .calledWithExactly("$output");
+
+            });
+
+        });
 
     });
 

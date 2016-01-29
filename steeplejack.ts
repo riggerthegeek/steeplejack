@@ -12,8 +12,9 @@ import * as path from "path";
 
 
 /* Third-party modules */
-import * as _ from "lodash";
+let _ = require("lodash");
 let isAbsolute = require("path-is-absolute");
+import {sync as glob} from "glob";
 import * as yargs from "yargs";
 
 
@@ -21,6 +22,7 @@ import * as yargs from "yargs";
 import {Base} from "./lib/base";
 import {Injector} from "./lib/injector";
 import {Router} from "./lib/router";
+import {Server} from "./lib/server";
 import {cliParameters} from "./helpers/cliParameters";
 import {replaceEnvVars} from "./helpers/replaceEnvVars";
 
@@ -126,7 +128,7 @@ export class Steeplejack extends Base {
         this.injector.registerSingleton("$config", this.config);
 
         /* Add in the modules */
-        _.each(modules, module => {
+        _.each(modules, (module: string | IPlugin) => {
             this.addModule(module);
         });
 
@@ -145,7 +147,184 @@ export class Steeplejack extends Base {
     }
 
 
+    /**
+     * Process Routes
+     *
+     * Processes the routes and puts them into
+     * the Routes library
+     *
+     * @returns {Router}
+     * @private
+     */
+    protected _processRoutes () {
+
+        let routes = _.reduce(this.routes, (result: any, fn: Function, name: string) => {
+
+            result[name] = this.injector.process(fn);
+
+            return result;
+
+        }, {});
+
+        /* Put into a Router object and return */
+        return new Router(routes);
+
+    }
+
+
+    protected _registerFactory (module: IFactory, modulePath: any) : Steeplejack {
+
+        this.injector.registerFactory(module.name, module.factory);
+
+        return this;
+
+    }
+
+
+    protected _registerModule (modulePath: any) : Steeplejack {
+
+        let module: any = modulePath;
+
+        /* Is the module a file path? */
+        if (_.isString(module)) {
+            /* Yup - load the file */
+            module = require(module);
+        }
+
+        _.each(module, (value: any, key: any) => {
+
+            let method = '_' + _.camelCase(`register_${key}`);
+
+            (<any>this)[method](module, modulePath);
+
+        });
+
+        return this;
+
+    }
+
+
+    protected _registerSingleton (module: ISingleton, modulePath: any) : Steeplejack {
+
+        this.injector.registerSingleton(module.name, module.singleton);
+
+        return this;
+
+    }
+
+
+    /**
+     * Add Modules
+     *
+     * Takes a new module and loads it into the
+     * application. The modules can be relative
+     * to the application, an absolute path or
+     * an instance of Plugin.
+     *
+     * For paths, globbed paths are recommended.
+     *
+     * @param {string|IPlugin} module
+     * @returns {Steeplejack}
+     */
     public addModule (module: string | IPlugin) : Steeplejack {
+
+        /* Check if it's a module */
+        if (_.isArray((<IPlugin>module).modules)) {
+            /* Yes - just pull in from there */
+            this.modules = _.concat(this.modules, (<IPlugin>module).modules);
+            return this;
+        }
+
+        /* Ensure path is a string */
+        if (_.isString(module) === false) {
+            throw new TypeError("Steeplejack.addModule can only accept a string or a Plugin instance");
+        }
+
+        /* Ensure an absolute path */
+        let modulePath: string;
+        if (isAbsolute(module)) {
+            modulePath = <string>module;
+        } else {
+            modulePath = path.join(process.cwd(), module);
+        }
+
+        /* Store in the array */
+        this.modules = _.concat(this.modules, glob(modulePath));
+
+        return this;
+
+    }
+
+
+    /**
+     * Create Output Handler
+     *
+     * Creates the output handler.  This is registered
+     * in the IOC as $output.  It returns the handler
+     * so it can be used during the run phase.
+     *
+     * @param {Server} server
+     * @returns {function(Function, Object, Object): (Thenable<U>|Promise<U>|Promise<T>)}
+     */
+    public createOutputHandler (server: Server) : (fn: Function, req: Object, res: Object) => any {
+
+        /* Get the server output handler */
+        let outputHandler = (fn: Function, req: Object, res: Object) : any => {
+            return server.outputHandler(fn, req, res);
+        };
+
+        /* Store in the injector */
+        this.injector.registerSingleton("$output", outputHandler);
+
+        /* Return so can be used elsewhere */
+        return outputHandler;
+
+    }
+
+
+    /**
+     * Run
+     *
+     * Sets up the server and runs the application. Must
+     * receive a function which configures the server
+     * instance.
+     *
+     * @returns {Steeplejack}
+     */
+    public run (factory: Function) : Steeplejack {
+
+        /* Register the modules */
+        _.each(this.modules, (module: any) => {
+            this._registerModule(module);
+        });
+
+        /* Run the server factory through the injector */
+        let server = this.injector.process(factory);
+
+        /* Register the server to the injector */
+        this.injector.registerSingleton("$server", server);
+
+        /* Create the outputHandler and register to injector if not already done */
+        if (this.injector.getComponent("$output") === null) {
+            this.createOutputHandler(server);
+        }
+
+        /* Process the routes */
+        let routes = this._processRoutes();
+
+        /* Add in the routes to the server */
+        server.addRoutes(routes.getRoutes());
+
+        /* Listen for close events */
+        this.on("close", () => {
+            server.close();
+        });
+
+        /* Start the server */
+        server.start()
+            .then(() => {
+                this.emit("start", this);
+            });
 
         return this;
 
