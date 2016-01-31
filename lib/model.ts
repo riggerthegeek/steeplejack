@@ -3,7 +3,7 @@ import {data} from "datautils";
  * model
  */
 
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/main.d.ts" />
 
 "use strict";
 

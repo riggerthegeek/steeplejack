@@ -2,7 +2,7 @@
  * steeplejack.test
  */
 
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/main.d.ts" />
 
 "use strict";
 
@@ -116,7 +116,7 @@ describe("Steeplejack test", function () {
 
             });
 
-            it("should load up the app with no extras", function () {
+            it("should load up the app with no extras - no config", function () {
 
                 var app = this.Steeplejack.app();
 
@@ -124,6 +124,18 @@ describe("Steeplejack test", function () {
                     .instanceof(Base);
 
                 expect(app.config).to.be.eql({});
+                expect(app.modules).to.be.eql([]);
+                expect(app.routes).to.be.eql({});
+
+            });
+
+            it("should load up the app with no extras", function () {
+
+                var app = Steeplejack.app();
+
+                expect(app).to.be.instanceof(Steeplejack)
+                    .instanceof(Base);
+
                 expect(app.modules).to.be.eql([]);
                 expect(app.routes).to.be.eql({});
 
@@ -137,6 +149,18 @@ describe("Steeplejack test", function () {
                     .instanceof(Base);
 
                 expect(app.config).to.be.eql({});
+                expect(app.modules).to.be.eql([]);
+                expect(app.routes).to.be.eql({});
+
+            });
+
+            it("should load up the app with no extras if empty object provided - no config", function () {
+
+                var app = Steeplejack.app({});
+
+                expect(app).to.be.instanceof(Steeplejack)
+                    .instanceof(Base);
+
                 expect(app.modules).to.be.eql([]);
                 expect(app.routes).to.be.eql({});
 

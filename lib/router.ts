@@ -2,7 +2,7 @@
  * router
  */
 
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/main.d.ts" />
 
 "use strict";
 
@@ -24,6 +24,133 @@ export class Router extends Base {
 
 
     /**
+     * Routes
+     *
+     * Stores the routes
+     * @type {object}
+     * @private
+     */
+    protected _routes: Object = {};
+
+
+    /**
+     * Constructor
+     *
+     * Creates the object, adding in routes
+     *
+     * @param {object} routes
+     */
+    public constructor (routes: Object = null) {
+
+        super();
+
+        this.addRoute(routes);
+
+    }
+
+
+    /**
+     * Clean Slashes
+     *
+     * Gets rid of excess slashes from a string
+     *
+     * @param {string} str
+     * @returns {string}
+     * @private
+     */
+    protected _cleanSlashes (str: string) {
+
+        /* Remove forward slashes */
+        str = str.replace(/\\/g, "/");
+
+        /* Remove excess slashes */
+        str = str.replace(/\/+/g, "/");
+
+        return str;
+
+    }
+
+
+    /**
+     * Set Route Name
+     *
+     * Sets the route name
+     *
+     * @param {string} parent
+     * @param {string} route
+     * @returns {string}
+     */
+    protected _setRouteName (parent: string, route: string) {
+
+        let str = [
+            parent, route
+        ].join("/");
+
+        return this._cleanSlashes(str);
+
+    }
+
+
+    /**
+     * Add Route
+     *
+     * Adds in a new route(s) to the object
+     *
+     * @param {object} routes
+     * @param {string} parent
+     * @returns {Router}
+     */
+    public addRoute (routes: Object, parent: string = null) : Router {
+
+        _.each(routes, (value: any, key: string) => {
+
+            if (_.isPlainObject(value)) {
+                /* It's an object - we're not yet at the lowest level */
+                this.addRoute(value, this._setRouteName(parent, key));
+            } else {
+
+                /* Remove final slash */
+                if (parent !== "/") {
+                    parent = parent.replace(/(\/+)$/, "");
+                }
+
+                /* Save to the instance */
+                if (_.has(this._routes, parent) === false) {
+                    (<any>this._routes)[parent] = {};
+                }
+
+                if (_.has(this._routes, [parent, key])) {
+                    /* Can't overwrite a route */
+                    let err = new SyntaxError("CANNOT_OVERWRITE_A_ROUTE");
+                    (<any>err).route = parent;
+                    (<any>err).key = key;
+                    throw err;
+                }
+
+                (<any>this._routes)[parent][key] = value;
+
+            }
+
+        });
+
+        return this;
+
+    }
+
+
+    /**
+     * Get Routes
+     *
+     * Gets the set routes
+     *
+     * @returns {object}
+     */
+    public getRoutes () : Object {
+        return this._routes;
+    }
+
+
+    /**
      * Discover Routes
      *
      * This is discovers the route files in the
@@ -34,7 +161,7 @@ export class Router extends Base {
      * @param {IRouteFiles[]} files
      * @returns {Object}
      */
-    public static discoverRoutes (files: IRouteFiles[]) : any {
+    public static discoverRoutes (files: IRouteFiles[]) : Object {
 
         const splitNames = new RegExp(`^((\\w+${path.sep})+)?(\\w+)`);
 

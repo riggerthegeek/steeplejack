@@ -2,7 +2,7 @@
  * steeplejack
  */
 
-/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="./typings/main.d.ts" />
 
 "use strict";
 
@@ -171,13 +171,7 @@ export class Steeplejack extends Base {
         modules = [],
         routesDir = null,
         routesGlob = void 0
-    } : IAppFactory = {
-        config: {},
-        env: {},
-        modules: [],
-        routesDir: null,
-        routesGlob: void 0
-    }) : Steeplejack {
+    } : IAppFactory = {}) : Steeplejack {
 
         /* Pull in the parameters from the command line */
         let cliArgs = cliParameters(...yargs.argv._);
