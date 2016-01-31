@@ -4,6 +4,7 @@
   "description": "A NodeJS scaffolding framework",
   "main": "./steeplejack",
   "scripts": {
+    "postinstall": "typings install",
     "test": "grunt watch:test"
   },
   "author": "Simon Emms <simon@simonemms.com>",
@@ -45,6 +46,7 @@
     "sinon-chai": "^2.8.0",
     "tsd": "^0.6.5",
     "tslint": "^3.2.0",
-    "typescript": "^1.7.3"
+    "typescript": "^1.7.3",
+    "typings": "^0.6.3"
   }
 }
