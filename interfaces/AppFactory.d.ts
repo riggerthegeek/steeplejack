@@ -6,7 +6,7 @@
 declare interface IAppFactory {
     config?: Object;
     env?: Object;
-    modules?: any[];
+    modules?: string[] | IPlugin[];
     routesDir?: string;
     routesGlob?: string;
 }

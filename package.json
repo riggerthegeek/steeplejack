@@ -4,7 +4,6 @@
   "description": "A NodeJS scaffolding framework",
   "main": "./steeplejack",
   "scripts": {
-    "postinstall": "typings install",
     "test": "grunt watch:test"
   },
   "author": "Simon Emms <simon@simonemms.com>",
@@ -20,6 +19,7 @@
   },
   "devDependencies": {
     "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
     "es6-collections": "^0.5.5",
     "es6-promise": "^3.0.2",
     "grunt": "^0.4.5",
@@ -42,10 +42,10 @@
     "proxyquire": "^1.7.3",
     "remap-istanbul": "^0.5.1",
     "sinon": "^1.17.2",
+    "sinon-as-promised": "^4.0.0",
     "sinon-chai": "^2.8.0",
     "tsd": "^0.6.5",
     "tslint": "^3.2.0",
-    "typescript": "^1.7.3",
-    "typings": "^0.6.3"
+    "typescript": "^1.7.3"
   }
 }
