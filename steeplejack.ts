@@ -13,6 +13,7 @@ import * as path from "path";
 
 /* Third-party modules */
 let _ = require("lodash");
+let isAbsolute = require("path-is-absolute");
 import {sync as glob} from "glob";
 import * as yargs from "yargs";
 
@@ -26,14 +27,16 @@ import {cliParameters} from "./helpers/cliParameters";
 import {replaceEnvVars} from "./helpers/replaceEnvVars";
 
 
-/* path.isAbsolute not in node 0.10 - use a library instead */
-let isAbsolute = path.isAbsolute;
-if (_.isFunction(isAbsolute) === false) {
-    isAbsolute = require("path-is-absolute");
-}
-
-
 export class Steeplejack extends Base {
+
+
+    /**
+     * Output Handler Name
+     *
+     * @type {string}
+     * @private
+     */
+    private _outputHandlerName: string = "$output";
 
 
     /**
@@ -46,6 +49,13 @@ export class Steeplejack extends Base {
     public config: Object = {};
 
 
+    /**
+     * Injector
+     *
+     * The instance of the IOC container
+     *
+     * @type {{}}
+     */
     public injector: Injector;
 
 
@@ -186,63 +196,21 @@ export class Steeplejack extends Base {
      * to the IOC container.
      *
      * @param {IConfig} module
-     * @param {*} modulePath
      * @returns {Steeplejack}
      * @private
      */
-    protected _registerConfig (module: IConfig, modulePath: any) : Steeplejack {
+    protected _registerConfig (module: IConfig) : Steeplejack {
 
-        let config = module.__config;
-
-        console.log(module);
-        process.exit();
-
-        console.log(config);
-        process.exit();
-
-        let fn = module.__config;
-        let name = module.name
+        let fn = module.config;
 
         /* Run the function, returning the config object as the argument */
         let inst = fn(this.config);
 
-        console.log({
-            name: module.name,
-            __singleton: inst
-        });
-        console.log(module);
-        process.exit();
-
         /* Register as a singleton */
         return this._registerSingleton({
             name: module.name,
-            __singleton: inst
-        }, modulePath);
-
-    }
-
-
-    /**
-     * Register Constant
-     *
-     * This registers whatever is sent as to the IOC
-     * controller.  Although it can be used for any
-     * data type, it is designed to be used for app-wide
-     * configuration parameters.
-     *
-     * It is certainly not designed with using to store
-     * functions (although it will work, you should use
-     * either the factory or the singleton for that).
-     *
-     * @param {IConstant} module
-     * @returns {Steeplejack}
-     * @private
-     */
-    protected _registerConstant (module: IConstant) : Steeplejack {
-
-        this.injector.registerSingleton(module.name, module.__constant);
-
-        return this;
+            singleton: inst
+        });
 
     }
 
@@ -259,13 +227,12 @@ export class Steeplejack extends Base {
      * instance of the class) when they are called.
      *
      * @param {IFactory} module
-     * @param {any} modulePath
      * @returns {Steeplejack}
      * @private
      */
-    protected _registerFactory (module: IFactory, modulePath: any) : Steeplejack {
+    protected _registerFactory (module: IFactory) : Steeplejack {
 
-        this.injector.registerFactory(module.name, module.__factory);
+        this.injector.registerFactory(module.name, module.factory);
 
         return this;
 
@@ -288,20 +255,38 @@ export class Steeplejack extends Base {
 
         let module: any = modulePath;
 
+        let requireable : boolean = _.isString(module);
+
         /* Is the module a file path? */
-        if (_.isString(module)) {
+        if (requireable) {
             /* Yup - load the file */
             module = require(module);
         }
 
         _.each(module, (value: any, key: any) => {
 
-            let method = "_" + _.camelCase(`register_${key}`);
+            switch (key) {
 
-            console.log(module);
-            process.exit();
+                case "__config":
+                    this._registerConfig(value);
+                    break;
 
-            (<any>this)[method](module, modulePath);
+                case "__factory":
+                    this._registerFactory(value);
+                    break;
+
+                case "__singleton":
+                    this._registerSingleton(value);
+                    break;
+
+                default:
+                    let message: string = `Unknown registration module: '${key}'`;
+                    if (requireable) {
+                        message += ` in '${modulePath}'`;
+                    }
+                    throw new Error(message);
+
+            }
 
         });
 
@@ -319,13 +304,12 @@ export class Steeplejack extends Base {
      * object.
      *
      * @param {ISingleton} module
-     * @param {*} modulePath
      * @returns {Steeplejack}
      * @private
      */
-    protected _registerSingleton (module: ISingleton, modulePath: any) : Steeplejack {
+    protected _registerSingleton (module: ISingleton) : Steeplejack {
 
-        this.injector.registerSingleton(module.name, module.__singleton);
+        this.injector.registerSingleton(module.name, module.singleton);
 
         return this;
 
@@ -393,7 +377,7 @@ export class Steeplejack extends Base {
         };
 
         /* Store in the injector */
-        this.injector.registerSingleton("$output", outputHandler);
+        this.injector.registerSingleton(this._outputHandlerName, outputHandler);
 
         /* Return so can be used elsewhere */
         return outputHandler;
@@ -428,7 +412,7 @@ export class Steeplejack extends Base {
         this.injector.registerSingleton("$server", server);
 
         /* Create the outputHandler and register to injector if not already done */
-        if (this.injector.getComponent("$output") === null) {
+        if (this.injector.getComponent(this._outputHandlerName) === null) {
             this.createOutputHandler(server);
         }
 

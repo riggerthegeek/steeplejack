@@ -420,8 +420,8 @@ describe("Steeplejack test", function () {
                     },
                     module3: {
                         __config: {
-                            config: () => {},
-                            name: "mod2"
+                            config: sinon.spy(),
+                            name: "mod3"
                         }
                     },
                     module4: {
@@ -429,7 +429,7 @@ describe("Steeplejack test", function () {
                             constant: {
                                 hello: "world"
                             },
-                            name: "mod2"
+                            name: "mod4"
                         }
                     }
                 };
@@ -490,14 +490,13 @@ describe("Steeplejack test", function () {
 
             });
 
-            it.only("should run the steeplejack server successfully - $output created automatically", function (done) {
+            it("should run the steeplejack server successfully - $output created automatically", function (done) {
 
                 /* Put in the modules and routes manually */
                 this.obj.modules = [
                     "module1",
                     "module2",
-                    "module3",
-                    //"module4"
+                    "module3"
                 ];
 
                 this.obj.routes = {
@@ -530,7 +529,7 @@ describe("Steeplejack test", function () {
                     .calledWithExactly(this.server);
 
                 expect(this.registerFactory).to.be.calledOnce
-                    .calledWithExactly(this.modules.module1.name, this.modules.module1.__factory);
+                    .calledWithExactly(this.modules.module1.__factory.name, this.modules.module1.__factory.factory);
 
                 expect(this.process).to.be.calledTwice
                     .calledWithExactly(createServer)
@@ -538,11 +537,189 @@ describe("Steeplejack test", function () {
 
                 expect(this.registerSingleton).to.be.calledThrice
                     .calledWithExactly("$server", this.server)
-                    .calledWithExactly(this.modules.module2.name, this.modules.module2.__singleton)
-                    .calledWith(this.module.module3.name);
+                    .calledWithExactly(this.modules.module2.__singleton.name, this.modules.module2.__singleton.singleton)
+                    .calledWith(this.modules.module3.__config.name);
+
+                expect(this.modules.module3.__config.config).to.be.calledOnce
+                    .calledWithExactly({
+                        config: "value"
+                    });
 
                 expect(this.getComponent).to.be.calledOnce
                     .calledWithExactly("$output");
+
+            });
+
+            it("should run the steeplejack server successfully - $output already registered", function (done) {
+
+                /* Put in the modules and routes manually */
+                this.obj.modules = [
+                    "module1",
+                    "module2",
+                    "module3"
+                ];
+
+                this.obj.routes = {
+                    "/route": "routeFn"
+                };
+
+                /* Wait for the start emitter */
+                this.obj.on("start", (inst: Steeplejack) => {
+
+                    expect(inst).to.be.equal(this.obj);
+
+                    /* Emit close event */
+                    this.obj.emit("close");
+
+                    expect(this.server.close).to.be.calledOnce;
+
+                    done();
+
+                });
+
+                this.server.start.resolves();
+
+                var createServer = function () {};
+
+                this.getComponent.returns({});
+
+                expect(this.obj.run(createServer)).to.be.equal(this.obj);
+
+                expect(this.createOutputHandler).to.be.not.be.called;
+
+                expect(this.registerFactory).to.be.calledOnce
+                    .calledWithExactly(this.modules.module1.__factory.name, this.modules.module1.__factory.factory);
+
+                expect(this.process).to.be.calledTwice
+                    .calledWithExactly(createServer)
+                    .calledWithExactly("routeFn");
+
+                expect(this.registerSingleton).to.be.calledThrice
+                    .calledWithExactly("$server", this.server)
+                    .calledWithExactly(this.modules.module2.__singleton.name, this.modules.module2.__singleton.singleton)
+                    .calledWith(this.modules.module3.__config.name);
+
+                expect(this.modules.module3.__config.config).to.be.calledOnce
+                    .calledWithExactly({
+                        config: "value"
+                    });
+
+                expect(this.getComponent).to.be.calledOnce
+                    .calledWithExactly("$output");
+
+            });
+
+            it("should add in a plugin module", function (done) {
+
+                let fn = () => {};
+
+                /* Put in the modules and routes manually */
+                this.obj.modules = [
+                    {
+                        __factory: {
+                            factory: fn,
+                            name: "plugin"
+                        }
+                    }
+                ];
+
+                this.obj.routes = {
+                    "/route": "routeFn"
+                };
+
+                /* Wait for the start emitter */
+                this.obj.on("start", (inst: Steeplejack) => {
+
+                    expect(inst).to.be.equal(this.obj);
+
+                    /* Emit close event */
+                    this.obj.emit("close");
+
+                    expect(this.server.close).to.be.calledOnce;
+
+                    done();
+
+                });
+
+                this.server.start.resolves();
+
+                var createServer = function () {};
+
+                this.getComponent.returns(null);
+
+                expect(this.obj.run(createServer)).to.be.equal(this.obj);
+
+                expect(this.registerFactory).to.be.calledOnce
+                    .calledWithExactly("plugin", fn);
+
+            });
+
+            it("should throw an error when unknown register module passed in - required", function () {
+
+                /* Put in the modules and routes manually */
+                this.obj.modules = [
+                    "module4"
+                ];
+
+                this.server.start.resolves();
+
+                var createServer = function () {};
+
+                this.getComponent.returns(null);
+
+                let fail = false;
+                try {
+                    this.obj.run(createServer);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Error);
+                    expect(err.message).to.be.equal("Unknown registration module: '__constant' in 'module4'");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.registerFactory).to.not.be.called;
+
+                }
+
+            });
+
+            it("should throw an error when unknown register module passed in - plugin", function () {
+
+                /* Put in the modules and routes manually */
+                this.obj.modules = [{
+                    factory: {
+                        factory: () => {},
+                        name: "invalid"
+                    }
+                }];
+
+                this.server.start.resolves();
+
+                var createServer = function () {};
+
+                this.getComponent.returns(null);
+
+                let fail = false;
+                try {
+                    this.obj.run(createServer);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(Error);
+                    expect(err.message).to.be.equal("Unknown registration module: 'factory'");
+
+                } finally {
+
+                    expect(fail).to.be.true;
+
+                    expect(this.registerFactory).to.not.be.called;
+
+                }
 
             });
 

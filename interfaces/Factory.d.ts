@@ -5,5 +5,5 @@
 
 declare interface IFactory {
     name: string;
-    __factory: Function;
+    factory: Function;
 }

@@ -5,5 +5,5 @@
 
 declare interface IConfig {
     name: string;
-    __config: (config: Object) => any;
+    config: (config: Object) => any;
 }
