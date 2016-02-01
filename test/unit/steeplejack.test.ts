@@ -285,7 +285,6 @@ describe("Steeplejack test", function () {
                     enableCORS: (origins: string[], addHeaders: string[]) => void;
                     getServer: () => Object;
                     gzipResponse: () => void;
-                    //outputHandler: (err: any, data: any, request: Object, result: Object) => any;
                     queryParser: (mapParser: boolean) => void;
                     start: (port: number, hostname: string, backlog: number) => any;
                     uncaughtException: (fn: Function) => void;
@@ -406,14 +405,28 @@ describe("Steeplejack test", function () {
 
                 this.modules = {
                     module1: {
-                        factory: {
+                        __factory: {
                             factory: () => {},
                             name: "mod1"
                         }
                     },
                     module2: {
-                        singleton: {
+                        __singleton: {
                             singleton: {
+                                hello: "world"
+                            },
+                            name: "mod2"
+                        }
+                    },
+                    module3: {
+                        __config: {
+                            config: () => {},
+                            name: "mod2"
+                        }
+                    },
+                    module4: {
+                        __constant: {
+                            constant: {
                                 hello: "world"
                             },
                             name: "mod2"
@@ -423,7 +436,9 @@ describe("Steeplejack test", function () {
 
                 this.Steeplejack = proxyquire("../../steeplejack", {
                     module1: this.modules.module1,
-                    module2: this.modules.module2
+                    module2: this.modules.module2,
+                    module3: this.modules.module3,
+                    module4: this.modules.module4,
                 }).Steeplejack;
 
                 this.obj = new this.Steeplejack({
@@ -454,12 +469,35 @@ describe("Steeplejack test", function () {
 
             });
 
-            it.only("should run the steeplejack server successfully - create $outputHandler", function (done) {
+            it("should throw an error when no function received", function () {
+
+                let fail = false;
+
+                let obj = new Steeplejack();
+
+                try {
+                    obj.run(null);
+                } catch (err) {
+
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Steeplejack.run must receive a factory to create the server");
+
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it.only("should run the steeplejack server successfully - $output created automatically", function (done) {
 
                 /* Put in the modules and routes manually */
                 this.obj.modules = [
                     "module1",
-                    "module2"
+                    "module2",
+                    "module3",
+                    //"module4"
                 ];
 
                 this.obj.routes = {
@@ -492,15 +530,16 @@ describe("Steeplejack test", function () {
                     .calledWithExactly(this.server);
 
                 expect(this.registerFactory).to.be.calledOnce
-                    .calledWith(this.modules.module1.name, this.modules.modul1.factory);
+                    .calledWithExactly(this.modules.module1.name, this.modules.module1.__factory);
 
                 expect(this.process).to.be.calledTwice
                     .calledWithExactly(createServer)
                     .calledWithExactly("routeFn");
 
-                expect(this.registerSingleton).to.be.calledTwice
-                    .calledWithExactly("$server", this.server);
-                // @todo
+                expect(this.registerSingleton).to.be.calledThrice
+                    .calledWithExactly("$server", this.server)
+                    .calledWithExactly(this.modules.module2.name, this.modules.module2.__singleton)
+                    .calledWith(this.module.module3.name);
 
                 expect(this.getComponent).to.be.calledOnce
                     .calledWithExactly("$output");

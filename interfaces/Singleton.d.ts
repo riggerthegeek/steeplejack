@@ -5,5 +5,5 @@
 
 declare interface ISingleton {
     name: string;
-    singleton: any;
+    __singleton: any;
 }

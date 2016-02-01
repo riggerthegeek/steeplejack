@@ -13,7 +13,6 @@ import * as path from "path";
 
 /* Third-party modules */
 let _ = require("lodash");
-let isAbsolute = require("path-is-absolute");
 import {sync as glob} from "glob";
 import * as yargs from "yargs";
 
@@ -26,6 +25,12 @@ import {Server} from "./lib/server";
 import {cliParameters} from "./helpers/cliParameters";
 import {replaceEnvVars} from "./helpers/replaceEnvVars";
 
+
+/* path.isAbsolute not in node 0.10 - use a library instead */
+let isAbsolute = path.isAbsolute;
+if (_.isFunction(isAbsolute) === false) {
+    isAbsolute = require("path-is-absolute");
+}
 
 
 export class Steeplejack extends Base {
@@ -172,15 +177,113 @@ export class Steeplejack extends Base {
     }
 
 
-    protected _registerFactory (module: IFactory, modulePath: any) : Steeplejack {
+    /**
+     * Register Config
+     *
+     * A config is something that receive the config
+     * object as a single argument.  It must return
+     * the instance that is then set as a singleton
+     * to the IOC container.
+     *
+     * @param {IConfig} module
+     * @param {*} modulePath
+     * @returns {Steeplejack}
+     * @private
+     */
+    protected _registerConfig (module: IConfig, modulePath: any) : Steeplejack {
 
-        this.injector.registerFactory(module.name, module.factory);
+        let config = module.__config;
+
+        console.log(module);
+        process.exit();
+
+        console.log(config);
+        process.exit();
+
+        let fn = module.__config;
+        let name = module.name
+
+        /* Run the function, returning the config object as the argument */
+        let inst = fn(this.config);
+
+        console.log({
+            name: module.name,
+            __singleton: inst
+        });
+        console.log(module);
+        process.exit();
+
+        /* Register as a singleton */
+        return this._registerSingleton({
+            name: module.name,
+            __singleton: inst
+        }, modulePath);
+
+    }
+
+
+    /**
+     * Register Constant
+     *
+     * This registers whatever is sent as to the IOC
+     * controller.  Although it can be used for any
+     * data type, it is designed to be used for app-wide
+     * configuration parameters.
+     *
+     * It is certainly not designed with using to store
+     * functions (although it will work, you should use
+     * either the factory or the singleton for that).
+     *
+     * @param {IConstant} module
+     * @returns {Steeplejack}
+     * @private
+     */
+    protected _registerConstant (module: IConstant) : Steeplejack {
+
+        this.injector.registerSingleton(module.name, module.__constant);
 
         return this;
 
     }
 
 
+    /**
+     * Register Factory
+     *
+     * Registers a factory method to the application. A
+     * factory is a function.  This is where you would
+     * store a "class" that is instantiated later on.
+     *
+     * Models and collections would typically be stored
+     * inside a factory as they create something (an
+     * instance of the class) when they are called.
+     *
+     * @param {IFactory} module
+     * @param {any} modulePath
+     * @returns {Steeplejack}
+     * @private
+     */
+    protected _registerFactory (module: IFactory, modulePath: any) : Steeplejack {
+
+        this.injector.registerFactory(module.name, module.__factory);
+
+        return this;
+
+    }
+
+
+    /**
+     * Register Module
+     *
+     * This is the initial registration of the
+     * modules. The looks at the registration
+     * keys available and runs those registration
+     * methods.
+     *
+     * @param {*} modulePath
+     * @returns {Steeplejack}
+     * @private
+     */
     protected _registerModule (modulePath: any) : Steeplejack {
 
         let module: any = modulePath;
@@ -193,7 +296,10 @@ export class Steeplejack extends Base {
 
         _.each(module, (value: any, key: any) => {
 
-            let method = '_' + _.camelCase(`register_${key}`);
+            let method = "_" + _.camelCase(`register_${key}`);
+
+            console.log(module);
+            process.exit();
 
             (<any>this)[method](module, modulePath);
 
@@ -204,9 +310,22 @@ export class Steeplejack extends Base {
     }
 
 
+    /**
+     * Register Singleton
+     *
+     * Registers a singleton method to the application. A
+     * singleton will typically be something that has
+     * already been instantiated or it may be just a JSON
+     * object.
+     *
+     * @param {ISingleton} module
+     * @param {*} modulePath
+     * @returns {Steeplejack}
+     * @private
+     */
     protected _registerSingleton (module: ISingleton, modulePath: any) : Steeplejack {
 
-        this.injector.registerSingleton(module.name, module.singleton);
+        this.injector.registerSingleton(module.name, module.__singleton);
 
         return this;
 
@@ -242,7 +361,7 @@ export class Steeplejack extends Base {
 
         /* Ensure an absolute path */
         let modulePath: string;
-        if (isAbsolute(module)) {
+        if (isAbsolute(<string>module)) {
             modulePath = <string>module;
         } else {
             modulePath = path.join(process.cwd(), module);
@@ -292,6 +411,10 @@ export class Steeplejack extends Base {
      * @returns {Steeplejack}
      */
     public run (factory: Function) : Steeplejack {
+
+        if (_.isFunction(factory) === false) {
+            throw new TypeError("Steeplejack.run must receive a factory to create the server");
+        }
 
         /* Register the modules */
         _.each(this.modules, (module: any) => {
