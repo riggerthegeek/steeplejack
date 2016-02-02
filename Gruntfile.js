@@ -206,6 +206,11 @@ module.exports = function (grunt) {
                 reporter: "spec",
                 ui: "bdd"
             },
+            stacktest: {
+                src: [
+                    "./<%= config.tmp %>/compiled/test/stack/app/app.js"
+                ]
+            },
             unittest: {
                 src: [
                     "./<%= config.tmp %>/compiled/test/unit/**/*.js"
@@ -384,9 +389,33 @@ module.exports = function (grunt) {
     ]);
 
 
+    grunt.registerTask("stacktest", "Runs test on an example stack", [
+        "clean:tmp",
+        "ts:all",
+        "copy:jsTest",
+        "serve",
+        "mochaTest:stacktest"
+    ]);
+
+
+    grunt.registerTask("serve", "Serves up the test stack", function () {
+
+        /* Make asynchronous */
+        var done = this.async();
+
+        /* Get the compiled stack file */
+        var app = require("./" + config.tmp + "/compiled/" + config.test + "/stack/app/app").app;
+
+        /* Listen for start event */
+        app.on("start", done);
+
+    });
+
+
     grunt.registerTask("test", "Runs tests on the application", [
         "lint",
-        "unittest"
+        "unittest",
+        "stacktest"
     ]);
 
 
