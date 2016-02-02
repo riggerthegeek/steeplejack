@@ -113,6 +113,13 @@ module.exports = function (grunt) {
                     src: "<%= config.test %>/**/*.{js,json}",
                     dest: "./<%= config.tmp %>/compiled"
                 }]
+            },
+            stackDb: {
+                files: [{
+                    expand: true,
+                    src: "<%= config.test %>/**/*.db",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
             }
         },
 
@@ -393,6 +400,7 @@ module.exports = function (grunt) {
         "clean:tmp",
         "ts:all",
         "copy:jsTest",
+        "copy:stackDb",
         "serve",
         "mochaTest:stacktest"
     ]);
