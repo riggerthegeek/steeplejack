@@ -8,6 +8,7 @@
 
 
 /* Node modules */
+import {EventEmitter} from "events";
 import * as path from "path";
 
 
@@ -275,7 +276,7 @@ describe("Steeplejack test", function () {
 
                 var obj = new Steeplejack();
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
                     addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
                     after: (fn: Function) => void;
@@ -333,7 +334,7 @@ describe("Steeplejack test", function () {
 
                 var obj = new Steeplejack();
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
                     addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
                     after: (fn: Function) => void;

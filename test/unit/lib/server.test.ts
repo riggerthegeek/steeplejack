@@ -8,6 +8,7 @@
 
 
 /* Node modules */
+import {EventEmitter} from "events";
 
 
 /* Third-party modules */
@@ -24,7 +25,7 @@ import {expect, sinon} from "../../helpers/configure";
 describe("Server tests", function () {
 
     beforeEach(function () {
-        class Strategy implements IServerStrategy {
+        class Strategy extends EventEmitter implements IServerStrategy {
             acceptParser (options: any, strict: boolean) { }
 
             addRoute (httpMethod: string, route: string, fn: Function) { }
@@ -852,7 +853,7 @@ describe("Server tests", function () {
 
             it("should start a server with just the port", function () {
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
@@ -899,7 +900,7 @@ describe("Server tests", function () {
 
             it("should start a server, returning an ES6 promise", function () {
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
@@ -948,7 +949,7 @@ describe("Server tests", function () {
 
             it("should start a server, returning a Bluebird promise", function (done: any) {
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
