@@ -7,7 +7,7 @@
  * Steeplejack .d.ts files
  */
 
-/// <reference path="../../../typings/node/node.d.ts" />
+/// <reference path="../../../typings/main/ambient/node/node.d.ts" />
 
 "use strict";
 
@@ -18,12 +18,16 @@ import * as path from "path";
 
 /* Third-party modules */
 import {Steeplejack} from "../../../steeplejack";
+import {Server} from "../../../lib/server";
 
 
 /* Files */
+import {Restify} from "./lib/restify";
 
+console.log(path.join(__dirname, "routes/**/*.js"));
 
-export let app = Steeplejack.app({
+/* Start up the server */
+let app = Steeplejack.app({
     config: require("./config"),
     env: require("./envvars"),
     modules: [
@@ -31,3 +35,20 @@ export let app = Steeplejack.app({
     ],
     routesDir: path.join(__dirname, "routes")
 });
+
+
+app.on("start", () => {
+    console.log(app.config);
+});
+
+
+app.run(($config: any) => {
+
+    let http = new Restify();
+
+    return new Server($config.server, http);
+
+});
+
+
+export {app};
