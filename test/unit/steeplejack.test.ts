@@ -655,7 +655,7 @@ describe("Steeplejack test", function () {
 
             });
 
-            it("should throw an error when unknown register module passed in - required", function () {
+            it("should ignore when unknown register module passed in - required", function () {
 
                 /* Put in the modules and routes manually */
                 this.obj.modules = [
@@ -668,27 +668,16 @@ describe("Steeplejack test", function () {
 
                 this.getComponent.returns(null);
 
-                let fail = false;
-                try {
-                    this.obj.run(createServer);
-                } catch (err) {
+                this.obj.run(createServer);
 
-                    fail = true;
+                expect(this.registerFactory).to.not.be.called;
 
-                    expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal("Unknown registration module: '__constant' in 'module4'");
-
-                } finally {
-
-                    expect(fail).to.be.true;
-
-                    expect(this.registerFactory).to.not.be.called;
-
-                }
+                expect(this.registerSingleton).to.be.calledOnce
+                    .calledWithExactly("$server", this.server);
 
             });
 
-            it("should throw an error when unknown register module passed in - plugin", function () {
+            it("should ignore when unknown register module passed in - plugin", function () {
 
                 /* Put in the modules and routes manually */
                 this.obj.modules = [{
@@ -704,23 +693,12 @@ describe("Steeplejack test", function () {
 
                 this.getComponent.returns(null);
 
-                let fail = false;
-                try {
-                    this.obj.run(createServer);
-                } catch (err) {
+                this.obj.run(createServer);
 
-                    fail = true;
+                expect(this.registerFactory).to.not.be.called;
 
-                    expect(err).to.be.instanceof(Error);
-                    expect(err.message).to.be.equal("Unknown registration module: 'factory'");
-
-                } finally {
-
-                    expect(fail).to.be.true;
-
-                    expect(this.registerFactory).to.not.be.called;
-
-                }
+                expect(this.registerSingleton).to.be.calledOnce
+                    .calledWithExactly("$server", this.server);
 
             });
 

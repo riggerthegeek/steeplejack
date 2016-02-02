@@ -279,13 +279,6 @@ export class Steeplejack extends Base {
                     this._registerSingleton(value);
                     break;
 
-                default:
-                    let message: string = `Unknown registration module: '${key}'`;
-                    if (requireable) {
-                        message += ` in '${modulePath}'`;
-                    }
-                    throw new Error(message);
-
             }
 
         });
