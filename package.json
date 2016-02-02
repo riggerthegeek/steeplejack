@@ -41,6 +41,7 @@
     "mocha": "^2.3.4",
     "proxyquire": "^1.7.3",
     "remap-istanbul": "^0.5.1",
+    "restify": "^4.0.3",
     "sinon": "^1.17.2",
     "sinon-as-promised": "^4.0.0",
     "sinon-chai": "^2.8.0",
