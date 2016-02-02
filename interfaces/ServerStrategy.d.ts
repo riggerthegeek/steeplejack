@@ -15,7 +15,7 @@ declare interface IServerStrategy extends EventEmitter {
     getServer: () => Object;
     gzipResponse: () => void;
     outputHandler: (err: any, data: any, request: any, result: any) => any;
-    queryParser: (mapParser: boolean) => void;
+    queryParser: (mapParams: boolean) => void;
     start: (port: number, hostname: string, backlog: number) => any;
     uncaughtException: (fn: Function) => void;
     use: (fn: Function | Function[]) => void;
