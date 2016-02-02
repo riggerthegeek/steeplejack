@@ -9,7 +9,6 @@
 /// <reference path="browser/ambient/node-uuid-cjs/node-uuid-cjs.d.ts" />
 /// <reference path="browser/ambient/node-uuid/node-uuid.d.ts" />
 /// <reference path="browser/ambient/node/node.d.ts" />
-/// <reference path="browser/ambient/restify/restify.d.ts" />
 /// <reference path="browser/ambient/sinon-chai/sinon-chai.d.ts" />
 /// <reference path="browser/ambient/sinon/sinon.d.ts" />
 /// <reference path="browser/definitions/es6-promise/es6-promise.d.ts" />

@@ -3,7 +3,6 @@
  */
 
 /// <reference path="../../../../typings/main/ambient/node/node.d.ts" />
-/// <reference path="../../../../typings/main/ambient/restify/restify.d.ts" />
 
 "use strict";
 
@@ -15,7 +14,7 @@ import * as http from "http";
 
 /* Third-party modules */
 let Bluebird = require("bluebird");
-import * as rest from "restify";
+let restify = require("restify");
 
 
 /* Files */
@@ -24,7 +23,7 @@ import {Collection} from "../../../../lib/collection";
 import {Model} from "../../../../lib/model";
 
 
-export class Restify extends EventEmitter{
+export class Restify extends EventEmitter {
 
 
     protected _inst: any;
@@ -34,7 +33,7 @@ export class Restify extends EventEmitter{
 
         super();
 
-        this._inst = Bluebird.promisifyAll(rest.createServer());
+        this._inst = Bluebird.promisifyAll(restify.createServer());
 
     }
 
@@ -62,7 +61,7 @@ export class Restify extends EventEmitter{
 
 
     bodyParser () {
-        this.use(rest.bodyParser());
+        this.use(restify.bodyParser());
     }
 
 
@@ -82,7 +81,7 @@ export class Restify extends EventEmitter{
 
 
     gzipResponse () {
-        this.use(rest.gzipResponse());
+        this.use(restify.gzipResponse());
     }
 
 
@@ -94,7 +93,7 @@ export class Restify extends EventEmitter{
         if (err) {
 
             /* Convert to a Restify error and process */
-            if (err instanceof rest.RestError) {
+            if (err instanceof restify.RestError) {
 
                 /* Already a RestError - use it */
                 statusCode = err.statusCode;
@@ -146,7 +145,7 @@ export class Restify extends EventEmitter{
 
 
     queryParser (mapParams: boolean) {
-        this.use(rest.queryParser({
+        this.use(restify.queryParser({
             mapParams: mapParams
         }));
     }
