@@ -315,7 +315,7 @@ describe("Steeplejack test", function () {
                 /* Ensure it exits at finally */
                 handler(() => {
                     return "result";
-                }, req, res)
+                })(req, res)
                     .then((result: any) => {
 
                         expect(result).to.be.eql({
@@ -374,7 +374,7 @@ describe("Steeplejack test", function () {
                 /* Ensure it exits at finally */
                 handler(() => {
                     throw new Error("oh dear");
-                }, req, res)
+                })(req, res)
                     .then(() => {
                         throw new Error("invalid");
                     })

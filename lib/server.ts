@@ -331,19 +331,23 @@ export class Server extends Base {
      * start going to the application tier and beyond.
      *
      * @param {function} fn
-     * @param {object} req
-     * @param {object} res
-     * @returns {Thenable<U>|Promise<U>|Promise<T>}
+     * @returns {function(Object, Object): Promise<T>|Promise<U>}
      */
-    public outputHandler (fn: Function, req: Object, res: Object) {
+    public outputHandler (fn: Function) {
 
-        return Promise.try(fn)
-            .then((data: any) => {
-                return this._strategy.outputHandler(null, data, req, res);
-            })
-            .catch((err: any) => {
-                return this._strategy.outputHandler(err, null, req, res);
-            });
+        return (req: Object, res: Object) => {
+
+            return Promise.try(fn)
+                .then((data: any) => {
+                    return this._strategy.outputHandler(null, data, req, res);
+                })
+                .catch((err: any) => {
+                    this.emit("error_log", err);
+
+                    return this._strategy.outputHandler(err, null, req, res);
+                });
+
+        };
 
     }
 

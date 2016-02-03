@@ -743,7 +743,7 @@ describe("Server tests", function () {
 
                 return obj.outputHandler(() => {
                     return "result";
-                }, req, res)
+                })(req, res)
                     .then((data: any) => {
 
                         expect(data).to.be.equal("output");
@@ -776,7 +776,7 @@ describe("Server tests", function () {
                             return output;
 
                         });
-                }, req, res)
+                })(req, res)
                     .then((data: any) => {
 
                         expect(data).to.be.equal("output");
@@ -794,16 +794,24 @@ describe("Server tests", function () {
                 let req = {req: true, hello: () => { }};
                 let res = {res: true, hello: () => { }};
 
-                this.stub.returns("output");
-
                 let error = new Error("oooops");
+
+                this.stub.rejects(error);
+
+                let listener = sinon.spy(obj, "emit");
 
                 return obj.outputHandler(() => {
                     throw error;
-                }, req, res)
+                })(req, res)
+                    .then((...args: any[]) => {
+                        throw new Error("invalid");
+                    })
                     .catch((err: any) => {
 
                         expect(err).to.be.equal(error);
+
+                        expect(listener).to.be.calledOnce
+                            .calledWithExactly("error_log", error);
 
                         expect(this.stub).to.be.calledOnce
                             .calledWithExactly(error, null, req, res);
