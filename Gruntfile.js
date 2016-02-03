@@ -215,7 +215,7 @@ module.exports = function (grunt) {
             },
             stacktest: {
                 src: [
-                    "./<%= config.tmp %>/compiled/test/Corrtest/**/*.js"
+                    "./<%= config.tmp %>/compiled/test/stack/test/**/*.js"
                 ]
             },
             unittest: {
