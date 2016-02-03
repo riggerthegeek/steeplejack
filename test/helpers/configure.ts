@@ -4,6 +4,7 @@
 
 /// <reference path="../../typings/main.d.ts" />
 
+"use strict";
 
 
 /* Node modules */
@@ -17,9 +18,6 @@ import * as proxyquire from "proxyquire";
 import * as sinon from "sinon";
 let sinonAsPromised = require("sinon-as-promised");
 import sinonChai = require("sinon-chai");
-import * as supertest from "supertest";
-
-console.log(supertest);
 
 
 /* Files */
@@ -30,11 +28,12 @@ chai.use(chaiAsPromised);
 
 sinonAsPromised(Promise);
 
-export let expect = chai.expect;
+let expect = chai.expect;
 
 proxyquire.noCallThru();
 
 export {
+    expect,
     proxyquire,
     sinon
 };
