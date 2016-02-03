@@ -21,15 +21,15 @@ export let route = ($userController: any, $output: any) => {
         "/": {
 
             get: [
-                (req: any, res: any) => {
+                $output(() => {
+                    return $userController.getUser();
+                })
+            ],
 
-                    $output(() => {
-
-                        return $userController.getUser();
-
-                    }, req, res);
-
-                }
+            post: [
+                $output(() => {
+                    return ["hello"];
+                })
             ]
 
         }

@@ -24,7 +24,6 @@ import {Server} from "../../../lib/server";
 /* Files */
 import {Restify} from "./lib/restify";
 
-console.log(path.join(__dirname, "routes/**/*.js"));
 
 /* Start up the server */
 let app = Steeplejack.app({
@@ -38,15 +37,25 @@ let app = Steeplejack.app({
 
 
 app.on("start", () => {
-    console.log(app.config);
+    console.log("--- Config ---");
+    console.log(JSON.stringify(app.config, null, 4));
 });
 
 
 app.run(($config: any) => {
 
-    let http = new Restify();
+    let server = new Server($config.server, new Restify());
 
-    return new Server($config.server, http);
+    /* Listen for errors to log */
+    server.on("error", (err: any) => {
+
+    });
+
+    server
+        //.bodyParser()
+        .gzipResponse();
+
+    return server;
 
 });
 

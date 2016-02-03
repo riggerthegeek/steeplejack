@@ -1,5 +1,9 @@
 /**
  * restify
+ *
+ * This is a cut-downRestify strategy pattern for the
+ * Server class.  If using Restify in production, use
+ * the steeplejack-restify package instead.
  */
 
 /// <reference path="../../../../typings/main/ambient/node/node.d.ts" />
@@ -13,6 +17,7 @@ import * as http from "http";
 
 
 /* Third-party modules */
+import * as _ from "lodash";
 let Bluebird = require("bluebird");
 let restify = require("restify");
 
@@ -119,9 +124,6 @@ export class Restify extends EventEmitter {
                 output = _.isFunction(err.getDetail) ? err.getDetail() : err;
 
             }
-
-            /* Emit the error */
-            this.emit("error", err);
 
         } else if (data) {
             /* Success */
