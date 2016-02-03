@@ -80,6 +80,14 @@ export class Steeplejack extends Base {
 
 
     /**
+     * Server
+     *
+     * The server object
+     */
+    public server: any;
+
+
+    /**
      * Constructor
      *
      * Instantiates a new instance of steeplejack.  All the
@@ -399,29 +407,29 @@ export class Steeplejack extends Base {
         });
 
         /* Run the server factory through the injector */
-        let server = this.injector.process(factory);
+        this.server = this.injector.process(factory);
 
         /* Register the server to the injector */
-        this.injector.registerSingleton("$server", server);
+        this.injector.registerSingleton("$server", this.server);
 
         /* Create the outputHandler and register to injector if not already done */
         if (this.injector.getComponent(this._outputHandlerName) === null) {
-            this.createOutputHandler(server);
+            this.createOutputHandler(this.server);
         }
 
         /* Process the routes */
         let routes = this._processRoutes();
 
         /* Add in the routes to the server */
-        server.addRoutes(routes.getRoutes());
+        this.server.addRoutes(routes.getRoutes());
 
         /* Listen for close events */
         this.on("close", () => {
-            server.close();
+            this.server.close();
         });
 
         /* Start the server */
-        server.start()
+        this.server.start()
             .then(() => {
                 this.emit("start", this);
             });

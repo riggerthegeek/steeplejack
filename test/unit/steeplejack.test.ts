@@ -468,6 +468,8 @@ describe("Steeplejack test", function () {
                     process: this.process
                 };
 
+                expect(this.obj.server).to.be.undefined;
+
             });
 
             it("should throw an error when no function received", function () {
@@ -548,6 +550,8 @@ describe("Steeplejack test", function () {
 
                 expect(this.getComponent).to.be.calledOnce
                     .calledWithExactly("$output");
+
+                expect(this.obj.server).to.be.equal(this.server);
 
             });
 
