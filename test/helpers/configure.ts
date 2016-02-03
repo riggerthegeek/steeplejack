@@ -17,6 +17,9 @@ import * as proxyquire from "proxyquire";
 import * as sinon from "sinon";
 let sinonAsPromised = require("sinon-as-promised");
 import sinonChai = require("sinon-chai");
+import * as supertest from "supertest";
+
+console.log(supertest);
 
 
 /* Files */
