@@ -370,11 +370,11 @@ export class Steeplejack extends Base {
      * @param {Server} server
      * @returns {function(Function, Object, Object): (Thenable<U>|Promise<U>|Promise<T>)}
      */
-    public createOutputHandler (server: Server) : (fn: Function) => any {
+    public createOutputHandler (server: Server) : (request: Object, response: Object, fn: () => void) => any {
 
         /* Get the server output handler */
-        let outputHandler = (fn: Function) : any => {
-            return server.outputHandler(fn);
+        let outputHandler = (request: Object, response: Object, fn: () => void) : any => {
+            return server.outputHandler(request, response, fn);
         };
 
         /* Store in the injector */

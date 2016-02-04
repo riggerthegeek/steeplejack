@@ -741,9 +741,9 @@ describe("Server tests", function () {
 
                 this.stub.returns("output");
 
-                return obj.outputHandler(() => {
+                return obj.outputHandler(req, res, () => {
                     return "result";
-                })(req, res)
+                })
                     .then((data: any) => {
 
                         expect(data).to.be.equal("output");
@@ -763,7 +763,7 @@ describe("Server tests", function () {
 
                 this.stub.returns("output");
 
-                return obj.outputHandler(() => {
+                return obj.outputHandler(req, res, () => {
                     return new Promise((resolve) => {
                         resolve("result");
                     })
@@ -776,7 +776,7 @@ describe("Server tests", function () {
                             return output;
 
                         });
-                })(req, res)
+                })
                     .then((data: any) => {
 
                         expect(data).to.be.equal("output");
@@ -800,9 +800,9 @@ describe("Server tests", function () {
 
                 let listener = sinon.spy(obj, "emit");
 
-                return obj.outputHandler(() => {
+                return obj.outputHandler(req, res, () => {
                     throw error;
-                })(req, res)
+                })
                     .then((...args: any[]) => {
                         throw new Error("invalid");
                     })
