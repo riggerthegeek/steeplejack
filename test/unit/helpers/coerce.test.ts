@@ -18,6 +18,8 @@ import {coerce} from "../../../helpers/coerce";
 
 describe("coerce test", function () {
 
+    this.timeout(5000);
+
     it("should typecast integers", function () {
 
         for (var i = 1; i <= 100000; i++) {
