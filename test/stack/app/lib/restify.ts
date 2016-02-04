@@ -24,8 +24,6 @@ let restify = require("restify");
 
 /* Files */
 import {ValidationException} from "../../../../exception/validation/index";
-import {Collection} from "../../../../lib/collection";
-import {Model} from "../../../../lib/model";
 
 
 export class Restify extends EventEmitter {
@@ -121,20 +119,19 @@ export class Restify extends EventEmitter {
 
                 /* Convert to a restify-friendly error */
                 statusCode = _.isFunction(err.getHttpCode) ? err.getHttpCode() : 500;
-                output = _.isFunction(err.getDetail) ? err.getDetail() : err;
+                output = _.isFunction(err.getDetail) ? err.getDetail() : err.message;
 
             }
 
         } else if (data) {
-            /* Success */
 
-            if (data instanceof Collection) {
-                output = data.toJSON();
-            } else if (data instanceof Model) {
-                output = data.toObject();
+            /* Success */
+            if (_.isFunction(data.getData)) {
+                output = data.getData();
             } else {
                 output = data;
             }
+
         } else {
             /* No content */
             statusCode = 204;
