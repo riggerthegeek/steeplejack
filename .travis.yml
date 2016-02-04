@@ -28,7 +28,6 @@ before_install:
 - date
 script:
 - grunt ci
-- grunt coveralls:src
 deploy:
   provider: npm
   email: simon@simonemms.com
