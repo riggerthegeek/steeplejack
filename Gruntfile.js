@@ -97,7 +97,7 @@ module.exports = function (grunt) {
                 }]
             },
             tmp: {
-                file: [{
+                files: [{
                     src: [
                         "./<%= config.tmp %>"
                     ]
@@ -114,11 +114,25 @@ module.exports = function (grunt) {
                     dest: "./<%= config.tmp %>/compiled"
                 }]
             },
+            jsonTest: {
+                files: [{
+                    expand: true,
+                    src: "<%= config.test %>/**/*.json",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
+            },
             stackDb: {
                 files: [{
                     expand: true,
                     src: "<%= config.test %>/**/*.db",
                     dest: "./<%= config.tmp %>/compiled"
+                }]
+            },
+            stackTests: {
+                files: [{
+                    expand: false,
+                    src: "<%= config.test %>/stack/test/user/index.test.js",
+                    dest: "./<%= config.tmp %>/compiled/test/stack/test/typescript/user/index.test.js"
                 }]
             }
         },
@@ -388,26 +402,16 @@ module.exports = function (grunt) {
 
     grunt.registerTask("stacktest", "Runs test on an example stack", [
         "clean:tmp",
-        "ts:all",
-        "copy:jsTest",
         "copy:stackDb",
-        "serve",
+        "copy:jsonTest",
+        "copy:stackTests",
+
+        /* TypeScript tasks */
+        "ts:all",
+
+        /* Run the tests */
         "mochaTest:stacktest"
     ]);
-
-
-    grunt.registerTask("serve", "Serves up the test stack", function () {
-
-        /* Make asynchronous */
-        var done = this.async();
-
-        /* Get the compiled stack file */
-        var app = require("./" + config.tmp + "/compiled/" + config.test + "/stack/app/app").app;
-
-        /* Listen for start event */
-        app.on("start", done);
-
-    });
 
 
     grunt.registerTask("test", "Runs tests on the application", [

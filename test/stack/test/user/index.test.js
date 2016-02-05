@@ -14,7 +14,7 @@ var request = require("supertest");
 
 
 /* Files */
-var app = require("../../app/typescript/app").app;
+var app = require("../../../app/typescript/app").app;
 
 var expect = chai.expect;
 
