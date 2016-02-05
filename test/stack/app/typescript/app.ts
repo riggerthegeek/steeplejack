@@ -7,7 +7,7 @@
  * Steeplejack .d.ts files
  */
 
-/// <reference path="../../../typings/main/ambient/node/node.d.ts" />
+/// <reference path="../../../../typings/main/ambient/node/node.d.ts" />
 
 "use strict";
 
@@ -17,8 +17,8 @@ import * as path from "path";
 
 
 /* Third-party modules */
-import {Steeplejack} from "../../../steeplejack";
-import {Server} from "../../../lib/server";
+import {Steeplejack} from "../../../../steeplejack";
+import {Server} from "../../../../lib/server";
 
 
 /* Files */

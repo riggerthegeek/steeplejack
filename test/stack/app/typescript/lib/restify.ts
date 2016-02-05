@@ -6,7 +6,7 @@
  * the steeplejack-restify package instead.
  */
 
-/// <reference path="../../../../typings/main/ambient/node/node.d.ts" />
+/// <reference path="../../../../../typings/main/ambient/node/node.d.ts" />
 
 "use strict";
 
@@ -23,7 +23,7 @@ let restify = require("restify");
 
 
 /* Files */
-import {ValidationException} from "../../../../exception/validation/index";
+import {ValidationException} from "../../../../../exception/validation/index";
 
 
 export class Restify extends EventEmitter {
