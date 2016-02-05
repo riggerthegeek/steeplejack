@@ -2,8 +2,6 @@
  * sqlite
  */
 
-/// <reference path="../../../../../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -16,15 +14,15 @@
 /* Files */
 
 
-const name = "$sqlite";
+export module __factory {
 
+    export const name: string = "$sqlite";
+    export module factory {
 
-function SQLite () {
+        export class SQLite {
+
+        }
+
+    }
 
 }
-
-
-export let __factory = {
-    name,
-    factory: SQLite
-};

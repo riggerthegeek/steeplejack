@@ -15,34 +15,24 @@
 /* Files */
 
 
-/* Define the factory name for the public */
-const name = "$userController";
+/* Defines the public output */
+export module __factory {
 
-/*
-    The factory function - any arguments are processed
-    through the IOC container
- */
-function UserController () {
+    export const name = "$userController";
+    export module factory {
 
-
-    return {
+        export class UserController {
 
 
-        getUser: () => {
+            public static getUser () {
 
-            return 3354;
+                return 3354;
+
+            }
+
 
         }
 
-
-    };
-
+    }
 
 }
-
-
-/* Defines the public output */
-export let __factory = {
-    name,
-    factory: UserController
-};
