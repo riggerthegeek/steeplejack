@@ -9,14 +9,11 @@
 
 
 /* Third-party modules */
-var chai = require("chai");
 var request = require("supertest");
 
 
 /* Files */
 var app = require("../../../app/typescript/app").app;
-
-var expect = chai.expect;
 
 
 describe("/user", function () {
@@ -45,9 +42,7 @@ describe("/user", function () {
             return request(app.server.getServer())
                 .get("/user")
                 .set("Authorization", "bearer valid")
-                .expect(200, JSON.stringify([
-                    3354
-                ]));
+                .expect(200, "3354");
 
         });
 

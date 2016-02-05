@@ -27,18 +27,12 @@ import {Restify} from "./lib/restify";
 
 /* Start up the server */
 let app = Steeplejack.app({
-    config: require("./config"),
-    env: require("./envvars"),
+    config: require("../config"),
+    env: require("../envvars"),
     modules: [
         path.join(__dirname, "!(routes)/**/*.js")
     ],
     routesDir: path.join(__dirname, "routes")
-});
-
-
-app.on("start", () => {
-    console.log("--- Config ---");
-    console.log(JSON.stringify(app.config, null, 4));
 });
 
 
