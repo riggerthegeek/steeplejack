@@ -15,11 +15,38 @@
 
 /* Third-party modules */
 require("es6-collections");
+var _ = require("lodash");
 var loader = require("load-grunt-tasks");
 var timer = require("grunt-timer");
 
 
 /* Files */
+
+
+var stackDirs = [
+    "es5",
+    "typescript"
+];
+var stackWrappers = _.reduce(stackDirs, function (result, type) {
+
+    result[type] = {
+        options: {
+            wrapper: [
+                "describe(\"" +
+                type.toUpperCase() + "\", function () {\nvar app = require(\"../../../app/" +
+                type + "/app\").app;\n",
+                "});"
+            ]
+        },
+        src: [
+            "<%= config.test %>/stack/test/user/index.test.js"
+        ],
+        dest: "./<%= config.tmp %>/compiled/test/stack/test/" + type + "/user/index.test.js"
+    };
+
+    return result;
+
+}, {});
 
 
 module.exports = function (grunt) {
@@ -107,6 +134,13 @@ module.exports = function (grunt) {
 
 
         copy: {
+            es5stack: {
+                files: [{
+                    expand: true,
+                    src: "<%= config.test %>/stack/app/es5/**/*",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
+            },
             jsTest: {
                 files: [{
                     expand: true,
@@ -126,13 +160,6 @@ module.exports = function (grunt) {
                     expand: true,
                     src: "<%= config.test %>/**/*.db",
                     dest: "./<%= config.tmp %>/compiled"
-                }]
-            },
-            stackTests: {
-                files: [{
-                    expand: false,
-                    src: "<%= config.test %>/stack/test/user/index.test.js",
-                    dest: "./<%= config.tmp %>/compiled/test/stack/test/typescript/user/index.test.js"
                 }]
             }
         },
@@ -335,7 +362,10 @@ module.exports = function (grunt) {
                     "test"
                 ]
             }
-        }
+        },
+
+
+        wrap: stackWrappers
 
 
     });
@@ -404,10 +434,14 @@ module.exports = function (grunt) {
         "clean:tmp",
         "copy:stackDb",
         "copy:jsonTest",
-        "copy:stackTests",
+        "wrap:es5",
+        "wrap:typescript",
 
         /* TypeScript tasks */
         "ts:all",
+
+        /* ES5 tasks */
+        "copy:es5stack",
 
         /* Run the tests */
         "mochaTest:stacktest"
