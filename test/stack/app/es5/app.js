@@ -44,7 +44,7 @@ app.run(function ($config) {
     });
 
     server
-    //.bodyParser()
+        .bodyParser()
         .gzipResponse();
 
     return server;

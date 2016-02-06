@@ -35,7 +35,7 @@ exports.route = function ($userController, $output) {
                 function (req, res) {
 
                     $output(req, res, function () {
-                        return $userController.getUser("1234");
+                        return $userController.getUser("1");
                     });
 
                 }

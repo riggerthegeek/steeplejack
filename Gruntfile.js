@@ -24,8 +24,7 @@ var timer = require("grunt-timer");
 
 
 var stackDirs = [
-    "es5",
-    "typescript"
+    "es5"
 ];
 var stackWrappers = _.reduce(stackDirs, function (result, type) {
 
@@ -434,8 +433,10 @@ module.exports = function (grunt) {
         "clean:tmp",
         "copy:stackDb",
         "copy:jsonTest",
+        //"wrap:coffeescript",
         "wrap:es5",
-        "wrap:typescript",
+        //"wrap:es6",
+        //"wrap:typescript",
 
         /* TypeScript tasks */
         "ts:all",

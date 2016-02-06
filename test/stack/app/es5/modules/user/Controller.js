@@ -22,17 +22,22 @@ var name = "$userController";
  The factory function - any arguments are processed
  through the IOC container
  */
-function UserController () {
+function UserController ($userStore, UserModel) {
 
 
     return {
 
 
-            getUser: function () {
+        getUser: function (userId) {
 
-                return 3354;
+            return $userStore.getUserById(userId)
+                .then(function (result) {
 
-            }
+                    return UserModel.toModel(result);
+
+                });
+
+        }
 
 
     };

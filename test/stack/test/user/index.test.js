@@ -41,7 +41,12 @@ describe("/user", function () {
             return request(app.server.getServer())
                 .get("/user")
                 .set("Authorization", "bearer valid")
-                .expect(200, "3354");
+                .expect(200, {
+                    id: 1,
+                    firstName: "Test",
+                    lastName: "Testington",
+                    emailAddress: "test@test.com"
+                });
 
         });
 
