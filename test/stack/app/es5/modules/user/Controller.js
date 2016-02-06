@@ -28,6 +28,22 @@ function UserController ($userStore, UserModel) {
     return {
 
 
+        createUser: function (data) {
+
+            var user = new UserModel(data);
+
+            user.validate();
+
+            return $userStore.createUser(user.toDb())
+                .then(function (result) {
+
+                    return UserModel.toModel(result);
+
+                });
+
+        },
+
+
         getUser: function (userId) {
 
             return $userStore.getUserById(userId)

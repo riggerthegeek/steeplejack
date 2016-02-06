@@ -10,6 +10,8 @@
 
 
 /* Third-party modules */
+var _ = require("lodash");
+var Bluebird = require("bluebird");
 
 
 /* Files */
@@ -25,6 +27,48 @@ function UserStore ($poolGrabber, $SQLiteResource) {
 
 
     return {
+
+
+        createUser: function (data) {
+
+            return $poolGrabber($SQLiteResource, function (db) {
+
+                var map = {
+                    "$firstName": "first_name",
+                    "$lastName": "last_name",
+                    "$emailAddress": "email_address"
+                };
+
+                var sql = "INSERT INTO users (first_name, last_name, email_address)" +
+                    "VALUES($firstName, $lastName, $emailAddress)";
+
+                var values = _.reduce(map, function (result, dataKey, valueKey) {
+
+                    result[valueKey] = data[dataKey];
+
+                    return result;
+
+                }, {});
+
+                var defer = Bluebird.defer();
+
+                db.run(sql, values, function (err) {
+
+                    if (err) {
+                        return defer.reject(err);
+                    }
+
+                    data.id = this.lastID;
+
+                    defer.resolve(data);
+
+                });
+
+                return defer.promise;
+
+            });
+
+        },
 
 
         getUserById: function (userId) {

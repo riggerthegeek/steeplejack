@@ -42,9 +42,20 @@ exports.route = function ($userController, $output) {
             ],
 
             post: [
+                function (req, res, next) {
+
+                    /* Simulate a valid bearer token */
+                    if (req.headers.authorization !== "bearer valid") {
+                        res.send(401);
+                        return;
+                    }
+
+                    next();
+
+                },
                 function (req, res) {
                     $output(req, res, function () {
-                        return ["hello"];
+                        return $userController.createUser(req.body);
                     });
                 }
             ]

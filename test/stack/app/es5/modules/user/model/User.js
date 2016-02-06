@@ -32,15 +32,26 @@ function UserModel () {
                 },
                 firstName: {
                     type: "string",
-                    column: "first_name"
+                    column: "first_name",
+                    validation: [{
+                        rule: "required"
+                    }]
                 },
                 lastName: {
                     type: "string",
-                    column: "last_name"
+                    column: "last_name",
+                    validation: [{
+                        rule: "required"
+                    }]
                 },
                 emailAddress: {
                     type: "string",
-                    column: "email_address"
+                    column: "email_address",
+                    validation: [{
+                        rule: "required"
+                    }, {
+                        rule: "email"
+                    }]
                 }
             }
 
