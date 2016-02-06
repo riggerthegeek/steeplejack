@@ -21,7 +21,6 @@ var Restify = require("./lib/restify").Restify;
 /* Start up the server */
 var app = Steeplejack.app({
     config: require("./config"),
-    env: require("./envvars"),
     modules: [
         path.join(__dirname, "!(routes)/**/*.js")
     ],
