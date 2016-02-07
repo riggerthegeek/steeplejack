@@ -1,0 +1,8 @@
+{
+  "sqlite": {
+    "filename": "../stack.db"
+  },
+  "server": {
+    "port": 3002
+  }
+}

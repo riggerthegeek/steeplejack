@@ -13,18 +13,19 @@
 
 
 /* Files */
-var Model = require("../../../../../../../lib/model").Model;
+import {Model} from "../../../../../../../lib/model";
 
 
-var name = "UserModel";
+const name = "UserModel";
 
 
 function UserModel () {
 
-    return Model.extend({
+
+    return class User extends Model {
 
 
-        _schema: function () {
+        _schema () {
 
             return {
                 id: {
@@ -58,7 +59,8 @@ function UserModel () {
         }
 
 
-    });
+    }
+
 
 }
 

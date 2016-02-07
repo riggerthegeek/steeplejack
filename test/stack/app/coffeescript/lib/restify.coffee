@@ -1,5 +1,9 @@
 ###
  * restify
+ *
+ * This is a cut-down Restify strategy pattern for the
+ * Server class.  If using Restify in production, use
+ * the steeplejack-restify package instead.
 ###
 
 "use strict";
@@ -16,11 +20,10 @@ restify = require "restify"
 
 
 # Files
-Base = require("../../../../../lib/base").Base
 ValidationException = require("../../../../../exception/validation/index").ValidationException
 
 
-exports.Restify = class Restify extends Base
+exports.Restify = class Restify
 
 
     constructor: () ->

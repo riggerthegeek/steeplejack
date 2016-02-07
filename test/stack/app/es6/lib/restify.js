@@ -6,59 +6,59 @@
  * the steeplejack-restify package instead.
  */
 
+
 "use strict";
 
 
 /* Node modules */
-var http = require("http");
+import http from "http";
 
 
 /* Third-party modules */
-var _ = require("lodash");
-var Bluebird = require("bluebird");
-var restify = require("restify");
+import {_} from "lodash";
+import Bluebird from "bluebird";
+import restify from "restify";
 
 
 /* Files */
-var Base = require("../../../../../lib/base").Base;
-var ValidationException = require("../../../../../exception/validation/index").ValidationException;
+import {Base} from "../../../../../lib/base";
+import {ValidationException} from "../../../../../exception/validation/index";
 
 
-exports.Restify = Base.extend({
+export class Restify {
 
-    __construct: function () {
+
+    constructor () {
         this._inst = Bluebird.promisifyAll(restify.createServer());
-    },
+    }
 
 
-    addRoute: function (httpMethod, route, fn) {
-
+    addRoute (httpMethod, route, fn) {
         this._inst[httpMethod.toLowerCase()](route, fn);
+    }
 
-    },
 
-
-    bodyParser: function () {
+    bodyParser () {
         this.use(restify.bodyParser());
-    },
+    }
 
 
-    close: function () {
+    close () {
         this._inst.close();
-    },
+    }
 
 
-    getServer: function () {
+    getServer () {
         return this._inst;
-    },
+    }
 
 
-    gzipResponse: function () {
+    gzipResponse () {
         this.use(restify.gzipResponse());
-    },
+    }
 
 
-    outputHandler: function (err, data, req, res) {
+    outputHandler (err, data, req, res) {
 
         var statusCode = 200;
         var output;
@@ -110,31 +110,31 @@ exports.Restify = Base.extend({
         /* Push the output */
         res.send(statusCode, output);
 
-    },
+    }
 
 
-    queryParser: function (mapParams) {
+    queryParser (mapParams) {
         this.use(restify.queryParser({
             mapParams: mapParams
         }));
-    },
+    }
 
 
-    start: function (port, hostname, backlog) {
+    start (port, hostname, backlog) {
 
         return this._inst.listenAsync(port, hostname, backlog);
 
-    },
+    }
 
 
-    uncaughtException: function (fn) {
+    uncaughtException (fn) {
         this._inst.on("uncaughtException", fn);
-    },
+    }
 
 
-    use: function (fn) {
+    use (fn) {
         this._inst.use(fn);
     }
 
 
-});
+}

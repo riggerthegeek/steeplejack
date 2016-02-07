@@ -25,7 +25,9 @@ var timer = require("grunt-timer");
 
 var stackDirs = [
     "coffeescript",
-    "es5"
+    "es5",
+    "es6",
+    //"typescript"
 ];
 var stackWrappers = _.reduce(stackDirs, function (result, type) {
 
@@ -98,6 +100,23 @@ module.exports = function (grunt) {
             "<%= config.typings %>",
             "node_modules"
         ].join("|"),
+
+
+        babel: {
+            stack: {
+                options: {
+                    comments: false,
+                    presets: [
+                        "es2015"
+                    ]
+                },
+                files: [{
+                    expand: true,
+                    src: "./<%= config.test %>/stack/app/es6/**/*.js",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
+            }
+        },
 
 
         clean: {
@@ -443,11 +462,13 @@ module.exports = function (grunt) {
     grunt.registerTask("stacktest", "Runs test on an example stack", [
         "clean:tmp",
         "ts:all",
+
+        /* Copy test files over */
         "copy:stackDb",
         "copy:jsonTest",
         "wrap:coffeescript",
         "wrap:es5",
-        //"wrap:es6",
+        "wrap:es6",
         //"wrap:typescript",
 
         /* CoffeeScript tasks */
@@ -457,7 +478,7 @@ module.exports = function (grunt) {
         "copy:es5stack",
 
         /* ES6 tasks */
-        //"copy:es5stack",
+        "babel:stack",
 
         /* TypeScript tasks */
         //"ts:stack",
