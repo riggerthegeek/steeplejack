@@ -27,7 +27,7 @@ var stackDirs = [
     "coffeescript",
     "es5",
     "es6",
-    //"typescript"
+    "typescript"
 ];
 var stackWrappers = _.reduce(stackDirs, function (result, type) {
 
@@ -303,6 +303,7 @@ module.exports = function (grunt) {
             options: {
                 compiler: "./node_modules/typescript/bin/tsc",
                 declaration: true,
+                experimentalDecorators: true,
                 module: "commonjs",
                 moduleResolution: "node",
                 noImplicitAny: true,
@@ -469,7 +470,7 @@ module.exports = function (grunt) {
         "wrap:coffeescript",
         "wrap:es5",
         "wrap:es6",
-        //"wrap:typescript",
+        "wrap:typescript",
 
         /* CoffeeScript tasks */
         "coffee:stack",

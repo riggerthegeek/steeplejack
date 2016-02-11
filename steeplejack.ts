@@ -19,6 +19,7 @@ import * as yargs from "yargs";
 
 
 /* Files */
+import {injectFlag, injectName} from "./decorators/inject";
 import {Base} from "./lib/base";
 import {Injector} from "./lib/injector";
 import {Router} from "./lib/router";
@@ -196,6 +197,41 @@ export class Steeplejack extends Base {
 
 
     /**
+     * Register Class
+     *
+     * Registers a new class and adds any dependencies
+     * to the class as a mixin. We can then call those
+     * as static dependencies and look after them with
+     * interfaces.
+     *
+     * @param {*} module
+     * @returns {Steeplejack}
+     * @private
+     */
+    protected _registerClass (module: any) : Steeplejack {
+
+        let deps = _.clone(module[injectFlag]);
+
+        let fn = (...args: any[]) => {
+
+            _.each(_.initial(deps), (name: any, id: number) => {
+                module[name] = args[id];
+            });
+
+            return module;
+
+        };
+
+        deps.push(fn);
+
+        this.injector.registerFactory(module[injectName], deps);
+
+        return this;
+
+    }
+
+
+    /**
      * Register Config
      *
      * A config is something that receive the config
@@ -273,19 +309,25 @@ export class Steeplejack extends Base {
 
         _.each(module, (value: any, key: any) => {
 
-            switch (key) {
+            if (_.has(value, injectFlag)) {
+                this._registerClass(value);
+            } else {
 
-                case "__config":
-                    this._registerConfig(value);
-                    break;
+                switch (key) {
 
-                case "__factory":
-                    this._registerFactory(value);
-                    break;
+                    case "__config":
+                        this._registerConfig(value);
+                        break;
 
-                case "__singleton":
-                    this._registerSingleton(value);
-                    break;
+                    case "__factory":
+                        this._registerFactory(value);
+                        break;
+
+                    case "__singleton":
+                        this._registerSingleton(value);
+                        break;
+
+                }
 
             }
 
