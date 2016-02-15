@@ -9,7 +9,7 @@
 [![Dependencies][dependencies-image]][dependencies-url]
 [![Dev Depedencies][dev-dependencies-image]][dev-dependencies-url]
 
-A NodeJS scaffolding framework.
+An opinionated way of making a [Twelve Factor App](http://12factor.net) in NodeJS
 
 # License
 
