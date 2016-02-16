@@ -17,19 +17,84 @@ let Bluebird = require("bluebird");
 import {Inject} from "../../../../../../../decorators/inject";
 
 
-@Inject("$userStore", "$poolGrabber", "$SQLiteResource")
+//@Inject("$userStore", "$poolGrabber", "$SQLiteResource")
+//export class Store {
+//
+//
+//    protected static $poolGrabber: any;
+//
+//
+//    protected static $SQLiteResource: any;
+//
+//
+//    public static createUser (data: any) {
+//
+//        return Store.$poolGrabber(Store.$SQLiteResource, function (db: any) {
+//
+//            var map = {
+//                "$firstName": "first_name",
+//                "$lastName": "last_name",
+//                "$emailAddress": "email_address"
+//            };
+//
+//            var sql = "INSERT INTO users (first_name, last_name, email_address)" +
+//                "VALUES($firstName, $lastName, $emailAddress)";
+//
+//            var values = _.reduce(map, function (result: any, dataKey: any, valueKey: any) {
+//
+//                result[valueKey] = data[dataKey];
+//
+//                return result;
+//
+//            }, {});
+//
+//            var defer = Bluebird.defer();
+//
+//            db.run(sql, values, function (err: any) {
+//
+//                if (err) {
+//                    return defer.reject(err);
+//                }
+//
+//                data.id = (<any>this).lastID;
+//
+//                defer.resolve(data);
+//
+//            });
+//
+//            return defer.promise;
+//
+//        });
+//
+//    }
+//
+//
+//    public static getUserById (userId: string) {
+//
+//        return Store.$poolGrabber(Store.$SQLiteResource, (db: any) => {
+//
+//            return db.allAsync("SELECT * FROM users WHERE id = ? LIMIT 1", userId)
+//                .then((result: any[]) => {
+//                    return result[0];
+//                });
+//
+//
+//        });
+//
+//    }
+//
+//
+//}
+@Inject({
+    name: "$userStore"
+})
 export class Store {
 
+    public constructor (protected $poolGrabber: any, protected $SQLiteResource: any) {}
 
-    protected static $poolGrabber: any;
+    public createUser (data: any) {
 
-
-    protected static $SQLiteResource: any;
-
-
-    public static createUser (data: any) {
-
-        return Store.$poolGrabber(Store.$SQLiteResource, function (db: any) {
+        return this.$poolGrabber(this.$SQLiteResource, function (db: any) {
 
             var map = {
                 "$firstName": "first_name",
@@ -68,20 +133,17 @@ export class Store {
 
     }
 
+    public getUserById (userId: string) {
 
-    public static getUserById (userId: string) {
-
-        return Store.$poolGrabber(Store.$SQLiteResource, (db: any) => {
+        return this.$poolGrabber(this.$SQLiteResource, (db: any) => {
 
             return db.allAsync("SELECT * FROM users WHERE id = ? LIMIT 1", userId)
-                .then((result: any[]) => {
+                .then((result:any[]) => {
                     return result[0];
                 });
-
 
         });
 
     }
-
 
 }

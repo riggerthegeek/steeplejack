@@ -17,37 +17,36 @@
 import {Inject} from "../../../../../../decorators/inject";
 
 
-@Inject("$userController", "UserModel", "$userStore")
+@Inject({
+    name: "$userController",
+})
 export class UserController {
 
-    protected static UserModel: any;
 
-    protected static $userStore: any;
+    public constructor (protected UserModel: any, protected $userStore: any) {}
 
 
-    public static createUser (data: any) {
+    public createUser (data: any) {
 
-        var user = new UserController.UserModel(data);
+        var user = new this.UserModel(data);
 
         user.validate();
 
-        return UserController.$userStore.createUser(user.toDb())
+        return this.$userStore.createUser(user.toDb())
             .then((result: any) => {
 
-                return UserController.UserModel.toModel(result);
+                return this.UserModel.toModel(result);
 
             });
 
     }
 
 
-    public static getUser (userId: string) {
+    public getUser (userId: string) {
 
-        return UserController.$userStore.getUserById(userId)
+        return this.$userStore.getUserById(userId)
             .then((result: any) => {
-
-                return UserController.UserModel.toModel(result);
-
+                return this.UserModel.toModel(result);
             });
 
     }

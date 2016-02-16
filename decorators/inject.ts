@@ -14,23 +14,31 @@
 
 
 /* Files */
+import {Injector} from "../lib/injector";
 
 
 export const injectFlag = "__INJECT__";
-export const injectName = "__NAME__";
 
 
-export let Inject = (name: string, ...inject: string[]) => {
+export let Inject = (config: IInjectDecorator) => {
+
     return (constructor: any) => {
 
-        Object.defineProperties(constructor, {
-            [injectName]: {
-                value: name
-            },
-            [injectFlag]: {
-                value: inject
+        /* See if dependencies are specified in config */
+        if (!config.deps) {
+            /* No, check for dependencies in the constructor */
+            config.deps = Injector.getTargetDependencies(constructor).dependencies;
+        }
+
+        /* Define the injector stuff */
+        Object.defineProperty(constructor, injectFlag, {
+            value: {
+                name: config.name,
+                deps: config.deps,
+                factory: config.factory || false
             }
         });
 
     };
+
 };

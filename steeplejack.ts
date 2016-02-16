@@ -19,7 +19,7 @@ import * as yargs from "yargs";
 
 
 /* Files */
-import {injectFlag, injectName} from "./decorators/inject";
+import {injectFlag} from "./decorators/inject";
 import {Base} from "./lib/base";
 import {Injector} from "./lib/injector";
 import {Router} from "./lib/router";
@@ -210,21 +210,29 @@ export class Steeplejack extends Base {
      */
     protected _registerClass (module: any) : Steeplejack {
 
-        let deps = _.clone(module[injectFlag]);
+        let config = module[injectFlag];
+
+        let deps = _.clone(config.deps);
 
         let fn = (...args: any[]) => {
 
-            _.each(_.initial(deps), (name: any, id: number) => {
-                module[name] = args[id];
-            });
+            if (config.factory) {
+                /* Factory - set dependencies to class */
+                _.each(_.initial(deps), (name: any, id: number) => {
+                    module[name] = args[id];
+                });
 
-            return module;
+                return module;
+            } else {
+                /* Create instance */
+                return new module(...args);
+            }
 
         };
 
         deps.push(fn);
 
-        this.injector.registerFactory(module[injectName], deps);
+        this.injector.registerFactory(config.name, deps);
 
         return this;
 

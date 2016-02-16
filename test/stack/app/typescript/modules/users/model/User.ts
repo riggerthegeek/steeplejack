@@ -16,7 +16,10 @@ import {Model} from "../../../../../../../lib/model";
 import {Inject} from "../../../../../../../decorators/inject";
 
 
-@Inject("UserModel")
+@Inject({
+    name: "UserModel",
+    factory: true
+})
 export class User extends Model {
 
 
