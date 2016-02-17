@@ -196,25 +196,16 @@ export class Injector extends Base {
         target = targetDeps.target;
 
         /* Get a definitive list of dependencies */
-        let resolved = _.reduce(dependencies, (result: any[], str: string) => {
+        let resolved = _.map(dependencies, (str: string) => {
 
-            /* Remove any whitespace */
-            str = str.trim();
-
-            if (_.isEmpty(str) === false) {
-
-                if (test) {
-                    /* Test - remove underscores at start and end of string */
-                    str = str.replace(/\b_([\w\$]+)_\b/g, "$1");
-                }
-
-                result.push(str);
-
+            if (test) {
+                /* Test - remove underscores at start and end of string */
+                str = str.replace(/\b_([\w\$]+)_\b/g, "$1");
             }
 
-            return result;
+            return str;
 
-        }, []);
+        });
 
         /* Return the constructor with the dependencies loaded */
         return construct(target, this.getDependencies(resolved));
@@ -327,7 +318,7 @@ export class Injector extends Base {
      * target, either by parsing the function or by
      * reading the array contents
      *
-     * @param {function|Array} target
+     * @param {*} target
      * @returns {IInjectorTarget}
      * @private
      */
@@ -335,7 +326,7 @@ export class Injector extends Base {
 
         /* Ensure it's an array or function */
         if (_.isFunction(target) === false && _.isArray(target) === false) {
-            throw new SyntaxError(
+            throw new TypeError(
                 "Injectable constructor must be an array or function"
             );
         }
