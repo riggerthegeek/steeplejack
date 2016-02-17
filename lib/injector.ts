@@ -374,10 +374,18 @@ export class Injector extends Base {
 
         }
 
-        /* Trim out whitespace */
-        dependencies = _.map(dependencies, (name: string) => {
-            return _.trim(name);
-        });
+        /* Trim out whitespace/empty dependencies */
+        dependencies = _.reduce(dependencies, (result: string[], name: string) => {
+
+            name = _.trim(name);
+
+            if (_.isEmpty(name) === false) {
+                result.push(name);
+            }
+
+            return result;
+
+        }, []);
 
         return {
             dependencies: dependencies,
