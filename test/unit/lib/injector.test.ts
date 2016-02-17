@@ -820,7 +820,7 @@ describe("Injector library", function () {
 
                             fail = true;
 
-                            expect(err).to.be.instanceof(SyntaxError);
+                            expect(err).to.be.instanceof(TypeError);
                             expect(err.message).to.be.equal("Injectable constructor must be an array or function");
 
                         } finally {
@@ -1170,6 +1170,121 @@ describe("Injector library", function () {
                 } finally {
                     expect(fail).to.be.true;
                 }
+
+            });
+
+        });
+
+    });
+
+    describe("static methods", function () {
+
+        describe("#getTargetDependencies", function () {
+
+            it("should throw an error when a non-function/array passed in", function () {
+
+                let fail = false;
+
+                try {
+                    Injector.getTargetDependencies("string");
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(TypeError);
+                    expect(err.message).to.be.equal("Injectable constructor must be an array or function");
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should throw an error if ES5 constructor not a function", function () {
+
+                function Test () {}
+
+                Test.prototype._construct = "fail";
+
+                let fail = false;
+
+                try {
+                    Injector.getTargetDependencies([Test]);
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("No constructor function in injector array");
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should throw an error if constructor not a function", function () {
+
+                let fail = false;
+
+                try {
+                    Injector.getTargetDependencies(["string"]);
+                } catch (err) {
+                    fail = true;
+
+                    expect(err).to.be.instanceof(SyntaxError);
+                    expect(err.message).to.be.equal("No constructor function in injector array");
+                } finally {
+                    expect(fail).to.be.true;
+                }
+
+            });
+
+            it("should use array dependencies", function () {
+
+                class Test {}
+
+                expect(Injector.getTargetDependencies([
+                    "",
+                    " hello ",
+                    "    ohMe",
+                    "   ",
+                    Test
+                ])).to.be.eql({
+                    dependencies: [
+                        "hello",
+                        "ohMe"
+                    ],
+                    target: Test
+                });
+
+            });
+
+            it("should get dependencies in an ES5 constructor", function () {
+
+                function Test () {}
+
+                Test.prototype._construct = (hello: any, goodbye: any) => {};
+
+                expect(Injector.getTargetDependencies(Test)).to.be.eql({
+                    dependencies: [
+                        "hello",
+                        "goodbye"
+                    ],
+                    target: Test.prototype._construct
+                });
+
+            });
+
+            it("should get dependencies in a class constructor", function () {
+
+                class Test {
+                    constructor (ohMe: any, ohMy: any) {}
+                }
+
+                expect(Injector.getTargetDependencies(Test)).to.be.eql({
+                    dependencies: [
+                        "ohMe",
+                        "ohMy"
+                    ],
+                    target: Test
+                });
 
             });
 
