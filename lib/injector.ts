@@ -46,6 +46,22 @@ let construct = (constructor: Function, args: any[]) : any => {
 };
 
 
+/**
+ * Is ES5 Class
+ *
+ * This searches a target for evidence
+ * of it being an ES5 class (ie, having
+ * been extended using the extender helper
+ * method).
+ *
+ * This shouldn't be seen as super-reliable
+ * way of testing if it's a class but is
+ * a quick and dirty way for the injector
+ * to work it out.
+ *
+ * @param target
+ * @returns {boolean}
+ */
 let isES5Class = (target: any) : boolean => {
     return _.has(target, [
         "prototype",
