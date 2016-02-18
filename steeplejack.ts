@@ -200,9 +200,14 @@ export class Steeplejack extends Base {
      * Register Class
      *
      * Registers a new class and adds any dependencies
-     * to the class as a mixin. We can then call those
-     * as static dependencies and look after them with
-     * interfaces.
+     * to the class.
+     *
+     * If you specify the class as a factory, it does
+     * not create a new instance of the class and any
+     * dependencies are available as static methods. If
+     * not a factory, an instance of the class is created
+     * with the dependencies sent through to the
+     * constructor method.
      *
      * @param {*} module
      * @returns {Steeplejack}
@@ -213,6 +218,7 @@ export class Steeplejack extends Base {
         let config = module[injectFlag];
 
         let deps = _.clone(config.deps);
+        if (_.isArray(deps) === false) { deps = []; }
 
         let fn = (...args: any[]) => {
 
@@ -270,13 +276,10 @@ export class Steeplejack extends Base {
     /**
      * Register Factory
      *
-     * Registers a factory method to the application. A
-     * factory is a function.  This is where you would
-     * store a "class" that is instantiated later on.
-     *
-     * Models and collections would typically be stored
-     * inside a factory as they create something (an
-     * instance of the class) when they are called.
+     * Registers a function to the container. Any
+     * arguments are resolved as dependencies. Anything
+     * that is returned from that function then becomes
+     * a useable dependency.
      *
      * @param {IFactory} module
      * @returns {Steeplejack}
