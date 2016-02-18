@@ -4,8 +4,8 @@
  - Project completely rewritten using [TypeScript](http://typescriptlang.org). It keeps the `.extend` static method for
  use with ES5 projects, however a transpiled language (TypeScript, ES6 or CoffeeScript) is the preferred way of using.
  - Dropped support for NodeJS 0.8. The lowest supported version of NodeJS is 0.10. This is supported simply because it
- is still the version on [OpenShift](http://openshift.redhat.com). However, you really should be using NodeJS 4.x.x for
- most projects.
+ is still the version on [OpenShift](http://openshift.redhat.com). However, you really should be using the officially
+ supported stable or LTS version of NodeJS (at time of writing, v4.x.x and above).
  - Removed the child objects from the main `Steeplejack` class. Now, you should call by using the require namespacing,
  eg `var Base = require("steeplejack/lib/base");`.
  - Socket connections now supported by default.
@@ -44,7 +44,8 @@
 
 ## Router
  - Rewritten as a true strategy pattern rather than having to extend this class.
- -
+ - Rewritten so that the files it accepts are now defined by `exports.route` or `exports.socket`.
+ - Sockets are now available as well as HTTP routes.
 
 ## Server
  - Rewritten as a true strategy pattern rather than having to extend this class.
@@ -53,6 +54,7 @@
 ## Steeplejack
  - Removed the static methods that exposed the child objects.
  - Change `.app` routeDir to route, which now accepts a glob.
+ - The automated IOC registration has been improved and allows a much simpler `class` registration
 
 ---
 
