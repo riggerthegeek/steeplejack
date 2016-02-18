@@ -146,7 +146,7 @@ describe("Inject decorator test", function () {
 
         });
 
-        it("should decorate a class with some constructor dependencies", function () {
+        it("should decorate a class and ignore constructor dependencies", function () {
 
             @Inject({
                 name: "otherName",
@@ -160,8 +160,6 @@ describe("Inject decorator test", function () {
             expect((<any>Test)[injectFlag]).to.be.eql({
                 name: "otherName",
                 deps: [
-                    "hello",
-                    "goodbye"
                 ],
                 factory: true
             });

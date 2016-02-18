@@ -11,6 +11,7 @@
 
 
 /* Third-party modules */
+import * as _ from "lodash";
 
 
 /* Files */
@@ -24,8 +25,10 @@ export let Inject = (config: IInjectDecorator) => {
 
     return (constructor: any) => {
 
+        let factory = _.isBoolean(config.factory) ? config.factory : false;
+
         /* See if dependencies are specified in config */
-        if (!config.deps) {
+        if (!config.deps && !factory) {
             /* No, check for dependencies in the constructor */
             config.deps = Injector.getTargetDependencies(constructor).dependencies;
         }
@@ -34,8 +37,8 @@ export let Inject = (config: IInjectDecorator) => {
         Object.defineProperty(constructor, injectFlag, {
             value: {
                 name: config.name,
-                deps: config.deps,
-                factory: config.factory || false
+                deps: config.deps || [],
+                factory: factory
             }
         });
 
