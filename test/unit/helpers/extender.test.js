@@ -196,6 +196,48 @@ describe("extender test", function () {
 
     });
 
+    it("should ignore an error when extending 'caller' and 'arguments'", function () {
+
+        var Constructor = function () {
+
+            this.fn1 = function () { return 2; };
+
+        };
+        Constructor.staticFn = function () { return 3; };
+
+        var Child = extender(Constructor, {
+            fn2: function () { return 4; }
+        }, {
+            staticFn1: function () { return 5; },
+            caller: function () {},
+            arguments: function () {}
+        });
+
+        var obj = new Child();
+
+        expect(obj.super_).to.be.equal(Constructor.prototype);
+        expect(Child.staticFn1()).to.be.equal(5);
+
+        expect(Child.super_).to.be.equal(Constructor);
+
+        expect(Child).to.be.a("function");
+
+        expect(obj).to.be.instanceof(Child)
+            .instanceof(Constructor);
+
+        expect(obj.fn1).to.be.a("function");
+        expect(obj.fn1()).to.be.equal(2);
+
+        expect(obj.fn2).to.be.a("function");
+        expect(obj.fn2()).to.be.equal(4);
+
+        expect(Child.staticFn).to.be.a("function");
+        expect(Child.staticFn()).to.be.equal(3);
+
+        expect(Child.staticFn1).to.be.a("function");
+
+    });
+
     it("should extend an extended Constructor with some properties", function () {
 
         var Constructor = function () {

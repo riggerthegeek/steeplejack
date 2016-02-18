@@ -15,11 +15,40 @@
 
 /* Third-party modules */
 require("es6-collections");
+var _ = require("lodash");
 var loader = require("load-grunt-tasks");
 var timer = require("grunt-timer");
 
 
 /* Files */
+
+
+var stackDirs = [
+    "coffeescript",
+    "es5",
+    "es6",
+    "typescript"
+];
+var stackWrappers = _.reduce(stackDirs, function (result, type) {
+
+    result[type] = {
+        options: {
+            wrapper: [
+                "describe(\"" +
+                type.toUpperCase() + "\", function () {\nvar app = require(\"../../../app/" +
+                type + "/app\").app;\n",
+                "});"
+            ]
+        },
+        src: [
+            "<%= config.test %>/stack/test/user/index.test.js"
+        ],
+        dest: "./<%= config.tmp %>/compiled/test/stack/test/" + type + "/user/index.test.js"
+    };
+
+    return result;
+
+}, {});
 
 
 module.exports = function (grunt) {
@@ -73,6 +102,23 @@ module.exports = function (grunt) {
         ].join("|"),
 
 
+        babel: {
+            stack: {
+                options: {
+                    comments: false,
+                    presets: [
+                        "es2015"
+                    ]
+                },
+                files: [{
+                    expand: true,
+                    src: "./<%= config.test %>/stack/app/es6/**/*.js",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
+            }
+        },
+
+
         clean: {
             dist: {
                 files: [{
@@ -97,7 +143,7 @@ module.exports = function (grunt) {
                 }]
             },
             tmp: {
-                file: [{
+                files: [{
                     src: [
                         "./<%= config.tmp %>"
                     ]
@@ -106,11 +152,42 @@ module.exports = function (grunt) {
         },
 
 
+        coffee: {
+            stack: {
+                expand: true,
+                src: "./<%= config.test %>/stack/app/coffeescript/**/*.coffee",
+                dest: "./<%= config.tmp %>/compiled",
+                ext: ".js"
+            }
+        },
+
+
         copy: {
+            es5stack: {
+                files: [{
+                    expand: true,
+                    src: "<%= config.test %>/stack/app/es5/**/*",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
+            },
             jsTest: {
                 files: [{
                     expand: true,
-                    src: "<%= config.test %>/**/*.js",
+                    src: "<%= config.test %>/**/*.{js,json}",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
+            },
+            jsonTest: {
+                files: [{
+                    expand: true,
+                    src: "<%= config.test %>/**/*.json",
+                    dest: "./<%= config.tmp %>/compiled"
+                }]
+            },
+            stackDb: {
+                files: [{
+                    expand: true,
+                    src: "<%= config.test %>/**/*.db",
                     dest: "./<%= config.tmp %>/compiled"
                 }]
             }
@@ -196,6 +273,11 @@ module.exports = function (grunt) {
                 reporter: "spec",
                 ui: "bdd"
             },
+            stacktest: {
+                src: [
+                    "./<%= config.tmp %>/compiled/test/stack/test/**/*.js"
+                ]
+            },
             unittest: {
                 src: [
                     "./<%= config.tmp %>/compiled/test/unit/**/*.js"
@@ -221,6 +303,7 @@ module.exports = function (grunt) {
             options: {
                 compiler: "./node_modules/typescript/bin/tsc",
                 declaration: true,
+                experimentalDecorators: true,
                 module: "commonjs",
                 moduleResolution: "node",
                 noImplicitAny: true,
@@ -309,7 +392,10 @@ module.exports = function (grunt) {
                     "test"
                 ]
             }
-        }
+        },
+
+
+        wrap: stackWrappers
 
 
     });
@@ -358,6 +444,13 @@ module.exports = function (grunt) {
     ]);
 
 
+    grunt.registerTask("integrationtest", "Run a simple end-to-end stack", [
+        "clean:tmp",
+        "ts:all",
+        "copy:jsTest"
+    ]);
+
+
     grunt.registerTask("lint", "Runs code quality tests", [
         "tslint:src",
         "jshint:src",
@@ -367,9 +460,39 @@ module.exports = function (grunt) {
     ]);
 
 
+    grunt.registerTask("stacktest", "Runs test on an example stack", [
+        "clean:tmp",
+        "ts:all",
+
+        /* Copy test files over */
+        "copy:stackDb",
+        "copy:jsonTest",
+        "wrap:coffeescript",
+        "wrap:es5",
+        "wrap:es6",
+        "wrap:typescript",
+
+        /* CoffeeScript tasks */
+        "coffee:stack",
+
+        /* ES5 tasks */
+        "copy:es5stack",
+
+        /* ES6 tasks */
+        "babel:stack",
+
+        /* TypeScript tasks */
+        //"ts:stack",
+
+        /* Run the tests */
+        "mochaTest:stacktest"
+    ]);
+
+
     grunt.registerTask("test", "Runs tests on the application", [
         "lint",
-        "unittest"
+        "unittest",
+        "stacktest"
     ]);
 
 

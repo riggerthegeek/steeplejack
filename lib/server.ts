@@ -16,7 +16,7 @@
 
 /* Third-party modules */
 import * as _ from "lodash";
-let Promise = require("bluebird");
+let Bluebird = require("bluebird");
 
 
 /* Files */
@@ -326,22 +326,24 @@ export class Server extends Base {
      *
      * Handles the output, dispatching to the strategy
      * so it displays the output correctly. This invokes
-     * the given function as a promise and then handles
+     * the given function as a Bluebird and then handles
      * what it returns. This is how the router should
      * start going to the application tier and beyond.
      *
-     * @param {function} fn
      * @param {object} req
      * @param {object} res
-     * @returns {Thenable<U>|Promise<U>|Promise<T>}
+     * @param {function} fn
+     * @returns {Promise<T>|Promise<U>}
      */
-    public outputHandler (fn: Function, req: Object, res: Object) {
+    public outputHandler (req: Object, res: Object, fn: () => void) {
 
-        return Promise.try(fn)
+        return Bluebird.try(fn)
             .then((data: any) => {
                 return this._strategy.outputHandler(null, data, req, res);
             })
             .catch((err: any) => {
+                this.emit("error_log", err);
+
                 return this._strategy.outputHandler(err, null, req, res);
             });
 
@@ -369,9 +371,9 @@ export class Server extends Base {
     /**
      * Start
      *
-     * Starts up the server, returning a promise
+     * Starts up the server, returning a Bluebird
      *
-     * @returns {Promise}
+     * @returns {Bluebird}
      */
     public start () {
 

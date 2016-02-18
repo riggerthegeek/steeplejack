@@ -19,6 +19,7 @@ import * as yargs from "yargs";
 
 
 /* Files */
+import {injectFlag} from "./decorators/inject";
 import {Base} from "./lib/base";
 import {Injector} from "./lib/injector";
 import {Router} from "./lib/router";
@@ -77,6 +78,14 @@ export class Steeplejack extends Base {
      * @type {{}}
      */
     public routes: Object = {};
+
+
+    /**
+     * Server
+     *
+     * The server object
+     */
+    public server: any;
 
 
     /**
@@ -188,6 +197,55 @@ export class Steeplejack extends Base {
 
 
     /**
+     * Register Class
+     *
+     * Registers a new class and adds any dependencies
+     * to the class.
+     *
+     * If you specify the class as a factory, it does
+     * not create a new instance of the class and any
+     * dependencies are available as static methods. If
+     * not a factory, an instance of the class is created
+     * with the dependencies sent through to the
+     * constructor method.
+     *
+     * @param {*} module
+     * @returns {Steeplejack}
+     * @private
+     */
+    protected _registerClass (module: any) : Steeplejack {
+
+        let config = module[injectFlag];
+
+        let deps = _.clone(config.deps);
+        if (_.isArray(deps) === false) { deps = []; }
+
+        let fn = (...args: any[]) => {
+
+            if (config.factory) {
+                /* Factory - set dependencies to class */
+                _.each(_.initial(deps), (name: any, id: number) => {
+                    module[name] = args[id];
+                });
+
+                return module;
+            } else {
+                /* Create instance */
+                return new module(...args);
+            }
+
+        };
+
+        deps.push(fn);
+
+        this.injector.registerFactory(config.name, deps);
+
+        return this;
+
+    }
+
+
+    /**
      * Register Config
      *
      * A config is something that receive the config
@@ -218,13 +276,10 @@ export class Steeplejack extends Base {
     /**
      * Register Factory
      *
-     * Registers a factory method to the application. A
-     * factory is a function.  This is where you would
-     * store a "class" that is instantiated later on.
-     *
-     * Models and collections would typically be stored
-     * inside a factory as they create something (an
-     * instance of the class) when they are called.
+     * Registers a function to the container. Any
+     * arguments are resolved as dependencies. Anything
+     * that is returned from that function then becomes
+     * a useable dependency.
      *
      * @param {IFactory} module
      * @returns {Steeplejack}
@@ -265,26 +320,25 @@ export class Steeplejack extends Base {
 
         _.each(module, (value: any, key: any) => {
 
-            switch (key) {
+            if (_.has(value, injectFlag)) {
+                this._registerClass(value);
+            } else {
 
-                case "__config":
-                    this._registerConfig(value);
-                    break;
+                switch (key) {
 
-                case "__factory":
-                    this._registerFactory(value);
-                    break;
+                    case "__config":
+                        this._registerConfig(value);
+                        break;
 
-                case "__singleton":
-                    this._registerSingleton(value);
-                    break;
+                    case "__factory":
+                        this._registerFactory(value);
+                        break;
 
-                default:
-                    let message: string = `Unknown registration module: '${key}'`;
-                    if (requireable) {
-                        message += ` in '${modulePath}'`;
-                    }
-                    throw new Error(message);
+                    case "__singleton":
+                        this._registerSingleton(value);
+                        break;
+
+                }
 
             }
 
@@ -369,11 +423,11 @@ export class Steeplejack extends Base {
      * @param {Server} server
      * @returns {function(Function, Object, Object): (Thenable<U>|Promise<U>|Promise<T>)}
      */
-    public createOutputHandler (server: Server) : (fn: Function, req: Object, res: Object) => any {
+    public createOutputHandler (server: Server) : (request: Object, response: Object, fn: () => void) => any {
 
         /* Get the server output handler */
-        let outputHandler = (fn: Function, req: Object, res: Object) : any => {
-            return server.outputHandler(fn, req, res);
+        let outputHandler = (request: Object, response: Object, fn: () => void) : any => {
+            return server.outputHandler(request, response, fn);
         };
 
         /* Store in the injector */
@@ -406,29 +460,29 @@ export class Steeplejack extends Base {
         });
 
         /* Run the server factory through the injector */
-        let server = this.injector.process(factory);
+        this.server = this.injector.process(factory);
 
         /* Register the server to the injector */
-        this.injector.registerSingleton("$server", server);
+        this.injector.registerSingleton("$server", this.server);
 
         /* Create the outputHandler and register to injector if not already done */
         if (this.injector.getComponent(this._outputHandlerName) === null) {
-            this.createOutputHandler(server);
+            this.createOutputHandler(this.server);
         }
 
         /* Process the routes */
         let routes = this._processRoutes();
 
         /* Add in the routes to the server */
-        server.addRoutes(routes.getRoutes());
+        this.server.addRoutes(routes.getRoutes());
 
         /* Listen for close events */
         this.on("close", () => {
-            server.close();
+            this.server.close();
         });
 
         /* Start the server */
-        server.start()
+        this.server.start()
             .then(() => {
                 this.emit("start", this);
             });

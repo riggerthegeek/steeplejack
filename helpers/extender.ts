@@ -82,7 +82,17 @@ export function extender (Constructor: any, prototypeProps: Object = {}, staticP
         }
 
         _.each(keys, key => {
-            MyClass[key] = obj[key];
+
+            /*
+                Some methods (eg, 'caller' and 'arguments' can't be
+                set like this. This just ignores the errors.
+             */
+            try {
+                MyClass[key] = obj[key];
+            } catch (err) {
+                return;
+            }
+
         });
 
     });

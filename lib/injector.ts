@@ -46,6 +46,22 @@ let construct = (constructor: Function, args: any[]) : any => {
 };
 
 
+/**
+ * Is ES5 Class
+ *
+ * This searches a target for evidence
+ * of it being an ES5 class (ie, having
+ * been extended using the extender helper
+ * method).
+ *
+ * This shouldn't be seen as super-reliable
+ * way of testing if it's a class but is
+ * a quick and dirty way for the injector
+ * to work it out.
+ *
+ * @param target
+ * @returns {boolean}
+ */
 let isES5Class = (target: any) : boolean => {
     return _.has(target, [
         "prototype",
@@ -66,68 +82,6 @@ export class Injector extends Base {
      * @private
      */
     protected _components: IInjectorComponent = {};
-
-
-    /**
-     * Get Target Dependencies
-     *
-     * Gets the dependencies that are required in the
-     * target, either by parsing the function or by
-     * reading the array contents
-     *
-     * @param {function|Array} target
-     * @returns {IInjectorTarget}
-     * @private
-     */
-    protected _getTargetDependencies (target: any) : IInjectorTarget {
-
-        /* Ensure it's an array or function */
-        if (_.isFunction(target) === false && _.isArray(target) === false) {
-            throw new SyntaxError(
-                "Injectable constructor must be an array or function"
-            );
-        }
-
-        let dependencies: any[];
-        let fn: Function;
-
-        if (_.isFunction (target) === false) {
-
-            /* Take from the array - last element must be a function */
-            dependencies = _.cloneDeep(target);
-
-            /* Set the function as the target */
-            fn = dependencies.pop();
-
-            if (isES5Class(fn)) {
-                fn = fn.prototype._construct;
-            }
-
-            if (_.isFunction(fn) === false) {
-                throw new SyntaxError("No constructor function in injector array");
-            }
-
-        } else {
-
-            if (isES5Class(target)) {
-                fn = target.prototype._construct;
-            } else {
-                fn = target;
-            }
-
-            let text = fn.toString();
-
-            dependencies = text.match(FN_ARGS)[1]
-                .split(",");
-
-        }
-
-        return {
-            dependencies: dependencies,
-            target: fn
-        };
-
-    }
 
 
     /**
@@ -250,7 +204,7 @@ export class Injector extends Base {
     public process (target: any, test: boolean = false) : any {
 
         /* Get an array of dependencies */
-        let targetDeps = this._getTargetDependencies(target);
+        let targetDeps = Injector.getTargetDependencies(target);
 
         let dependencies: any = targetDeps.dependencies;
 
@@ -258,25 +212,16 @@ export class Injector extends Base {
         target = targetDeps.target;
 
         /* Get a definitive list of dependencies */
-        let resolved = _.reduce(dependencies, (result: any[], str: string) => {
+        let resolved = _.map(dependencies, (str: string) => {
 
-            /* Remove any whitespace */
-            str = str.trim();
-
-            if (_.isEmpty(str) === false) {
-
-                if (test) {
-                    /* Test - remove underscores at start and end of string */
-                    str = str.replace(/\b_([\w\$]+)_\b/g, "$1");
-                }
-
-                result.push(str);
-
+            if (test) {
+                /* Test - remove underscores at start and end of string */
+                str = str.replace(/\b_([\w\$]+)_\b/g, "$1");
             }
 
-            return result;
+            return str;
 
-        }, []);
+        });
 
         /* Return the constructor with the dependencies loaded */
         return construct(target, this.getDependencies(resolved));
@@ -378,6 +323,81 @@ export class Injector extends Base {
         }
 
         return this;
+
+    }
+
+
+    /**
+     * Get Target Dependencies
+     *
+     * Gets the dependencies that are required in the
+     * target, either by parsing the function or by
+     * reading the array contents
+     *
+     * @param {*} target
+     * @returns {IInjectorTarget}
+     * @private
+     */
+    public static getTargetDependencies (target: any) : IInjectorTarget {
+
+        /* Ensure it's an array or function */
+        if (_.isFunction(target) === false && _.isArray(target) === false) {
+            throw new TypeError(
+                "Injectable constructor must be an array or function"
+            );
+        }
+
+        let dependencies: any[];
+        let fn: Function;
+
+        if (_.isFunction(target) === false) {
+
+            /* Take from the array - last element must be a function */
+            dependencies = _.cloneDeep(target);
+
+            /* Set the function as the target */
+            fn = dependencies.pop();
+
+            if (isES5Class(fn)) {
+                fn = fn.prototype._construct;
+            }
+
+            if (_.isFunction(fn) === false) {
+                throw new SyntaxError("No constructor function in injector array");
+            }
+
+        } else {
+
+            if (isES5Class(target)) {
+                fn = target.prototype._construct;
+            } else {
+                fn = target;
+            }
+
+            let text = fn.toString();
+
+            dependencies = text.match(FN_ARGS)[1]
+                .split(",");
+
+        }
+
+        /* Trim out whitespace/empty dependencies */
+        dependencies = _.reduce(dependencies, (result: string[], name: string) => {
+
+            name = _.trim(name);
+
+            if (_.isEmpty(name) === false) {
+                result.push(name);
+            }
+
+            return result;
+
+        }, []);
+
+        return {
+            dependencies: dependencies,
+            target: fn
+        };
 
     }
 

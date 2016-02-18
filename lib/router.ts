@@ -110,7 +110,7 @@ export class Router extends Base {
             } else {
 
                 /* Remove final slash */
-                if (parent !== "/") {
+                if (parent !== null && parent !== "/") {
                     parent = parent.replace(/(\/+)$/, "");
                 }
 

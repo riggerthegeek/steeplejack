@@ -4,6 +4,7 @@
 
 /// <reference path="../../typings/main.d.ts" />
 
+"use strict";
 
 
 /* Node modules */
@@ -27,11 +28,12 @@ chai.use(chaiAsPromised);
 
 sinonAsPromised(Promise);
 
-export let expect = chai.expect;
+let expect = chai.expect;
 
 proxyquire.noCallThru();
 
 export {
+    expect,
     proxyquire,
     sinon
 };

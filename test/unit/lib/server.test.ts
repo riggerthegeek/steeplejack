@@ -8,6 +8,7 @@
 
 
 /* Node modules */
+import {EventEmitter} from "events";
 
 
 /* Third-party modules */
@@ -24,7 +25,7 @@ import {expect, sinon} from "../../helpers/configure";
 describe("Server tests", function () {
 
     beforeEach(function () {
-        class Strategy implements IServerStrategy {
+        class Strategy extends EventEmitter implements IServerStrategy {
             acceptParser (options: any, strict: boolean) { }
 
             addRoute (httpMethod: string, route: string, fn: Function) { }
@@ -740,9 +741,9 @@ describe("Server tests", function () {
 
                 this.stub.returns("output");
 
-                return obj.outputHandler(() => {
+                return obj.outputHandler(req, res, () => {
                     return "result";
-                }, req, res)
+                })
                     .then((data: any) => {
 
                         expect(data).to.be.equal("output");
@@ -762,7 +763,7 @@ describe("Server tests", function () {
 
                 this.stub.returns("output");
 
-                return obj.outputHandler(() => {
+                return obj.outputHandler(req, res, () => {
                     return new Promise((resolve) => {
                         resolve("result");
                     })
@@ -775,7 +776,7 @@ describe("Server tests", function () {
                             return output;
 
                         });
-                }, req, res)
+                })
                     .then((data: any) => {
 
                         expect(data).to.be.equal("output");
@@ -793,16 +794,24 @@ describe("Server tests", function () {
                 let req = {req: true, hello: () => { }};
                 let res = {res: true, hello: () => { }};
 
-                this.stub.returns("output");
-
                 let error = new Error("oooops");
 
-                return obj.outputHandler(() => {
+                this.stub.rejects(error);
+
+                let listener = sinon.spy(obj, "emit");
+
+                return obj.outputHandler(req, res, () => {
                     throw error;
-                }, req, res)
+                })
+                    .then((...args: any[]) => {
+                        throw new Error("invalid");
+                    })
                     .catch((err: any) => {
 
                         expect(err).to.be.equal(error);
+
+                        expect(listener).to.be.calledOnce
+                            .calledWithExactly("error_log", error);
 
                         expect(this.stub).to.be.calledOnce
                             .calledWithExactly(error, null, req, res);
@@ -852,7 +861,7 @@ describe("Server tests", function () {
 
             it("should start a server with just the port", function () {
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
@@ -899,7 +908,7 @@ describe("Server tests", function () {
 
             it("should start a server, returning an ES6 promise", function () {
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
@@ -948,7 +957,7 @@ describe("Server tests", function () {
 
             it("should start a server, returning a Bluebird promise", function (done: any) {
 
-                class Strategy implements IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
