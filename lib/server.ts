@@ -63,7 +63,7 @@ export class Server extends Base {
     /**
      * The strategy instance
      *
-     * @type: {IServerStrategy}
+     * @type {IServerStrategy}
      * @private
      */
     protected _strategy: IServerStrategy;
