@@ -420,6 +420,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("ci", "Runs the continuous integration tests", [
         "test",
+        "stacktest",
         "codecoverage"
     ]);
 
@@ -441,13 +442,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask("default", [
         "build"
-    ]);
-
-
-    grunt.registerTask("integrationtest", "Run a simple end-to-end stack", [
-        "clean:tmp",
-        "ts:all",
-        "copy:jsTest"
     ]);
 
 
@@ -491,8 +485,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("test", "Runs tests on the application", [
         "lint",
-        "unittest",
-        "stacktest"
+        "unittest"
     ]);
 
 
