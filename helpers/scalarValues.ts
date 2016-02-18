@@ -1,5 +1,7 @@
 /**
- * scalarValues
+ * Scalar Values
+ *
+ * Converts objects to scalar values
  */
 
 /// <reference path="../typings/main.d.ts" />

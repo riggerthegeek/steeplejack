@@ -1,5 +1,10 @@
 /**
- * fatal
+ * Fatal
+ *
+ * This is an error that cannot be recovered from. This
+ * is likely to be either when a datastore cannot respond
+ * or similar. Ultimately, this would return an HTTP 503
+ * error (or equivalent).
  */
 
 /// <reference path="../typings/main.d.ts" />
@@ -17,14 +22,6 @@
 import {Exception} from "./index";
 
 
-/**
- * Fatal
- *
- * This is an error that cannot be recovered from. This
- * is likely to be either when a datastore cannot respond
- * or similar. Ultimately, this would return an HTTP 503
- * error (or equivalent).
- */
 export class FatalException extends Exception {
 
 

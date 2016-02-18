@@ -1,6 +1,10 @@
-import {data} from "datautils";
 /**
- * model
+ * Model
+ *
+ * This is a piece of data. Typically, this
+ * would be a single line/document out of a
+ * database. This requires a schema to be
+ * defined.
  */
 
 /// <reference path="../typings/main.d.ts" />

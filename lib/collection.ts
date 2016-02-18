@@ -1,5 +1,10 @@
 /**
- * collection
+ * Collection
+ *
+ * This is a collection of models.  Typically, this
+ * would be multiple lines/documents out of a
+ * database.  You will need to define a model and
+ * it does the rest of it for you.
  */
 
 /// <reference path="../typings/main.d.ts" />

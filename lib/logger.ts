@@ -1,5 +1,7 @@
 /**
- * logger
+ * Logger
+ *
+ * A simple logging strategy pattern.
  */
 
 /// <reference path="../typings/main.d.ts" />

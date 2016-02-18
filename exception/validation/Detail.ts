@@ -1,5 +1,7 @@
 /**
  * Detail
+ *
+ * The detail object for a validation error
  */
 
 /// <reference path="../../typings/main.d.ts" />

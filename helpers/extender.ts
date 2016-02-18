@@ -1,5 +1,8 @@
 /**
- * extender
+ * Extender
+ *
+ * A generic extender to allow extension of a
+ * class in ES5.
  */
 
 /// <reference path="../typings/main.d.ts" />

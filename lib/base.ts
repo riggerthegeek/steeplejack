@@ -1,5 +1,12 @@
 /**
  * Base
+ *
+ * This is the base class. Everything should be
+ * extended from here. For ES6/CoffeeScript/TypeScript,
+ * classes this will just add the clone method in
+ * reality. If you are using ES5, this is how you
+ * create an extendable class by using the .extend()
+ * static method.
  */
 
 /// <reference path="../typings/main.d.ts" />

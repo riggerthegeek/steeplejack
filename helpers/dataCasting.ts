@@ -1,5 +1,18 @@
 /**
- * dataCasting
+ * Data Casting
+ *
+ * The functions to use when casting the
+ * data types
+ *
+ * @type {{
+ *     array: string,
+ *     boolean: string,
+ *     date: string,
+ *     float: string,
+ *     integer: string,
+ *     object: string,
+ *     string: string
+ * }}
  */
 
 /// <reference path="../typings/main.d.ts" />
@@ -16,22 +29,6 @@
 /* Files */
 
 
-/**
- * Data Casting
- *
- * The functions to use when casting the
- * data types
- *
- * @type {{
- *     array: string,
- *     boolean: string,
- *     date: string,
- *     float: string,
- *     integer: string,
- *     object: string,
- *     string: string
- * }}
- */
 export const dataCasting = {
     array: "setArray",
     boolean: "setBool",

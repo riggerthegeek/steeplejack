@@ -1,6 +1,6 @@
 /**
  * Coerce
-
+ *
  * Coerces the value into it's datatype
  */
 

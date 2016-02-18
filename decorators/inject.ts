@@ -1,5 +1,8 @@
 /**
  * inject
+ *
+ * Simplified the formatting of classes ready for
+ * registering with the injector.
  */
 
 /// <reference path="../typings/main.d.ts" />

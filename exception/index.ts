@@ -1,5 +1,12 @@
 /**
  * Exception
+ *
+ * This is the main error object for the framework. It
+ * is an extension of the global Error object and can
+ * be extended infinitely.
+ *
+ * This is an abstract class and can't be instantiated
+ * directly - it must be extended.
  */
 
 /// <reference path="../typings/main.d.ts" />
@@ -18,16 +25,6 @@ import * as _ from "lodash";
 import {extender} from "../helpers/extender";
 
 
-/**
- * Exception
- *
- * This is the main error object for the framework. It
- * is an extension of the global Error object and can
- * be extended infinitely.
- *
- * This is an abstract class and can't be instantiated
- * directly - it must be extended.
- */
 export abstract class Exception extends Error {
 
 

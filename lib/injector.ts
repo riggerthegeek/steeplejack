@@ -1,5 +1,8 @@
 /**
- * injector
+ * Injector
+ *
+ * This a simple reflective dependency injector that
+ * helps you create SOLID applications.
  */
 
 /// <reference path="../typings/main.d.ts" />

@@ -1,5 +1,8 @@
 /**
- * router
+ * Router
+ *
+ * This is to do the HTTP routing based upon
+ * the file/folder that it's in.
  */
 
 /// <reference path="../typings/main.d.ts" />

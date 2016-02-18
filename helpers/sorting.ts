@@ -1,5 +1,7 @@
 /**
- * sorting
+ * Sorting
+ *
+ * Sorting functions
  */
 
 /// <reference path="../typings/main.d.ts" />

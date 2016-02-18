@@ -1,5 +1,5 @@
 /**
- * server
+ * Server
  *
  * The context of a strategy pattern. It receives
  * the strategy object and dispatches to that for
