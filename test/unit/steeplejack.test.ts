@@ -273,7 +273,7 @@ describe("Steeplejack test", function () {
 
         describe("#createOutputHandler", function () {
 
-            it("should register the method to the IOC container - result", function (done) {
+            it("should register the method to the IOC container - result", function () {
 
                 var obj = new Steeplejack();
 
@@ -326,12 +326,11 @@ describe("Steeplejack test", function () {
                             result: res
                         });
 
-                    })
-                    .finally(done);
+                    });
 
             });
 
-            it("should register the method to the IOC container - err", function (done) {
+            it("should register the method to the IOC container - err", function () {
 
                 var obj = new Steeplejack();
 
@@ -394,8 +393,7 @@ describe("Steeplejack test", function () {
                         expect(err.request).to.be.equal(req);
                         expect(err.result).to.be.equal(res);
 
-                    })
-                    .finally(done);
+                    });
 
             });
 

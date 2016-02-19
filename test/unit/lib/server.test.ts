@@ -734,7 +734,7 @@ describe("Server tests", function () {
 
             });
 
-            it("should dispatch to the strategy, resolving a promise", function (done: any) {
+            it("should dispatch to the strategy, resolving a promise", function () {
 
                 let req = {req: true, hello: () => { }};
                 let res = {res: true, hello: () => { }};
@@ -742,8 +742,8 @@ describe("Server tests", function () {
                 this.stub.returns("output");
 
                 return obj.outputHandler(req, res, () => {
-                    return "result";
-                })
+                        return "result";
+                    })
                     .then((data: any) => {
 
                         expect(data).to.be.equal("output");
@@ -751,8 +751,40 @@ describe("Server tests", function () {
                         expect(this.stub).to.be.calledOnce
                             .calledWithExactly(null, "result", req, res);
 
+                    });
+
+            });
+
+            it("should dispatch to the strategy, rejecting a promise", function () {
+
+                let req = {req: true, hello: () => { }};
+                let res = {res: true, hello: () => { }};
+
+                let error = new Error("some message");
+
+                this.stub.rejects(error);
+
+                let listener = sinon.spy(obj, "emit");
+
+                return obj.outputHandler(req, res, () => {
+                    return new Promise((resolve: Function, reject: Function) => {
+                        reject("failed promise");
+                    });
+                })
+                    .then(() => {
+                        throw new Error("fail");
                     })
-                    .finally(done);
+                    .catch((err: any) => {
+
+                        expect(err).to.be.equal(error);
+
+                        expect(listener).to.be.calledOnce
+                            .calledWithExactly("error_log", "failed promise");
+
+                        expect(this.stub).to.be.calledOnce
+                            .calledWithExactly("failed promise", null, req, res);
+
+                    });
 
             });
 
@@ -785,11 +817,11 @@ describe("Server tests", function () {
                             .calledWithExactly(null, "result", req, res);
 
                     })
-                    .finally(done);
+                    .then(done);
 
             });
 
-            it("should dispatch to the strategy, rejecting a promise", function (done: any) {
+            it("should dispatch to the strategy, throwing an error in a promise", function () {
 
                 let req = {req: true, hello: () => { }};
                 let res = {res: true, hello: () => { }};
@@ -801,8 +833,8 @@ describe("Server tests", function () {
                 let listener = sinon.spy(obj, "emit");
 
                 return obj.outputHandler(req, res, () => {
-                    throw error;
-                })
+                        throw error;
+                    })
                     .then((...args: any[]) => {
                         throw new Error("invalid");
                     })
@@ -816,8 +848,7 @@ describe("Server tests", function () {
                         expect(this.stub).to.be.calledOnce
                             .calledWithExactly(error, null, req, res);
 
-                    })
-                    .finally(done);
+                    });
 
             });
 
