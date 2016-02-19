@@ -345,15 +345,14 @@ export class Server extends Base {
                 reject(err);
             }
 
+        }).then((data: any) => {
+            return this._strategy.outputHandler(null, data, req, res);
         })
-            .then((data: any) => {
-                return this._strategy.outputHandler(null, data, req, res);
-            })
-            .catch((err: any) => {
-                this.emit("error_log", err);
+        .catch((err: any) => {
+            this.emit("error_log", err);
 
-                return this._strategy.outputHandler(err, null, req, res);
-            });
+            return this._strategy.outputHandler(err, null, req, res);
+        });
 
     }
 
