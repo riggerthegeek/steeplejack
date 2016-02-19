@@ -1,8 +1,8 @@
-import EventEmitter = NodeJS.EventEmitter;
 /**
  * ServerStrategy
  */
 
+import EventEmitter = NodeJS.EventEmitter;
 
 declare interface IServerStrategy extends EventEmitter {
     acceptParser: (options: any, strict: boolean) => void;
