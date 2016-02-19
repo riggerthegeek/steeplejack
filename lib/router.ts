@@ -161,14 +161,14 @@ export class Router extends Base {
      * up.  It then returns an object of route
      * functions that can be used.
      *
-     * @param {IRouteFiles[]} files
+     * @param {Steeplejack.IRouteFiles[]} files
      * @returns {Object}
      */
-    public static discoverRoutes (files: IRouteFiles[]) : Object {
+    public static discoverRoutes (files: Steeplejack.IRouteFiles[]) : Object {
 
         const splitNames = new RegExp(`^((\\w+${path.sep})+)?(\\w+)`);
 
-        return _.reduce(files, (result: any, file: IRouteFiles) => {
+        return _.reduce(files, (result: any, file: Steeplejack.IRouteFiles) => {
 
             let segments = file.name.match(splitNames);
 
@@ -215,9 +215,9 @@ export class Router extends Base {
      *
      * @param {string} routeDir
      * @param {string} routeGlob
-     * @returns {IRouteFiles[]}
+     * @returns {Steeplejack.IRouteFiles[]}
      */
-    public static getFileList (routeDir: string, routeGlob: string) : IRouteFiles[] {
+    public static getFileList (routeDir: string, routeGlob: string) : Steeplejack.IRouteFiles[] {
 
         /* Build the routes up */
         let routes = path.join(routeDir, routeGlob);
@@ -234,7 +234,7 @@ export class Router extends Base {
                 path: routeDir
             };
 
-        }).sort((a: IRouteFiles, b: IRouteFiles) => {
+        }).sort((a: Steeplejack.IRouteFiles, b: Steeplejack.IRouteFiles) => {
 
             /* Put an index file at the end */
             if (a.name.match(/index\./)) {

@@ -24,7 +24,7 @@ import {Injector} from "../lib/injector";
 export const injectFlag = "__INJECT__";
 
 
-export let Inject = (config: IInjectDecorator) => {
+export let Inject = (config: Steeplejack.IInjectDecorator) => {
 
     return (constructor: any) => {
 

@@ -3,7 +3,11 @@
  */
 
 
-declare interface IInjectorComponentItem {
-    factory: any;
-    instance: any;
+declare module Steeplejack {
+
+    export interface IInjectorComponentItem {
+        factory: any;
+        instance: any;
+    }
+
 }

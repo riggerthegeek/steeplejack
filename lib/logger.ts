@@ -33,9 +33,9 @@ export class Logger extends Base {
      * class and ensures the concrete strategy
      * object is set
      *
-     * @param {ILoggerStrategy} strategy
+     * @param {Steeplejack.ILoggerStrategy} strategy
      */
-    public constructor (protected strategy: ILoggerStrategy) {
+    public constructor (protected strategy: Steeplejack.ILoggerStrategy) {
 
         super();
 

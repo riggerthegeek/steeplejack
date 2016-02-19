@@ -3,6 +3,10 @@
  */
 
 
-declare interface IPlugin {
-    modules: any[];
+declare module Steeplejack {
+
+    export interface IPlugin {
+        modules: any[];
+    }
+
 }

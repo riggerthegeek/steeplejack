@@ -2,8 +2,12 @@
  * InjectDecorator
  */
 
-declare interface IInjectDecorator {
-    name: string;
-    deps?: string[];
-    factory?: boolean;
+declare module Steeplejack {
+
+    export interface IInjectDecorator {
+        name: string;
+        deps?: string[];
+        factory?: boolean;
+    }
+
 }

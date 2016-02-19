@@ -78,10 +78,10 @@ export class Validation {
      * Creates the closure to validate the model
      * data
      *
-     * @param {IDefinitionValidation} validate
+     * @param {Steeplejack.IDefinitionValidation} validate
      * @param {*} defaultValue
      */
-    static generateFunction (validate: IDefinitionValidation, defaultValue: any = void 0) : any {
+    static generateFunction (validate: Steeplejack.IDefinitionValidation, defaultValue: any = void 0) : any {
 
         if (_.isObject(validate) === false) {
             return null;

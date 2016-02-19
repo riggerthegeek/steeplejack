@@ -3,7 +3,11 @@
  */
 
 
-declare interface IDecodedParameter {
-    param: string;
-    value: any;
+declare module Steeplejack {
+
+    export interface IDecodedParameter {
+        param: string;
+        value: any;
+    }
+
 }

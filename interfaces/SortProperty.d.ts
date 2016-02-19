@@ -3,6 +3,10 @@
  */
 
 
-declare interface ISortProperty {
-    [key: string]: string;
+declare module Steeplejack {
+
+    export interface ISortProperty {
+        [key: string]: string;
+    }
+
 }
