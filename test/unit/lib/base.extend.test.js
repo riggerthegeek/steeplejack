@@ -27,7 +27,7 @@ describe("Base.extend Coffee test", function () {
     it("should allow extension of this class", function () {
 
         var Child,
-            extend = function(child, parent) {
+            extend = function (child, parent) {
                 for (var key in parent) {
                     if (hasProp.call(parent, key)) {
                         child[key] = parent[key];
@@ -43,10 +43,10 @@ describe("Base.extend Coffee test", function () {
             },
             hasProp = {}.hasOwnProperty;
 
-        Child = (function(superClass) {
+        Child = (function (superClass) {
             extend(Child, superClass);
 
-            function Child() {
+            function Child () {
                 return Child.__super__.constructor.apply(this, arguments);
             }
 
