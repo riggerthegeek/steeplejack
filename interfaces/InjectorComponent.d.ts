@@ -4,5 +4,5 @@
 
 
 declare interface IInjectorComponent {
-    [key:string]: IInjectorComponentItem;
+    [key: string]: IInjectorComponentItem;
 }

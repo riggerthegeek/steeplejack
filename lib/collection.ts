@@ -91,12 +91,12 @@ export abstract class Collection extends Base {
 
         if (_.isObject(data) && _.isArray(data) === false) {
 
-            let model:Model;
+            let model: Model;
             let ModelConstructor: any = this._model();
 
             if (data instanceof ModelConstructor) {
                 /* It's already an instance of the model */
-                model = <Model>data;
+                model = <Model> data;
             } else {
                 /* Convert the data into an instance of the model */
                 model = new ModelConstructor(data);

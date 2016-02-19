@@ -386,9 +386,9 @@ export class Steeplejack extends Base {
     public addModule (module: string | IPlugin) : Steeplejack {
 
         /* Check if it's a module */
-        if (_.isArray((<IPlugin>module).modules)) {
+        if (_.isArray((<IPlugin> module).modules)) {
             /* Yes - just pull in from there */
-            this.modules = _.concat(this.modules, (<IPlugin>module).modules);
+            this.modules = _.concat(this.modules, (<IPlugin> module).modules);
             return this;
         }
 
@@ -399,8 +399,8 @@ export class Steeplejack extends Base {
 
         /* Ensure an absolute path */
         let modulePath: string;
-        if (isAbsolute(<string>module)) {
-            modulePath = <string>module;
+        if (isAbsolute(<string> module)) {
+            modulePath = <string> module;
         } else {
             modulePath = path.join(process.cwd(), module);
         }

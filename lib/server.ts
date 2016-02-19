@@ -195,7 +195,7 @@ export class Server extends Base {
                 if (_.isPlainObject(methods)) {
 
                     /* Add the HTTP verbs and endpoints */
-                    _.each(methods, (fn:Function | Function[], method:string) => {
+                    _.each(methods, (fn: Function | Function[], method: string) => {
 
                         this.addRoute(method, route, fn);
 

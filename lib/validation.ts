@@ -104,7 +104,7 @@ export class Validation {
             if (rule === "match") {
                 /* Use the special match rule */
                 ruleFn = Validation.match;
-            } else if (_.isFunction((<any>validation)[rule])) {
+            } else if (_.isFunction((<any> validation)[rule])) {
 
                 /* Valid rule in the validation utils package */
                 ruleFn = function (...args: any[]) {
@@ -112,7 +112,7 @@ export class Validation {
                     /* Remove the first element */
                     args.shift();
 
-                    return (<any>validation)[rule](...args);
+                    return (<any> validation)[rule](...args);
 
                 };
 

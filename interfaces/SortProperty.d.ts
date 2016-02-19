@@ -4,5 +4,5 @@
 
 
 declare interface ISortProperty {
-    [key:string]: string;
+    [key: string]: string;
 }

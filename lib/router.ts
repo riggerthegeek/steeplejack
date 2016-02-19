@@ -119,18 +119,18 @@ export class Router extends Base {
 
                 /* Save to the instance */
                 if (_.has(this._routes, parent) === false) {
-                    (<any>this._routes)[parent] = {};
+                    (<any> this._routes)[parent] = {};
                 }
 
                 if (_.has(this._routes, [parent, key])) {
                     /* Can't overwrite a route */
                     let err = new SyntaxError("CANNOT_OVERWRITE_A_ROUTE");
-                    (<any>err).route = parent;
-                    (<any>err).key = key;
+                    (<any> err).route = parent;
+                    (<any> err).key = key;
                     throw err;
                 }
 
-                (<any>this._routes)[parent][key] = value;
+                (<any> this._routes)[parent][key] = value;
 
             }
 

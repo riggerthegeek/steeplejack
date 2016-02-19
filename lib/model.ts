@@ -96,7 +96,7 @@ export abstract class Model extends Base {
 
         /* Set the data to the model */
         _.each(data, (value: any, key: string) => {
-            (<any>this)[key] = value;
+            (<any> this)[key] = value;
         });
 
     }
@@ -137,7 +137,7 @@ export abstract class Model extends Base {
             });
 
             /* Set the default value */
-            (<any>this)[key] = void 0;
+            (<any> this)[key] = void 0;
 
         }, {});
 
@@ -197,10 +197,10 @@ export abstract class Model extends Base {
         /* Get the current value */
         let currentValue: any = (_.has(this._data, key)) ? this._data[key] : void 0;
 
-        if (_.isFunction((<any>this)[customFunc])) {
+        if (_.isFunction((<any> this)[customFunc])) {
 
             /* Use the custom function */
-            return (<any>this)[customFunc](currentValue);
+            return (<any> this)[customFunc](currentValue);
 
         } else {
 
@@ -343,9 +343,9 @@ export abstract class Model extends Base {
         let customFunc = getFnName("_set", key);
         let defaultValue = definition.value;
 
-        if (_.isFunction((<any>this)[customFunc])) {
+        if (_.isFunction((<any> this)[customFunc])) {
 
-            value = (<any>this)[customFunc](value, defaultValue);
+            value = (<any> this)[customFunc](value, defaultValue);
 
             if (_.isUndefined(value)) {
                 value = defaultValue;
@@ -396,8 +396,8 @@ export abstract class Model extends Base {
                     default:
                         if (_.has(dataCasting, type)) {
 
-                            let fnName:string = (<any>dataCasting)[type];
-                            let fn:Function = (<any>datatypes)[fnName];
+                            let fnName: string = (<any> dataCasting)[type];
+                            let fn: Function = (<any> datatypes)[fnName];
 
                             value = fn(value, defaultValue);
 
@@ -438,7 +438,7 @@ export abstract class Model extends Base {
             /* Ignore null columns */
             if (column !== null) {
 
-                let data: any = (<any>this)[key];
+                let data: any = (<any> this)[key];
 
                 /* If it's an instance of the model, get the DB representation */
                 if (_.isObject(data) && _.isFunction(data.toDb)) {

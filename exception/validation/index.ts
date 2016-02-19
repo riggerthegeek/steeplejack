@@ -27,7 +27,7 @@ export class ValidationException extends Exception {
 
 
     public errors: {
-        [key:string]: Detail[];
+        [key: string]: Detail[];
     } = {};
 
 
@@ -91,7 +91,7 @@ export class ValidationException extends Exception {
                 element.push(err.toDTO());
             });
 
-            (<any>result)[key] = element;
+            (<any> result)[key] = element;
 
             return result;
 

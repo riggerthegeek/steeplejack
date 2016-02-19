@@ -44,7 +44,7 @@ let construct = (constructor: Function, args: any[]) : any => {
 
     Factory.prototype = constructor.prototype;
 
-    return new (<any>Factory)();
+    return new (<any> Factory)();
 
 };
 

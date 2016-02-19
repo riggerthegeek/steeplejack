@@ -4,7 +4,7 @@
 
 
 declare interface IAddRoutes {
-    [key:string]: {
-        [route:string]: Function | Function[];
+    [key: string]: {
+        [route: string]: Function | Function[];
     };
 }

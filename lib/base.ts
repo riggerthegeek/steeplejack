@@ -73,7 +73,7 @@ export class Base extends EventEmitter {
         Object.getOwnPropertyNames(this)
             .map((name) => {
 
-                let obj = _.clone((<any>this)[name]);
+                let obj = _.clone((<any> this)[name]);
 
                 Object.defineProperty(clonedObj, name, {
                     value: obj,
