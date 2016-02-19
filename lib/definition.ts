@@ -21,7 +21,7 @@ import {data as datatypes} from "datautils";
 import {Validation} from "./validation";
 
 
-export class Definition implements Steeplejack.IModelDefinition {
+export class Definition implements ISteeplejack.IModelDefinition {
 
 
     public type: any;
@@ -33,7 +33,7 @@ export class Definition implements Steeplejack.IModelDefinition {
     public settings: any;
 
 
-    public constructor (data: Steeplejack.IModelDefinition = null) {
+    public constructor (data: ISteeplejack.IModelDefinition = null) {
 
         let options: any = _.isObject(data) ? data : {};
 
@@ -68,7 +68,7 @@ export class Definition implements Steeplejack.IModelDefinition {
      * @returns {Definition}
      * @todo
      */
-    public addValidation (rule: Steeplejack.IDefinitionValidation[] = null) : Definition {
+    public addValidation (rule: ISteeplejack.IDefinitionValidation[] = null) : Definition {
 
         if (_.isArray(rule)) {
 

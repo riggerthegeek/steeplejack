@@ -67,7 +67,7 @@ export class Steeplejack extends Base {
      *
      * @type {Array}
      */
-    public modules: string[] | Steeplejack.IPlugin[] = [];
+    public modules: string[] | ISteeplejack.IPlugin[] = [];
 
 
     /**
@@ -124,13 +124,13 @@ export class Steeplejack extends Base {
      * be a glob pattern.
      *
      * @param {object} config
-     * @param {Steeplejack.IPlugin[]} modules
+     * @param {ISteeplejack.IPlugin[]} modules
      * @param {string} routesDir
      * @param {string} routesGlob
      */
     public constructor (
         config: Object = {},
-        modules: string[] | Steeplejack.IPlugin[] = [],
+        modules: string[] | ISteeplejack.IPlugin[] = [],
         routesDir: string = null,
         routesGlob: string = "**/*.js"
     ) {
@@ -152,7 +152,7 @@ export class Steeplejack extends Base {
         this.injector.registerSingleton("$config", this.config);
 
         /* Add in the modules */
-        _.each(modules, (module: string | Steeplejack.IPlugin) => {
+        _.each(modules, (module: string | ISteeplejack.IPlugin) => {
             this.addModule(module);
         });
 
@@ -253,11 +253,11 @@ export class Steeplejack extends Base {
      * the instance that is then set as a singleton
      * to the IOC container.
      *
-     * @param {Steeplejack.IConfig} module
+     * @param {ISteeplejack.IConfig} module
      * @returns {Steeplejack}
      * @private
      */
-    protected _registerConfig (module: Steeplejack.IConfig) : Steeplejack {
+    protected _registerConfig (module: ISteeplejack.IConfig) : Steeplejack {
 
         let fn = module.config;
 
@@ -281,11 +281,11 @@ export class Steeplejack extends Base {
      * that is returned from that function then becomes
      * a useable dependency.
      *
-     * @param {Steeplejack.IFactory} module
+     * @param {ISteeplejack.IFactory} module
      * @returns {Steeplejack}
      * @private
      */
-    protected _registerFactory (module: Steeplejack.IFactory) : Steeplejack {
+    protected _registerFactory (module: ISteeplejack.IFactory) : Steeplejack {
 
         this.injector.registerFactory(module.name, module.factory);
 
@@ -357,11 +357,11 @@ export class Steeplejack extends Base {
      * already been instantiated or it may be just a JSON
      * object.
      *
-     * @param {Steeplejack.ISingleton} module
+     * @param {ISteeplejack.ISingleton} module
      * @returns {Steeplejack}
      * @private
      */
-    protected _registerSingleton (module: Steeplejack.ISingleton) : Steeplejack {
+    protected _registerSingleton (module: ISteeplejack.ISingleton) : Steeplejack {
 
         this.injector.registerSingleton(module.name, module.singleton);
 
@@ -380,15 +380,15 @@ export class Steeplejack extends Base {
      *
      * For paths, globbed paths are recommended.
      *
-     * @param {string|Steeplejack.IPlugin} module
+     * @param {string|ISteeplejack.IPlugin} module
      * @returns {Steeplejack}
      */
-    public addModule (module: string | Steeplejack.IPlugin) : Steeplejack {
+    public addModule (module: string | ISteeplejack.IPlugin) : Steeplejack {
 
         /* Check if it's a module */
-        if (_.isArray((<Steeplejack.IPlugin> module).modules)) {
+        if (_.isArray((<ISteeplejack.IPlugin> module).modules)) {
             /* Yes - just pull in from there */
-            this.modules = _.concat(this.modules, (<Steeplejack.IPlugin> module).modules);
+            this.modules = _.concat(this.modules, (<ISteeplejack.IPlugin> module).modules);
             return this;
         }
 
@@ -512,7 +512,7 @@ export class Steeplejack extends Base {
         modules = [],
         routesDir = null,
         routesGlob = void 0
-    } : Steeplejack.IAppFactory = {}) : Steeplejack {
+    } : ISteeplejack.IAppFactory = {}) : Steeplejack {
 
         /* Pull in the parameters from the command line */
         let cliArgs = cliParameters(...yargs.argv._);

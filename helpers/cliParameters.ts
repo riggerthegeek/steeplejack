@@ -50,7 +50,7 @@ export function cliParameters (...input: string[]) : any {
 }
 
 
-export function decodeParams (input: string) : Steeplejack.IDecodedParameter {
+export function decodeParams (input: string) : ISteeplejack.IDecodedParameter {
 
     if (_.isString(input) === false) {
         return;

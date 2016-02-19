@@ -2,7 +2,7 @@
  * InjectDecorator
  */
 
-declare module Steeplejack {
+declare module ISteeplejack {
 
     export interface IInjectDecorator {
         name: string;

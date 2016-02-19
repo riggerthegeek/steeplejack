@@ -81,10 +81,10 @@ export class Injector extends Base {
      *
      * Where the registered components live
      *
-     * @type {Steeplejack.IInjectorComponent}
+     * @type {ISteeplejack.IInjectorComponent}
      * @private
      */
-    protected _components: Steeplejack.IInjectorComponent = {};
+    protected _components: ISteeplejack.IInjectorComponent = {};
 
 
     /**
@@ -146,9 +146,9 @@ export class Injector extends Base {
      * Get the components by name
      *
      * @param {string} name
-     * @returns {Steeplejack.IInjectorComponentItem}
+     * @returns {ISteeplejack.IInjectorComponentItem}
      */
-    public getComponent (name: string) : Steeplejack.IInjectorComponentItem {
+    public getComponent (name: string) : ISteeplejack.IInjectorComponentItem {
 
         if (_.has(this._components, name)) {
             return this._components[name];
@@ -300,10 +300,10 @@ export class Injector extends Base {
      * you're replacing.
      *
      * @param {string} name
-     * @param {Steeplejack.IInjectorComponentItem} newComponent
+     * @param {ISteeplejack.IInjectorComponentItem} newComponent
      * @returns {Injector}
      */
-    public replace (name: string, newComponent: Steeplejack.IInjectorComponentItem) : Injector {
+    public replace (name: string, newComponent: ISteeplejack.IInjectorComponentItem) : Injector {
 
         /* Get the component */
         let registered = this.getComponent(name);
@@ -338,10 +338,10 @@ export class Injector extends Base {
      * reading the array contents
      *
      * @param {*} target
-     * @returns {Steeplejack.IInjectorTarget}
+     * @returns {ISteeplejack.IInjectorTarget}
      * @private
      */
-    public static getTargetDependencies (target: any) : Steeplejack.IInjectorTarget {
+    public static getTargetDependencies (target: any) : ISteeplejack.IInjectorTarget {
 
         /* Ensure it's an array or function */
         if (_.isFunction(target) === false && _.isArray(target) === false) {

@@ -113,7 +113,7 @@ export abstract class Model extends Base {
     protected _configureDefinition () : void {
 
         /* Written like this (not with _.reduce) as the setter needs to access the definition */
-        _.each(this._schema(), (schemaItem: Steeplejack.IModelDefinition, key: string) => {
+        _.each(this._schema(), (schemaItem: ISteeplejack.IModelDefinition, key: string) => {
 
             let definition = Definition.toDefinition(key, schemaItem);
 
@@ -218,9 +218,9 @@ export abstract class Model extends Base {
      * Gets the keys and the column name
      * as an array of objects
      *
-     * @returns {Steeplejack.IDefinitionColumns[]}
+     * @returns {ISteeplejack.IDefinitionColumns[]}
      */
-    public getColumnKeys () : Steeplejack.IDefinitionColumns[] {
+    public getColumnKeys () : ISteeplejack.IDefinitionColumns[] {
 
         return _.reduce(this._definition, (result: any, definition: Definition, key: string) => {
 
@@ -605,7 +605,7 @@ export abstract class Model extends Base {
         let model = Object.create(this.prototype);
         this.apply(model, []);
 
-        let definition: Steeplejack.IDefinitionColumns[] = (model.getColumnKeys());
+        let definition: ISteeplejack.IDefinitionColumns[] = (model.getColumnKeys());
 
         /* Set the column data to the model */
         _.each(definition, item => {

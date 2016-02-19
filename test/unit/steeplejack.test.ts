@@ -277,7 +277,7 @@ describe("Steeplejack test", function () {
 
                 var obj = new Steeplejack();
 
-                class Strategy extends EventEmitter implements Steeplejack.IServerStrategy {
+                class Strategy extends EventEmitter implements ISteeplejack.IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
                     addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
                     after: (fn: Function) => void;
@@ -334,7 +334,7 @@ describe("Steeplejack test", function () {
 
                 var obj = new Steeplejack();
 
-                class Strategy extends EventEmitter implements Steeplejack.IServerStrategy {
+                class Strategy extends EventEmitter implements ISteeplejack.IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
                     addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
                     after: (fn: Function) => void;

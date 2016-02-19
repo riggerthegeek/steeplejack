@@ -3,7 +3,7 @@
  */
 
 
-declare module Steeplejack {
+declare module ISteeplejack {
 
     export interface IServerStrategy extends NodeJS.EventEmitter {
         acceptParser: (options: any, strict: boolean) => void;

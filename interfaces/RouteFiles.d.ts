@@ -4,7 +4,7 @@
 
 
 
-declare module Steeplejack {
+declare module ISteeplejack {
 
     export interface IRouteFiles {
         name: string;

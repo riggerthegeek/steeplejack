@@ -1377,7 +1377,7 @@ describe("Collection test", function () {
 
             it("should return true if removed", function () {
 
-                let models = _.reduce(obj.getAll(), (result: Model[], data: Steeplejack.ICollectionData) => {
+                let models = _.reduce(obj.getAll(), (result: Model[], data: ISteeplejack.ICollectionData) => {
                     result.push(data.model);
                     return result;
                 }, []);
@@ -1578,7 +1578,7 @@ describe("Collection test", function () {
 
                 it("should allow me to write a sort function", function () {
 
-                    var arr = _.reduce(champs.getAll(), (result: any[], data: Steeplejack.ICollectionData) => {
+                    var arr = _.reduce(champs.getAll(), (result: any[], data: ISteeplejack.ICollectionData) => {
                         result.push(data.model);
                         return result;
                     }, []);

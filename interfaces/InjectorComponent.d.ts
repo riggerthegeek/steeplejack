@@ -3,7 +3,7 @@
  */
 
 
-declare module Steeplejack {
+declare module ISteeplejack {
 
     export interface IInjectorComponent {
         [key: string]: IInjectorComponentItem;

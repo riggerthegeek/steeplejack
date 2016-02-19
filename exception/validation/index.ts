@@ -85,7 +85,7 @@ export class ValidationException extends Exception {
 
         return _.reduce(this.errors, (result, errors, key) => {
 
-            let element: Steeplejack.IValidationExceptionDetail[] = [];
+            let element: ISteeplejack.IValidationExceptionDetail[] = [];
 
             _.each(errors, err => {
                 element.push(err.toDTO());

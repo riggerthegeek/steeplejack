@@ -2,7 +2,7 @@
  * CollectionData
  */
 
-declare module Steeplejack {
+declare module ISteeplejack {
 
     export interface ICollectionData {
         id: string;
