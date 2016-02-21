@@ -28,7 +28,7 @@ Almost every application will require some form of data storage. It's likely the
 too. In the most part, these will be the same across all your projects. So, make write these as plugins and use them
 across multiple projects.
 
-## Why makes the Twelve Factor App so great?
+## What makes the Twelve Factor App so great?
 
 Pick any of the following reasons:
 
