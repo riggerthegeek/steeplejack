@@ -468,9 +468,6 @@ module.exports = function (grunt) {
         /* ES6 tasks */
         "babel:stack",
 
-        /* TypeScript tasks */
-        //"ts:stack",
-
         /* Run the tests */
         "mochaTest:stacktest"
     ]);
