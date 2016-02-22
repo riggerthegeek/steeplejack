@@ -10,8 +10,10 @@
 Issues are welcome but they should be specific points rather than general questions.  A runnable
 [Plunkr](http://plnkr.co/) (or similar) is preferred.
 
-When raising a bug, you **MUST** answer the follow questions.
+When raising a bug, you **MUST** answer the follow questions. This will help us help you.
 
  - What you did, including input and system info
  - What it returned
  - What you expected
+
+# Please be nice!

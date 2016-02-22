@@ -2,8 +2,6 @@
  * Get Fn Name
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

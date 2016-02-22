@@ -56,6 +56,7 @@ module.exports = function (grunt) {
 
     /* Load all grunt tasks */
     loader(grunt);
+    grunt.loadNpmTasks("dts-generator");
     grunt.loadNpmTasks("remap-istanbul");
 
 
@@ -209,6 +210,23 @@ module.exports = function (grunt) {
         },
 
 
+        dtsGenerator: {
+            options: {
+                baseDir: __dirname,
+                name: pkg.name,
+                project: "./",
+                out: pkg.name + ".d.ts"
+            },
+            src: {
+                src: [
+                    "*.ts",
+                    "**/*.ts",
+                    "./!(<%= ignorePaths %>)/**/*.js"
+                ]
+            }
+        },
+
+
         jscs: {
             options: {
                 config: ".jscsrc"
@@ -301,16 +319,7 @@ module.exports = function (grunt) {
 
         ts: {
             options: {
-                compiler: "./node_modules/typescript/bin/tsc",
-                declaration: true,
-                experimentalDecorators: true,
-                module: "commonjs",
-                moduleResolution: "node",
-                noImplicitAny: true,
-                preserveConstEnums: true,
-                removeComments: true,
-                sourceMap: true,
-                target: "es5"
+                compiler: "./node_modules/typescript/bin/tsc"
             },
             all: {
                 options: {
@@ -321,7 +330,8 @@ module.exports = function (grunt) {
                     "*.ts",
                     "./!(<%= ignorePaths %>)/**/*.ts",
                     "./<%= config.test %>/**/*.ts"
-                ]
+                ],
+                tsconfig: true
             },
             src: {
                 options: {
@@ -330,7 +340,8 @@ module.exports = function (grunt) {
                 src: [
                     "*.ts",
                     "./!(<%= ignorePaths %>)/**/*.ts"
-                ]
+                ],
+                tsconfig: true
             }
         },
 
@@ -426,7 +437,8 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask("compile", "Compiles the public application", [
-        "ts:src"
+        "ts:src",
+        "dtsGenerator:src"
     ]);
 
 
@@ -475,15 +487,13 @@ module.exports = function (grunt) {
         /* ES6 tasks */
         "babel:stack",
 
-        /* TypeScript tasks */
-        //"ts:stack",
-
         /* Run the tests */
         "mochaTest:stacktest"
     ]);
 
 
     grunt.registerTask("test", "Runs tests on the application", [
+        "clean",
         "lint",
         "unittest"
     ]);

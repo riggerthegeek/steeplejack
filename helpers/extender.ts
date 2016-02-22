@@ -5,8 +5,6 @@
  * class in ES5.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

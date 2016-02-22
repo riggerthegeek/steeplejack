@@ -5,8 +5,6 @@
  * helps you create SOLID applications.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -81,10 +79,10 @@ export class Injector extends Base {
      *
      * Where the registered components live
      *
-     * @type {ISteeplejack.IInjectorComponent}
+     * @type {IInjectorComponent}
      * @private
      */
-    protected _components: ISteeplejack.IInjectorComponent = {};
+    protected _components: IInjectorComponent = {};
 
 
     /**
@@ -146,9 +144,9 @@ export class Injector extends Base {
      * Get the components by name
      *
      * @param {string} name
-     * @returns {ISteeplejack.IInjectorComponentItem}
+     * @returns {IInjectorComponentItem}
      */
-    public getComponent (name: string) : ISteeplejack.IInjectorComponentItem {
+    public getComponent (name: string) : IInjectorComponentItem {
 
         if (_.has(this._components, name)) {
             return this._components[name];
@@ -300,10 +298,10 @@ export class Injector extends Base {
      * you're replacing.
      *
      * @param {string} name
-     * @param {ISteeplejack.IInjectorComponentItem} newComponent
+     * @param {IInjectorComponentItem} newComponent
      * @returns {Injector}
      */
-    public replace (name: string, newComponent: ISteeplejack.IInjectorComponentItem) : Injector {
+    public replace (name: string, newComponent: IInjectorComponentItem) : Injector {
 
         /* Get the component */
         let registered = this.getComponent(name);
@@ -338,10 +336,10 @@ export class Injector extends Base {
      * reading the array contents
      *
      * @param {*} target
-     * @returns {ISteeplejack.IInjectorTarget}
+     * @returns {IInjectorTarget}
      * @private
      */
-    public static getTargetDependencies (target: any) : ISteeplejack.IInjectorTarget {
+    public static getTargetDependencies (target: any) : IInjectorTarget {
 
         /* Ensure it's an array or function */
         if (_.isFunction(target) === false && _.isArray(target) === false) {

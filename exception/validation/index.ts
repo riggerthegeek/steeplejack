@@ -6,8 +6,6 @@
  * this would return something like an HTTP 400 error.
  */
 
-/// <reference path="../../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -85,7 +83,7 @@ export class ValidationException extends Exception {
 
         return _.reduce(this.errors, (result, errors, key) => {
 
-            let element: ISteeplejack.IValidationExceptionDetail[] = [];
+            let element: IValidationExceptionDetail[] = [];
 
             _.each(errors, err => {
                 element.push(err.toDTO());

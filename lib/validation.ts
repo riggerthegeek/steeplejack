@@ -4,8 +4,6 @@
  * This adds validation to the Definition class
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -78,10 +76,10 @@ export class Validation {
      * Creates the closure to validate the model
      * data
      *
-     * @param {ISteeplejack.IDefinitionValidation} validate
+     * @param {IDefinitionValidation} validate
      * @param {*} defaultValue
      */
-    static generateFunction (validate: ISteeplejack.IDefinitionValidation, defaultValue: any = void 0) : any {
+    static generateFunction (validate: IDefinitionValidation, defaultValue: any = void 0) : any {
 
         if (_.isObject(validate) === false) {
             return null;

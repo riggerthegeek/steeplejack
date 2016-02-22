@@ -1098,7 +1098,7 @@ describe("Injector library", function () {
 
                 class TestInjector extends Injector {
 
-                    updateComponents (name: string, data: ISteeplejack.IInjectorComponentItem) {
+                    updateComponents (name: string, data: IInjectorComponentItem) {
                         this._components[name] = data;
                     }
 

@@ -7,8 +7,6 @@
  * it does the rest of it for you.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -132,7 +130,7 @@ export abstract class Collection extends Base {
 
         let collection = this.getAll();
 
-        _.each(collection, (data: ISteeplejack.ICollectionData) => {
+        _.each(collection, (data: ICollectionData) => {
             return iterator.call(thisArg, data.model, data.id, collection);
         });
 
@@ -159,7 +157,7 @@ export abstract class Collection extends Base {
 
         let collection = this.getAll();
 
-        _.eachRight(collection, (data: ISteeplejack.ICollectionData) => {
+        _.eachRight(collection, (data: ICollectionData) => {
             return iterator.call(thisArg, data.model, data.id, collection);
         });
 
@@ -247,9 +245,9 @@ export abstract class Collection extends Base {
      *
      * Returns the data array
      *
-     * @returns {ISteeplejack.ICollectionData[]}
+     * @returns {ICollectionData[]}
      */
-    public getAll () : ISteeplejack.ICollectionData[] {
+    public getAll () : ICollectionData[] {
         return _.map(this._order, (id: string) => {
             return {
                 id,
@@ -271,7 +269,7 @@ export abstract class Collection extends Base {
     public getAllById (ids : string[]) : Model[] {
 
         /* Get the keys for the models */
-        let keys = _.reduce(this.getAll(), (result: any, data: ISteeplejack.ICollectionData, key: number) => {
+        let keys = _.reduce(this.getAll(), (result: any, data: ICollectionData, key: number) => {
 
             if (_.indexOf(ids, data.id) !== -1) {
                 result.push(key);
@@ -297,7 +295,7 @@ export abstract class Collection extends Base {
      */
     public getAllByKey (id : number[]) : Model[] {
 
-        return _.reduce(this.getAll(), (result: any, data: ISteeplejack.ICollectionData, key: number) => {
+        return _.reduce(this.getAll(), (result: any, data: ICollectionData, key: number) => {
 
             if (_.indexOf(id, key) !== -1) {
                 result.push(data.model);
@@ -322,7 +320,7 @@ export abstract class Collection extends Base {
     public getAllByModel (models: Model[]) : Model[] {
 
         /* Get the IDs for the models */
-        let keys = _.reduce(this.getAll(), (result: any, data: ISteeplejack.ICollectionData, key: number) => {
+        let keys = _.reduce(this.getAll(), (result: any, data: ICollectionData, key: number) => {
 
             if (_.indexOf(models, data.model) !== -1) {
                 result.push(key);
@@ -427,7 +425,7 @@ export abstract class Collection extends Base {
      * @returns {any[]}
      */
     public getData () : any[] {
-        return _.map(this.getAll(), (item: ISteeplejack.ICollectionData) => {
+        return _.map(this.getAll(), (item: ICollectionData) => {
             return item.model.getData();
         });
     }
@@ -441,7 +439,7 @@ export abstract class Collection extends Base {
      * @returns {string[]}
      */
     public getIds () : string[] {
-        return _.map(this.getAll(), (item: ISteeplejack.ICollectionData) => {
+        return _.map(this.getAll(), (item: ICollectionData) => {
             return item.id;
         });
     }
@@ -601,7 +599,7 @@ export abstract class Collection extends Base {
         sorted.sort(fn);
 
         /* Change the order array */
-        this._order = _.reduce(sorted, (result: string[], data: ISteeplejack.ICollectionData) => {
+        this._order = _.reduce(sorted, (result: string[], data: ICollectionData) => {
             result.push(data.id);
 
             return result;
@@ -621,10 +619,10 @@ export abstract class Collection extends Base {
      * direction values are "ASC" or "DESC".  This works
      * in broadly the same way as MySQLs sorting.
      *
-     * @param {ISteeplejack.ISortProperty} properties
+     * @param {ISortProperty} properties
      * @returns {Collection}
      */
-    public sortBy (properties : ISteeplejack.ISortProperty ) : Collection {
+    public sortBy (properties : ISortProperty ) : Collection {
 
         if (_.isPlainObject(properties) === false) {
             throw new TypeError("Collection.sortBy must receive an object of keys and directions");
@@ -641,7 +639,7 @@ export abstract class Collection extends Base {
         }, {});
 
         /* Dispatch to the sort method */
-        return this.sort((a: ISteeplejack.ICollectionData, b: ISteeplejack.ICollectionData) => {
+        return this.sort((a: ICollectionData, b: ICollectionData) => {
 
             let keys = _.keys(search);
             let keyLength = keys.length;
@@ -686,7 +684,7 @@ export abstract class Collection extends Base {
      * @returns {TResult[]}
      */
     public toDb () : any {
-        return _.map(this.getAll(), (item: ISteeplejack.ICollectionData) => {
+        return _.map(this.getAll(), (item: ICollectionData) => {
             return item.model.toDb();
         });
     }
@@ -703,7 +701,7 @@ export abstract class Collection extends Base {
 
         let collectionErr = new ValidationException("Collection validation error");
 
-        _.each(this.getAll(), (item: ISteeplejack.ICollectionData, id: number) => {
+        _.each(this.getAll(), (item: ICollectionData, id: number) => {
 
             try {
                 item.model.validate();

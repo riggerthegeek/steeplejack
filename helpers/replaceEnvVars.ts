@@ -5,8 +5,6 @@
  * puts it into the object
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

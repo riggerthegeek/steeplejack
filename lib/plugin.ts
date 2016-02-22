@@ -9,8 +9,6 @@
  * Isn't DRY code marvellous?
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

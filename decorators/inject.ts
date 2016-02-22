@@ -5,8 +5,6 @@
  * registering with the injector.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -24,7 +22,7 @@ import {Injector} from "../lib/injector";
 export const injectFlag = "__INJECT__";
 
 
-export let Inject = (config: ISteeplejack.IInjectDecorator) => {
+export let Inject = (config: IInjectDecorator) => {
 
     return (constructor: any) => {
 

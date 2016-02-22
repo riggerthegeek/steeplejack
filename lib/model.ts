@@ -7,8 +7,6 @@
  * defined.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -113,7 +111,7 @@ export abstract class Model extends Base {
     protected _configureDefinition () : void {
 
         /* Written like this (not with _.reduce) as the setter needs to access the definition */
-        _.each(this._schema(), (schemaItem: ISteeplejack.IModelDefinition, key: string) => {
+        _.each(this._schema(), (schemaItem: IModelDefinition, key: string) => {
 
             let definition = Definition.toDefinition(key, schemaItem);
 
@@ -218,9 +216,9 @@ export abstract class Model extends Base {
      * Gets the keys and the column name
      * as an array of objects
      *
-     * @returns {ISteeplejack.IDefinitionColumns[]}
+     * @returns {IDefinitionColumns[]}
      */
-    public getColumnKeys () : ISteeplejack.IDefinitionColumns[] {
+    public getColumnKeys () : IDefinitionColumns[] {
 
         return _.reduce(this._definition, (result: any, definition: Definition, key: string) => {
 
@@ -605,7 +603,7 @@ export abstract class Model extends Base {
         let model = Object.create(this.prototype);
         this.apply(model, []);
 
-        let definition: ISteeplejack.IDefinitionColumns[] = (model.getColumnKeys());
+        let definition: IDefinitionColumns[] = (model.getColumnKeys());
 
         /* Set the column data to the model */
         _.each(definition, item => {

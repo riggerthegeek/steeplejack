@@ -4,8 +4,6 @@
  * Bundles the CLI parameters into a single object
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 
@@ -50,7 +48,7 @@ export function cliParameters (...input: string[]) : any {
 }
 
 
-export function decodeParams (input: string) : ISteeplejack.IDecodedParameter {
+export function decodeParams (input: string) : IDecodedParameter {
 
     if (_.isString(input) === false) {
         return;
