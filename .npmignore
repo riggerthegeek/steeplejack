@@ -1,14 +1,12 @@
 /.tscache/
 /coverage/
-/gulp/
 /node_modules/
-/src/
 /test/
 /tmp/
 /typings/
 
 .baseDir.ts
 /Gruntfile.js
-/tsd.json
+/typings.json
 *.tmp.txt
 .*
