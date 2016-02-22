@@ -3,11 +3,7 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IInjectorTarget {
-        dependencies: any;
-        target: any;
-    }
-
+declare interface IInjectorTarget {
+    dependencies: any;
+    target: any;
 }

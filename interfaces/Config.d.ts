@@ -3,11 +3,7 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IConfig {
-        name: string;
-        config: (config: Object) => any;
-    }
-
+declare interface IConfig {
+    name: string;
+    config: (config: Object) => any;
 }

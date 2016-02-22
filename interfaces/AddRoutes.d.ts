@@ -3,12 +3,8 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IAddRoutes {
-        [key: string]: {
-            [route: string]: Function | Function[];
-        };
-    }
-
+declare interface IAddRoutes {
+    [key: string]: {
+        [route: string]: Function | Function[];
+    };
 }

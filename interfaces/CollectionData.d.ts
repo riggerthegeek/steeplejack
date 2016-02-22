@@ -2,12 +2,8 @@
  * CollectionData
  */
 
-declare module ISteeplejack {
-
-    export interface ICollectionData {
-        id: string;
-        key?: number;
-        model: any;
-    }
-
+declare interface ICollectionData {
+    id: string;
+    key?: number;
+    model: any;
 }

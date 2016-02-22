@@ -3,11 +3,7 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IDefinitionValidation {
-        rule: any;
-        param?: any[];
-    }
-
+declare interface IDefinitionValidation {
+    rule: any;
+    param?: any[];
 }

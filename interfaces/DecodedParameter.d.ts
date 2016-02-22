@@ -3,11 +3,7 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IDecodedParameter {
-        param: string;
-        value: any;
-    }
-
+declare interface IDecodedParameter {
+    param: string;
+    value: any;
 }

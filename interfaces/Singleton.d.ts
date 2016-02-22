@@ -3,11 +3,7 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface ISingleton {
-        name: string;
-        singleton: any;
-    }
-
+declare interface ISingleton {
+    name: string;
+    singleton: any;
 }

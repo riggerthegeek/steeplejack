@@ -3,10 +3,6 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IInjectorComponent {
-        [key: string]: IInjectorComponentItem;
-    }
-
+declare interface IInjectorComponent {
+    [key: string]: IInjectorComponentItem;
 }

@@ -3,12 +3,8 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IServerOptions {
-        backlog?: number;
-        hostname?: string;
-        port: number;
-    }
-
+declare interface IServerOptions {
+    backlog?: number;
+    hostname?: string;
+    port: number;
 }

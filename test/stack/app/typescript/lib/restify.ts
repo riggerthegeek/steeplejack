@@ -21,7 +21,7 @@ import {Base} from "../../../../../lib/base";
 import {ValidationException} from "../../../../../exception/validation/index";
 
 
-export class Restify extends Base implements ISteeplejack.IServerStrategy {
+export class Restify extends Base implements IServerStrategy {
 
 
     _inst: any;

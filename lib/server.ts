@@ -66,7 +66,7 @@ export class Server extends Base {
      * @type {IServerStrategy}
      * @private
      */
-    protected _strategy: ISteeplejack.IServerStrategy;
+    protected _strategy: IServerStrategy;
 
 
     /**
@@ -74,10 +74,10 @@ export class Server extends Base {
      *
      * Assigns options and the strategy object
      *
-     * @param {ISteeplejack.IServerOptions} options
-     * @param {ISteeplejack.IServerStrategy} strategy
+     * @param {IServerOptions} options
+     * @param {IServerStrategy} strategy
      */
-    public constructor (options: ISteeplejack.IServerOptions, strategy: ISteeplejack.IServerStrategy) {
+    public constructor (options: IServerOptions, strategy: IServerStrategy) {
 
         super();
 
@@ -185,7 +185,7 @@ export class Server extends Base {
      * @param {object} routes
      * @returns {Server}
      */
-    public addRoutes (routes: ISteeplejack.IAddRoutes) : Server {
+    public addRoutes (routes: IAddRoutes) : Server {
 
         if (_.isPlainObject(routes)) {
 

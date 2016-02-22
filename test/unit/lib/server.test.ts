@@ -25,7 +25,7 @@ import {expect, sinon} from "../../helpers/configure";
 describe("Server tests", function () {
 
     beforeEach(function () {
-        class Strategy extends EventEmitter implements ISteeplejack.IServerStrategy {
+        class Strategy extends EventEmitter implements IServerStrategy {
             acceptParser (options: any, strict: boolean) { }
 
             addRoute (httpMethod: string, route: string, fn: Function) { }
@@ -406,7 +406,7 @@ describe("Server tests", function () {
 
                 var arr = [fn3, fn4];
 
-                var routes: ISteeplejack.IAddRoutes = {
+                var routes: IAddRoutes = {
                     "/test": {
                         get: fn1,
                         post: fn2
@@ -892,7 +892,7 @@ describe("Server tests", function () {
 
             it("should start a server with just the port", function () {
 
-                class Strategy extends EventEmitter implements ISteeplejack.IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
@@ -939,7 +939,7 @@ describe("Server tests", function () {
 
             it("should start a server, returning an ES6 promise", function () {
 
-                class Strategy extends EventEmitter implements ISteeplejack.IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }
@@ -988,7 +988,7 @@ describe("Server tests", function () {
 
             it("should start a server, returning a Bluebird promise", function (done: any) {
 
-                class Strategy extends EventEmitter implements ISteeplejack.IServerStrategy {
+                class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser (options: any, strict: boolean) { }
                     after (fn: Function) { }
                     before (fn: Function) { }

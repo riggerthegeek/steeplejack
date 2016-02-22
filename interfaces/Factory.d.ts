@@ -3,11 +3,7 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IFactory {
-        name: string;
-        factory: Function;
-    }
-
+declare interface IFactory {
+    name: string;
+    factory: Function;
 }

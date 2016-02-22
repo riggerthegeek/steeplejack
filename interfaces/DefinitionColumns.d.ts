@@ -3,11 +3,7 @@
  */
 
 
-declare module ISteeplejack {
-
-    export interface IDefinitionColumns {
-        key: string;
-        column: string;
-    }
-
+declare interface IDefinitionColumns {
+    key: string;
+    column: string;
 }
