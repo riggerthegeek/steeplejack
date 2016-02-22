@@ -41,6 +41,11 @@ Steeplejack adds to this by allowing you to reuse your code.
 
 ## Config
 
+> A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be
+> made open source at any moment, without compromising any credentials.
+>
+> [Twelve Factor App: Config](http://12factor.net/config)
+
 A lot of developers still specify all the different config environments in their config file. That was great when we
 wrote PHP and there were only three instances; dev, test and live. The power of NodeJS comes from it's scalability - how
 scalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to add in a new
