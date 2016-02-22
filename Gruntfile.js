@@ -301,16 +301,7 @@ module.exports = function (grunt) {
 
         ts: {
             options: {
-                compiler: "./node_modules/typescript/bin/tsc",
-                declaration: true,
-                experimentalDecorators: true,
-                module: "commonjs",
-                moduleResolution: "node",
-                noImplicitAny: true,
-                preserveConstEnums: true,
-                removeComments: true,
-                sourceMap: true,
-                target: "es5"
+                compiler: "./node_modules/typescript/bin/tsc"
             },
             all: {
                 options: {
@@ -321,7 +312,8 @@ module.exports = function (grunt) {
                     "*.ts",
                     "./!(<%= ignorePaths %>)/**/*.ts",
                     "./<%= config.test %>/**/*.ts"
-                ]
+                ],
+                tsconfig: true
             },
             src: {
                 options: {
@@ -330,7 +322,8 @@ module.exports = function (grunt) {
                 src: [
                     "*.ts",
                     "./!(<%= ignorePaths %>)/**/*.ts"
-                ]
+                ],
+                tsconfig: true
             }
         },
 
