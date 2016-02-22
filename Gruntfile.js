@@ -493,6 +493,7 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask("test", "Runs tests on the application", [
+        "clean",
         "lint",
         "unittest"
     ]);
