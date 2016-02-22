@@ -48,12 +48,16 @@ Steeplejack adds to this by allowing you to reuse your code.
 
 A lot of developers still specify all the different config environments in their config file. That was great when we
 wrote PHP and there were only three instances; dev, test and live. The power of NodeJS comes from it's scalability - how
-scalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to add in a new
-environment in your config file?
+scalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to get our of
+bed and add in a new environment in your config file?
 
 Get rid of all the environments out of your config file and just have one (the development one, so you don't have to dig
 around each time you download from the repo). For all other deployments of your software, use environment variables.
 Then it's the deployer's responsibility to put in the right config and you can stay in bed.
+
+Steeplejack offers a single config file that can be overwritten by either environment variables or command line
+arguments. The application then has one single source of truth with your config and it's your choice how to specify the
+deployment config.
 
 ## Data Modelling
 
