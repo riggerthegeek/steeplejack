@@ -6,8 +6,6 @@
  * this would return something like an HTTP 400 error.
  */
 
-/// <reference path="../../typings/main.d.ts" />
-
 "use strict";
 
 

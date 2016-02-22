@@ -7,8 +7,6 @@
  * it does the rest of it for you.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

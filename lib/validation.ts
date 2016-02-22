@@ -4,8 +4,6 @@
  * This adds validation to the Definition class
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

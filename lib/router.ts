@@ -5,8 +5,6 @@
  * the file/folder that it's in.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

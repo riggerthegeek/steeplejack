@@ -5,8 +5,6 @@
  * registering with the injector.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

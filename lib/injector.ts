@@ -5,8 +5,6 @@
  * helps you create SOLID applications.
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 

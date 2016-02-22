@@ -4,8 +4,6 @@
  * This is the definition of a model
  */
 
-/// <reference path="../typings/main.d.ts" />
-
 "use strict";
 
 
