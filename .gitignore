@@ -44,7 +44,6 @@ node_modules
 .baseDir.ts
 *.tmp.txt
 *.d.ts
-!interfaces/*.d.ts
 *.js.map
 **/*.js
 !Gruntfile.js
