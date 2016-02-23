@@ -2,8 +2,6 @@
  * ServerStrategy
  */
 
-///<reference path="../typings/main/ambient/node/node.d.ts" />
-
 
 declare interface IServerStrategy extends NodeJS.EventEmitter {
     acceptParser: (options: any, strict: boolean) => void;

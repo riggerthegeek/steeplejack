@@ -2,18 +2,6 @@
  * steeplejack
  */
 
-/// <reference path="./typings/main/ambient/datautils/datautils.d.ts" />
-/// <reference path="./typings/main/ambient/glob/glob.d.ts" />
-/// <reference path="./typings/main/ambient/lodash/lodash.d.ts" />
-/// <reference path="./typings/main/ambient/minimatch/minimatch.d.ts" />
-/// <reference path="./typings/main/ambient/node-uuid-base/node-uuid-base.d.ts" />
-/// <reference path="./typings/main/ambient/node-uuid-cjs/node-uuid-cjs.d.ts" />
-/// <reference path="./typings/main/ambient/node-uuid/node-uuid.d.ts" />
-/// <reference path="./typings/main/ambient/node/node.d.ts" />
-/// <reference path="./typings/main/definitions/es6-promise/es6-promise.d.ts" />
-/// <reference path="./typings/main/definitions/yargs/yargs.d.ts" />
-
-
 "use strict";
 
 
