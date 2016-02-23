@@ -17,6 +17,7 @@ import {validation} from "datautils";
 
 /* Files */
 import {Model} from "./model";
+import {IDefinitionValidation} from "../interfaces/definitionValidation";
 
 
 export class Validation {

@@ -3,7 +3,7 @@
  */
 
 
-declare interface IDecodedParameter {
+export interface IDecodedParameter {
     param: string;
     value: any;
 }

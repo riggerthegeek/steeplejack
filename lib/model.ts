@@ -25,6 +25,8 @@ import {ValidationException} from "../exception/validation/index";
 import {dataCasting} from "../helpers/dataCasting";
 import {getFnName} from "../helpers/getFnName";
 import {scalarValues} from "../helpers/scalarValues";
+import {IDefinitionColumns} from "../interfaces/definitionColumns";
+import {IModelDefinition} from "../interfaces/modelDefinition";
 
 
 export abstract class Model extends Base {

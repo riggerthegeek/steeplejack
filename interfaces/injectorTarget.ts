@@ -3,7 +3,7 @@
  */
 
 
-declare interface IInjectorTarget {
+export interface IInjectorTarget {
     dependencies: any;
     target: any;
 }

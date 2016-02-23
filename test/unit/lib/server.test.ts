@@ -19,6 +19,8 @@ import {Promise} from "es6-promise";
 /* Files */
 import {Server} from "../../../lib/server";
 import {Base} from "../../../lib/base";
+import {IAddRoutes} from "../../../interfaces/addRoutes";
+import {IServerStrategy} from "../../../interfaces/serverStrategy";
 import {expect, sinon} from "../../helpers/configure";
 
 

@@ -3,7 +3,7 @@
  */
 
 
-declare interface IAddRoutes {
+export interface IAddRoutes {
     [key: string]: {
         [route: string]: Function | Function[];
     };

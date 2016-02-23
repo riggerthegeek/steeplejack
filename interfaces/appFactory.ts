@@ -2,8 +2,10 @@
  * AppFactory.d
  */
 
+import {IPlugin} from "./plugin";
 
-declare interface IAppFactory {
+
+export interface IAppFactory {
     config?: Object;
     env?: Object;
     modules?: string[] | IPlugin[];

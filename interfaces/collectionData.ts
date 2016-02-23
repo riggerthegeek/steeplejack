@@ -2,7 +2,7 @@
  * CollectionData
  */
 
-declare interface ICollectionData {
+export interface ICollectionData {
     id: string;
     key?: number;
     model: any;

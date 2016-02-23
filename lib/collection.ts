@@ -24,6 +24,8 @@ import {Base} from "./base";
 import {Model} from "./model";
 import {sortAsc, sortDesc} from "../helpers/sorting";
 import {ValidationException} from "../exception/validation/index";
+import {ICollectionData} from "../interfaces/collectionData";
+import {ISortProperty} from "../interfaces/sortProperty";
 
 
 export abstract class Collection extends Base {

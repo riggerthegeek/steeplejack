@@ -3,6 +3,6 @@
  */
 
 
-declare interface IPlugin {
+export interface IPlugin {
     modules: any[];
 }

@@ -19,6 +19,9 @@ import {Promise} from "es6-promise";
 
 /* Files */
 import {Base} from "./base";
+import {IAddRoutes} from "../interfaces/addRoutes";
+import {IServerOptions} from "../interfaces/serverOptions";
+import {IServerStrategy} from "../interfaces/serverStrategy";
 
 
 export class Server extends Base {

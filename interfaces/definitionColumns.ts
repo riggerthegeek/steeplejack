@@ -3,7 +3,7 @@
  */
 
 
-declare interface IDefinitionColumns {
+export interface IDefinitionColumns {
     key: string;
     column: string;
 }

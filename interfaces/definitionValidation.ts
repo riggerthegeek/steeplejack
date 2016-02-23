@@ -3,7 +3,7 @@
  */
 
 
-declare interface IDefinitionValidation {
+export interface IDefinitionValidation {
     rule: any;
     param?: any[];
 }

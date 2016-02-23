@@ -3,7 +3,7 @@
  */
 
 
-declare interface IFactory {
+export interface IFactory {
     name: string;
     factory: Function;
 }

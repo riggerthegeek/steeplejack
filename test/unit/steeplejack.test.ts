@@ -27,6 +27,7 @@ import {Base} from "../../lib/base";
 import {Injector} from "../../lib/injector";
 import {Plugin} from "../../lib/plugin";
 import {Server} from "../../lib/server";
+import {IServerStrategy} from "../../interfaces/serverStrategy";
 
 
 describe("Steeplejack test", function () {

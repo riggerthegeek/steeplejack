@@ -17,6 +17,8 @@ import {data as datatypes} from "datautils";
 
 /* Files */
 import {Validation} from "./validation";
+import {IDefinitionValidation} from "../interfaces/definitionValidation";
+import {IModelDefinition} from "../interfaces/modelDefinition";
 
 
 export class Definition implements IModelDefinition {

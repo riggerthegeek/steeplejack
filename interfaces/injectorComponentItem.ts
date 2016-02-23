@@ -3,7 +3,7 @@
  */
 
 
-declare interface IInjectorComponentItem {
+export interface IInjectorComponentItem {
     factory: any;
     instance: any;
 }

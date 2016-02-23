@@ -17,6 +17,7 @@ import * as _ from "lodash";
 
 /* Files */
 import {Injector} from "../lib/injector";
+import {IInjectDecorator} from "../interfaces/injectDecorator";
 
 
 export const injectFlag = "__INJECT__";

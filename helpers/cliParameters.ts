@@ -16,6 +16,7 @@ import * as _ from "lodash";
 
 /* Files */
 import {coerce} from "./coerce";
+import {IDecodedParameter} from "../interfaces/decodedParameter";
 
 
 export function cliParameters (...input: string[]) : any {

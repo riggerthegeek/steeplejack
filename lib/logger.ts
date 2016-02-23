@@ -16,6 +16,7 @@ import * as _ from "lodash";
 
 /* Files */
 import {Base} from "./base";
+import {ILoggerStrategy} from "../interfaces/loggerStrategy";
 
 
 export class Logger extends Base {

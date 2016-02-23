@@ -18,6 +18,7 @@ let restify = require("restify");
 
 /* Files */
 import {Base} from "../../../../../lib/base";
+import {IServerStrategy} from "../../../../../interfaces/serverStrategy";
 import {ValidationException} from "../../../../../exception/validation/index";
 
 

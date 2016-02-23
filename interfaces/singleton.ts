@@ -3,7 +3,7 @@
  */
 
 
-declare interface ISingleton {
+export interface ISingleton {
     name: string;
     singleton: any;
 }

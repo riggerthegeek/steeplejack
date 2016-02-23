@@ -3,6 +3,6 @@
  */
 
 
-declare interface ISortProperty {
+export interface ISortProperty {
     [key: string]: string;
 }

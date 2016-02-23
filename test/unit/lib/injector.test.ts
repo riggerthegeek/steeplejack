@@ -15,6 +15,7 @@ import {EventEmitter} from "events";
 /* Files */
 import {Base} from "../../../lib/base";
 import {Injector} from "../../../lib/injector";
+import {IInjectorComponentItem} from "../../../interfaces/injectorComponentItem";
 import {expect, sinon} from "../../helpers/configure";
 
 

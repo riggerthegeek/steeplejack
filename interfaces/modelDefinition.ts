@@ -3,7 +3,7 @@
  */
 
 
-declare interface IModelDefinition {
+export interface IModelDefinition {
     type: any;
     value: any;
     column?: any;

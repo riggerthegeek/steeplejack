@@ -1,5 +1,10 @@
 /**
- * steeplejack
+ * Steeplejack
+ *
+ * An opinionated way of making a Twelve Factor App in NodeJS
+ *
+ * @license MIT
+ * @link http://www.steeplejack.info
  */
 
 "use strict";
@@ -24,6 +29,11 @@ import {Router} from "./lib/router";
 import {Server} from "./lib/server";
 import {cliParameters} from "./helpers/cliParameters";
 import {replaceEnvVars} from "./helpers/replaceEnvVars";
+import {IAppFactory} from "./interfaces/appFactory";
+import {IConfig} from "./interfaces/config";
+import {IFactory} from "./interfaces/factory";
+import {IPlugin} from "./interfaces/plugin";
+import {ISingleton} from "./interfaces/singleton";
 
 
 export class Steeplejack extends Base {

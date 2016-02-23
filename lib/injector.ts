@@ -17,6 +17,9 @@ import * as _ from "lodash";
 
 /* Files */
 import {Base} from "./base";
+import {IInjectorComponent} from "../interfaces/injectorComponent";
+import {IInjectorComponentItem} from "../interfaces/injectorComponentItem";
+import {IInjectorTarget} from "../interfaces/injectorTarget";
 
 
 const FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;

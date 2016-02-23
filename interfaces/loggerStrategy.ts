@@ -3,7 +3,7 @@
  */
 
 
-declare interface ILoggerStrategy {
+export interface ILoggerStrategy {
     fatal(message: string): any;
     error(message: string): any;
     warn(message: string): any;

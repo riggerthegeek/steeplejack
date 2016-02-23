@@ -3,7 +3,7 @@
  */
 
 
-declare interface IServerOptions {
+export interface IServerOptions {
     backlog?: number;
     hostname?: string;
     port: number;
