@@ -9,3 +9,5 @@
 /typings.json
 *.tmp.txt
 .*
+*.ts
+!*.d.ts
