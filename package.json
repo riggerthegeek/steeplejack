@@ -4,7 +4,8 @@
   "description": "An opinionated way of making a Twelve Factor App in NodeJS",
   "main": "./steeplejack",
   "scripts": {
-    "test": "grunt watch:test"
+    "test": "grunt watch:test",
+    "typings": "typings install"
   },
   "author": "Simon Emms <simon@simonemms.com>",
   "license": "MIT",
