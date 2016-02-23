@@ -19,6 +19,7 @@ import {sync as glob} from "glob";
 
 /* Files */
 import {Base} from "./base";
+import {IRouteFiles} from "../interfaces/routeFiles";
 
 
 export class Router extends Base {

@@ -19,6 +19,7 @@ import * as _ from "lodash";
 /* Files */
 import {Detail} from "./Detail";
 import {Exception} from "../index";
+import {IValidationExceptionDetail} from "../../interfaces/validationExceptionDetail";
 
 
 export class ValidationException extends Exception {

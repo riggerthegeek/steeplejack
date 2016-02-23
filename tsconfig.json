@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "experimentalDecorators": true,
     "module": "commonjs",
     "moduleResolution": "classic",
@@ -16,5 +17,8 @@
     "test",
     "tmp",
     "typings"
+  ],
+  "files": [
+    "./typings/main.d.ts"
   ]
 }

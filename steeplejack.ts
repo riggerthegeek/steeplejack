@@ -1,18 +1,11 @@
 /**
- * steeplejack
+ * Steeplejack
+ *
+ * An opinionated way of making a Twelve Factor App in NodeJS
+ *
+ * @license MIT
+ * @link http://www.steeplejack.info
  */
-
-/// <reference path="./typings/main/ambient/datautils/datautils.d.ts" />
-/// <reference path="./typings/main/ambient/glob/glob.d.ts" />
-/// <reference path="./typings/main/ambient/lodash/lodash.d.ts" />
-/// <reference path="./typings/main/ambient/minimatch/minimatch.d.ts" />
-/// <reference path="./typings/main/ambient/node-uuid-base/node-uuid-base.d.ts" />
-/// <reference path="./typings/main/ambient/node-uuid-cjs/node-uuid-cjs.d.ts" />
-/// <reference path="./typings/main/ambient/node-uuid/node-uuid.d.ts" />
-/// <reference path="./typings/main/ambient/node/node.d.ts" />
-/// <reference path="./typings/main/definitions/es6-promise/es6-promise.d.ts" />
-/// <reference path="./typings/main/definitions/yargs/yargs.d.ts" />
-
 
 "use strict";
 
@@ -36,6 +29,11 @@ import {Router} from "./lib/router";
 import {Server} from "./lib/server";
 import {cliParameters} from "./helpers/cliParameters";
 import {replaceEnvVars} from "./helpers/replaceEnvVars";
+import {IAppFactory} from "./interfaces/appFactory";
+import {IConfig} from "./interfaces/config";
+import {IFactory} from "./interfaces/factory";
+import {IPlugin} from "./interfaces/plugin";
+import {ISingleton} from "./interfaces/singleton";
 
 
 export class Steeplejack extends Base {

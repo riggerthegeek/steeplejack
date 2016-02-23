@@ -19,6 +19,7 @@ import {Definition} from "../../../lib/definition";
 import {Model} from "../../../lib/model";
 import {Collection} from "../../../lib/collection";
 import {Base} from "../../../lib/base";
+import {ICollectionData} from "../../../interfaces/collectionData";
 import {ValidationException} from "../../../exception/validation/index";
 
 
