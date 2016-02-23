@@ -406,8 +406,7 @@ module.exports = function (grunt) {
         "clean:dist",
         "test",
         "clean",
-        "compile",
-        "clean:tscache"
+        "compile"
     ]);
 
 
