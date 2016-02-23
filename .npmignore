@@ -3,6 +3,7 @@
 /node_modules/
 /test/
 /tmp/
+/typings/
 
 .baseDir.ts
 /Gruntfile.js
