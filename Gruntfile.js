@@ -56,7 +56,6 @@ module.exports = function (grunt) {
 
     /* Load all grunt tasks */
     loader(grunt);
-    grunt.loadNpmTasks("dts-generator");
     grunt.loadNpmTasks("remap-istanbul");
 
 
@@ -206,23 +205,6 @@ module.exports = function (grunt) {
                     },
                     dir: "./<%= config.coverage %>"
                 }
-            }
-        },
-
-
-        dtsGenerator: {
-            options: {
-                baseDir: __dirname,
-                name: pkg.name,
-                project: "./",
-                out: pkg.name + ".d.ts"
-            },
-            src: {
-                src: [
-                    "*.ts",
-                    "**/*.ts",
-                    "./!(<%= ignorePaths %>)/**/*.js"
-                ]
             }
         },
 
@@ -437,8 +419,7 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask("compile", "Compiles the public application", [
-        "ts:src",
-        "dtsGenerator:src"
+        "ts:src"
     ]);
 
 
