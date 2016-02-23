@@ -7,7 +7,6 @@
     "proxyquire": "github:typings/typed-proxyquire#e94c99bbac8d350e28edd70471d9460a5534927b"
   },
   "ambientDependencies": {
-    "datautils": "github:riggerthegeek/datautils-js#7f24a25349a72ded078fde89c75d82d13a34fbcf",
     "glob": "github:DefinitelyTyped/DefinitelyTyped/glob/glob.d.ts#a14d724826174d1669d4df04c80f4838b7e71fdf",
     "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#df712b17fa4737fdb3eb52118b1465cd3be81a1d",
     "minimatch": "github:DefinitelyTyped/DefinitelyTyped/minimatch/minimatch.d.ts#a3900b896f7b3361b79f9b503224777619907d53",
