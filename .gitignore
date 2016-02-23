@@ -46,5 +46,6 @@ node_modules
 *.d.ts
 *.js.map
 **/*.js
+/typings/
 !Gruntfile.js
 !test/**/*.js
