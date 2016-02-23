@@ -2,6 +2,17 @@
  * LoggerStrategy
  */
 
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+
 
 export interface ILoggerStrategy {
     fatal(message: string): any;

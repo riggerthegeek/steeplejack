@@ -2,6 +2,16 @@
  * AppFactory.d
  */
 
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
 import {IPlugin} from "./plugin";
 
 

@@ -2,6 +2,17 @@
  * ServerStrategy
  */
 
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+
 
 export interface IServerStrategy extends NodeJS.EventEmitter {
     acceptParser: (options: any, strict: boolean) => void;

@@ -2,6 +2,17 @@
  * Config.d
  */
 
+"use strict";
+
+
+/* Node modules */
+
+
+/* Third-party modules */
+
+
+/* Files */
+
 
 export interface IConfig {
     name: string;
