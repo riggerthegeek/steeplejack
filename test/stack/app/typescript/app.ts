@@ -10,7 +10,7 @@ import * as path from "path";
 
 
 /* Third-party modules */
-import {Steeplejack} from "../../../../steeplejack";
+import {Steeplejack} from "../../../../index";
 import {Server} from "../../../../lib/server";
 
 

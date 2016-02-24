@@ -2,7 +2,7 @@
   "name": "steeplejack",
   "version": "2.0.0-0",
   "description": "An opinionated way of making a Twelve Factor App in NodeJS",
-  "main": "./steeplejack",
+  "main": "./index",
   "scripts": {
     "test": "grunt watch:test",
     "typings": "typings install"
