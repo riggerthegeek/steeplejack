@@ -81,11 +81,22 @@ export class Steeplejack extends Base {
     /**
      * Routes
      *
-     * The routes available
+     * The routes available. These are unprocessed
+     * by the dependency injector.
      *
      * @type {{}}
      */
-    public routes: Object = {};
+    protected _routes: Object = {};
+
+
+    /**
+     * Routes
+     *
+     * The processed routes.
+     *
+     * @type {Array}
+     */
+    public routes: string[] = [];
 
 
     /**
@@ -173,7 +184,7 @@ export class Steeplejack extends Base {
             /* Get the route files */
             let routeFiles = Router.getFileList(routesDir, routesGlob);
 
-            this.routes = Router.discoverRoutes(routeFiles);
+            this._routes = Router.discoverRoutes(routeFiles);
         }
 
     }
@@ -190,7 +201,7 @@ export class Steeplejack extends Base {
      */
     protected _processRoutes () {
 
-        let routes = _.reduce(this.routes, (result: any, fn: Function, name: string) => {
+        let routes = _.reduce(this._routes, (result: any, fn: Function, name: string) => {
 
             result[name] = this.injector.process(fn);
 
@@ -480,6 +491,11 @@ export class Steeplejack extends Base {
 
         /* Process the routes */
         let routes = this._processRoutes();
+
+        /* Get list of routes */
+        this.server.on("routeAdded", (httpMethod: string, route: string) => {
+            this.routes.push(`${httpMethod}:${route}`);
+        });
 
         /* Add in the routes to the server */
         this.server.addRoutes(routes.getRoutes());
