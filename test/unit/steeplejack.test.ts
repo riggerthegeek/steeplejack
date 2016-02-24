@@ -534,7 +534,7 @@ describe("Steeplejack test", function () {
                     "module3"
                 ];
 
-                this.obj._routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -596,7 +596,7 @@ describe("Steeplejack test", function () {
                     "module3"
                 ];
 
-                this.obj._routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -660,7 +660,7 @@ describe("Steeplejack test", function () {
                     }
                 ];
 
-                this.obj._routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -745,7 +745,7 @@ describe("Steeplejack test", function () {
                     "module5"
                 ];
 
-                this.obj._routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -1393,7 +1393,7 @@ describe("Steeplejack test", function () {
 
                 expect(app.config).to.be.eql({});
                 expect(app.modules).to.be.eql([]);
-                expect(app._routes).to.be.eql({
+                expect((<any> app)._routes).to.be.eql({
                     foo: "bar"
                 });
 
