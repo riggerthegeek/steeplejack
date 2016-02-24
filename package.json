@@ -4,6 +4,8 @@
   "description": "An opinionated way of making a Twelve Factor App in NodeJS",
   "main": "./index",
   "scripts": {
+    "preversion": "grunt",
+    "postversion": "git push && git push --tags",
     "test": "grunt watch:test",
     "typings": "typings install"
   },
