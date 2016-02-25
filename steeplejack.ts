@@ -17,6 +17,7 @@ import * as path from "path";
 /* Third-party modules */
 let _ = require("lodash");
 let isAbsolute = require("path-is-absolute");
+import {Promise} from "es6-promise";
 import {sync as glob} from "glob";
 import * as yargs from "yargs";
 
@@ -32,6 +33,7 @@ import {replaceEnvVars} from "./helpers/replaceEnvVars";
 import {IAppFactory} from "./interfaces/appFactory";
 import {IConfig} from "./interfaces/config";
 import {IFactory} from "./interfaces/factory";
+import {IOutput} from "./interfaces/output";
 import {IPlugin} from "./interfaces/plugin";
 import {ISingleton} from "./interfaces/singleton";
 
@@ -440,12 +442,12 @@ export class Steeplejack extends Base {
      * so it can be used during the run phase.
      *
      * @param {Server} server
-     * @returns {function(Function, Object, Object): (Thenable<U>|Promise<U>|Promise<T>)}
+     * @returns {IOutput}
      */
-    public createOutputHandler (server: Server) : (request: Object, response: Object, fn: () => void) => any {
+    public createOutputHandler (server: Server) : IOutput {
 
         /* Get the server output handler */
-        let outputHandler = (request: Object, response: Object, fn: () => void) : any => {
+        let outputHandler = (request: Object, response: Object, fn: () => void) : Promise<any> => {
             return server.outputHandler(request, response, fn);
         };
 
