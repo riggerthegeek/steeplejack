@@ -26,6 +26,7 @@ import {Steeplejack} from "../../steeplejack";
 import {Base} from "../../lib/base";
 import {Injector} from "../../lib/injector";
 import {Plugin} from "../../lib/plugin";
+import {IPlugin} from "../../interfaces/plugin";
 import {Server} from "../../lib/server";
 import {IServerStrategy} from "../../interfaces/serverStrategy";
 
@@ -455,7 +456,24 @@ describe("Steeplejack test", function () {
                     module5: this.modules.module5
                 }).Steeplejack;
 
-                this.obj = new this.Steeplejack({
+                interface FauxSteeplejack {
+                    new(
+                        config?: Object,
+                        modules?: string[] | IPlugin[],
+                        routesDir?: string,
+                        routesGlob?: string
+                    ) : FauxSteeplejack;
+                }
+
+                let Parent: FauxSteeplejack = this.Steeplejack;
+
+                class S extends Parent {
+
+                    public _routes: string[] = [];
+
+                }
+
+                this.obj = new S({
                     config: "value"
                 });
 
@@ -464,6 +482,7 @@ describe("Steeplejack test", function () {
                 this.server = {
                     addRoutes: sinon.spy(),
                     close: sinon.spy(),
+                    on: sinon.spy(),
                     outputHandler: sinon.spy(),
                     start: sinon.stub()
                 };
@@ -515,7 +534,7 @@ describe("Steeplejack test", function () {
                     "module3"
                 ];
 
-                this.obj.routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -577,7 +596,7 @@ describe("Steeplejack test", function () {
                     "module3"
                 ];
 
-                this.obj.routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -641,7 +660,7 @@ describe("Steeplejack test", function () {
                     }
                 ];
 
-                this.obj.routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -726,7 +745,7 @@ describe("Steeplejack test", function () {
                     "module5"
                 ];
 
-                this.obj.routes = {
+                (<any> this.obj)._routes = {
                     "/route": "routeFn"
                 };
 
@@ -1189,10 +1208,10 @@ describe("Steeplejack test", function () {
                     }
                 };
 
-                this.router = {
-                    discoverRoutes: sinon.stub(),
-                    getFileList: sinon.stub()
-                };
+                this.router = sinon.stub();
+                this.router.prototype.getRoutes = sinon.stub();
+                this.router.discoverRoutes = sinon.stub();
+                this.router.getFileList = sinon.stub();
 
                 this.Steeplejack = proxyquire("../../steeplejack", {
                     yargs: this.yargs,
@@ -1210,7 +1229,7 @@ describe("Steeplejack test", function () {
 
                 expect(app.config).to.be.eql({});
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
             });
 
@@ -1222,7 +1241,7 @@ describe("Steeplejack test", function () {
                     .instanceof(Base);
 
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
             });
 
@@ -1235,7 +1254,7 @@ describe("Steeplejack test", function () {
 
                 expect(app.config).to.be.eql({});
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
             });
 
@@ -1247,7 +1266,7 @@ describe("Steeplejack test", function () {
                     .instanceof(Base);
 
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
             });
 
@@ -1269,7 +1288,7 @@ describe("Steeplejack test", function () {
                     val2: "hello"
                 });
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
             });
 
@@ -1298,7 +1317,7 @@ describe("Steeplejack test", function () {
                     val2: "goodbye"
                 });
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
             });
 
@@ -1329,7 +1348,7 @@ describe("Steeplejack test", function () {
                     val2: "erm?"
                 });
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
             });
 
@@ -1348,7 +1367,7 @@ describe("Steeplejack test", function () {
                 expect(app).to.be.instanceof(this.Steeplejack);
 
                 expect(app.config).to.be.eql({});
-                expect(app.routes).to.be.eql({});
+                expect(app.routes).to.be.eql([]);
 
                 expect(spy).to.be.calledThrice
                     .calledWithExactly("module1")
@@ -1374,7 +1393,7 @@ describe("Steeplejack test", function () {
 
                 expect(app.config).to.be.eql({});
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({
+                expect((<any> app)._routes).to.be.eql({
                     foo: "bar"
                 });
 
@@ -1404,12 +1423,126 @@ describe("Steeplejack test", function () {
 
                 expect(app.config).to.be.eql({});
                 expect(app.modules).to.be.eql([]);
-                expect(app.routes).to.be.eql({
+                expect(app._routes).to.be.eql({
                     food: "bard"
                 });
 
                 expect(this.router.getFileList).to.be.calledOnce
                     .calledWithExactly("/route/dir", "**/*.es6");
+
+                expect(this.router.discoverRoutes).to.be.calledOnce
+                    .calledWithExactly(routesObj);
+
+            });
+
+            it("should parse the routes into a list", function () {
+
+                class Strategy extends EventEmitter implements IServerStrategy {
+                    acceptParser: (options: any, strict: boolean) => void;
+                    addRoute (httpMethod: string, route: string, fn: Function | Function[]) {};
+                    after: (fn: Function) => void;
+                    before: (fn: Function) => void;
+                    bodyParser: () => void;
+                    close: () => void;
+                    enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getServer: () => Object;
+                    gzipResponse: () => void;
+                    queryParser: (mapParser: boolean) => void;
+                    start: (port: number, hostname: string, backlog: number) => any;
+                    uncaughtException: (fn: Function) => void;
+                    use: (fn: Function | Function[]) => void;
+
+                    outputHandler (err: any, data: any, request: Object, result: Object) : any {
+                        return {
+                            err,
+                            data,
+                            request,
+                            result
+                        };
+                    }
+                }
+
+                let routesObj = {hello: "world"};
+
+                let myRoutes = {
+                    foo: () => {
+                        return {
+                            "/": {
+                                get: () => {},
+                                put: () => {}
+                            },
+                            "/bar": {
+                                "/": {
+                                    get: () => {},
+                                    del: () => {}
+                                },
+                                "spam": {
+                                    put: () => {}
+                                }
+                            }
+                        }
+                    },
+                    hello: () => {
+                        return {
+                            "world": {
+                                post: [
+                                    () => {}
+                                ]
+                            }
+                        }
+                    }
+                };
+
+                this.router.prototype.getRoutes.returns({
+                    "/foo": {
+                        get: () => {},
+                        put: () => {}
+                    },
+                    "/foo/bar": {
+                        get: () => {},
+                        del: () => {}
+                    },
+                    "/foo/bar/spam": {
+                        put: () => {}
+                    },
+                    "/hello/world": {
+                        post: [
+                            () => {}
+                        ]
+                    }
+                });
+                this.router.getFileList.returns(routesObj);
+                this.router.discoverRoutes.returns(myRoutes);
+
+                let server = new Server({
+                    port: 3000
+                }, new Strategy());
+                server.start = sinon.stub();
+
+                (<any> server).start.resolves();
+
+                var app = this.Steeplejack.app({
+                    routesDir: "route/dir"
+                });
+
+                app.run(() => {
+                    return server;
+                });
+
+                expect(app).to.be.instanceof(this.Steeplejack);
+
+                expect(app._routes).to.be.eql(myRoutes);
+                expect(app.routes).to.be.eql([
+                    "GET:/foo",
+                    "PUT:/foo",
+                    "GET:/foo/bar",
+                    "DELETE:/foo/bar",
+                    "PUT:/foo/bar/spam",
+                    "POST:/hello/world"
+                ]);
+
+                expect(this.router.getFileList).to.be.calledOnce
+                    .calledWithExactly(path.join(process.cwd(), "route/dir"), "**/*.js");
 
                 expect(this.router.discoverRoutes).to.be.calledOnce
                     .calledWithExactly(routesObj);

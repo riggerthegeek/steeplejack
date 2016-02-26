@@ -20,6 +20,8 @@ before_install:
 script:
 - npm run typings
 - grunt ci
+before_deploy:
+- grunt
 deploy:
   provider: npm
   email: simon@simonemms.com

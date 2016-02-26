@@ -17,6 +17,7 @@ import * as path from "path";
 /* Third-party modules */
 let _ = require("lodash");
 let isAbsolute = require("path-is-absolute");
+import {Promise} from "es6-promise";
 import {sync as glob} from "glob";
 import * as yargs from "yargs";
 
@@ -32,6 +33,7 @@ import {replaceEnvVars} from "./helpers/replaceEnvVars";
 import {IAppFactory} from "./interfaces/appFactory";
 import {IConfig} from "./interfaces/config";
 import {IFactory} from "./interfaces/factory";
+import {IOutput} from "./interfaces/output";
 import {IPlugin} from "./interfaces/plugin";
 import {ISingleton} from "./interfaces/singleton";
 
@@ -81,11 +83,22 @@ export class Steeplejack extends Base {
     /**
      * Routes
      *
-     * The routes available
+     * The routes available. These are unprocessed
+     * by the dependency injector.
      *
      * @type {{}}
      */
-    public routes: Object = {};
+    protected _routes: Object = {};
+
+
+    /**
+     * Routes
+     *
+     * The processed routes.
+     *
+     * @type {Array}
+     */
+    public routes: string[] = [];
 
 
     /**
@@ -173,7 +186,7 @@ export class Steeplejack extends Base {
             /* Get the route files */
             let routeFiles = Router.getFileList(routesDir, routesGlob);
 
-            this.routes = Router.discoverRoutes(routeFiles);
+            this._routes = Router.discoverRoutes(routeFiles);
         }
 
     }
@@ -190,7 +203,7 @@ export class Steeplejack extends Base {
      */
     protected _processRoutes () {
 
-        let routes = _.reduce(this.routes, (result: any, fn: Function, name: string) => {
+        let routes = _.reduce(this._routes, (result: any, fn: Function, name: string) => {
 
             result[name] = this.injector.process(fn);
 
@@ -429,12 +442,12 @@ export class Steeplejack extends Base {
      * so it can be used during the run phase.
      *
      * @param {Server} server
-     * @returns {function(Function, Object, Object): (Thenable<U>|Promise<U>|Promise<T>)}
+     * @returns {IOutput}
      */
-    public createOutputHandler (server: Server) : (request: Object, response: Object, fn: () => void) => any {
+    public createOutputHandler (server: Server) : IOutput {
 
         /* Get the server output handler */
-        let outputHandler = (request: Object, response: Object, fn: () => void) : any => {
+        let outputHandler = (request: Object, response: Object, fn: () => void) : Promise<any> => {
             return server.outputHandler(request, response, fn);
         };
 
@@ -480,6 +493,11 @@ export class Steeplejack extends Base {
 
         /* Process the routes */
         let routes = this._processRoutes();
+
+        /* Get list of routes */
+        this.server.on("routeAdded", (httpMethod: string, route: string) => {
+            this.routes.push(`${httpMethod}:${route}`);
+        });
 
         /* Add in the routes to the server */
         this.server.addRoutes(routes.getRoutes());
