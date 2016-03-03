@@ -66,4 +66,4 @@ to see:
 
 **[PREVIOUS - Installation](index.md)**
 
-**[NEXT - Configuring routes](02-your-first-app.md)**
+**[NEXT - Routing](03-routing.md)**
