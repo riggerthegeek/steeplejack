@@ -63,6 +63,6 @@ Start up the server with `node src/app` and go to http://localhost:3000.  If it'
 }
 ```
 
-**[PREVIOUS - Installing](index.md)**
+**[PREVIOUS - Installation](index.md)**
 
 **[NEXT - Configuring routes](02-your-first-app.md)**
