@@ -9,7 +9,7 @@
 [![Dependencies][dependencies-image]][dependencies-url]
 [![Dev Depedencies][dev-dependencies-image]][dev-dependencies-url]
 
-An opinionated way of making a [Twelve Factor App](http://12factor.net) in NodeJS
+An easy way of making a [Twelve Factor App](http://12factor.net) in NodeJS
 
 ## What is Steeplejack?
 
@@ -20,13 +20,13 @@ When creating a new project, you need to set up the same things over and over ag
 your dependency injection, your HTTP server, your routing and your logging. With Steeplejack, this is all there by
 default allowing you to get straight into your coding.
 
-This is not a framework, it is scaffolding. It doesn't tell you how to write your software, it just lets you do it. You
-can use [Express](http://expressjs.com) or [Restify](http://restify.com) as your HTTP strategy or even one of your own.
-So long as it satisfies the strategy, it doesn't care.
+This is not a framework, it is scaffolding for module. It doesn't tell you how to write your software, it just lets you do
+it. You can use [Express](http://expressjs.com) or [Restify](http://restify.com) as your HTTP strategy or even one of your
+own. So long as it satisfies the strategy, it doesn't care.
 
 Almost every application will require some form of data storage. It's likely there will be some form of user management
-too. In the most part, these will be the same across all your projects. So, make write these as plugins and use them
-across multiple projects.
+too. In the most part, these will be the same across all your projects. So, write these as plugins and use them across
+multiple projects rather than write it afresh each time.
 
 ## What makes the Twelve Factor App so great?
 
@@ -37,7 +37,11 @@ Pick any of the following reasons:
  - you can give true long-term support for your software
  - happier developers
 
-Steeplejack adds to this by allowing you to reuse your code.
+Steeplejack adds to this by:
+
+ - allowing you to reuse your code in the form of plugins
+ - being stupidly easy to set up a new server
+ - things needed in every piece of software - error logging, data modelling and routing - are provided out-of-the-box
 
 ## Config
 
@@ -48,7 +52,7 @@ Steeplejack adds to this by allowing you to reuse your code.
 
 A lot of developers still specify all the different config environments in their config file. That was great when we
 wrote PHP and there were only three instances; dev, test and live. The power of NodeJS comes from it's scalability - how
-scalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to get our of
+scalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to get out of
 bed and add in a new environment in your config file?
 
 Get rid of all the environments out of your config file and just have one (the development one, so you don't have to dig
@@ -74,7 +78,7 @@ and want to sort it in the application. Steeplejack allows you to write a simple
 
 ## TypeScript, ES6, CoffeeScript or ES5?
 
-It's up to you. Steeplejack is written in [TypeScript](http://typescriptlang.org) because it's the most enterpise-ready
+It's up to you. Steeplejack is written in [TypeScript](http://typescriptlang.org) because it's the most enterprise-ready
 form of JavaScript with it's additional features, like interfaces. But if you want to write in a different flavour of
 JavaScript because that's what you know best then you can.
 
