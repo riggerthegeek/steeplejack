@@ -10,7 +10,7 @@ import {EventEmitter} from "events";
 
 
 /* Third-party modules */
-import {data as datatypes} from "datautils";
+import {data as datatypes, validation} from "datautils";
 
 
 /* Files */
@@ -119,6 +119,16 @@ describe("Base class", function () {
             it("should expose the datautils.data object", function () {
 
                 expect(Base.datatypes).to.be.equal(datatypes);
+
+            });
+
+        });
+
+        describe("validation", function () {
+
+            it("should expose the datautils.validation object", function () {
+
+                expect(Base.validation).to.be.equal(validation);
 
             });
 
