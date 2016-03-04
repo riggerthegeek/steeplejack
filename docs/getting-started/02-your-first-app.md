@@ -54,7 +54,7 @@ app.run($config => {
 export {app};
 ```
 
-Start up the server with `node src/app` and go to [http://localhost:3000](http://localhost:3000). If it's running correctly, you ought
+Start up the server with `babel-node src/app` and go to [http://localhost:3000](http://localhost:3000). If it's running correctly, you ought
 to see:
 
 ```json
