@@ -2,7 +2,7 @@
 
 > This example is written in ES6. Steeplejack v2 allows your to write in any language that compiles to JavaScript.
 
-Let's create a simple RESTful application using [Restify](http://restify.com).  Create a folder in your project called `/src` and in it
+Let's create a simple RESTful application using [Restify](http://restify.com). Create a folder in your project called `/src` and in it
 the following files.
 
 ## /src/config.json
@@ -54,7 +54,7 @@ app.run($config => {
 export {app};
 ```
 
-Start up the server with `node src/app` and go to [http://localhost:3000](http://localhost:3000).  If it's running correctly, you ought
+Start up the server with `node src/app` and go to [http://localhost:3000](http://localhost:3000). If it's running correctly, you ought
 to see:
 
 ```json
