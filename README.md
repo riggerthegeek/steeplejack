@@ -65,9 +65,9 @@ deployment config.
 
 ## Data Modelling
 
-The Twelve Factor App is all about loose coupling to your attached resources. You might start by using MongoDB, but
-there will be a time when that isn't the best solution. If you're using something like Mongoose, you are tied-in to
-Mongo.
+The Twelve Factor App is all about loose coupling to your attached resources. You might start by using
+[MongoDB](https://www.mongodb.org/), but there will be a time when that isn't the best solution. If you're using something like
+[Mongoose](http://mongoosejs.com/), you are tied-in to MongoDB regardless.
 
 The data modelling in Steeplejack is all about the data - it doesn't care where you store it, if indeed anywhere. The
 data is designed to be used by your application and stored in a way you decide. If your model doesn't match your data
