@@ -18,7 +18,7 @@ import {EventEmitter} from "events";
 
 /* Third-party modules */
 import * as _ from "lodash";
-import {data as datatypes} from "datautils";
+import {data as datatypes, validation} from "datautils";
 
 
 /* Files */
@@ -119,6 +119,19 @@ export class Base extends EventEmitter {
      */
     public static extend (properties: Object = {}, staticProperties: Object = {}) : Function {
         return extender(this, properties, staticProperties);
+    }
+
+
+    /**
+     * Validation
+     *
+     * Returns the validation parameter from
+     * datautils package
+     *
+     * @returns {datautils.validation}
+     */
+    static get validation () {
+        return validation;
     }
 
 
