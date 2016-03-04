@@ -44,6 +44,6 @@ let app = Steeplejack.app({
 });
 ```
 
-**[PREVIOUS - Routing](03-routing.md)**
+**[PREVIOUS - Routing](routing.md)**
 
-**[NEXT - Config](05-config.md)**
+**[NEXT - Config](config.md)**

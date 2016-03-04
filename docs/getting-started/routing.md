@@ -47,6 +47,6 @@ It comes in from the dependency injector which we will cover shortly. When confi
 throughout your application. The function assigned to `exports.route` gets processed by the dependency injector, automatically resolving
 the dependency.
 
-**[PREVIOUS - Your First App](02-your-first-app.md)**
+**[PREVIOUS - Your First App](your-first-app.md)**
 
-**[NEXT - Modules](04-modules.md)**
+**[NEXT - Modules](modules.md)**

@@ -12,4 +12,4 @@ Create a new directory called `myapp`. In that directory, you’ll need to run t
 
 Now we have Steeplejack installed, let’s now look at creating your first app.
 
-**[NEXT - Your First App](02-your-first-app.md)**
+**[NEXT - Your First App](your-first-app.md)**
