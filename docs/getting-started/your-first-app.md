@@ -1,6 +1,10 @@
 # Your First App
 
-> This example is written in ES6. Steeplejack v2 allows your to write in any language that compiles to JavaScript.
+> Steeplejack v2 allows you to write in any language that compiles to JavaScript.
+>
+> This example is written in ES6 and will require transpiling with [Babel](http://babeljs.io/docs/setup/#babel_cli). It will require
+> the [ES2015](https://babeljs.io/docs/plugins/preset-es2015) preset and the
+> [Legacy Transform Decorators](https://www.npmjs.com/package/babel-plugin-transform-decorators-legacy) plugin to be configured.
 
 Let's create a simple RESTful application using [Restify](http://restify.com). Create a folder in your project called `/src` and in it
 the following files.
