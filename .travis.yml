@@ -1,4 +1,4 @@
-language: node_js
+# @todo language: node_js
 node_js:
 - 'node'
 - '4.3'
@@ -19,9 +19,7 @@ before_install:
 - date
 script:
 - npm run typings
-- grunt test
-- grunt stacktest
-- grunt codecoverage
+- grunt ci
 before_deploy:
 - grunt
 deploy:
