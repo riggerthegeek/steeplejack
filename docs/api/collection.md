@@ -60,93 +60,148 @@ _0th_.
 
 ### filter (properties: Object) => Collection
 
+Anything that matches is removed from the Collection. This is the opposite of [where](#where-properties-object--collection).
+
 ---
 
 ### find (properties: Object) => Model
+
+Similar to the [where](#where-properties-object--collection) method, except that returns the first Model that matches. This may mean that
+there are additional models that would match.
 
 ---
 
 ### findLast (properties: Object) => Model
 
+This reverses the [find](#find-properties-object--model) method, returning the final matching Model in the collection.
+
 ---
 
 ### getAll () => ICollectionData[]
+
+Returns the data array.
 
 ---
 
 ### getAllById (ids: string[]) => Model[]
 
+Gets all the Models that match the given ids in the array. These will be in the
+[UUID v4 format](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_.28random.29).
+
 ---
 
 ### getAllByKey (keys: number[]) => Model[]
+
+Get all the Models that match the given keys in the array. These will reflect the order of the Models, starting with the _0th_.
 
 ---
 
 ### getAllByModel (models: Model[]) => Model[]
 
+Gets all the Models that match the given Models in the array.
+
 ---
 
 ### getById (id: string) => Model
+
+Searches through the Collection for the given ID. This will be a
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_.28random.29).
 
 ---
 
 ### getByKey (key: number) => Model
 
+Searches through the Collection for the key.
+
 ---
 
 ### getByModel (model: Model) => Model
+
+Search through Collection for the Model.
 
 ---
 
 ### getCount () => Number
 
+Counts the number of Models in the Collection
+
 ---
 
-### getData () => Model[]
+### getData () => Object[]
+
+Returns the array of Models in order. This will return an array of objects.
 
 ---
 
 ### getIds () => string[]
 
+Returns all the IDs in order.
+
 ---
 
 ### getModel () => Object
+
+Gets the Model constructor.
 
 ---
 
 ### limit (limit: number, offset: number) => Collection
 
+Limits in the same way as MySQL limits.  The first is the limit, which is the maximum number of items we can keep.  The second is the
+offset, which is the number of items we pad.
+
+On a collection with 5 items, `limit(2, 2)` will only keep the data at position 2 and 3, dropping 0, 1 and 4 out.
+
 ---
 
 ### reset () => boolean
+
+Resets the collection back to it's original (empty) state.
 
 ---
 
 ### removeById (id: string) => boolean
 
+Removes the model by the ID
+
 ---
 
 ### removeByModel (removeModel: Model) => boolean
+
+Removes the given model
 
 ---
 
 ### sort (fn: (a: any, b: any) => number) => Collection
 
+Sort by the given sortation function. This works in the same way as the
+[Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) method.
+
 ---
 
 ### sortBy (properties: ISortProperty) => Collection
+
+This sorts by a key (or keys) in the model. The params should be an object, with the key as the key and the direction as the value.  The
+acceptable direction values are `"ASC"` or `"DESC"`.  This works in broadly the same way as MySQLs sorting.
 
 ---
 
 ### toDb () => Object[]
 
+Returns the database representation of the models in order.
+
 ---
 
 ### validate () => boolean
 
+Validates all the models in the Collection. If any of the Models have an error, it will aggregate them into one `ValidationError`
+
 ---
 
 ### where (properties: Object) => Collection
+
+Performs a where query on the Collection.  Removes anything that doesn't meet the criteria from the Collection. This is the opposite of
+[filter](#filter-properties-object--collection).
 
 ---
 
@@ -154,8 +209,8 @@ _0th_.
 
 ### toModels (data: Object[]) => Collection
 
-This converts an array of objects in the Model _data_ format - the same as returned by the [toDb]() method. This will return an instance
-of the Collection.
+This converts an array of objects in the Model _data_ format - the same as returned by the [toDb](#todb---object) method. This will
+return an instance of the Collection.
 
 ---
 

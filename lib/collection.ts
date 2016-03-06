@@ -469,8 +469,8 @@ export abstract class Collection extends Base {
      *
      * On a collection with 5 items, limit(2, 2) will
      * only keep the data at position 2 and 3, dropping
-     *
      * 0, 1 and 4 out.
+     *
      * @param {number} limit
      * @param {number} offset
      * @returns {Collection}
