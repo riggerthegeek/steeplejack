@@ -86,6 +86,14 @@ And if you're still writing your NodeJS in ES5, then Steeplejack makes your life
 classes have a little `.extend` static method on them to allow you to simplify
 [prototypical inheritance](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain).
 
+# Why's it called 'Steeplejack'?
+
+When I started thinking about a scaffolding project, I was watching a [Fred Dibnah](http://www.freddibnahheritagecentre.com) documentary.
+Fred was a great enthusiast of beautiful engineering. It struck me as a great metaphor for what I was trying to achieve. By trade, Fred
+was a steeplejack, so the name is a little nod to him.
+
+[![Fred Dibnah](http://img.youtube.com/vi/3R3-YwDZrzg/0.jpg)](http://www.youtube.com/watch?v=3R3-YwDZrzg)
+
 # License
 
 MIT License
