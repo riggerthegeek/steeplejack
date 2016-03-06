@@ -9,7 +9,7 @@
 
 
 /* Third-party modules */
-var request = require("supertest-as-promised");
+var request = require("supertest");
 
 
 /* Files */
@@ -19,26 +19,28 @@ describe("/user", function () {
 
     describe("GET", function () {
 
-        it("should reject a user with no auth header", function () {
+        it("should reject a user with no auth header", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .get("/user")
-                .expect(401);
+                .expect(401)
+                .end(done);
 
         });
 
-        it("should reject a user with an invalid auth header", function () {
+        it("should reject a user with an invalid auth header", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .get("/user")
                 .set("Authorization", "bearer invalid")
-                .expect(401);
+                .expect(401)
+                .end(done);
 
         });
 
-        it("should get the user data", function () {
+        it("should get the user data", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .get("/user")
                 .set("Authorization", "bearer valid")
                 .expect(200, {
@@ -46,7 +48,8 @@ describe("/user", function () {
                     firstName: "Test",
                     lastName: "Testington",
                     emailAddress: "test@test.com"
-                });
+                })
+                .end(done);
 
         });
 
@@ -54,26 +57,28 @@ describe("/user", function () {
 
     describe("POST", function () {
 
-        it("should reject if no auth header", function () {
+        it("should reject if no auth header", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .post("/user")
-                .expect(401);
+                .expect(401)
+                .end(done);
 
         });
 
-        it("should reject if invalid auth header", function () {
+        it("should reject if invalid auth header", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .post("/user")
                 .set("Authorization", "bearer invalid")
-                .expect(401);
+                .expect(401)
+                .end(done);
 
         });
 
-        it("should reject if no data", function () {
+        it("should reject if no data", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .post("/user")
                 .set("Authorization", "bearer valid")
                 .expect(400, {
@@ -93,13 +98,14 @@ describe("/user", function () {
                         }]
                     },
                     message: "Model validation error"
-                });
+                })
+                .end(done);
 
         });
 
-        it("should reject if invalid data", function () {
+        it("should reject if invalid data", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .post("/user")
                 .set("Authorization", "bearer valid")
                 .send({
@@ -116,13 +122,14 @@ describe("/user", function () {
                         }]
                     },
                     message: "Model validation error"
-                });
+                })
+                .end(done);
 
         });
 
-        it("should create a new user", function () {
+        it("should create a new user", function (done) {
 
-            return request(app.server.getServer())
+            request(app.server.getServer())
                 .post("/user")
                 .set("Authorization", "bearer valid")
                 .send({
@@ -135,7 +142,8 @@ describe("/user", function () {
                     firstName: "Jenson",
                     lastName: "Button",
                     emailAddress: "jenson@button.com"
-                });
+                })
+                .end(done);
 
         });
 
