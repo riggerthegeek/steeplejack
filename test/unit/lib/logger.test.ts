@@ -45,23 +45,6 @@ describe("Logger test", function () {
 
         });
 
-        describe("#getLogLevels", function () {
-
-            it("should return the logging levels", function () {
-
-                expect(obj.getLogLevels()).to.be.eql([
-                    "fatal",
-                    "error",
-                    "warn",
-                    "info",
-                    "debug",
-                    "trace"
-                ]);
-
-            });
-
-        });
-
         describe("#setLevel", function () {
 
             it("should default the level to error when not set", function () {
@@ -72,7 +55,7 @@ describe("Logger test", function () {
 
             it("should allow a string to be set", function () {
 
-                obj.getLogLevels().forEach((level:string) => {
+                Logger.getLogLevels().forEach((level:string) => {
 
                     obj.level = level;
 
@@ -175,6 +158,27 @@ describe("Logger test", function () {
 
                 expect(strategy.trace).to.be.calledOnce
                     .calledWithExactly("message");
+
+            });
+
+        });
+
+    });
+
+    describe("Static method", function () {
+
+        describe("#getLogLevels", function () {
+
+            it("should return the logging levels", function () {
+
+                expect(Logger.getLogLevels()).to.be.eql([
+                    "fatal",
+                    "error",
+                    "warn",
+                    "info",
+                    "debug",
+                    "trace"
+                ]);
 
             });
 
