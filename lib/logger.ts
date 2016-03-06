@@ -87,11 +87,11 @@ export class Logger extends Base {
      * triggered when there's no way of recovering
      * without human input.
      *
-     * @param {string} message
+     * @param {*[]} args
      * @returns {Logger}
      */
-    public fatal (message: string) : Logger {
-        this.strategy.fatal(message);
+    public fatal (...args: any[]) : Logger {
+        this.strategy.fatal(...args);
         return this;
     }
 
@@ -99,11 +99,11 @@ export class Logger extends Base {
     /**
      * Error
      *
-     * @param {string} message
+     * @param {*[]} args
      * @returns {Logger}
      */
-    public error (message: string) : Logger {
-        this.strategy.error(message);
+    public error (...args: any[]) : Logger {
+        this.strategy.error(...args);
         return this;
     }
 
@@ -111,11 +111,11 @@ export class Logger extends Base {
     /**
      * Warn
      *
-     * @param {string} message
+     * @param {*[]} args
      * @returns {Logger}
      */
-    public warn (message: string) : Logger {
-        this.strategy.warn(message);
+    public warn (...args: any[]) : Logger {
+        this.strategy.warn(...args);
         return this;
     }
 
@@ -123,11 +123,11 @@ export class Logger extends Base {
     /**
      * Info
      *
-     * @param {string} message
+     * @param {*[]} args
      * @returns {Logger}
      */
-    public info (message: string) : Logger {
-        this.strategy.info(message);
+    public info (...args: any[]) : Logger {
+        this.strategy.info(...args);
         return this;
     }
 
@@ -135,11 +135,11 @@ export class Logger extends Base {
     /**
      * Debug
      *
-     * @param {string} message
+     * @param {*[]} args
      * @returns {Logger}
      */
-    public debug (message: string) : Logger {
-        this.strategy.debug(message);
+    public debug (...args: any[]) : Logger {
+        this.strategy.debug(...args);
         return this;
     }
 
@@ -151,11 +151,11 @@ export class Logger extends Base {
      * sort of thing to be used when we're marking
      * databases queries and such-like.
      *
-     * @param {string} message
+     * @param {*[]} args
      * @returns {Logger}
      */
-    public trace (message: string) : Logger {
-        this.strategy.trace(message);
+    public trace (...args: any[]) : Logger {
+        this.strategy.trace(...args);
         return this;
     }
 
