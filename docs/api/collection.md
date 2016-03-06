@@ -2,7 +2,7 @@
 
 A Collection is simply a series of [Model instances](model.md) - if a Model is a single object of data then a Collection is an array of
 those object. If you were to define a `Person` model to represent one person, then the Collection may be called `People` to represent
-many `Person` Models. At the very minimum, you must define the Model (see [Usage](#Usage)) the Collection is using. You can also add any
+many `Person` Models. At the very minimum, you must define the Model (see [Usage](0uUsage)) the Collection is using. You can also add any
 number of additional methods to your Collections.
 
 This is an [abstract class](https://en.wikipedia.org/wiki/Abstract_type), meaning it cannot be instantiated directly - this only applies to
@@ -18,7 +18,7 @@ import {Collection} from "steeplejack/lib/collection";
 
 ### constructor (data: Object[]) => void
 
-Creates a new instance of the collection. All data gets sent to the [add]() method.
+Creates a new instance of the collection. All data gets sent to the [add](#add-data-object--collection) method.
 
 ---
 
@@ -28,7 +28,7 @@ Adds each object in the array to the collection. Dispatches to the [addOne]() me
 
 ---
 
-### method (data: Object) => Collection
+### addOne (data: Object) => Collection
 
 Adds a single data object to the collection. If it's already an instance of the Model defined in the protected `_model` method, it will just
 add it. If not, it will create an instance of the Model with the data object sent to it.
