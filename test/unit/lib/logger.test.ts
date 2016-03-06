@@ -89,10 +89,12 @@ describe("Logger test", function () {
 
             it("should send a fatal message", function () {
 
-                expect(obj.fatal("message")).to.be.equal(obj);
+                let err = new Error("This is an error");
+
+                expect(obj.fatal("message", err, 2)).to.be.equal(obj);
 
                 expect(strategy.fatal).to.be.calledOnce
-                    .calledWithExactly("message");
+                    .calledWithExactly("message", err, 2);
 
             });
 
@@ -102,10 +104,12 @@ describe("Logger test", function () {
 
             it("should send a error message", function () {
 
-                expect(obj.error("message")).to.be.equal(obj);
+                let err = new Error("This is an error");
+
+                expect(obj.error("message", err, 3)).to.be.equal(obj);
 
                 expect(strategy.error).to.be.calledOnce
-                    .calledWithExactly("message");
+                    .calledWithExactly("message", err, 3);
 
             });
 
@@ -115,10 +119,12 @@ describe("Logger test", function () {
 
             it("should send a warn message", function () {
 
-                expect(obj.warn("message")).to.be.equal(obj);
+                let err = new Error("This is an error");
+
+                expect(obj.warn("message", err, 4)).to.be.equal(obj);
 
                 expect(strategy.warn).to.be.calledOnce
-                    .calledWithExactly("message");
+                    .calledWithExactly("message", err, 4);
 
             });
 
@@ -128,10 +134,12 @@ describe("Logger test", function () {
 
             it("should send an info message", function () {
 
-                expect(obj.info("message")).to.be.equal(obj);
+                let err = new Error("This is an error");
+
+                expect(obj.info("message", err, 5)).to.be.equal(obj);
 
                 expect(strategy.info).to.be.calledOnce
-                    .calledWithExactly("message");
+                    .calledWithExactly("message", err, 5);
 
             });
 
@@ -141,10 +149,12 @@ describe("Logger test", function () {
 
             it("should send a debug message", function () {
 
-                expect(obj.debug("message")).to.be.equal(obj);
+                let err = new Error("This is an error");
+
+                expect(obj.debug("message", err, 6)).to.be.equal(obj);
 
                 expect(strategy.debug).to.be.calledOnce
-                    .calledWithExactly("message");
+                    .calledWithExactly("message", err, 6);
 
             });
 
@@ -154,10 +164,12 @@ describe("Logger test", function () {
 
             it("should send a trace message", function () {
 
-                expect(obj.trace("message")).to.be.equal(obj);
+                let err = new Error("This is an error");
+
+                expect(obj.trace("message", err, 7)).to.be.equal(obj);
 
                 expect(strategy.trace).to.be.calledOnce
-                    .calledWithExactly("message");
+                    .calledWithExactly("message", err, 7);
 
             });
 
