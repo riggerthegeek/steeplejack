@@ -410,6 +410,13 @@ module.exports = function (grunt) {
     ]);
 
 
+    grunt.registerTask("ci", "Runs the continuous integration tests", [
+        "test",
+        "stacktest",
+        "codecoverage"
+    ]);
+
+
     grunt.registerTask("compile", "Compiles the public application", [
         "ts:src"
     ]);

@@ -19,9 +19,7 @@ before_install:
 - date
 script:
 - npm run typings
-- grunt test
-- grunt stacktest
-- grunt codecoverage
+- grunt ci
 before_deploy:
 - grunt
 deploy:
