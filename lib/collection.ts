@@ -45,9 +45,9 @@ export abstract class Collection extends Base {
      *
      * Adds the data to the collection
      *
-     * @param {any[]} data
+     * @param {Object[]} data
      */
-    public constructor (data: any[] = null) {
+    public constructor (data: Object[] = null) {
 
         super();
 
@@ -62,10 +62,10 @@ export abstract class Collection extends Base {
      *
      * Adds in the data to the collection
      *
-     * @param {any[]} data
+     * @param {Object[]} data
      * @returns {Collection}
      */
-    public add (data: any[] = null) : Collection {
+    public add (data: Object[] = null) : Collection {
 
         /* Ensure we've got an array */
         if (_.isArray(data)) {
