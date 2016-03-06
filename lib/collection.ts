@@ -766,10 +766,10 @@ export abstract class Collection extends Base {
      * can be used to convert a data store result into
      * a collection of models
      *
-     * @param {any[]} data
+     * @param {Object[]} data
      * @returns {Collection}
      */
-    public static toModels(data : any[] = null) : Collection {
+    public static toModels(data : Object[] = null) : Collection {
 
         /* Create a new instance of this collection with default data */
         let collection = Object.create(this.prototype);
