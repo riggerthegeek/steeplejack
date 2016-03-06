@@ -1,7 +1,7 @@
 # Base
 
-**Extends:** [EventEmitter](https://nodejs.org/api/events.html)
-**Import:** `steeplejack/lib/base`
+- **Extends:** [EventEmitter](https://nodejs.org/api/events.html)
+- **Import:** `steeplejack/lib/base`
 
 The Base class is at the heart of every Steeplejack class to provide a consistent foundation. If you are still using ES5, this simplifies
 prototypical inheritance with the `extend` static method.
