@@ -24,7 +24,7 @@ Creates a new instance of the collection. All data gets sent to the [add](#add-d
 
 ### add (data: Object[]) => Collection
 
-Adds each object in the array to the collection. Dispatches to the [addOne]() method.
+Adds each object in the array to the collection. Dispatches to the [addOne](#addone-data-object--collection) method.
 
 ---
 
