@@ -32,7 +32,7 @@ If `factory` is `true`, you must set your dependencies in this array.
 @Inject({
     name: "childClass"
 })
-class Child extends Base {
+class Child {
 
     constructor (dep1, dep2) {}
 
@@ -50,7 +50,7 @@ class Child extends Base {
         "dep2",
     ]
 })
-class Child extends Base {
+class Child {
 
     constructor (_dep1, _dep2) {}
 
@@ -69,7 +69,7 @@ class Child extends Base {
         "dep2",
     ]
 })
-class Child extends Base {
+class Child {
 
     constructor () {
         console.log(Child.dep1);
