@@ -42,26 +42,6 @@ export class Logger extends Base {
 
 
     /**
-     * Get Log Levels
-     *
-     * Gets the available logging levels. This is
-     * in order, from most to least severe.
-     *
-     * @returns {string[]}
-     */
-    public getLogLevels () : string[] {
-        return [
-            "fatal",
-            "error",
-            "warn",
-            "info",
-            "debug",
-            "trace"
-        ];
-    }
-
-
-    /**
      * Level
      *
      * Gets the logging level
@@ -83,7 +63,7 @@ export class Logger extends Base {
      */
     public set level (level: string) {
 
-        let logLevel = this.getLogLevels();
+        let logLevel = Logger.getLogLevels();
 
         /* Set the log level if valid */
         if (_.indexOf(logLevel, level) !== -1) {
@@ -110,7 +90,7 @@ export class Logger extends Base {
      * @param {string} message
      * @returns {Logger}
      */
-    fatal (message: string) : Logger {
+    public fatal (message: string) : Logger {
         this.strategy.fatal(message);
         return this;
     }
@@ -122,7 +102,7 @@ export class Logger extends Base {
      * @param {string} message
      * @returns {Logger}
      */
-    error (message: string) : Logger {
+    public error (message: string) : Logger {
         this.strategy.error(message);
         return this;
     }
@@ -134,7 +114,7 @@ export class Logger extends Base {
      * @param {string} message
      * @returns {Logger}
      */
-    warn (message: string) : Logger {
+    public warn (message: string) : Logger {
         this.strategy.warn(message);
         return this;
     }
@@ -146,7 +126,7 @@ export class Logger extends Base {
      * @param {string} message
      * @returns {Logger}
      */
-    info (message: string) : Logger {
+    public info (message: string) : Logger {
         this.strategy.info(message);
         return this;
     }
@@ -158,7 +138,7 @@ export class Logger extends Base {
      * @param {string} message
      * @returns {Logger}
      */
-    debug (message: string) : Logger {
+    public debug (message: string) : Logger {
         this.strategy.debug(message);
         return this;
     }
@@ -174,9 +154,29 @@ export class Logger extends Base {
      * @param {string} message
      * @returns {Logger}
      */
-    trace (message: string) : Logger {
+    public trace (message: string) : Logger {
         this.strategy.trace(message);
         return this;
+    }
+
+
+    /**
+     * Get Log Levels
+     *
+     * Gets the available logging levels. This is
+     * in order, from most to least severe.
+     *
+     * @returns {string[]}
+     */
+    public static getLogLevels () : string[] {
+        return [
+            "fatal",
+            "error",
+            "warn",
+            "info",
+            "debug",
+            "trace"
+        ];
     }
 
 
