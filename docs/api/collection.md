@@ -38,7 +38,7 @@ add it. If not, it will create an instance of the Model with the data object sen
 ### each (iterator: Function, thisArg: Object) => Collection
 
 Cycles through each model in the collection and runs the iterator function on it. The `thisArg` is for ES5 compatibility, which sets the
-scope of the iterator function.
+scope of the iterator function. The order starts with the _0th_ model and ends with the last.
 
 ```javascript
 obj.each((model, id, collection) => {
@@ -51,11 +51,111 @@ obj.each((model, id, collection) => {
 
 ---
 
+### eachRight (iterator: Function, thisArg: Object) => Collection
+
+Identical to [each](#each-iterator-function-thisarg-object--collection) method, except that it starts with the last model and ends with the
+_0th_.
+
+---
+
+### filter (properties: Object) => Collection
+
+---
+
+### find (properties: Object) => Model
+
+---
+
+### findLast (properties: Object) => Model
+
+---
+
+### getAll () => ICollectionData[]
+
+---
+
+### getAllById (ids: string[]) => Model[]
+
+---
+
+### getAllByKey (keys: number[]) => Model[]
+
+---
+
+### getAllByModel (models: Model[]) => Model[]
+
+---
+
+### getById (id: string) => Model
+
+---
+
+### getByKey (key: number) => Model
+
+---
+
+### getByModel (model: Model) => Model
+
+---
+
+### getCount () => Number
+
+---
+
+### getData () => Model[]
+
+---
+
+### getIds () => string[]
+
+---
+
+### getModel () => Object
+
+---
+
+### limit (limit: number, offset: number) => Collection
+
+---
+
+### reset () => boolean
+
+---
+
+### removeById (id: string) => boolean
+
+---
+
+### removeByModel (removeModel: Model) => boolean
+
+---
+
+### sort (fn: (a: any, b: any) => number) => Collection
+
+---
+
+### sortBy (properties: ISortProperty) => Collection
+
+---
+
+### toDb () => Object[]
+
+---
+
+### validate () => boolean
+
+---
+
+### where (properties: Object) => Collection
+
+---
+
 ## Static Methods
 
-### toModels (data: Object[]) => string[]
+### toModels (data: Object[]) => Collection
 
-
+This converts an array of objects in the Model _data_ format - the same as returned by the [toDb]() method. This will return an instance
+of the Collection.
 
 ---
 
