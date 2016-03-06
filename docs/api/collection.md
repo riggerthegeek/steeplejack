@@ -2,7 +2,7 @@
 
 A Collection is simply a series of [Model instances](model.md) - if a Model is a single object of data then a Collection is an array of
 those object. If you were to define a `Person` model to represent one person, then the Collection may be called `People` to represent
-many `Person` Models. At the very minimum, you must define the Model (see [Usage](0uUsage)) the Collection is using. You can also add any
+many `Person` Models. At the very minimum, you must define the Model (see [Usage](#usage)) the Collection is using. You can also add any
 number of additional methods to your Collections.
 
 This is an [abstract class](https://en.wikipedia.org/wiki/Abstract_type), meaning it cannot be instantiated directly - this only applies to
