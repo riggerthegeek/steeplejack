@@ -28,17 +28,19 @@ Clones the instance of the object, returning a new instance of this object but w
 
 ## Static Methods
 
-### datatypes
-
-Returns the data parameter from the [datautils](https://github.com/riggerthegeek/datautils-js) package
-
----
-
 ### extend (properties: Object, staticProperties: Object) => Function
 
 This is a polyfill for ES5. Modern compiled JavaScript languages have a `class` sugar which simplifies extending. ES5 doesn't have this
 feature so this is there to simplify it.  The first object is your prototypical methods, the second being your static methods. If you provide
 a `__construct` object on your prototypical methods object, this will be called when the class is invoked.
+
+---
+
+## Static Properties
+
+### datatypes
+
+Returns the data parameter from the [datautils](https://github.com/riggerthegeek/datautils-js) package
 
 ---
 

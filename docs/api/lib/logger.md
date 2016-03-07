@@ -16,12 +16,6 @@ Sets the logging strategy to use.
 
 ---
 
-### level => string
-
-Setter and getter of the error level - below that level, logs are not stored. Must be one of `getLogLevel` array.
-
----
-
 ### debug (...args: any[]) => Logger
 
 Log the message at the debug level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should
@@ -61,6 +55,14 @@ Log the message at the trace level. Any number of arguments can be passed, depen
 
 Log the message at the warn level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should
                                  be an error message.
+
+---
+
+## Properties
+
+### level => string
+
+Setter and getter of the error level - below that level, logs are not stored. Must be one of `getLogLevel` array.
 
 ---
 
