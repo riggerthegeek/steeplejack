@@ -93,7 +93,7 @@ function UserStore ($poolGrabber, $SQLiteResource) {
 
 
 /* Defines the public output */
-exports.__factory = {
+export let __factory = {
     name: name,
     factory: UserStore
 };

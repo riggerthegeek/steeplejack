@@ -23,7 +23,7 @@ let SQLite3 = sqlite3.verbose();
 
 
 /* Defines the public output */
-exports.__factory = {
+export let __factory = {
     name: "$SQLiteResource",
     factory: ($config) => {
 

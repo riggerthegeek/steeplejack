@@ -22,7 +22,7 @@ const name = "$userController";
  The factory function - any arguments are processed
  through the IOC container
  */
-function UserController ($userStore, UserModel) {
+function UserController (spankStore, spankModel) {
 
 
     return class Controller {
@@ -30,14 +30,14 @@ function UserController ($userStore, UserModel) {
 
         static createUser (data) {
 
-            var user = new UserModel(data);
+            var user = new spankModel(data);
 
             user.validate();
 
-            return $userStore.createUser(user.toDb())
+            return spankStore.createUser(user.toDb())
                 .then((result) => {
 
-                    return UserModel.toModel(result);
+                    return spankModel.toModel(result);
 
                 });
 
@@ -46,10 +46,10 @@ function UserController ($userStore, UserModel) {
 
         static getUser (userId) {
 
-            return $userStore.getUserById(userId)
+            return spankStore.getUserById(userId)
                 .then((result) => {
 
-                    return UserModel.toModel(result);
+                    return spankModel.toModel(result);
 
                 });
 
@@ -63,7 +63,7 @@ function UserController ($userStore, UserModel) {
 
 
 /* Defines the public output */
-exports.__factory = {
-    name: name,
-    factory: UserController
+export let __factory = {
+    name,
+    factory: ["$userStore", "UserModel", UserController]
 };
