@@ -74,7 +74,7 @@ class MyClass {
 ### The class constructor registered with some dependencies
 
 If you want a class constructor with some dependencies, you'll need to define them in the `deps` array. This will register `MySecondClass`
-to the injector and it will have `MyClass` and `dep2` as dependencies. These dependencies are set
+to the injector and it will have `MyClass` and `dep2` as dependencies. These dependencies are set as static methods on the class.
 
 ```javascript
 import {Inject} from "steeplejack/decorators/inject";
@@ -90,6 +90,9 @@ import {Inject} from "steeplejack/decorators/inject";
 class MySecondClass {
 
     constructor (obj) {
+        MySecondClass.MyClass; // The MyClass dependency
+        MySecondClass.dep2; // The dep2 dependency
+        obj; // Whatever is sent through when invoking
     }
 
 }
