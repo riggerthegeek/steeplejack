@@ -26,35 +26,35 @@ be an error message.
 ### error (...args: any[]) => Logger
 
 Log the message at the error level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should
-                                  be an error message.
+be an error message.
 
 ---
 
 ### fatal (...args: any[]) => Logger
 
 Log the message at the fatal level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should
-                                  be an error message.
+be an error message.
 
 ---
 
 ### info (...args: any[]) => Logger
 
 Log the message at the info level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should
-                                 be an error message.
+be an error message.
 
 ---
 
 ### trace (...args: any[]) => Logger
 
 Log the message at the trace level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should
-                                  be an error message.
+be an error message.
 
 ---
 
 ### warn (...args: any[]) => Logger
 
 Log the message at the warn level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should
-                                 be an error message.
+be an error message.
 
 ---
 
