@@ -32,8 +32,8 @@ var config = function ($config) {
 
 };
 
-exports.__singleton = {
+exports.__config = {
     name: name,
-    singleton: singleton
+    config: config
 };
 ```
