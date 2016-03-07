@@ -26,7 +26,7 @@ If `factory` is `true`, you must set your dependencies in this array.
 
 ## Usage
 
-### Basica
+### Basic usage
 
 > This will store an instance of this class in the injector under the name `childClass` with two dependencies, `dep1` and `dep2`.
 
