@@ -20,3 +20,10 @@ class People extends Collection {
 
 }
 ```
+
+## Column names
+
+Have a look at the [Model section](model.md#column-names) first.
+
+To convert an array of database representations, use the `toModels` static method. You can convert your Collection back to a plain array
+by using the `toDb` method.

@@ -11,5 +11,8 @@ You could use tools like [Mongoose](http://mongoosejs.com) as your data modeller
 to. Mongoose is logically connected to a MongoDB - using the Steeplejack models do not imply any database connection. This means that the
 model won't need to change if you change the data store.
 
+Also, there may not be 1:1 parity between what's stored in your database and what you want in your business logic. This easily maps the
+object name names across between the two representations.
+
  - [Model](model.md)
  - [Collection](collection.md)
