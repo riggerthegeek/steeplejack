@@ -26,6 +26,8 @@ If `factory` is `true`, you must set your dependencies in this array.
 
 ## Usage
 
+### Basica
+
 > This will store an instance of this class in the injector under the name `childClass` with two dependencies, `dep1` and `dep2`.
 
 ```javascript
@@ -38,6 +40,8 @@ class Child {
 
 }
 ```
+
+### Specified dependencies
 
 > This will an instance of thisclass in the injector under the name `childClass`. Again, the dependencies called will by `dep1` and `dep2`,
 > but they will be referred to internally as `_dep1` and `_dep2`.
@@ -56,6 +60,8 @@ class Child {
 
 }
 ```
+
+### Exporting the constructor
 
 > This is a factory method, meaning it can be called with `new ChildClass()`. The two dependencies are `dep1` and `dep2` and set as static
 > methods on the class.
