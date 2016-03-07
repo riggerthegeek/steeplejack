@@ -33,7 +33,7 @@ Factory Injector do the same job - use the Class injector if you can and these s
 
  - [Class Injector](class-injector.md)
     - [Factory Injector](factory-injector.md)
- - [Config Injector](config-injector.md)
  - [Singleton Injector](singleton-injector.md)
+ - [Config Injector](config-injector.md)
 
 That's it. Simple eh?
