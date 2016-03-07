@@ -37,3 +37,10 @@ Factory Injector do the same job - use the Class injector if you can and these s
  - [Config Injector](config-injector.md)
 
 That's it. Simple eh?
+
+## Automatically registered depdendencies
+
+These dependencies are always registered:
+
+ - `$config`: this is the main config object which is resolved from the environment variable and command line arguments.
+ - `$output`: the is the function that you can use to output to the web. This is defined in [Server.outputHandler](../api/lib/server.md)
