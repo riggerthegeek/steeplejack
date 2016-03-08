@@ -14,49 +14,33 @@
 /* Files */
 
 
-export let route = ($userController: any, $output: any) => {
+export let route = ($userController: any) => {
 
     return {
 
         "/": {
 
             get: [
-                (req: any, res: any, next: () => void) => {
+                ({request}) => {
 
                     /* Simulate a valid bearer token */
-                    if (req.headers.authorization !== "bearer valid") {
-                        res.send(401);
-                        return;
+                    if (request.headers.authorization !== "bearer valid") {
+                        return 401;
                     }
 
-                    next();
-
-                },
-                (req: any, res: any) => {
-
-                    $output(req, res, () => {
-                        return $userController.getUser("1");
-                    });
+                    return $userController.getUser("1");
 
                 }
             ],
 
             post: [
-                (req: any, res: any, next: () => void) => {
-
+                ({request}) => {
                     /* Simulate a valid bearer token */
-                    if (req.headers.authorization !== "bearer valid") {
-                        res.send(401);
-                        return;
+                    if (request.headers.authorization !== "bearer valid") {
+                        return 401;
                     }
 
-                    next();
-
-                },
-                (req: any, res: any) => {
-                    $output(req, res, () => {
-                        return $userController.createUser(req.body);
-                    });
+                    return $userController.createUser(request.body);
                 }
             ]
 

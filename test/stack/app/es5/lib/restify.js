@@ -33,7 +33,30 @@ exports.Restify = Base.extend({
 
     addRoute: function (httpMethod, route, fn) {
 
-        this._inst[httpMethod.toLowerCase()](route, fn);
+        var self = this;
+
+        self._inst[httpMethod.toLowerCase()](route, function (request, response) {
+
+            let tasks = _.map(fn, function (task) {
+
+                return Bluebird.try(function () {
+                    return task({
+                        request: request,
+                        response: response
+                    });
+                });
+
+            });
+
+            Bluebird.reduce(tasks, function () {})
+                .then(function (result) {
+                    self.outputHandler(null, result, request, response);
+                })
+                .catch(function (err) {
+                    self.outputHandler(err, null, request, response);
+                });
+
+        });
 
     },
 
@@ -66,7 +89,9 @@ exports.Restify = Base.extend({
         if (err) {
 
             /* Convert to a Restify error and process */
-            if (err instanceof restify.RestError) {
+            if (err > 100 && err < 600) {
+                statusCode = err;
+            } else if (err instanceof restify.RestError) {
 
                 /* Already a RestError - use it */
                 statusCode = err.statusCode;
@@ -96,7 +121,9 @@ exports.Restify = Base.extend({
         } else if (data) {
 
             /* Success */
-            if (_.isFunction(data.getData)) {
+            if (data > 100 && data < 600) {
+                statusCode = data;
+            } else if (_.isFunction(data.getData)) {
                 output = data.getData();
             } else {
                 output = data;

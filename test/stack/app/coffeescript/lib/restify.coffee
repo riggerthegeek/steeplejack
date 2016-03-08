@@ -31,7 +31,21 @@ exports.Restify = class Restify
 
 
     addRoute: (httpMethod, route, fn) ->
-        @_inst[httpMethod.toLowerCase()] route, fn
+        @_inst[httpMethod.toLowerCase()] route, (request, response) =>
+
+            tasks = _.map fn, (task) =>
+
+                Bluebird.try =>
+                    task
+                        request: request
+                        response: response
+
+            promise = Bluebird.reduce tasks, ->
+
+            promise.then (result) =>
+                @outputHandler null, result, request, response
+            .catch (err) =>
+                @outputHandler err, null, request, response
 
 
     bodyParser: ->
@@ -58,7 +72,9 @@ exports.Restify = class Restify
         if err
 
             # Convert to a Restify error and process
-            if err instanceof restify.RestError
+            if err > 100 && err < 600
+                statusCode = err
+            else if err instanceof restify.RestError
 
                 # Already a RestError - use it
                 statusCode = err.statusCode
@@ -85,7 +101,9 @@ exports.Restify = class Restify
         else if data
 
             # Success
-            if _.isFunction data.getData
+            if data > 100 && data < 600
+                statusCode = data
+            else if _.isFunction data.getData
                 output = data.getData()
             else
                 output = data

@@ -22,42 +22,26 @@ export let route = ($userController, $output) => {
         "/": {
 
             get: [
-                (req, res, next) => {
+                ({request}) => {
 
                     /* Simulate a valid bearer token */
-                    if (req.headers.authorization !== "bearer valid") {
-                        res.send(401);
-                        return;
+                    if (request.headers.authorization !== "bearer valid") {
+                        return 401;
                     }
 
-                    next();
-
-                },
-                (req, res) => {
-
-                    $output(req, res, () => {
-                        return $userController.getUser("1");
-                    });
+                    return $userController.getUser("1");
 
                 }
             ],
 
             post: [
-                (req, res, next) => {
-
+                ({request}) => {
                     /* Simulate a valid bearer token */
-                    if (req.headers.authorization !== "bearer valid") {
-                        res.send(401);
-                        return;
+                    if (request.headers.authorization !== "bearer valid") {
+                        return 401;
                     }
 
-                    next();
-
-                },
-                (req, res) => {
-                    $output(req, res, () => {
-                        return $userController.createUser(req.body);
-                    });
+                    return $userController.createUser(request.body);
                 }
             ]
 
