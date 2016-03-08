@@ -570,8 +570,7 @@ describe("Steeplejack test", function () {
                     .calledWithExactly(createServer)
                     .calledWithExactly("routeFn");
 
-                expect(this.registerSingleton).to.be.calledThrice
-                    .calledWithExactly("$server", this.server)
+                expect(this.registerSingleton).to.be.calledTwice
                     .calledWithExactly(this.modules.module2.__singleton.name, this.modules.module2.__singleton.singleton)
                     .calledWith(this.modules.module3.__config.name);
 
@@ -631,8 +630,7 @@ describe("Steeplejack test", function () {
                     .calledWithExactly(createServer)
                     .calledWithExactly("routeFn");
 
-                expect(this.registerSingleton).to.be.calledThrice
-                    .calledWithExactly("$server", this.server)
+                expect(this.registerSingleton).to.be.calledTwice
                     .calledWithExactly(this.modules.module2.__singleton.name, this.modules.module2.__singleton.singleton)
                     .calledWith(this.modules.module3.__config.name);
 
@@ -708,9 +706,6 @@ describe("Steeplejack test", function () {
 
                 expect(this.registerFactory).to.not.be.called;
 
-                expect(this.registerSingleton).to.be.calledOnce
-                    .calledWithExactly("$server", this.server);
-
             });
 
             it("should ignore when unknown register module passed in - plugin", function () {
@@ -732,9 +727,6 @@ describe("Steeplejack test", function () {
                 this.obj.run(createServer);
 
                 expect(this.registerFactory).to.not.be.called;
-
-                expect(this.registerSingleton).to.be.calledOnce
-                    .calledWithExactly("$server", this.server);
 
             });
 

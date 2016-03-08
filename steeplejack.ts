@@ -483,9 +483,6 @@ export class Steeplejack extends Base {
         /* Run the server factory through the injector */
         this.server = this.injector.process(factory);
 
-        /* Register the server to the injector */
-        this.injector.registerSingleton("$server", this.server);
-
         /* Create the outputHandler and register to injector if not already done */
         if (this.injector.getComponent(this._outputHandlerName) === null) {
             this.createOutputHandler(this.server);
