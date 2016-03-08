@@ -31,21 +31,7 @@ exports.Restify = class Restify
 
 
     addRoute: (httpMethod, route, fn) ->
-        @_inst[httpMethod.toLowerCase()] route, (request, response) =>
-
-            tasks = _.map fn, (task) =>
-
-                Bluebird.try =>
-                    task
-                        request: request
-                        response: response
-
-            promise = Bluebird.reduce tasks, ->
-
-            promise.then (result) =>
-                @outputHandler null, result, request, response
-            .catch (err) =>
-                @outputHandler err, null, request, response
+        @_inst[httpMethod.toLowerCase()] route, fn
 
 
     bodyParser: ->

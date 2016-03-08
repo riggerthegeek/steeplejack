@@ -34,28 +34,7 @@ export class Restify {
 
 
     addRoute (httpMethod, route, fn) {
-        this._inst[httpMethod.toLowerCase()](route, (request, response) => {
-
-            let tasks = _.map(fn, task => {
-
-                return Bluebird.try(() => {
-                    return task({
-                        request,
-                        response
-                    });
-                });
-
-            });
-
-            Bluebird.reduce(tasks, () => {})
-                .then(result => {
-                    this.outputHandler(null, result, request, response);
-                })
-                .catch(err => {
-                    this.outputHandler(err, null, request, response);
-                });
-
-        });
+        this._inst[httpMethod.toLowerCase()](route, fn);
     }
 
 
