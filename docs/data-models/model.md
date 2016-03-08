@@ -101,7 +101,7 @@ If your type is `enum`, this allows you to set the allowed values.
 An object of anything you want. This allows you to store any meta information about your entry.
 
 ---
-
+j
 ## Validation
 
 Once you've defined your model, you might want to validate your data. The Steeplejack validation is very flexible. For the most part, you
@@ -132,9 +132,9 @@ obj1.getData();
 
 ```json
 {
-    id: 1,
-    firstName: "Test",
-    lastName: "Testington"
+    "id": 1,
+    "firstName": "Test",
+    "lastName": "Testington"
 }
 ```
 
@@ -156,9 +156,9 @@ obj2.toDb();
 
 ```json
 {
-    id: 1,
-    firstName: "Test",
-    surname: "Testington"
+    "id": 1,
+    "firstName": "Test",
+    "surname": "Testington"
 }
 ```
 
