@@ -1,3 +1,4 @@
+import {IncomingMessage} from "http";
 /**
  * Server
  *
@@ -22,6 +23,7 @@ import {Base} from "./base";
 import {IAddRoutes} from "../interfaces/addRoutes";
 import {IServerOptions} from "../interfaces/serverOptions";
 import {IServerStrategy} from "../interfaces/serverStrategy";
+import {ServerResponse} from "http";
 
 
 export class Server extends Base {
@@ -94,6 +96,64 @@ export class Server extends Base {
 
 
     /**
+     * Set Route
+     *
+     * Sets the route to the server strategy. This makes
+     * the routes an array of promises. If your route file
+     * uses a function, whatever is returned is sent as
+     * the response.
+     *
+     * If you decide to use an array of functions then only
+     * the result of the final function is sent to the
+     * response.
+     *
+     * @param {string} httpMethod
+     * @param {string} route
+     * @param {Function[]} routeFn
+     * @private
+     */
+    protected _setRoute (httpMethod: string, route: string, routeFn: Function[]) {
+
+        this._strategy.addRoute(httpMethod, route, (request: Object, response: Object) => {
+
+            this.outputHandler(request, response, () => {
+
+                /* Promisify the individual task */
+                let tasks: Promise<{}>[] = _.map(routeFn, (task: Function) => {
+
+                    return new Promise((resolve: Function, reject: Function) => {
+
+                        try {
+
+                            let result: any = task({
+                                request,
+                                response
+                            });
+
+                            resolve(result);
+
+                        } catch (err) {
+                            reject(err);
+                        }
+
+                    });
+
+                });
+
+                /* Run as Promise.all and only output the final result */
+                return Promise.all(tasks)
+                    .then((result: any[]) => {
+                        return _.last(result);
+                    });
+
+            });
+
+        });
+
+    }
+
+
+    /**
      * Accept Parser
      *
      * Makes the server use the accept parse.  If
@@ -125,6 +185,9 @@ export class Server extends Base {
      * @returns {Server}
      */
     public addRoute (httpMethod: string, route: string, fn: Function | Function[]) : Server {
+
+        /* This the function that is set to the route */
+        let routeFn: Function[];
 
         if (_.isString(httpMethod) === false) {
             throw new TypeError("httpMethod must be a string");
@@ -169,8 +232,16 @@ export class Server extends Base {
         /* Emit the route for logging */
         this.emit("routeAdded", httpMethod, route);
 
-        /* Send to the strategy */
-        this._strategy.addRoute(httpMethod, route, fn);
+        /* Ensure routeFn is always an array */
+        if (_.isArray(fn)) {
+            routeFn = (<Function[]> fn);
+        } else {
+            routeFn = [
+                (<Function> fn)
+            ];
+        }
+
+        this._setRoute(httpMethod, route, routeFn);
 
         return this;
 
