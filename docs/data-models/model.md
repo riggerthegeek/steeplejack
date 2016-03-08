@@ -42,17 +42,18 @@ class Person extends Model {
 
 ## Schema definition
 
-Let's first look at the full definition object
+Your `_schema` needs to return an object. The object keys are the schema key. Each key should then have a definition object on it. Let's
+first look at the full definition object:
 
 ```javascript
 IModelDefinition {
     type: any;
-    value: any;
+    value?: any;
     column?: string;
     primaryKey?: boolean;
-    validation?: Function[];
+    validation?: IDefinitionValidation[] | Function[];
     enum?: any[];
-    settings?: any;
+    settings?: object;
 }
 ```
 
@@ -76,15 +77,37 @@ Address models, you could simply set that Collection to your type.
 ### value: any
 
 This is the default value. If no value is set, it will use this. Importantly, this can be whatever data type you want, regardless of what
-is set in type.
+is set in type. If nothing is set, it will be `null`.
 
 ### column: string
 
+The `column` is to be used if you want to have a different key name stored in your database. Look at the [Column names](#column-names)
+section for more detail
 
+### primaryKey: boolean
+
+Allows you to specify a primary key on a model. This would normally be a unique ID.
+
+### validation: Function[] | string[]
+
+An array of validation functions. This is covered in [Validation](#validation);
 
 ### enum: any[]
 
+If your type is `enum`, this allows you to set the allowed values.
+
+### settings: Object
+
+An object of anything you want. This allows you to store any meta information about your entry.
+
+---
+
 ## Validation
+
+Once you've defined your model, you might want to validate your data. The Steeplejack validation is very flexible. For the most part, you
+will be able to use the provided validation functions. And, if they don't work for you, you can write your own.
+
+---
 
 ## Column names
 
@@ -138,3 +161,5 @@ obj2.toDb();
     surname: "Testington"
 }
 ```
+
+---
