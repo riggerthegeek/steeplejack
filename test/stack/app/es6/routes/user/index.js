@@ -15,7 +15,7 @@
 /* Files */
 
 
-export let route = ($userController, $output) => {
+export let route = ($userController) => {
 
     return {
 
