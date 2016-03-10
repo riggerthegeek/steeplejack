@@ -1,3 +1,4 @@
+import {error} from "util";
 /**
  * restify
  */
@@ -39,8 +40,33 @@ export class Restify extends Base implements IServerStrategy {
     enableCORS: (origins: string[], addHeaders: string[]) => void;
 
 
-    addRoute (httpMethod: string, route: string, fn: Function) {
-        this._inst[httpMethod.toLowerCase()](route, fn);
+    addRoute (httpMethod: string, route: string, fn: Function[]) {
+
+        this._inst[httpMethod.toLowerCase()](route, (request: any, response: any) => {
+
+            let tasks: any[] = _.map(fn, (task: Function) => {
+
+                return Bluebird.try(() => {
+
+                    return task({
+                        request,
+                        response
+                    });
+
+                });
+
+            });
+
+            Bluebird.all(tasks)
+                .then((result: any[]) => {
+                    this.outputHandler(null, _.last(result), request, response);
+                })
+                .catch((err: any) => {
+                    this.outputHandler(err, null, request, response);
+                });
+
+        });
+
     }
 
 

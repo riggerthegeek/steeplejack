@@ -32,7 +32,34 @@ exports.Restify = Base.extend({
 
 
     addRoute: function (httpMethod, route, fn) {
-        this._inst[httpMethod.toLowerCase()](route, fn);
+
+        var self = this;
+
+        self._inst[httpMethod.toLowerCase()](route, function (request, response) {
+
+            var tasks = _.map(fn, function (task) {
+
+                return Bluebird.try(function () {
+
+                    return task({
+                        request: request,
+                        response: response
+                    });
+
+                });
+
+            });
+
+            Bluebird.all(tasks)
+                .then(function (result) {
+                    self.outputHandler(null, _.last(result), request, response);
+                })
+                .catch(function (err) {
+                    self.outputHandler(err, null, request, response);
+                });
+
+        });
+
     },
 
 

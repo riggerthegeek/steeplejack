@@ -16,7 +16,7 @@
 
 export interface IServerStrategy extends NodeJS.EventEmitter {
     acceptParser: (options: string[], strict: boolean) => void;
-    addRoute: (httpMethod: string, route: string) => any;
+    addRoute: (httpMethod: string, route: string, fn: Function[]) => any;
     after: (fn: Function) => void;
     before: (fn: Function) => void;
     bodyParser: () => void;

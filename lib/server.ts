@@ -96,64 +96,6 @@ export class Server extends Base {
 
 
     /**
-     * Set Route
-     *
-     * Sets the route to the server strategy. This makes
-     * the routes an array of promises. If your route file
-     * uses a function, whatever is returned is sent as
-     * the response.
-     *
-     * If you decide to use an array of functions then only
-     * the result of the final function is sent to the
-     * response.
-     *
-     * @param {string} httpMethod
-     * @param {string} route
-     * @param {Function[]} routeFn
-     * @private
-     */
-    protected _setRoute (httpMethod: string, route: string, routeFn: Function[]) {
-
-        this._strategy.addRoute(httpMethod, route, (request: Object, response: Object) => {
-
-            this.outputHandler(request, response, () => {
-
-                /* Promisify the individual task */
-                let tasks: Promise<{}>[] = _.map(routeFn, (task: Function) => {
-
-                    return new Promise((resolve: Function, reject: Function) => {
-
-                        try {
-
-                            let result: any = task({
-                                request,
-                                response
-                            });
-
-                            resolve(result);
-
-                        } catch (err) {
-                            reject(err);
-                        }
-
-                    });
-
-                });
-
-                /* Run as Promise.all and only output the final result */
-                return Promise.all(tasks)
-                    .then((result: any[]) => {
-                        return _.last(result);
-                    });
-
-            });
-
-        });
-
-    }
-
-
-    /**
      * Accept Parser
      *
      * Makes the server use the accept parse.  If
@@ -241,7 +183,7 @@ export class Server extends Base {
             ];
         }
 
-        this._setRoute(httpMethod, route, routeFn);
+        this._strategy.addRoute(httpMethod, route, routeFn);
 
         return this;
 
@@ -409,13 +351,9 @@ export class Server extends Base {
      */
     public outputHandler (req: Object, res: Object, fn: () => any) : Promise<any> {
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
 
-            try {
-                resolve(fn());
-            } catch (err) {
-                reject(err);
-            }
+            resolve(fn());
 
         }).then((data: any) => {
             return this._strategy.outputHandler(null, data, req, res);

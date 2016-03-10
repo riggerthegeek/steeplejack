@@ -30,7 +30,7 @@ describe("Server tests", function () {
         class Strategy extends EventEmitter implements IServerStrategy {
             acceptParser (options: any, strict: boolean) { }
 
-            addRoute (httpMethod: string, route: string, fn: Function) { }
+            addRoute (httpMethod: string, route: string, fn: Function[]) { }
 
             after (fn: Function) { }
 
@@ -268,7 +268,7 @@ describe("Server tests", function () {
                     expect(emitted).to.be.true;
 
                     expect(this.spy).to.be.callCount(++i)
-                        .calledWithExactly(httpMethod, "/route", fn);
+                        .calledWithExactly(httpMethod, "/route", [fn]);
 
                 });
 
@@ -361,7 +361,7 @@ describe("Server tests", function () {
                 expect(this.spy).to.be.callCount(methods.length);
 
                 methods.forEach((method) => {
-                    expect(this.spy).to.be.calledWithExactly(method, "/route", fn);
+                    expect(this.spy).to.be.calledWithExactly(method, "/route", [fn]);
                 });
 
             });
@@ -437,8 +437,8 @@ describe("Server tests", function () {
                 expect(count).to.be.equal(3);
 
                 expect(this.spy).to.be.calledThrice
-                    .calledWith("GET", "/test", fn1)
-                    .calledWith("POST", "/test", fn2)
+                    .calledWith("GET", "/test", [fn1])
+                    .calledWith("POST", "/test", [fn2])
                     .calledWith("DELETE", "/test/example", arr);
 
             });
@@ -905,7 +905,7 @@ describe("Server tests", function () {
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
                     use (fn: Function | Function[]) { }
-                    addRoute (httpMethod: string, route: string, fn: Function) {}
+                    addRoute (httpMethod: string, route: string, fn: Function[]) {}
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
@@ -952,7 +952,7 @@ describe("Server tests", function () {
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
                     use (fn: Function | Function[]) { }
-                    addRoute (httpMethod: string, route: string, fn: Function) {}
+                    addRoute (httpMethod: string, route: string, fn: Function[]) {}
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
@@ -1001,7 +1001,7 @@ describe("Server tests", function () {
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
                     use (fn: Function | Function[]) { }
-                    addRoute (httpMethod: string, route: string, fn: Function) {}
+                    addRoute (httpMethod: string, route: string, fn: Function[]) {}
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
