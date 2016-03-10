@@ -13,6 +13,7 @@ import * as path from "path";
 
 
 /* Third-party modules */
+import {Promise} from "es6-promise";
 
 
 /* Files */
@@ -281,7 +282,7 @@ describe("Steeplejack test", function () {
 
                 class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
-                    addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
+                    addRoute: (httpMethod: string, route: string) => any;
                     after: (fn: Function) => void;
                     before: (fn: Function) => void;
                     bodyParser: () => void;
@@ -338,7 +339,7 @@ describe("Steeplejack test", function () {
 
                 class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
-                    addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
+                    addRoute: (httpMethod: string, route: string) => any;
                     after: (fn: Function) => void;
                     before: (fn: Function) => void;
                     bodyParser: () => void;
@@ -1431,7 +1432,7 @@ describe("Steeplejack test", function () {
 
                 class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
-                    addRoute (httpMethod: string, route: string, fn: Function | Function[]) {};
+                    addRoute (httpMethod: string, route: string) { return Promise.resolve(); };
                     after: (fn: Function) => void;
                     before: (fn: Function) => void;
                     bodyParser: () => void;

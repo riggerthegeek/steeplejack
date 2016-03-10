@@ -1,7 +1,7 @@
 /**
  * Steeplejack
  *
- * An opinionated way of making a Twelve Factor App in NodeJS
+ * An easy way of making a Twelve Factor App in NodeJS
  *
  * @license MIT
  * @link http://www.steeplejack.info

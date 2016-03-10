@@ -14,49 +14,35 @@
 /* Files */
 
 
-exports.route = function ($userController, $output) {
+exports.route = function ($userController) {
 
     return {
 
         "/": {
 
             get: [
-                function (req, res, next) {
+                function (obj) {
 
                     /* Simulate a valid bearer token */
-                    if (req.headers.authorization !== "bearer valid") {
-                        res.send(401);
-                        return;
+                    if (obj.request.headers.authorization !== "bearer valid") {
+                        return 401;
                     }
 
-                    next();
-
-                },
-                function (req, res) {
-
-                    $output(req, res, function () {
-                        return $userController.getUser("1");
-                    });
+                    return $userController.getUser("1");
 
                 }
             ],
 
             post: [
-                function (req, res, next) {
+                function (obj) {
 
                     /* Simulate a valid bearer token */
-                    if (req.headers.authorization !== "bearer valid") {
-                        res.send(401);
-                        return;
+                    if (obj.request.headers.authorization !== "bearer valid") {
+                        return 401;
                     }
 
-                    next();
+                    return $userController.createUser(obj.request.body);
 
-                },
-                function (req, res) {
-                    $output(req, res, function () {
-                        return $userController.createUser(req.body);
-                    });
                 }
             ]
 
