@@ -1,3 +1,4 @@
+# @todo https://medium.com/@nthgergo/publishing-gh-pages-with-travis-ci-53a8270e87db#.kwnowod8n
 language: node_js
 node_js:
 - 'node'

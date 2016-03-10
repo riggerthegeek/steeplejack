@@ -1,3 +1,4 @@
+import {IncomingMessage} from "http";
 /**
  * Server
  *
@@ -22,6 +23,7 @@ import {Base} from "./base";
 import {IAddRoutes} from "../interfaces/addRoutes";
 import {IServerOptions} from "../interfaces/serverOptions";
 import {IServerStrategy} from "../interfaces/serverStrategy";
+import {ServerResponse} from "http";
 
 
 export class Server extends Base {
@@ -126,6 +128,9 @@ export class Server extends Base {
      */
     public addRoute (httpMethod: string, route: string, fn: Function | Function[]) : Server {
 
+        /* This the function that is set to the route */
+        let routeFn: Function[];
+
         if (_.isString(httpMethod) === false) {
             throw new TypeError("httpMethod must be a string");
         }
@@ -169,8 +174,16 @@ export class Server extends Base {
         /* Emit the route for logging */
         this.emit("routeAdded", httpMethod, route);
 
-        /* Send to the strategy */
-        this._strategy.addRoute(httpMethod, route, fn);
+        /* Ensure routeFn is always an array */
+        if (_.isArray(fn)) {
+            routeFn = (<Function[]> fn);
+        } else {
+            routeFn = [
+                (<Function> fn)
+            ];
+        }
+
+        this._strategy.addRoute(httpMethod, route, routeFn);
 
         return this;
 
@@ -338,13 +351,9 @@ export class Server extends Base {
      */
     public outputHandler (req: Object, res: Object, fn: () => any) : Promise<any> {
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
 
-            try {
-                resolve(fn());
-            } catch (err) {
-                reject(err);
-            }
+            resolve(fn());
 
         }).then((data: any) => {
             return this._strategy.outputHandler(null, data, req, res);

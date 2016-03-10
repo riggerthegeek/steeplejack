@@ -1,7 +1,7 @@
 /**
  * Steeplejack
  *
- * An opinionated way of making a Twelve Factor App in NodeJS
+ * An easy way of making a Twelve Factor App in NodeJS
  *
  * @license MIT
  * @link http://www.steeplejack.info
@@ -482,9 +482,6 @@ export class Steeplejack extends Base {
 
         /* Run the server factory through the injector */
         this.server = this.injector.process(factory);
-
-        /* Register the server to the injector */
-        this.injector.registerSingleton("$server", this.server);
 
         /* Create the outputHandler and register to injector if not already done */
         if (this.injector.getComponent(this._outputHandlerName) === null) {

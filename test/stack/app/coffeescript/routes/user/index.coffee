@@ -14,44 +14,31 @@
 # Files
 
 
-exports.route = ($output, $userController) ->
+exports.route = ($userController) ->
 
     {
 
         "/":
 
             get: [
-                (req, res, next) ->
+                ({request}) ->
 
                     # Simulate a valid bearer token
-                    if req.headers.authorization != "bearer valid"
-                        res.send(401)
-                        return
+                    if request.headers.authorization != "bearer valid"
+                        return 401
 
-                    next()
-
-                (req, res) ->
-
-                    $output req, res, ->
-                        $userController.getUser "1"
+                    $userController.getUser "1"
 
             ]
 
             post: [
-                (req, res, next) ->
+                ({request}) ->
 
                     # Simulate a valid bearer token
-                    if req.headers.authorization != "bearer valid"
-                        res.send 401
-                        return
+                    if request.headers.authorization != "bearer valid"
+                        return 401
 
-
-                    next()
-
-                (req, res) ->
-
-                    $output req, res, ->
-                        $userController.createUser req.body
+                    $userController.createUser request.body
 
             ]
 

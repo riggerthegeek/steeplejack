@@ -34,7 +34,32 @@ export class Restify {
 
 
     addRoute (httpMethod, route, fn) {
-        this._inst[httpMethod.toLowerCase()](route, fn);
+
+        this._inst[httpMethod.toLowerCase()](route, (request, response) => {
+
+            let tasks = _.map(fn, (task) => {
+
+                return Bluebird.try(() => {
+
+                    return task({
+                        request,
+                        response
+                    });
+
+                });
+
+            });
+
+            Bluebird.all(tasks)
+                .then(result => {
+                    this.outputHandler(null, _.last(result), request, response);
+                })
+                .catch(err => {
+                    this.outputHandler(err, null, request, response);
+                });
+
+        });
+
     }
 
 
@@ -66,7 +91,9 @@ export class Restify {
         if (err) {
 
             /* Convert to a Restify error and process */
-            if (err instanceof restify.RestError) {
+            if (err > 100 && err < 600) {
+                statusCode = err;
+            } else if (err instanceof restify.RestError) {
 
                 /* Already a RestError - use it */
                 statusCode = err.statusCode;
@@ -96,7 +123,9 @@ export class Restify {
         } else if (data) {
 
             /* Success */
-            if (_.isFunction(data.getData)) {
+            if (data > 100 && data < 600) {
+                statusCode = data;
+            } else if (_.isFunction(data.getData)) {
                 output = data.getData();
             } else {
                 output = data;

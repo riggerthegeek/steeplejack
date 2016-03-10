@@ -13,6 +13,7 @@ import * as path from "path";
 
 
 /* Third-party modules */
+import {Promise} from "es6-promise";
 
 
 /* Files */
@@ -281,7 +282,7 @@ describe("Steeplejack test", function () {
 
                 class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
-                    addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
+                    addRoute: (httpMethod: string, route: string) => any;
                     after: (fn: Function) => void;
                     before: (fn: Function) => void;
                     bodyParser: () => void;
@@ -338,7 +339,7 @@ describe("Steeplejack test", function () {
 
                 class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
-                    addRoute: (httpMethod: string, route: string, fn: Function | Function[]) => void;
+                    addRoute: (httpMethod: string, route: string) => any;
                     after: (fn: Function) => void;
                     before: (fn: Function) => void;
                     bodyParser: () => void;
@@ -570,8 +571,7 @@ describe("Steeplejack test", function () {
                     .calledWithExactly(createServer)
                     .calledWithExactly("routeFn");
 
-                expect(this.registerSingleton).to.be.calledThrice
-                    .calledWithExactly("$server", this.server)
+                expect(this.registerSingleton).to.be.calledTwice
                     .calledWithExactly(this.modules.module2.__singleton.name, this.modules.module2.__singleton.singleton)
                     .calledWith(this.modules.module3.__config.name);
 
@@ -631,8 +631,7 @@ describe("Steeplejack test", function () {
                     .calledWithExactly(createServer)
                     .calledWithExactly("routeFn");
 
-                expect(this.registerSingleton).to.be.calledThrice
-                    .calledWithExactly("$server", this.server)
+                expect(this.registerSingleton).to.be.calledTwice
                     .calledWithExactly(this.modules.module2.__singleton.name, this.modules.module2.__singleton.singleton)
                     .calledWith(this.modules.module3.__config.name);
 
@@ -708,9 +707,6 @@ describe("Steeplejack test", function () {
 
                 expect(this.registerFactory).to.not.be.called;
 
-                expect(this.registerSingleton).to.be.calledOnce
-                    .calledWithExactly("$server", this.server);
-
             });
 
             it("should ignore when unknown register module passed in - plugin", function () {
@@ -732,9 +728,6 @@ describe("Steeplejack test", function () {
                 this.obj.run(createServer);
 
                 expect(this.registerFactory).to.not.be.called;
-
-                expect(this.registerSingleton).to.be.calledOnce
-                    .calledWithExactly("$server", this.server);
 
             });
 
@@ -1439,7 +1432,7 @@ describe("Steeplejack test", function () {
 
                 class Strategy extends EventEmitter implements IServerStrategy {
                     acceptParser: (options: any, strict: boolean) => void;
-                    addRoute (httpMethod: string, route: string, fn: Function | Function[]) {};
+                    addRoute (httpMethod: string, route: string) { return Promise.resolve(); };
                     after: (fn: Function) => void;
                     before: (fn: Function) => void;
                     bodyParser: () => void;
