@@ -22,7 +22,7 @@ var Validation = _Validation.Validation;
 
 describe("validation rule test", function () {
 
-    let stub;
+    var stub;
     beforeEach(function () {
         stub = sinon.stub(Validation, "createClosure");
     });
