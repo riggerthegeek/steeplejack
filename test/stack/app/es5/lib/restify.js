@@ -41,10 +41,7 @@ exports.Restify = Base.extend({
 
                 return Bluebird.try(function () {
 
-                    return task({
-                        request: request,
-                        response: response
-                    });
+                    return task(request, response);
 
                 });
 

@@ -48,10 +48,7 @@ export class Restify extends Base implements IServerStrategy {
 
                 return Bluebird.try(() => {
 
-                    return task({
-                        request,
-                        response
-                    });
+                    return task(request, response);
 
                 });
 

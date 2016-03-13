@@ -41,10 +41,7 @@ export class Restify {
 
                 return Bluebird.try(() => {
 
-                    return task({
-                        request,
-                        response
-                    });
+                    return task(request, response);
 
                 });
 

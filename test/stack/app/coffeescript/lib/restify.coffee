@@ -38,10 +38,7 @@ exports.Restify = class Restify
 
                 Bluebird.try =>
 
-                    task {
-                        request
-                        response
-                    }
+                    task request, response
 
             Bluebird.all tasks
                 .then (result) =>
