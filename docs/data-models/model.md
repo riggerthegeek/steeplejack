@@ -120,20 +120,25 @@ will be able to use the provided validation functions. And, if they don't work f
 
 ```javascript
 interface IDefinitionValidation {
-    rule: string | Function;
+    rule: string | ((model: Model, value: any) => boolean);
     param?: any[];
 }
 ```
 
-### rule: string | Function
+### rule: string | ((model: Model, currentValue: any) => boolean)
 
 At it's simplest form, you will just be passing a string through to the validation. This wraps the
 [Datautils](https://github.com/riggerthegeek/datautils-js#validation) package, so any function available in there can be passed through as
 a string.
 
-### Available string functions
 
-The `value` gets passed in automatically. Any additional arguments must be passed into the [`param`]() array.
+
+> If you have created your model using `class`, the value of `this` will be the same as `model`. The `model` is mainly here for ES5
+> usage.
+
+#### Available string functions
+
+The `value` gets passed in automatically. Any additional arguments must be passed into the [`param`](#param-any) array.
 
  - email (value: string);
  - equal (value: any, match: any);
@@ -149,6 +154,24 @@ The `value` gets passed in automatically. Any additional arguments must be passe
  - required (value: any);
 
 ### param: any[]
+
+This is only used when you are using a function name in the `rule` that requires additional arguments, eg, used in the `equal` rule but
+**<u>not</u>** used in the `email` rule.
+
+You should pass through the same number of arguments that the `rule` requires, in the order and type that it requires it.
+
+```json
+    {
+        "validation": [{
+            "rule": "lengthBetween",
+            "param": [
+                5, 15
+            ]
+        }]
+    }
+```
+
+If you used this object on a validation, it would ensure that the string was between 5 and 15 characters long.
 
 ---
 
