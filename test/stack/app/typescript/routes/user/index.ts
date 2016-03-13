@@ -20,7 +20,7 @@ export let route = ($userController: any) => {
 
         "/": {
 
-            get: ({request}) => {
+            get: (request: any) => {
 
                 /* Simulate a valid bearer token */
                 if (request.headers.authorization !== "bearer valid") {
@@ -31,7 +31,7 @@ export let route = ($userController: any) => {
 
             },
 
-            post: ({request}) => {
+            post: (request: any) => {
                 /* Simulate a valid bearer token */
                 if (request.headers.authorization !== "bearer valid") {
                     return 401;

@@ -20,31 +20,27 @@ exports.route = function ($userController) {
 
         "/": {
 
-            get: [
-                function (obj) {
+            get: function (request) {
 
-                    /* Simulate a valid bearer token */
-                    if (obj.request.headers.authorization !== "bearer valid") {
-                        return 401;
-                    }
-
-                    return $userController.getUser("1");
-
+                /* Simulate a valid bearer token */
+                if (request.headers.authorization !== "bearer valid") {
+                    return 401;
                 }
-            ],
 
-            post: [
-                function (obj) {
+                return $userController.getUser("1");
 
-                    /* Simulate a valid bearer token */
-                    if (obj.request.headers.authorization !== "bearer valid") {
-                        return 401;
-                    }
+            },
 
-                    return $userController.createUser(obj.request.body);
+            post: function (request) {
 
+                /* Simulate a valid bearer token */
+                if (request.headers.authorization !== "bearer valid") {
+                    return 401;
                 }
-            ]
+
+                return $userController.createUser(request.body);
+
+            }
 
         }
 

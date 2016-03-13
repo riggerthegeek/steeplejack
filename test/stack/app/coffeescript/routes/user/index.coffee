@@ -20,26 +20,21 @@ exports.route = ($userController) ->
 
         "/":
 
-            get: [
-                ({request}) ->
+            get: (request) ->
 
-                    # Simulate a valid bearer token
-                    if request.headers.authorization != "bearer valid"
-                        return 401
+                # Simulate a valid bearer token
+                if request.headers.authorization != "bearer valid"
+                    return 401
 
-                    $userController.getUser "1"
+                $userController.getUser "1"
 
-            ]
 
-            post: [
-                ({request}) ->
+            post: (request) ->
 
-                    # Simulate a valid bearer token
-                    if request.headers.authorization != "bearer valid"
-                        return 401
+                # Simulate a valid bearer token
+                if request.headers.authorization != "bearer valid"
+                    return 401
 
-                    $userController.createUser request.body
-
-            ]
+                $userController.createUser request.body
 
     }
