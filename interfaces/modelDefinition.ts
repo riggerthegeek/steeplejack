@@ -9,6 +9,7 @@
 
 
 /* Third-party modules */
+import {IDefinitionValidation} from "./definitionValidation";
 
 
 /* Files */
@@ -19,7 +20,7 @@ export interface IModelDefinition {
     value: any;
     column?: any;
     primaryKey?: boolean;
-    validation?: Function[];
+    validation?: IDefinitionValidation[];
     enum?: any[];
     settings?: any;
 }

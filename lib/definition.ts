@@ -28,7 +28,7 @@ export class Definition implements IModelDefinition {
     public value: any;
     public column: any;
     public primaryKey: boolean;
-    public validation: Function[];
+    public validation: IDefinitionValidation[];
     public enum: any[];
     public settings: any;
 
