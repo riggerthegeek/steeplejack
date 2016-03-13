@@ -125,33 +125,37 @@ interface IDefinitionValidation {
 }
 ```
 
-### rule: string | ((model: Model, currentValue: any) => boolean)
-
-At it's simplest form, you will just be passing a string through to the validation. This wraps the
-[Datautils](https://github.com/riggerthegeek/datautils-js#validation) package, so any function available in there can be passed through as
-a string.
-
-
+### rule: string | ((currentValue: any, model: Model) => boolean)
 
 > If you have created your model using `class`, the value of `this` will be the same as `model`. The `model` is mainly here for ES5
 > usage.
+
+At it's simplest form, you will just be passing a string through to the validation object. This wraps the
+[Datautils](https://github.com/riggerthegeek/datautils-js#validation) package, so any function available in there can be passed through as
+a string. For most cases, this will be enough.
+
+If you want more control over your validation you can pass in a function. This will allow you to perform fine-grain validation. To tell that
+we have passed validation, simply `return true`. To return a useful error, you should throw the error you want to be added to the stack.
+
+> You can also `return false` to signify an error. This is not recommended as it just marks as a generic error.
 
 #### Available string functions
 
 The `value` gets passed in automatically. Any additional arguments must be passed into the [`param`](#param-any) array.
 
- - email (value: string);
- - equal (value: any, match: any);
- - greaterThan (value: any, target: any);
- - greaterThanOrEqual (value: any, target: any);
- - length (value: any, length: number);
- - lengthBetween (value: any, minLength: number, maxLength: number);
- - lessThan (value: any, target: any);
- - lessThanOrEqual (value: any, target: any);
- - maxLength (value: any, length: number);
- - minLength (value: any, length: number);
- - regex (value: string, regex: RegExp | string);
- - required (value: any);
+ - email (value: string) - checks the `value` matches an email regular expression
+ - equal (value: any, match: any) - checks the `value` is the same as `match`
+ - greaterThan (value: any, target: any) - checks the `value` is greater than the `target`
+ - greaterThanOrEqual (value: any, target: any) - checks the `value` is greater than or equal to the `target`
+ - length (value: any, length: number) - checks the length of the `value` is equal to the `length`
+ - lengthBetween (value: any, minLength: number, maxLength: number) - checks the `value` is between `minLength` and `maxLength`
+ - lessThan (value: any, target: any) - checks the `value` is less than the `target`
+ - lessThanOrEqual (value: any, target: any) - checks the `value` is less than or equal to the `target`
+ - match (value: any, key: string) - checks the `value` matches the `key` in the model
+ - maxLength (value: any, length: number) - checks the length of `value` is less than `length`
+ - minLength (value: any, length: number) - checks the length of `value` is more than `length`
+ - regex (value: string, regex: RegExp | string) - checks the `value` matches the `regex`
+ - required (value: any) - checks that `value` is not empty
 
 ### param: any[]
 
