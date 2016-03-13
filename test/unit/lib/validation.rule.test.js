@@ -41,7 +41,7 @@ describe("validation rule test", function () {
             2
         ].forEach(function (rule) {
 
-            let fail = false;
+            var fail = false;
 
             try {
                 Validation.generateFunction({
