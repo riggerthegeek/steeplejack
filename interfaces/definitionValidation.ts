@@ -12,9 +12,10 @@
 
 
 /* Files */
+import {Model} from "../lib/model";
 
 
 export interface IDefinitionValidation {
-    rule: string | Function;
+    rule: string | ((model: Model, value: any) => boolean);
     param?: any[];
 }

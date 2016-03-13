@@ -145,6 +145,7 @@ describe("Model validation test", function () {
                     let closure = function () {
                     };
                     let rule = function () {
+                        return true;
                     };
                     let param = ["param1", "param2"];
                     let defaultValue:any = null;
