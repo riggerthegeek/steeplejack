@@ -140,39 +140,6 @@ describe("Model validation test", function () {
 
                 });
 
-                it("should throw an error if the rule is not a function or a string", function () {
-
-                    [
-                        {},
-                        [],
-                        null,
-                        true,
-                        2
-                    ].forEach(rule => {
-
-                        let fail = false;
-
-                        try {
-                            Validation.generateFunction({
-                                rule
-                            });
-                        } catch (err) {
-
-                            fail = true;
-
-                            expect(err).to.be.instanceof(TypeError);
-                            expect(err.message).to.be.equal(`IDefinitionValidation.rule must be a function or a string, not a ${typeof rule}`);
-
-                        } finally {
-                            expect(fail).to.be.true;
-
-                            expect(stub).to.not.be.called;
-                        }
-
-                    });
-
-                });
-
                 it("should accept a function as a rule and create the closure", function () {
 
                     let closure = function () {

@@ -15,6 +15,6 @@
 
 
 export interface IDefinitionValidation {
-    rule: any;
+    rule: string | Function;
     param?: any[];
 }
