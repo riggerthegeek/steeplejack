@@ -41,20 +41,18 @@ export class Validation {
     static createClosure (rule: Function, params: any[], defaultValue: any, isRequired: boolean) : Function {
 
         /* Create closure with params */
-        return function (model: Model, value: any) {
+        return function (value: any, model: Model) {
 
             if (value === defaultValue && isRequired === false) {
                 /* Value is not set and not required - validate */
                 return true;
             } else {
 
-                /* Build the array to send to the rule - first, the model */
+                /* Build the array to send to the rule */
                 let input: any[] = [
+                    value,
                     model
                 ];
-
-                /* Add in the value as second parameter */
-                input.push(value);
 
                 /* Are there any parameters? */
                 if (_.isEmpty(params) === false) {
@@ -106,10 +104,10 @@ export class Validation {
             } else if (_.isFunction((<any> validation)[rule])) {
 
                 /* Valid rule in the validation utils package */
-                ruleFn = function (...args: any[]) {
+                ruleFn = function (value: string, model: Model, ...args: any[]) {
 
-                    /* Remove the first element */
-                    args.shift();
+                    /* Add the value as first element */
+                    args.unshift(value);
 
                     return (<any> validation)[rule](...args);
 
@@ -139,12 +137,12 @@ export class Validation {
      * against the value for the given key in the
      * model
      *
-     * @param {Model} model
      * @param {*} value
+     * @param {Model} model
      * @param {string} key
      * @returns {boolean}
      */
-    static match (model: Model, value: any, key: string) : boolean {
+    static match (value: any, model: Model, key: string) : boolean {
 
         let matchValue: any = model.get(key);
 

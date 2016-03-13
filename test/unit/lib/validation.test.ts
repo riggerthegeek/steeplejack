@@ -40,7 +40,7 @@ describe("Model validation test", function () {
 
                 let obj = new Child();
 
-                expect(fn(obj, null)).to.be.true;
+                expect(fn(null, obj)).to.be.true;
 
             });
 
@@ -64,8 +64,8 @@ describe("Model validation test", function () {
 
                     expect(args).to.have.length(2);
 
-                    expect(args[0]).to.be.equal(obj);
-                    expect(args[1]).to.be.equal("desired value");
+                    expect(args[0]).to.be.equal("desired value");
+                    expect(args[1]).to.be.equal(obj);
 
                     return "result";
 
@@ -73,7 +73,7 @@ describe("Model validation test", function () {
 
                 let fn: Function = Validation.createClosure(validationFn, null, null, false);
 
-                expect(fn(obj, "desired value")).to.be.equal("result");
+                expect(fn("desired value", obj)).to.be.equal("result");
 
             });
 
@@ -101,8 +101,8 @@ describe("Model validation test", function () {
 
                     expect(args).to.have.length(5);
 
-                    expect(args[0]).to.be.equal(obj);
-                    expect(args[1]).to.be.equal("myValue");
+                    expect(args[0]).to.be.equal("myValue");
+                    expect(args[1]).to.be.equal(obj);
                     expect(args[2]).to.be.equal(1);
                     expect(args[3]).to.be.equal(2);
                     expect(args[4]).to.be.equal(3);
@@ -113,7 +113,7 @@ describe("Model validation test", function () {
 
                 let fn: Function = Validation.createClosure(validationFn, params, null, false);
 
-                expect(fn(obj, "myValue")).to.be.equal("result");
+                expect(fn("myValue", obj)).to.be.equal("result");
 
             });
 
@@ -238,7 +238,7 @@ describe("Model validation test", function () {
                         email: "test@test.com"
                     });
 
-                    expect(fn(model, model.get("email"))).to.be.true;
+                    expect(fn(model.get("email"), model)).to.be.true;
 
                 });
 
@@ -264,7 +264,7 @@ describe("Model validation test", function () {
                     id: "hello"
                 });
 
-                expect(Validation.match(obj, "hello", "id")).to.be.true;
+                expect(Validation.match("hello", obj, "id")).to.be.true;
 
             });
 
@@ -287,7 +287,7 @@ describe("Model validation test", function () {
                 let fail = false;
 
                 try {
-                    Validation.match(obj, "mister", "hello")
+                    Validation.match("mister", obj, "hello")
                 } catch (err) {
 
                     fail = true;

@@ -507,7 +507,7 @@ export abstract class Model extends Base {
 
                 try {
                     /* A validation function can throw error or return false */
-                    if (rule(this, value) === false) {
+                    if (rule(value, this) === false) {
                         /* Returned false - throw a simple error */
                         throw new Error("Custom model validation failed");
                     }

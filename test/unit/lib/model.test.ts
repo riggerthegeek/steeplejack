@@ -2091,7 +2091,7 @@ describe("Model test", function () {
                                         type: "string",
                                         validation: [
                                             {
-                                                rule: function (objModel: any, value: any) {
+                                                rule: function (value: any) {
                                                     if (value === "throw") {
                                                         throw new Error("THROWN_ERROR");
                                                     }
@@ -2199,7 +2199,7 @@ describe("Model test", function () {
                                         type: "string",
                                         validation: [
                                             {
-                                                rule: function (objModel: any, value: any, match: any) {
+                                                rule: function (value: any, objModel: any, match: any) {
                                                     if (value === "throw") {
                                                         throw new Error("THROWN_ERROR");
                                                     }
@@ -2311,7 +2311,7 @@ describe("Model test", function () {
                                         type: "string",
                                         validation: [
                                             {
-                                                rule: function (objModel: any, value: any, match: any, datatype: any) {
+                                                rule: function (value: any, objModel: any, match: any, datatype: any) {
                                                     if (value === "throw") {
                                                         throw new Error("THROWN_ERROR");
                                                     }
@@ -2458,7 +2458,13 @@ describe("Model test", function () {
                         password2: "tnetennba"
                     });
 
-                    expect(obj.validate()).to.be.true;
+                    try {
+                        expect(obj.validate()).to.be.true;
+                    } catch (err) {
+                        console.log(err);
+                        console.log(err.getErrors());
+                        console.log(err.stack);
+                    }
 
                 });
 
@@ -2751,7 +2757,7 @@ describe("Model test", function () {
                                         rule: "minLength",
                                         param: [2]
                                     }, {
-                                        rule: function (objModel: any, value: any) {
+                                        rule: function (value: any) {
                                             return value === "Bob";
                                         }
                                     }]
@@ -2955,7 +2961,7 @@ describe("Model test", function () {
                                             2
                                         ]
                                     }, {
-                                        rule: function (objModel: any, value: any) {
+                                        rule: function (value: any) {
                                             return value === "Bob";
                                         }
                                     }]
