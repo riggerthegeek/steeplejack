@@ -127,6 +127,21 @@ interface IDefinitionValidation {
 
 ### rule: string | ((currentValue: any, model: Model) => boolean)
 
+```javascript
+    {
+        "validation": [{
+            "rule": "required"
+        }, {
+            "rule": (value) => {
+                if (value !== "desired value") {
+                    throw new Error("not my value");
+                }
+                return true;
+            }
+        }]
+    }
+```
+
 > If you have created your model using `class`, the value of `this` will be the same as `model`. The `model` is mainly here for ES5
 > usage.
 
