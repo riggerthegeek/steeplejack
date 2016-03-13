@@ -93,14 +93,14 @@ export class Validation {
         if (_.isFunction(rule)) {
 
             /* We're passing a custom function to validate against */
-            ruleFn = rule;
+            ruleFn = (<Function> rule);
 
         } else if (_.isString(rule)) {
 
             /* Set the required status */
-            required = rule.toUpperCase() === "REQUIRED";
+            required = (<string> rule).toUpperCase() === "REQUIRED";
 
-            if (rule === "match") {
+            if ((<string> rule).toUpperCase() === "MATCH") {
                 /* Use the special match rule */
                 ruleFn = Validation.match;
             } else if (_.isFunction((<any> validation)[rule])) {
