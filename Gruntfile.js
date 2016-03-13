@@ -413,7 +413,9 @@ module.exports = function (grunt) {
     grunt.registerTask("ci", "Runs the continuous integration tests", [
         "test",
         "stacktest",
-        "codecoverage"
+        "codecoverage",
+        "clean",
+        "compile"
     ]);
 
 
