@@ -9,11 +9,14 @@ You are required to define a schema for your model. This describes the model, da
 
 > Although a widely-used (if not formally adopted) standard, JSON schema is not used by design. This is because JSON schema is designed to
 > be a flat structure. In Steeplejack, we want to allow custom validation - it is not inconceivable that you will want to use a validation
-> method that cannot be achieved using JSON schema.
+> method that cannot be achieved using JSON schema. We use this by defining our own validation functions, something not possible using JSON
+> schema.
 
-Let's define a simple model. It has three properties - `id`, `firstName` and `lastName`. The ID is an integer and the other two are strings.
-If nothing is set to these elements, the default value will be `null` and there is no validation on this model. In the database, the
+Let's define a simple model. It has fource properties - `id`, `firstName`, `lastName` and `emailAddress`. The ID is an integer and the
+other three are strings. If nothing is set to these elements, the default value will be `null` and there is no validation on this model. In the database, the
 `lastName` is actually called `surname`.
+
+The `emailAddress` is a required field and it also must be an email address.
 
 ```javascript
 import {Model} from "steeplejack/lib/model";
@@ -32,6 +35,14 @@ class Person extends Model {
             lastName: {
                 type: "string",
                 column: "surname"
+            },
+            emailAddress: {
+                type: "string",
+                validation: [{
+                    rule: "required"
+                }, {
+                    rule: "email"
+                }]
             }
         };
 
@@ -46,12 +57,12 @@ Your `_schema` needs to return an object. The object keys are the schema key. Ea
 first look at the full definition object:
 
 ```javascript
-IModelDefinition {
+interface IModelDefinition {
     type: any;
     value?: any;
     column?: string;
     primaryKey?: boolean;
-    validation?: IDefinitionValidation[] | Function[];
+    validation?: IDefinitionValidation[];
     enum?: any[];
     settings?: object;
 }
@@ -88,7 +99,7 @@ section for more detail
 
 Allows you to specify a primary key on a model. This would normally be a unique ID.
 
-### validation: Function[] | string[]
+### validation: IDefinitionValidation[]
 
 An array of validation functions. This is covered in [Validation](#validation);
 
@@ -101,11 +112,43 @@ If your type is `enum`, this allows you to set the allowed values.
 An object of anything you want. This allows you to store any meta information about your entry.
 
 ---
-j
+
 ## Validation
 
 Once you've defined your model, you might want to validate your data. The Steeplejack validation is very flexible. For the most part, you
 will be able to use the provided validation functions. And, if they don't work for you, you can write your own.
+
+```javascript
+interface IDefinitionValidation {
+    rule: string | Function;
+    param?: any[];
+}
+```
+
+### rule: string | Function
+
+At it's simplest form, you will just be passing a string through to the validation. This wraps the
+[Datautils](https://github.com/riggerthegeek/datautils-js#validation) package, so any function available in there can be passed through as
+a string.
+
+### Available string functions
+
+The `value` gets passed in automatically. Any additional arguments must be passed into the [`param`]() array.
+
+ - email (value: string);
+ - equal (value: any, match: any);
+ - greaterThan (value: any, target: any);
+ - greaterThanOrEqual (value: any, target: any);
+ - length (value: any, length: number);
+ - lengthBetween (value: any, minLength: number, maxLength: number);
+ - lessThan (value: any, target: any);
+ - lessThanOrEqual (value: any, target: any);
+ - maxLength (value: any, length: number);
+ - minLength (value: any, length: number);
+ - regex (value: string, regex: RegExp | string);
+ - required (value: any);
+
+### param: any[]
 
 ---
 
