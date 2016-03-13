@@ -45,7 +45,7 @@ describe("validation rule test", function () {
 
             try {
                 Validation.generateFunction({
-                    rule
+                    rule: rule
                 });
             } catch (err) {
 
