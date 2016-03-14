@@ -12,7 +12,7 @@
 
 
 /* Files */
-var Exception = require("../../../exception").Exception;
+var Exception = require("../../../exception/index").Exception;
 var expect = require("../../helpers/configure").expect;
 
 
@@ -100,9 +100,8 @@ describe("Exception ES5 test", function () {
             expect(obj.arg1).to.be.equal("arg1");
             expect(obj.arg2).to.be.equal("arg2");
 
-
             expect(obj.stack).to.be.a("string")
-                .to.contain(require.resolve("../../../exception"));
+                .to.contain(require.resolve("../../../exception/index"));
 
         });
 

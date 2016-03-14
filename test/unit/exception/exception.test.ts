@@ -91,7 +91,7 @@ describe("Exception test", function () {
             expect(obj.arg2).to.be.equal("arg2");
 
             expect(obj.stack).to.be.a("string")
-                .to.contain(require.resolve("../../../exception"));
+                .to.contain(require.resolve("../../../exception/index"));
 
         });
 

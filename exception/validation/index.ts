@@ -17,7 +17,7 @@ import * as _ from "lodash";
 
 
 /* Files */
-import {Detail} from "./Detail";
+import {Detail} from "./detail";
 import {Exception} from "../index";
 import {IValidationExceptionDetail} from "../../interfaces/validationExceptionDetail";
 
