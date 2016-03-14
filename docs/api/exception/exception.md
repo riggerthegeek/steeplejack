@@ -3,12 +3,11 @@
 This is the main error object for the library. It is an extension of the JavaScript Error object. If you are still using ES5, this simplifies
 prototypical inheritance with the `extend` static method.
 
-
 This is an [abstract class](https://en.wikipedia.org/wiki/Abstract_type), meaning it cannot be instantiated directly - this only applies to
 TypeScript applications, but still should be extended in all other versions of JavaScript.
 
 ```javascript
-import {Exception} from "steeplejack/exception/index";
+import {Exception} from "steeplejack/exception";
 ```
 
 **Extends:** [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
