@@ -165,7 +165,7 @@ export class Router extends Base {
      */
     public static discoverRoutes (files: IRouteFiles[]) : Object {
 
-        const splitNames = new RegExp(`^((\\w+${path.sep})+)?(\\w+)`);
+        const splitNames = new RegExp(`^(([\\w\\.\\-]+${path.sep})+)?(\\w+)`);
 
         return _.reduce(files, (result: any, file: IRouteFiles) => {
 

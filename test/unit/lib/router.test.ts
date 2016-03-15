@@ -234,6 +234,9 @@ describe("Router test", function () {
                 beforeEach(function () {
 
                     let stubs: any = _.reduce({
+                        "/path/to/dir/v1-0/path/dir/endpoint": "/path/to/dir/v1-0/path/dir/endpoint",
+                        "/path/to/dir/v1_0/path/dir/endpoint": "/path/to/dir/v1_0/path/dir/endpoint",
+                        "/path/to/dir/v1.0/path/dir/endpoint": "/path/to/dir/v1.0/path/dir/endpoint",
                         "/path/to/dir/dir/endpoint": "/path/to/dir/dir/endpoint",
                         "/path/to/dir/dir/endpoint2/index": "/path/to/dir/dir/index",
                         "/path/to/dir/dir/endpoint2/twitter": "/path/to/dir/dir/hello",
@@ -313,6 +316,15 @@ describe("Router test", function () {
                 it("should discover an array of routes and return back the object", function () {
 
                     let files = [{
+                        name: "v1_0/path/dir/endpoint",
+                        path: "/path/to/dir"
+                    }, {
+                        name: "v1-0/path/dir/endpoint",
+                        path: "/path/to/dir"
+                    }, {
+                        name: "v1.0/path/dir/endpoint",
+                        path: "/path/to/dir"
+                    }, {
                         name: "dir/endpoint",
                         path: "/path/to/dir"
                     }, {
@@ -335,6 +347,9 @@ describe("Router test", function () {
                     var obj = this.router.discoverRoutes(files);
 
                     expect(obj).to.have.keys([
+                        "v1_0/path/dir/endpoint",
+                        "v1-0/path/dir/endpoint",
+                        "v1.0/path/dir/endpoint",
                         "dir/endpoint",
                         "dir/endpoint2/twitter",
                         "dir/endpoint2",
@@ -343,6 +358,9 @@ describe("Router test", function () {
                         ""
                     ]);
 
+                    expect(obj["v1_0/path/dir/endpoint"]()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
+                    expect(obj["v1-0/path/dir/endpoint"]()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
+                    expect(obj["v1.0/path/dir/endpoint"]()).to.be.equal("/path/to/dir/v1.0/path/dir/endpoint");
                     expect(obj["dir/endpoint"]()).to.be.equal("/path/to/dir/dir/endpoint");
                     expect(obj["dir/endpoint2/twitter"]()).to.be.equal("/path/to/dir/dir/hello");
                     expect(obj["dir/endpoint2"]()).to.be.equal("/path/to/dir/dir/index");
