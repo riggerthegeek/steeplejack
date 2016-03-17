@@ -96,12 +96,98 @@ export class Server extends Base {
 
 
     /**
+     * Parse Data
+     *
+     * Parses the data output
+     *
+     * @param {*} data
+     * @returns {{statusCode: Number, output: any}}
+     * @private
+     */
+    protected _parseData (data: any) {
+
+        let statusCode: Number = 200;
+        let output: any;
+
+        /* Some data to display */
+        if (data >= 100 && data < 600) {
+
+            /* HTTP status code */
+            statusCode = data;
+
+        } else if (_.isObject(data) && _.isFunction(data.getData)) {
+            /* Get the data from a function */
+            output = data.getData();
+        } else {
+            /* Just output the data */
+            output = data;
+        }
+
+        return {
+            statusCode,
+            output
+        };
+
+    }
+
+
+    /**
+     * Parse Error
+     *
+     * Parses the error output
+     *
+     * @param {*} err
+     * @returns {{statusCode: Number, output: any}}
+     * @private
+     */
+    protected _parseError (err: any) {
+
+        let statusCode: Number = 500;
+        let output: any;
+
+        /* Work out the appropriate error message */
+        if (err >= 100 && err < 600) {
+
+            /* HTTP status code */
+            statusCode = err;
+
+        } else if (_.isFunction(err.hasErrors)) {
+
+            /* A steeplejack validation error */
+            statusCode = 400;
+            output = {
+                code: err.type,
+                message: err.message
+            };
+
+            if (err.hasErrors()) {
+                output.error = err.getErrors();
+            }
+
+        } else {
+
+            /* Convert to a friendly error */
+            if (_.isFunction(err.getHttpCode)) {
+                statusCode = err.getHttpCode();
+            }
+
+            output = _.isFunction(err.getDetail) ? err.getDetail() : err.message;
+
+        }
+
+        return {
+            statusCode,
+            output
+        };
+
+    }
+
+
+    /**
      * Accept Parser
      *
-     * Makes the server use the accept parse.  If
-     * options are not an array, uses the default
-     * restify options.  Returns this to make the
-     * method chainable.
+     * Makes the server use the accept parse. Returns 
+     * this to make the method chainable.
      *
      * If it's in strict mode then it must match
      * the accept header exactly.
@@ -351,18 +437,28 @@ export class Server extends Base {
      */
     public outputHandler (req: Object, res: Object, fn: () => any) : Promise<any> {
 
-        return new Promise(resolve => {
-
+        let task = (resolve: Function) => {
             resolve(fn());
+        };
 
-        }).then((data: any) => {
-            return this._strategy.outputHandler(null, data, req, res);
-        })
-        .catch((err: any) => {
-            this.emit("error_log", err);
+        return new Promise(task)
+            .then((data: any) => {
 
-            return this._strategy.outputHandler(err, null, req, res);
-        });
+                return this._parseData(data);
+
+            })
+            .catch((err: any) => {
+
+                this.emit("error_log", err);
+
+                return this._parseError(err);
+
+            })
+            .then(({statusCode, output}) => {
+
+                return this._strategy.outputHandler(statusCode, output, req, res);
+
+            });
 
     }
 

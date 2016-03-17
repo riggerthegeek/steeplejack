@@ -728,129 +728,271 @@ describe("Server tests", function () {
 
             beforeEach(function () {
 
+                this.req = {req: true, hello: () => {}};
+                this.res = {res: true, hello: () => {}};
+
                 this.stub = sinon.stub(this.serverStrategy, "outputHandler");
 
                 obj = new Server({
                     port: 8080
                 }, this.serverStrategy);
 
-            });
-
-            it("should dispatch to the strategy, resolving a promise", function () {
-
-                let req = {req: true, hello: () => { }};
-                let res = {res: true, hello: () => { }};
-
-                this.stub.returns("output");
-
-                return obj.outputHandler(req, res, () => {
-                        return "result";
-                    })
-                    .then((data: any) => {
-
-                        expect(data).to.be.equal("output");
-
-                        expect(this.stub).to.be.calledOnce
-                            .calledWithExactly(null, "result", req, res);
-
-                    });
+                this.emit = sinon.spy(obj, "emit");
 
             });
 
-            it("should dispatch to the strategy, rejecting a promise", function () {
+            describe("successful response", function () {
 
-                let req = {req: true, hello: () => { }};
-                let res = {res: true, hello: () => { }};
+                afterEach(function () {
+                    expect(this.emit).to.not.be.called;
+                });
 
-                let error = new Error("some message");
+                it("should dispatch to the strategy, resolving a promise", function () {
 
-                this.stub.rejects(error);
+                    this.stub.returns("output");
 
-                let listener = sinon.spy(obj, "emit");
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return "result";
+                        })
+                        .then((data:any) => {
 
-                return obj.outputHandler(req, res, () => {
-                    return new Promise((resolve: Function, reject: Function) => {
-                        reject("failed promise");
-                    });
-                })
-                    .then(() => {
-                        throw new Error("fail");
-                    })
-                    .catch((err: any) => {
+                            expect(data).to.be.equal("output");
 
-                        expect(err).to.be.equal(error);
-
-                        expect(listener).to.be.calledOnce
-                            .calledWithExactly("error_log", "failed promise");
-
-                        expect(this.stub).to.be.calledOnce
-                            .calledWithExactly("failed promise", null, req, res);
-
-                    });
-
-            });
-
-            it("should dispatch to the strategy, intercepting a promise", function (done) {
-
-                let req = {req: true, hello: () => { }};
-                let res = {res: true, hello: () => { }};
-
-                this.stub.returns("output");
-
-                return obj.outputHandler(req, res, () => {
-                    return new Promise((resolve) => {
-                        resolve("result");
-                    })
-                        .then((output: any) => {
-
-                            expect(output).to.be.equal("result");
-
-                            expect(this.stub).to.not.be.called;
-
-                            return output;
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(200, "result", this.req, this.res);
 
                         });
-                })
-                    .then((data: any) => {
 
-                        expect(data).to.be.equal("output");
+                });
 
-                        expect(this.stub).to.be.calledOnce
-                            .calledWithExactly(null, "result", req, res);
+                it("should return the status code and empty output", function () {
 
-                    })
-                    .then(done);
+                    this.stub.returns("output");
 
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return 201;
+                        })
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(201, void 0, this.req, this.res);
+
+                        });
+
+                });
+
+                it("should call the getData function", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return {
+                                getData: () => {
+                                    return "getDataOutput";
+                                }
+                            };
+                        })
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(200, "getDataOutput", this.req, this.res);
+
+                        });
+
+                });
+
+                it("should dispatch to the strategy, resolving a promise", function () {
+
+                    this.stub.rejects("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return "result";
+                        })
+                        .then(() => {
+                            throw new Error("invalid");
+                        })
+                        .catch((err: any) => {
+
+                            expect(err).to.be.instanceof(Error);
+                            expect(err.message).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(200, "result", this.req, this.res);
+
+                        });
+
+                });
             });
 
-            it("should dispatch to the strategy, throwing an error in a promise", function () {
+            describe("failed response", function () {
 
-                let req = {req: true, hello: () => { }};
-                let res = {res: true, hello: () => { }};
+                it("should dispatch to the strategy, resolving a promise", function () {
 
-                let error = new Error("oooops");
+                    this.stub.returns("output");
 
-                this.stub.rejects(error);
+                    let err = new Error("rejected");
 
-                let listener = sinon.spy(obj, "emit");
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(err);
+                        })
+                        .then((data:any) => {
 
-                return obj.outputHandler(req, res, () => {
-                        throw error;
-                    })
-                    .then((...args: any[]) => {
-                        throw new Error("invalid");
-                    })
-                    .catch((err: any) => {
+                            expect(data).to.be.equal("output");
 
-                        expect(err).to.be.equal(error);
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(500, "rejected", this.req, this.res);
 
-                        expect(listener).to.be.calledOnce
-                            .calledWithExactly("error_log", error);
+                            expect(this.emit).to.be.calledOnce
+                                .calledWithExactly("error_log", err);
 
-                        expect(this.stub).to.be.calledOnce
-                            .calledWithExactly(error, null, req, res);
+                        });
 
-                    });
+                });
+
+                it("should return the status code and empty output", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(506);
+                        })
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(506, void 0, this.req, this.res);
+
+                            expect(this.emit).to.be.calledOnce
+                                .calledWithExactly("error_log", 506);
+
+                        });
+
+                });
+
+                it("should handle a validation error - no errors", function () {
+
+                    this.stub.returns("output");
+
+                    let err = {
+                        type: "errcode",
+                        message: "errmessage",
+                        hasErrors: () => {
+                            return false;
+                        }
+                    };
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(err);
+                        })
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(400, {
+                                    code: "errcode",
+                                    message: "errmessage"
+                                }, this.req, this.res);
+
+                            expect(this.emit).to.be.calledOnce
+                                .calledWithExactly("error_log", err);
+
+                        });
+
+                });
+
+                it("should handle a validation error - some errors", function () {
+
+                    this.stub.returns("output");
+
+                    let err = {
+                        type: "errcode2",
+                        message: "errmessage2",
+                        getErrors: () => {
+                            return "err list";
+                        },
+                        hasErrors: () => {
+                            return true;
+                        }
+                    };
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(err);
+                        })
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(400, {
+                                    code: "errcode2",
+                                    message: "errmessage2",
+                                    error: "err list"
+                                }, this.req, this.res);
+
+                            expect(this.emit).to.be.calledOnce
+                                .calledWithExactly("error_log", err);
+
+                        });
+
+                });
+
+                it("should handle an ordinary error", function () {
+
+                    this.stub.returns("output");
+
+                    let err = new Error("uh-oh");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(err);
+                        })
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(500, "uh-oh", this.req, this.res);
+
+                            expect(this.emit).to.be.calledOnce
+                                .calledWithExactly("error_log", err);
+
+                        });
+
+                });
+
+                it("should handle an ordinary error - getHttpCode and getDetail methods", function () {
+
+                    this.stub.returns("output");
+
+                    let err = new Error("uh-oh crap");
+                    (<any> err).getHttpCode = () => {
+                        return 401;
+                    };
+                    (<any> err).getDetail = () => {
+                        return "detail";
+                    };
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(err);
+                        })
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(401, "detail", this.req, this.res);
+
+                            expect(this.emit).to.be.calledOnce
+                                .calledWithExactly("error_log", err);
+
+                        });
+
+                });
 
             });
 
