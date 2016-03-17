@@ -186,7 +186,7 @@ export class Server extends Base {
     /**
      * Accept Parser
      *
-     * Makes the server use the accept parse. Returns 
+     * Makes the server use the accept parse. Returns
      * this to make the method chainable.
      *
      * If it's in strict mode then it must match
