@@ -30,22 +30,12 @@ exports.Restify = class Restify
         @_inst = Bluebird.promisifyAll restify.createServer()
 
 
-    addRoute: (httpMethod, route, fn) ->
+    addRoute: (httpMethod, route, iterator) ->
 
-        @_inst[httpMethod.toLowerCase()] route, (request, response) =>
+        method = httpMethod.toLowerCase();
 
-            tasks = _.map fn, (task) =>
-
-                Bluebird.try =>
-
-                    task request, response
-
-            Bluebird.all tasks
-                .then (result) =>
-                    @outputHandler null, _.last(result), request, response
-                .catch (err) =>
-                    @outputHandler err, null, request, response
-
+        @_inst[method] route, (req, res) =>
+            iterator req, res
 
 
     bodyParser: ->
@@ -64,57 +54,11 @@ exports.Restify = class Restify
         @use restify.gzipResponse()
 
 
-    outputHandler: (err, data, req, res) ->
-
-        statusCode = 200
-        output = null
-
-        if err
-
-            # Convert to a Restify error and process
-            if err > 100 && err < 600
-                statusCode = err
-            else if err instanceof restify.RestError
-
-                # Already a RestError - use it
-                statusCode = err.statusCode
-                output = err
-
-            else if err instanceof ValidationException
-
-                # A steeplejack validation error
-                statusCode = 400
-                output =
-                    code: err.type,
-                    message: err.message
-
-
-                if err.hasErrors()
-                    output.error = err.getErrors()
-
-            else
-
-                # Convert to a restify-friendly error
-                statusCode = if _.isFunction err.getHttpCode then err.getHttpCode() else 500
-                output = if _.isFunction err.getDetail then err.getDetail() else err.message
-
-        else if data
-
-            # Success
-            if data > 100 && data < 600
-                statusCode = data
-            else if _.isFunction data.getData
-                output = data.getData()
-            else
-                output = data
-
-        else
-
-            # No content
-            statusCode = 204
+    outputHandler: (statusCode, data, req, res) ->
 
         # Push the output
-        res.send statusCode, output
+        res.send statusCode, data
+
 
 
     queryParser: (mapParams) ->

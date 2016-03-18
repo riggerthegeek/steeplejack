@@ -31,30 +31,12 @@ exports.Restify = Base.extend({
     },
 
 
-    addRoute: function (httpMethod, route, fn) {
+    addRoute: function (httpMethod, route, iterator) {
 
-        var self = this;
+        var method = httpMethod.toLowerCase();
 
-        self._inst[httpMethod.toLowerCase()](route, function (request, response) {
-
-            var tasks = _.map(fn, function (task) {
-
-                return Bluebird.try(function () {
-
-                    return task(request, response);
-
-                });
-
-            });
-
-            Bluebird.all(tasks)
-                .then(function (result) {
-                    self.outputHandler(null, _.last(result), request, response);
-                })
-                .catch(function (err) {
-                    self.outputHandler(err, null, request, response);
-                });
-
+        this._inst[method](route, function (req, res) {
+            iterator(req, res);
         });
 
     },
@@ -80,61 +62,10 @@ exports.Restify = Base.extend({
     },
 
 
-    outputHandler: function (err, data, req, res) {
-
-        var statusCode = 200;
-        var output;
-
-        if (err) {
-
-            /* Convert to a Restify error and process */
-            if (err > 100 && err < 600) {
-                statusCode = err;
-            } else if (err instanceof restify.RestError) {
-
-                /* Already a RestError - use it */
-                statusCode = err.statusCode;
-                output = err;
-
-            } else if (err instanceof ValidationException) {
-
-                /* A steeplejack validation error */
-                statusCode = 400;
-                output = {
-                    code: err.type,
-                    message: err.message
-                };
-
-                if (err.hasErrors()) {
-                    output.error = err.getErrors();
-                }
-
-            } else {
-
-                /* Convert to a restify-friendly error */
-                statusCode = _.isFunction(err.getHttpCode) ? err.getHttpCode() : 500;
-                output = _.isFunction(err.getDetail) ? err.getDetail() : err.message;
-
-            }
-
-        } else if (data) {
-
-            /* Success */
-            if (data > 100 && data < 600) {
-                statusCode = data;
-            } else if (_.isFunction(data.getData)) {
-                output = data.getData();
-            } else {
-                output = data;
-            }
-
-        } else {
-            /* No content */
-            statusCode = 204;
-        }
+    outputHandler: function (statusCode, data, req, res) {
 
         /* Push the output */
-        res.send(statusCode, output);
+        res.send(statusCode, data);
 
     },
 
