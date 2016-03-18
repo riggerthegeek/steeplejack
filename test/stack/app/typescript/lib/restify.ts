@@ -87,61 +87,10 @@ export class Restify extends Base implements IServerStrategy {
     }
 
 
-    outputHandler (err: any, data: any, req: any, res: any) {
-
-        var statusCode = 200;
-        var output: any;
-
-        if (err) {
-
-            /* Convert to a Restify error and process */
-            if (err > 100 && err < 600) {
-                statusCode = err;
-            } else if (err instanceof restify.RestError) {
-
-                /* Already a RestError - use it */
-                statusCode = err.statusCode;
-                output = err;
-
-            } else if (err instanceof ValidationException) {
-
-                /* A steeplejack validation error */
-                statusCode = 400;
-                output = {
-                    code: err.type,
-                    message: err.message
-                };
-
-                if (err.hasErrors()) {
-                    output.error = err.getErrors();
-                }
-
-            } else {
-
-                /* Convert to a restify-friendly error */
-                statusCode = _.isFunction(err.getHttpCode) ? err.getHttpCode() : 500;
-                output = _.isFunction(err.getDetail) ? err.getDetail() : err.message;
-
-            }
-
-        } else if (data) {
-
-            /* Success */
-            if (data > 100 && data < 600) {
-                statusCode = data;
-            } else if (_.isFunction(data.getData)) {
-                output = data.getData();
-            } else {
-                output = data;
-            }
-
-        } else {
-            /* No content */
-            statusCode = 204;
-        }
+    outputHandler (statusCode: Number, data: any, req: any, res: any) {
 
         /* Push the output */
-        res.send(statusCode, output);
+        res.send(statusCode, data);
 
     }
 
