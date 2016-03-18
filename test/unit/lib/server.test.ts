@@ -30,7 +30,7 @@ describe("Server tests", function () {
         class Strategy extends EventEmitter implements IServerStrategy {
             acceptParser (options: any, strict: boolean) { }
 
-            addRoute (httpMethod: string, route: string, fn: Function[]) { }
+            addRoute (httpMethod: string, route: string, iterator: (request: any, response: any) => Promise<any>) { }
 
             after (fn: Function) { }
 
@@ -268,7 +268,7 @@ describe("Server tests", function () {
                     expect(emitted).to.be.true;
 
                     expect(this.spy).to.be.callCount(++i)
-                        .calledWithExactly(httpMethod, "/route", [fn]);
+                        .calledWith(httpMethod, "/route");
 
                 });
 
@@ -322,7 +322,7 @@ describe("Server tests", function () {
                     expect(emitted).to.be.true;
 
                     expect(this.spy).to.be.callCount(++i)
-                        .calledWithExactly(httpMethod, "/route", fn);
+                        .calledWith(httpMethod, "/route");
 
                 });
 
@@ -361,7 +361,7 @@ describe("Server tests", function () {
                 expect(this.spy).to.be.callCount(methods.length);
 
                 methods.forEach((method) => {
-                    expect(this.spy).to.be.calledWithExactly(method, "/route", [fn]);
+                    expect(this.spy).to.be.calledWith(method, "/route");
                 });
 
             });
@@ -391,20 +391,31 @@ describe("Server tests", function () {
 
             beforeEach(function () {
 
-                this.spy = sinon.spy(this.serverStrategy, "addRoute");
+                this.addRoute = sinon.stub(this.serverStrategy, "addRoute");
+                this.strategyOutput = sinon.spy(this.serverStrategy, "outputHandler");
 
                 obj = new Server({
                     port: 8080
                 }, this.serverStrategy);
 
+                this.outputHandler = sinon.spy(obj, "outputHandler");
+
             });
 
-            it("should go through an objects of objects, passing to the strategy", function () {
+            it("should go through an objects of objects, passing to the strategy", function (done: any) {
 
-                var fn1 = function () {};
-                var fn2 = function () {};
-                var fn3 = function () {};
-                var fn4 = function () {};
+                var fn1 = function () {
+                    return "fn1";
+                };
+                var fn2 = function () {
+                    return "fn2";
+                };
+                var fn3 = function () {
+                    return "fn3";
+                };
+                var fn4 = function () {
+                    return "fn4";
+                };
 
                 var arr = [fn3, fn4];
 
@@ -432,14 +443,37 @@ describe("Server tests", function () {
 
                 });
 
+                let req = {
+                    req: true
+                };
+                let res = {
+                    res: true
+                };
+
+                this.addRoute.yields(req, res);
+
                 expect(obj.addRoutes(routes)).to.be.equal(obj);
 
                 expect(count).to.be.equal(3);
 
-                expect(this.spy).to.be.calledThrice
-                    .calledWith("GET", "/test", [fn1])
-                    .calledWith("POST", "/test", [fn2])
-                    .calledWith("DELETE", "/test/example", arr);
+                expect(this.outputHandler).to.be.calledThrice
+                    .calledWith(req, res);
+
+                expect(this.addRoute).to.be.calledThrice
+                    .calledWith("GET", "/test")
+                    .calledWith("POST", "/test")
+                    .calledWith("DELETE", "/test/example");
+
+                setTimeout(() => {
+
+                    expect(this.strategyOutput).to.be.calledThrice
+                        .calledWithExactly(200, "fn1", req, res)
+                        .calledWithExactly(200, "fn2", req, res)
+                        .calledWithExactly(200, "fn4", req, res);
+
+                    done();
+
+                }, 10);
 
             });
 
@@ -463,7 +497,7 @@ describe("Server tests", function () {
 
                 expect(count).to.be.equal(0);
 
-                expect(this.spy).to.not.be.called;
+                expect(this.addRoute).to.not.be.called;
 
             });
 
@@ -473,7 +507,7 @@ describe("Server tests", function () {
 
                 obj.addRoutes(routes);
 
-                expect(this.spy).to.not.be.called;
+                expect(this.addRoute).to.not.be.called;
 
             });
 
@@ -1047,7 +1081,7 @@ describe("Server tests", function () {
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
                     use (fn: Function | Function[]) { }
-                    addRoute (httpMethod: string, route: string, fn: Function[]) {}
+                    addRoute (httpMethod: string, route: string, iterator: (request: any, response: any) => Promise<any>) { }
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
@@ -1094,7 +1128,7 @@ describe("Server tests", function () {
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
                     use (fn: Function | Function[]) { }
-                    addRoute (httpMethod: string, route: string, fn: Function[]) {}
+                    addRoute (httpMethod: string, route: string, iterator: (request: any, response: any) => Promise<any>) { }
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {
@@ -1143,7 +1177,7 @@ describe("Server tests", function () {
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
                     use (fn: Function | Function[]) { }
-                    addRoute (httpMethod: string, route: string, fn: Function[]) {}
+                    addRoute (httpMethod: string, route: string, iterator: (request: any, response: any) => Promise<any>) { }
                     getServer () : Object { return {}; }
                     outputHandler (err: any, data: any, req: Object, res: Object) { }
                     start (port: number, hostname: string, backlog: number) {

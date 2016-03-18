@@ -96,6 +96,51 @@ export class Server extends Base {
 
 
     /**
+     * Add Route
+     *
+     * Adds the route to the strategy and configures
+     * the output ready for use by the output handler
+     *
+     * @param {string} httpMethod
+     * @param {string} route
+     * @param {Function[]} routeFn
+     * @private
+     */
+    protected _addRoute (httpMethod: string, route: string, routeFn: Function[]) {
+
+        this._strategy.addRoute(httpMethod, route, (request: any, response: any) => {
+
+            let tasks: Promise<any>[] = _.map(routeFn, (task: Function) => {
+
+                return new Promise((resolve) => {
+
+                    /* Invoke the function */
+                    let result = task(request, response);
+
+                    /* Resolve the result */
+                    resolve(result);
+
+                });
+
+            });
+
+            /* Use the outputHandler method to output */
+            return this.outputHandler(request, response, () => {
+
+                return Promise.all(tasks)
+                    .then((result: any) => {
+                        /* Return the last result from the tasks as the output */
+                        return _.last(result);
+                    });
+
+            });
+
+        });
+
+    }
+
+
+    /**
      * Parse Data
      *
      * Parses the data output
@@ -269,7 +314,7 @@ export class Server extends Base {
             ];
         }
 
-        this._strategy.addRoute(httpMethod, route, routeFn);
+        this._addRoute(httpMethod, route, routeFn);
 
         return this;
 

@@ -9,6 +9,7 @@
 
 
 /* Third-party modules */
+import {Promise} from "es6-promise";
 
 
 /* Files */
@@ -16,7 +17,7 @@
 
 export interface IServerStrategy extends NodeJS.EventEmitter {
     acceptParser: (options: string[], strict: boolean) => void;
-    addRoute: (httpMethod: string, route: string, fn: Function[]) => any;
+    addRoute: (httpMethod: string, route: string, iterator: (request: any, response: any) => Promise<any>) => void;
     after: (fn: Function) => void;
     before: (fn: Function) => void;
     bodyParser: () => void;

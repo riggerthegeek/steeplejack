@@ -40,28 +40,10 @@ export class Restify extends Base implements IServerStrategy {
     enableCORS: (origins: string[], addHeaders: string[]) => void;
 
 
-    addRoute (httpMethod: string, route: string, fn: Function[]) {
+    addRoute (httpMethod: string, route: string, iterator: (req: any, res: any) => any) {
 
-        this._inst[httpMethod.toLowerCase()](route, (request: any, response: any) => {
-
-            let tasks: any[] = _.map(fn, (task: Function) => {
-
-                return Bluebird.try(() => {
-
-                    return task(request, response);
-
-                });
-
-            });
-
-            Bluebird.all(tasks)
-                .then((result: any[]) => {
-                    this.outputHandler(null, _.last(result), request, response);
-                })
-                .catch((err: any) => {
-                    this.outputHandler(err, null, request, response);
-                });
-
+        this._inst.get(route, (req: any, res: any) => {
+            iterator(req, res);
         });
 
     }
