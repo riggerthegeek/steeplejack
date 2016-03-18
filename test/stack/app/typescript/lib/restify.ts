@@ -42,7 +42,9 @@ export class Restify extends Base implements IServerStrategy {
 
     addRoute (httpMethod: string, route: string, iterator: (req: any, res: any) => any) {
 
-        this._inst.get(route, (req: any, res: any) => {
+        let method = httpMethod.toLowerCase();
+
+        this._inst[method](route, (req: any, res: any) => {
             iterator(req, res);
         });
 
