@@ -23,7 +23,7 @@ import {Base} from "./base";
 import {IAddRoutes} from "../interfaces/addRoutes";
 import {IServerOptions} from "../interfaces/serverOptions";
 import {IServerStrategy} from "../interfaces/serverStrategy";
-import {ServerResponse} from "http";
+import {ISocketStrategy} from "../interfaces/socketStrategy";
 
 
 export class Server extends Base {
@@ -51,28 +51,6 @@ export class Server extends Base {
 
 
     /**
-     * Options received by the constructor
-     *
-     * @type {object}
-     * @private
-     */
-    protected _options: {
-        port?: number;
-        hostname?: string;
-        backlog?: number;
-    } = {};
-
-
-    /**
-     * The strategy instance
-     *
-     * @type {IServerStrategy}
-     * @private
-     */
-    protected _strategy: IServerStrategy;
-
-
-    /**
      * Constructor
      *
      * Assigns options and the strategy object
@@ -80,17 +58,16 @@ export class Server extends Base {
      * @param {IServerOptions} options
      * @param {IServerStrategy} strategy
      */
-    public constructor (options: IServerOptions, strategy: IServerStrategy) {
+    public constructor (
+        protected _options: IServerOptions,
+        protected _strategy: IServerStrategy,
+        protected _socket: ISocketStrategy = null) {
 
         super();
 
-        if (_.isObject(strategy) === false) {
+        if (_.isObject(this._strategy) === false) {
             throw new SyntaxError("Server strategy object is required");
         }
-
-        /* Assign options and strategy */
-        this._options = options;
-        this._strategy = strategy;
 
     }
 
