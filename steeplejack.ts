@@ -35,6 +35,7 @@ import {IConfig} from "./interfaces/config";
 import {IFactory} from "./interfaces/factory";
 import {IOutput} from "./interfaces/output";
 import {IPlugin} from "./interfaces/plugin";
+import {IProcessedRoutes} from "./interfaces/processedRoutes";
 import {ISingleton} from "./interfaces/singleton";
 
 
@@ -107,6 +108,16 @@ export class Steeplejack extends Base {
      * The server object
      */
     public server: any;
+
+
+    /**
+     * Sockets
+     *
+     * The processed sockets.
+     *
+     * @type {Array}
+     */
+    public sockets: string[] = [];
 
 
     /**
@@ -198,21 +209,36 @@ export class Steeplejack extends Base {
      * Processes the routes and puts them into
      * the Routes library
      *
-     * @returns {Router}
+     * @returns {IProcessedRoutes}
      * @private
      */
-    protected _processRoutes () {
+    protected _processRoutes () : IProcessedRoutes {
 
-        let routes = _.reduce(this._routes, (result: any, fn: Function, name: string) => {
+        let types = [
+            "route",
+            "socket"
+        ];
 
-            result[name] = this.injector.process(fn);
+        let data = _.reduce(this._routes, (result: any, value: any, name: string) => {
+
+            _.each(types, (type: string) => {
+                if (value[type]) {
+                    result[type][name] = this.injector.process(value[type]);
+                }
+            });
 
             return result;
 
-        }, {});
+        }, {
+            route: {},
+            socket: {}
+        });
 
         /* Put into a Router object and return */
-        return new Router(routes);
+        return {
+            routes: new Router(data.route),
+            sockets: new Router(data.socket)
+        };
 
     }
 
@@ -489,15 +515,20 @@ export class Steeplejack extends Base {
         }
 
         /* Process the routes */
-        let routes = this._processRoutes();
+        let processedRoutes: IProcessedRoutes = this._processRoutes();
 
         /* Get list of routes */
-        this.server.on("routeAdded", (httpMethod: string, route: string) => {
-            this.routes.push(`${httpMethod}:${route}`);
-        });
+        this.server
+            .on("routeAdded", (httpMethod: string, route: string) => {
+                this.routes.push(`${httpMethod}:${route}`);
+            })
+            .on("socketAdded", (socketName: string) => {
+                this.sockets.push(socketName);
+            });
 
         /* Add in the routes to the server */
-        this.server.addRoutes(routes.getRoutes());
+        this.server
+            .addRoutes(processedRoutes.routes.getRoutes());
 
         /* Listen for close events */
         this.on("close", () => {
