@@ -243,6 +243,8 @@ describe("Router test", function () {
                         "/path/to/dir/endpoint/index": "/path/to/dir/endpoint",
                         "/path/to/dir/dir": "/path/to/dir/endpoint",
                         "/path/to/dir/index": "/path/to/dir",
+                        "/path/to/dir/route/only": "/path/to/dir/route/only",
+                        "/path/to/dir/socket/only": "/path/to/dir/socket/only",
                         "/no/route": "/path/to/dir",
                         "/no/route/fn": "/path/to/dir"
                     }, (result: any, value: string, key: string) => {
@@ -251,11 +253,27 @@ describe("Router test", function () {
                             result[key] = value;
                         } else if (key === "/no/route/fn") {
                             result[key] = {
-                                route: value
+                                route: value,
+                                socket: value
+                            };
+                        } else if (key === "/path/to/dir/route/only") {
+                            result[key] = {
+                                route: () => {
+                                    return value;
+                                }
+                            };
+                        } else if (key === "/path/to/dir/socket/only") {
+                            result[key] = {
+                                socket: () => {
+                                    return value;
+                                }
                             };
                         } else {
                             result[key] = {
                                 route: () => {
+                                    return value;
+                                },
+                                socket: () => {
                                     return value;
                                 }
                             };
@@ -269,7 +287,7 @@ describe("Router test", function () {
 
                 });
 
-                it("should throw an error if no route element", function () {
+                it("should throw an error if no route or socket element", function () {
 
                     let fail = false;
 
@@ -283,7 +301,7 @@ describe("Router test", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("A route file must have a function on exports.route");
+                        expect(err.message).to.be.equal("A route file must have a function on exports.route or exports.socket");
 
                     } finally {
                         expect(fail).to.be.true;
@@ -291,7 +309,7 @@ describe("Router test", function () {
 
                 });
 
-                it("should throw an error if no route function", function () {
+                it("should throw an error if no route or socket function", function () {
 
                     let fail = false;
 
@@ -305,7 +323,7 @@ describe("Router test", function () {
                         fail = true;
 
                         expect(err).to.be.instanceof(TypeError);
-                        expect(err.message).to.be.equal("A route file must have a function on exports.route");
+                        expect(err.message).to.be.equal("A route file must have a function on exports.route or exports.socket");
 
                     } finally {
                         expect(fail).to.be.true;
@@ -316,6 +334,12 @@ describe("Router test", function () {
                 it("should discover an array of routes and return back the object", function () {
 
                     let files = [{
+                        name: "route/only",
+                        path: "/path/to/dir"
+                    }, {
+                        name: "socket/only",
+                        path: "/path/to/dir"
+                    }, {
                         name: "v1_0/path/dir/endpoint",
                         path: "/path/to/dir"
                     }, {
@@ -347,6 +371,8 @@ describe("Router test", function () {
                     var obj = this.router.discoverRoutes(files);
 
                     expect(obj).to.have.keys([
+                        "route/only",
+                        "socket/only",
                         "v1_0/path/dir/endpoint",
                         "v1-0/path/dir/endpoint",
                         "v1.0/path/dir/endpoint",
@@ -358,15 +384,38 @@ describe("Router test", function () {
                         ""
                     ]);
 
-                    expect(obj["v1_0/path/dir/endpoint"]()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
-                    expect(obj["v1-0/path/dir/endpoint"]()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
-                    expect(obj["v1.0/path/dir/endpoint"]()).to.be.equal("/path/to/dir/v1.0/path/dir/endpoint");
-                    expect(obj["dir/endpoint"]()).to.be.equal("/path/to/dir/dir/endpoint");
-                    expect(obj["dir/endpoint2/twitter"]()).to.be.equal("/path/to/dir/dir/hello");
-                    expect(obj["dir/endpoint2"]()).to.be.equal("/path/to/dir/dir/index");
-                    expect(obj["endpoint"]()).to.be.equal("/path/to/dir/endpoint");
-                    expect(obj["dir"]()).to.be.equal("/path/to/dir/endpoint");
-                    expect(obj[""]()).to.be.equal("/path/to/dir");
+                    expect(obj["route/only"].route()).to.be.equal("/path/to/dir/route/only");
+                    expect(obj["route/only"].socket).to.be.null;
+
+                    expect(obj["socket/only"].route).to.be.null;
+                    expect(obj["socket/only"].socket()).to.be.equal("/path/to/dir/socket/only");
+
+                    expect(obj["v1_0/path/dir/endpoint"].route()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
+                    expect(obj["v1_0/path/dir/endpoint"].socket()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
+
+                    expect(obj["v1-0/path/dir/endpoint"].route()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
+                    expect(obj["v1-0/path/dir/endpoint"].socket()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
+
+                    expect(obj["v1.0/path/dir/endpoint"].route()).to.be.equal("/path/to/dir/v1.0/path/dir/endpoint");
+                    expect(obj["v1.0/path/dir/endpoint"].socket()).to.be.equal("/path/to/dir/v1.0/path/dir/endpoint");
+
+                    expect(obj["dir/endpoint"].route()).to.be.equal("/path/to/dir/dir/endpoint");
+                    expect(obj["dir/endpoint"].socket()).to.be.equal("/path/to/dir/dir/endpoint");
+
+                    expect(obj["dir/endpoint2/twitter"].route()).to.be.equal("/path/to/dir/dir/hello");
+                    expect(obj["dir/endpoint2/twitter"].socket()).to.be.equal("/path/to/dir/dir/hello");
+
+                    expect(obj["dir/endpoint2"].route()).to.be.equal("/path/to/dir/dir/index");
+                    expect(obj["dir/endpoint2"].socket()).to.be.equal("/path/to/dir/dir/index");
+
+                    expect(obj["endpoint"].route()).to.be.equal("/path/to/dir/endpoint");
+                    expect(obj["endpoint"].socket()).to.be.equal("/path/to/dir/endpoint");
+
+                    expect(obj["dir"].route()).to.be.equal("/path/to/dir/endpoint");
+                    expect(obj["dir"].socket()).to.be.equal("/path/to/dir/endpoint");
+
+                    expect(obj[""].route()).to.be.equal("/path/to/dir");
+                    expect(obj[""].socket()).to.be.equal("/path/to/dir");
 
                 });
 
@@ -390,6 +439,7 @@ describe("Router test", function () {
                     this.routes = {
                         es6: {
                             childRoute: require(path.join(process.cwd(), "test/routes/child/route.es6")).route,
+                            childRouteSocket: require(path.join(process.cwd(), "test/routes/child/route.es6")).socket,
                             child: require(path.join(process.cwd(), "test/routes/child/index.es6")).route,
                             endpoint: require(path.join(process.cwd(), "test/routes/endpoint.es6")).route,
                             index: require(path.join(process.cwd(), "test/routes/index.es6")).route,
@@ -397,6 +447,7 @@ describe("Router test", function () {
                         },
                         js: {
                             childRoute: require(path.join(process.cwd(), "test/routes/child/route.js")).route,
+                            childRouteSocket: require(path.join(process.cwd(), "test/routes/child/route.js")).socket,
                             child: require(path.join(process.cwd(), "test/routes/child/index.js")).route,
                             endpoint: require(path.join(process.cwd(), "test/routes/endpoint.js")).route,
                             index: require(path.join(process.cwd(), "test/routes/index.js")).route,
@@ -413,11 +464,26 @@ describe("Router test", function () {
                     let obj = Router.discoverRoutes(files);
 
                     expect(obj).to.be.eql({
-                        "child/route": this.routes.js.childRoute,
-                        child: this.routes.js.child,
-                        endpoint: this.routes.js.endpoint,
-                        route: this.routes.js.route,
-                        "": this.routes.js.index
+                        "child/route": {
+                            route: this.routes.js.childRoute,
+                            socket: this.routes.js.childRouteSocket
+                        },
+                        child: {
+                            route: this.routes.js.child,
+                            socket: null
+                        },
+                        endpoint: {
+                            route: this.routes.js.endpoint,
+                            socket: null
+                        },
+                        route: {
+                            route: this.routes.js.route,
+                            socket: null
+                        },
+                        "": {
+                            route: this.routes.js.index,
+                            socket: null
+                        }
                     });
 
                 });
@@ -429,11 +495,26 @@ describe("Router test", function () {
                     let obj = Router.discoverRoutes(files);
 
                     expect(obj).to.be.eql({
-                        "child/route": this.routes.es6.childRoute,
-                        child: this.routes.es6.child,
-                        endpoint: this.routes.es6.endpoint,
-                        route: this.routes.es6.route,
-                        "": this.routes.es6.index
+                        "child/route": {
+                            route: this.routes.es6.childRoute,
+                            socket: this.routes.es6.childRouteSocket
+                        },
+                        child: {
+                            route: this.routes.es6.child,
+                            socket: null
+                        },
+                        endpoint: {
+                            route: this.routes.es6.endpoint,
+                            socket: null
+                        },
+                        route: {
+                            route: this.routes.es6.route,
+                            socket: null
+                        },
+                        "": {
+                            route: this.routes.es6.index,
+                            socket: null
+                        }
                     });
 
                 });

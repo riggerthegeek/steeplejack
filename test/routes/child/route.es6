@@ -19,3 +19,9 @@ exports.route = function () {
     return "route.es6";
 
 };
+
+exports.socket = function () {
+    
+    return "socket.es6";
+
+};

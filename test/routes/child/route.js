@@ -19,3 +19,9 @@ exports.route = function () {
     return "route.js";
 
 };
+
+exports.socket = function () {
+
+    return "socket.js";
+
+};

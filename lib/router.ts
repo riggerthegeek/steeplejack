@@ -190,12 +190,15 @@ export class Router extends Base {
                 /* Load the route file */
                 let objRoute = require(path.join(file.path, file.name));
 
-                if (_.isFunction(objRoute.route) === false) {
-                    throw new TypeError("A route file must have a function on exports.route");
+                if (_.isFunction(objRoute.route) === false && _.isFunction(objRoute.socket) === false) {
+                    throw new TypeError("A route file must have a function on exports.route or exports.socket");
                 }
 
                 /* Put in stack */
-                result[tmp] = objRoute.route;
+                result[tmp] = {
+                    route: objRoute.route || null,
+                    socket: objRoute.socket || null
+                };
 
             }
 
