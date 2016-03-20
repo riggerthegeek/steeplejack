@@ -58,10 +58,7 @@ export class Server extends Base {
      * @param {IServerOptions} options
      * @param {IServerStrategy} strategy
      */
-    public constructor (
-        protected _options: IServerOptions,
-        protected _strategy: IServerStrategy,
-        protected _socket: ISocketStrategy = null) {
+    public constructor (protected _options: IServerOptions, protected _strategy: IServerStrategy) {
 
         super();
 

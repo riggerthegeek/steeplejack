@@ -483,10 +483,12 @@ describe("Steeplejack test", function () {
                 this.server = {
                     addRoutes: sinon.spy(),
                     close: sinon.spy(),
-                    on: sinon.spy(),
+                    on: sinon.stub(),
                     outputHandler: sinon.spy(),
                     start: sinon.stub()
                 };
+
+                this.server.on.returns(this.server);
 
                 this.getComponent = sinon.stub();
                 this.registerSingleton = sinon.spy();
@@ -536,7 +538,9 @@ describe("Steeplejack test", function () {
                 ];
 
                 (<any> this.obj)._routes = {
-                    "/route": "routeFn"
+                    "/route": {
+                        route: "routeFn"
+                    }
                 };
 
                 /* Wait for the start emitter */
@@ -597,7 +601,9 @@ describe("Steeplejack test", function () {
                 ];
 
                 (<any> this.obj)._routes = {
-                    "/route": "routeFn"
+                    "/route": {
+                        route: "routeFn"
+                    }
                 };
 
                 /* Wait for the start emitter */
@@ -739,7 +745,9 @@ describe("Steeplejack test", function () {
                 ];
 
                 (<any> this.obj)._routes = {
-                    "/route": "routeFn"
+                    "/route": {
+                        route: "routeFn"
+                    }
                 };
 
                 /* Wait for the start emitter */
