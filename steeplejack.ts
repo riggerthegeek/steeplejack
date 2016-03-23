@@ -15,8 +15,8 @@ import * as path from "path";
 
 
 /* Third-party modules */
-let _ = require("lodash");
-let isAbsolute = require("path-is-absolute");
+import * as _ from "lodash";
+const isAbsolute = require("path-is-absolute");
 import {Promise} from "es6-promise";
 import {sync as glob} from "glob";
 import * as yargs from "yargs";
