@@ -20,7 +20,6 @@ let restify = require("restify");
 /* Files */
 import {Base} from "../../../../../lib/base";
 import {IServerStrategy} from "../../../../../interfaces/serverStrategy";
-import {ValidationException} from "../../../../../exception/validation/index";
 
 
 export class Restify extends Base implements IServerStrategy {
@@ -58,6 +57,11 @@ export class Restify extends Base implements IServerStrategy {
 
     close () {
         this._inst.close();
+    }
+
+
+    getRawServer () {
+        return this._inst.server;
     }
 
 

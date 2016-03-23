@@ -23,6 +23,7 @@ export interface IServerStrategy extends NodeJS.EventEmitter {
     bodyParser: () => void;
     close: () => void;
     enableCORS: (origins: string[], addHeaders: string[]) => void;
+    getRawServer?: () => Object;
     getServer: () => Object;
     gzipResponse: () => void;
     outputHandler: (statusCode: Number, data: any, request: any, result: any) => any;

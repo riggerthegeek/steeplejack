@@ -45,3 +45,34 @@ export let route = ($userController: any) => {
     };
 
 };
+
+
+export let socket = () => {
+
+    return {
+
+        connect: [
+            (request: any) => {
+
+                console.log(request);
+
+            }
+        ],
+
+        chat: [
+            (request: any) => {
+
+                return 222;
+                
+            },
+            (value: Number) => {
+                
+                console.log(value);
+                process.exit();
+                
+            }
+        ]
+
+    };
+
+};

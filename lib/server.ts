@@ -1,10 +1,14 @@
-import {IncomingMessage} from "http";
 /**
  * Server
  *
  * The context of a strategy pattern. It receives
  * the strategy object and dispatches to that for
  * the individual calls.
+ *
+ * It creates and manages the HTTP connection. If
+ * configured to do so, it will also create an
+ * instance of a socket connection as a child of the
+ * HTTP server.
  */
 
 "use strict";
@@ -21,9 +25,11 @@ import {Promise} from "es6-promise";
 /* Files */
 import {Base} from "./base";
 import {IAddRoutes} from "../interfaces/addRoutes";
+import {IAddSocket} from "../interfaces/addSocket";
 import {IServerOptions} from "../interfaces/serverOptions";
 import {IServerStrategy} from "../interfaces/serverStrategy";
 import {ISocketStrategy} from "../interfaces/socketStrategy";
+import {Socket} from "./socket";
 
 
 export class Server extends Base {
@@ -51,19 +57,44 @@ export class Server extends Base {
 
 
     /**
+     * Socket
+     *
+     * This is the instance of the socket connection.
+     * Designed to be a child of the HTTP server, running
+     * off the same port and instance.
+     *
+     * @type {Socket}
+     * @private
+     */
+    protected _socket: Socket = null;
+
+
+    /**
      * Constructor
      *
      * Assigns options and the strategy object
      *
-     * @param {IServerOptions} options
-     * @param {IServerStrategy} strategy
+     * @param {IServerOptions} _options
+     * @param {IServerStrategy} _strategy
+     * @param {ISocketStrategy} socket
      */
-    public constructor (protected _options: IServerOptions, protected _strategy: IServerStrategy) {
+    public constructor (
+        protected _options: IServerOptions,
+        protected _strategy: IServerStrategy,
+        socket: ISocketStrategy = null
+    ) {
 
         super();
 
         if (_.isObject(this._strategy) === false) {
             throw new SyntaxError("Server strategy object is required");
+        }
+
+        /* Optional - create a socket server */
+        if (socket) {
+            socket.createSocket(this._strategy);
+
+            this._socket = new Socket(socket);
         }
 
     }
@@ -321,6 +352,37 @@ export class Server extends Base {
                     });
 
                 }
+
+            });
+
+        }
+
+        return this;
+
+    }
+
+
+    /**
+     * Add Sockets
+     *
+     * Adds namespaces and events to the socket
+     * instance. If there's no socket server
+     * configured, it won't add anything.
+     *
+     * @param {IAddRoutes} sockets
+     * @returns {Server}
+     */
+    public addSockets (sockets: IAddRoutes) : Server {
+
+        /* Only add if a socket connection */
+        if (this._socket !== null) {
+
+            _.each(sockets, (events: IAddSocket, namespace: string) => {
+                this._socket
+                    .namespace(namespace, events)
+                    .on("socketAdded", (nsp: string, event: string) => {
+                        this.emit("socketAdded", nsp, event);
+                    });
 
             });
 

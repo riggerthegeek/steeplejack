@@ -521,11 +521,15 @@ export class Steeplejack extends Base {
         this.server
             .on("routeAdded", (httpMethod: string, route: string) => {
                 this.routes.push(`${httpMethod}:${route}`);
+            })
+            .on("socketAdded", (socketName: string, event: string) => {
+                this.sockets.push(`${socketName}:${event}`);
             });
 
         /* Add in the routes to the server */
         this.server
-            .addRoutes(processedRoutes.routes.getRoutes());
+            .addRoutes(processedRoutes.routes.getRoutes())
+            .addSockets(processedRoutes.sockets.getRoutes());
 
         /* Listen for close events */
         this.on("close", () => {
