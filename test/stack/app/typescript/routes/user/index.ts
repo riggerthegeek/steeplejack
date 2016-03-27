@@ -12,6 +12,7 @@
 
 
 /* Files */
+import {ISocketRequest} from "../../../../../../interfaces/socketRequest";
 
 
 export let route = ($userController: any) => {
@@ -51,27 +52,27 @@ export let socket = () => {
 
     return {
 
-        connect: [
-            (request: any) => {
-
-                console.log(request);
-
+        __middleware: [
+            () => {
+                console.log(2222)
             }
         ],
 
-        chat: [
-            (request: any) => {
+        connect: () => {
 
-                return 222;
-                
-            },
-            (value: Number) => {
-                
-                console.log(value);
-                process.exit();
-                
-            }
-        ]
+        },
+
+        chat: (socket: ISocketRequest) => {
+
+            socket.joinChannel("bumTitty");
+
+            socket.broadcast({
+                event: "chat",
+                target: "bumTitty",
+                data: [22, 33, 44]
+            });
+
+        }
 
     };
 

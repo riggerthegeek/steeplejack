@@ -20,7 +20,7 @@ var socket = io("http://localhost:3003/user");
 
 socket.on("connect", function () {
 
-    console.log("connected");
+    console.log("connected %s", new Date());
 
     socket.emit("chat", "you", "utter", "twat");
 
@@ -29,5 +29,9 @@ socket.on("connect", function () {
 socket.on("chat", function () {
 
     console.log("chat");
+
+    console.log("---");
+    console.log(arguments);
+    console.log("---");
 
 });

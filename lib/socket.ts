@@ -18,8 +18,15 @@ import {Promise} from "es6-promise";
 
 /* Files */
 import {Base} from "./base";
+import {SocketRequest} from "./socketRequest";
 import {IAddSocket} from "../interfaces/addSocket";
+import {ISocketBroadcast} from "../interfaces/socketBroadcast";
 import {ISocketStrategy} from "../interfaces/socketStrategy";
+
+
+export const CONNECT_FLAG = "connect";
+
+export const MIDDLEWARE_FLAG = "__middleware";
 
 
 export class Socket extends Base {
@@ -43,15 +50,20 @@ export class Socket extends Base {
     }
 
 
-    public listen (socket: any, event: string, fn: Function[]) {
+    public listen (request: SocketRequest, event: string, socketFn: Function) {
 
-        this._strategy.listen(socket, event, () => {
+        this._strategy.listen(request.socket, event, (...params: any[]) => {
 
-            console.log("twat");
-            process.exit();
-            new Promise((resolve: any, reject: any) => {
+            /* Set the parameters received */
+            request.params = params;
 
+            return new Promise((resolve) => {
 
+                /* Invoke the function */
+                let result = socketFn(request);
+
+                /* Resolve the result */
+                resolve(result);
 
             });
 
@@ -62,34 +74,40 @@ export class Socket extends Base {
 
     public namespace (namespace: string, events: IAddSocket) : Socket {
 
-        let nsp = this._strategy.newNamespace(namespace);
-
         /* Get connection listener */
-        let onConnect = events.connect;
+        let onConnect = events[CONNECT_FLAG];
 
-        /* Omit the connect function now */
-        events = (<IAddSocket> _.omit(events, "connect"));
+        /* Search for any middleware functions */
+        let middleware: Function[] = [];
+        if (_.has(events, MIDDLEWARE_FLAG)) {
+            middleware = <Function[]> events[MIDDLEWARE_FLAG];
+        }
 
-        this._strategy.connect(nsp)
-            .then(socket => {
-                
+        /* Omit the connect and middleware functions now */
+        events = (<IAddSocket> _.omit(events, [
+            CONNECT_FLAG,
+            MIDDLEWARE_FLAG
+        ]));
+
+        this._strategy.connect(namespace, middleware)
+            .then(connection => {
+
+                let request = new SocketRequest(connection, this._strategy);
+
+                /* Listen for a broadcast event */
+                request.on("broadcast", (broadcast: ISocketBroadcast) => {
+                    this._strategy.broadcast(request, broadcast);
+                });
+
                 /* Fire the connection event */
-                // if (_.isFunction(onConnect)) {
-                //     onConnect(request);
-                // }
+                if (_.isFunction(onConnect)) {
+                    onConnect(request);
+                }
 
-                _.each(events, (fn: Function | Function[], event: string) => {
+                _.each(events, (fn: Function, event: string) => {
 
-                    let listener: Function[];
-
-                    if (_.isFunction(fn)) {
-                        /* Wrap in an array */
-                        listener = <Function[]> [fn];
-                    } else {
-                        listener = <Function[]> fn;
-                    }
-
-                    this.listen(socket, event, listener);
+                    /* Listen for the event */
+                    this.listen(request, event, fn);
 
                 });
 

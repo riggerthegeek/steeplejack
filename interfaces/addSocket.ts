@@ -15,6 +15,7 @@
 
 
 export interface IAddSocket {
+    __middleware?: Function[];
     connect?: Function;
     [event: string]: Function | Function[];
 }

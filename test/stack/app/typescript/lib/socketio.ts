@@ -9,28 +9,56 @@
 
 
 /* Third-party modules */
+import * as _ from "lodash";
 import * as io from "socket.io";
 import {Promise} from "es6-promise";
 
 
 /* Files */
 import {Base} from "../../../../../lib/base";
-import {ISocketStrategy} from "../../../../../interfaces/socketStrategy";
 import {IServerStrategy} from "../../../../../interfaces/serverStrategy";
+import {ISocketBroadcast} from "../../../../../interfaces/socketBroadcast";
+import {ISocketRequest} from "../../../../../interfaces/socketRequest";
+import {ISocketStrategy} from "../../../../../interfaces/socketStrategy";
 
 
 export class SocketIO extends Base implements ISocketStrategy {
 
 
-    _inst: any;
+    protected _inst: any;
 
 
-    connect (namespace: any) : Promise<any> {
+    public broadcast (request: ISocketRequest, broadcast: ISocketBroadcast) : void {
+
+        if (broadcast.target) {
+            request.socket.nsp.to(broadcast.target)
+                .emit(broadcast.event, ...broadcast.data);
+        } else {
+            request.socket.nsp.emit(broadcast.event, ...broadcast.data);
+        }
+
+    }
+
+
+    public connect (namespace: string, middleware: Function[]) : Promise<any> {
 
         return new Promise((resolve: any) => {
 
-            namespace.on("connection", (socket: any) => {
-                resolve(socket);
+            let nsp = this._inst
+                .of(namespace);
+
+            _.each(middleware, (fn: Function) => {
+                nsp.use(fn);
+            });
+
+            nsp.on("connection", (socket: any) => {
+
+                /* Send both the socket and the namespace */
+                resolve({
+                    socket,
+                    nsp
+                });
+
             });
 
         });
@@ -38,22 +66,28 @@ export class SocketIO extends Base implements ISocketStrategy {
     }
 
 
-    createSocket (server: IServerStrategy) : void {
+    public createSocket (server: IServerStrategy) : void {
         this._inst = io(server.getRawServer());
     }
 
 
-    listen (socket: any, event: string, fn: () => void) {
-        
-
+    public getSocketId ({ socket }: any) : string {
+        return socket.id;
     }
 
 
-    newNamespace (namespace: string) : any {
-        let nsp = this._inst
-            .of(namespace);
+    public joinChannel ({ socket }: any, channel: string) : void {
+        socket.join(channel);
+    }
 
-        return nsp;
+
+    public leaveChannel ({ socket }: any, channel: string) : void {
+        socket.leave(channel);
+    }
+
+
+    public listen ({ socket }: any, event: string, fn: () => void) {
+        socket.on(event, fn);
     }
 
 
