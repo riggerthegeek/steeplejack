@@ -481,12 +481,16 @@ describe("Steeplejack test", function () {
                 this.createOutputHandler = sinon.stub(this.obj, "createOutputHandler");
 
                 this.server = {
-                    addRoutes: sinon.spy(),
+                    addRoutes: sinon.stub(),
+                    addSockets: sinon.stub(),
                     close: sinon.spy(),
                     on: sinon.stub(),
                     outputHandler: sinon.spy(),
                     start: sinon.stub()
                 };
+
+                this.server.addRoutes.returns(this.server);
+                this.server.addSockets.returns(this.server);
 
                 this.server.on.returns(this.server);
 
