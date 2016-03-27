@@ -15,8 +15,8 @@ import * as path from "path";
 
 
 /* Third-party modules */
-let _ = require("lodash");
-let isAbsolute = require("path-is-absolute");
+import * as _ from "lodash";
+const isAbsolute = require("path-is-absolute");
 import {Promise} from "es6-promise";
 import {sync as glob} from "glob";
 import * as yargs from "yargs";
@@ -77,7 +77,7 @@ export class Steeplejack extends Base {
      *
      * @type {Array}
      */
-    public modules: string[] | IPlugin[] = [];
+    public modules: string[] = [];
 
 
     /**
@@ -203,7 +203,7 @@ export class Steeplejack extends Base {
      */
     protected _processRoutes () {
 
-        let routes = _.reduce(this._routes, (result: any, fn: Function, name: string) => {
+        let routes = _.reduce(<any> this._routes, (result: any, fn: Function, name: string) => {
 
             result[name] = this.injector.process(fn);
 
@@ -426,8 +426,10 @@ export class Steeplejack extends Base {
             modulePath = path.join(process.cwd(), module);
         }
 
+        let paths: string[] = glob(modulePath);
+
         /* Store in the array */
-        this.modules = _.concat(this.modules, glob(modulePath));
+        this.modules = _.concat(this.modules, paths);
 
         return this;
 
