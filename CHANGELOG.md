@@ -10,6 +10,7 @@
  eg `var Base = require("steeplejack/lib/base");`.
  - Socket connections now supported by default.
  - Project is now capitalised, ie "Steeplejack" rather than "steeplejack".
+ - Tested to run in ES6, ES6, TypeScript and CoffeeScript.
 
 ## Base
  - Removed the `.create` static method.
@@ -30,6 +31,7 @@
 
 ## Injector
  - Rewritten, but no major changes to the interface.
+ - Added an `@Inject` decorator for use in TypeScript/ES6.
 
 ## Logger
  - Rewritten as a true strategy pattern rather than having to extend this class.
