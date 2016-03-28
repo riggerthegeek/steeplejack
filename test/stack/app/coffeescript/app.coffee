@@ -16,6 +16,7 @@ Server = require("../../../../lib/server").Server;
 
 # Files
 Restify = require("./lib/restify").Restify;
+SocketIO = require("./lib/socketio").SocketIO;
 
 
 ### Start up the server ###
@@ -34,7 +35,7 @@ app.on "start", () ->
 
 app.run ($config) ->
 
-    server = new Server $config.server, new Restify
+    server = new Server $config.server, new Restify, new SocketIO
 
     server
         .bodyParser()

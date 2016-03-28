@@ -38,3 +38,15 @@ exports.route = ($userController) ->
                 $userController.createUser request.body
 
     }
+
+exports.socket = ->
+
+    {
+
+        send: (socket) ->
+
+            socket.broadcast
+                event: "receive",
+                data: socket.params
+
+    }

@@ -50,6 +50,10 @@ exports.Restify = class Restify
         @_inst
 
 
+    getRawServer: ->
+        @_inst.server
+
+
     gzipResponse: ->
         @use restify.gzipResponse()
 
