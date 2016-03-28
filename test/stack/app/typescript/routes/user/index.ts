@@ -52,24 +52,11 @@ export let socket = () => {
 
     return {
 
-        __middleware: [
-            () => {
-                console.log(2222)
-            }
-        ],
-
-        connect: () => {
-
-        },
-
-        chat: (socket: ISocketRequest) => {
-
-            socket.joinChannel("bumTitty");
+        send: (socket: ISocketRequest) => {
 
             socket.broadcast({
-                event: "chat",
-                target: "bumTitty",
-                data: [22, 33, 44]
+                event: "receive",
+                data: socket.params
             });
 
         }
