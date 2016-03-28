@@ -41,7 +41,7 @@ exports.SocketIO = Base.extend({
 
     connect: function (namespace, middleware)  {
 
-        return new Promise(resolve => {
+        return new Promise(function (resolve) {
 
             var nsp = this._inst
                 .of(namespace);
