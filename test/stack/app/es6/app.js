@@ -17,6 +17,7 @@ import {Server} from "../../../../lib/server";
 
 /* Files */
 import {Restify} from "./lib/restify";
+import {SocketIO} from "./lib/socketio";
 
 
 let app = Steeplejack.app({
@@ -35,7 +36,7 @@ app.on("start", () => {
 
 app.run(($config) => {
 
-    let server = new Server($config.server, new Restify());
+    let server = new Server($config.server, new Restify(), new SocketIO());
 
     /* Listen for errors to log */
     server.on("error", function (err) {

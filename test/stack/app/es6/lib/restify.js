@@ -59,6 +59,11 @@ export class Restify {
     }
 
 
+    getRawServer () {
+        return this._inst.server;
+    }
+
+
     gzipResponse () {
         this.use(restify.gzipResponse());
     }

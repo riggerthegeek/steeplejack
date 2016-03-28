@@ -46,3 +46,21 @@ export let route = ($userController) => {
     };
 
 };
+
+
+export let socket = () => {
+
+    return {
+
+        send: (socket) => {
+
+            socket.broadcast({
+                event: "receive",
+                data: socket.params
+            });
+
+        }
+
+    };
+
+};
