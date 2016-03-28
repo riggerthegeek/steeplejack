@@ -36,7 +36,7 @@ app.on("start", function () {
 
 app.run(function ($config) {
 
-    var server = new Server($config.server, new Restify(), new SocketIO);
+    var server = new Server($config.server, new Restify(), new SocketIO());
 
     /* Listen for errors to log */
     server.on("error", function (err) {

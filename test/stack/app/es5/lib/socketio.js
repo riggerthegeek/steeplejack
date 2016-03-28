@@ -23,11 +23,9 @@ exports.SocketIO = Base.extend({
 
     broadcast: function (request, broadcast) {
 
-        var args = [
+        var args = _.concat([
             broadcast.event
-        ];
-
-        args = _.concat(args, broadcast.data);
+        ], broadcast.data);
 
         if (broadcast.target) {
             request.socket.nsp.to(broadcast.target)
@@ -41,9 +39,11 @@ exports.SocketIO = Base.extend({
 
     connect: function (namespace, middleware)  {
 
+        var self = this;
+
         return new Promise(function (resolve) {
 
-            var nsp = this._inst
+            let nsp = self._inst
                 .of(namespace);
 
             _.each(middleware, function (fn) {
@@ -54,8 +54,8 @@ exports.SocketIO = Base.extend({
 
                 /* Send both the socket and the namespace */
                 resolve({
-                    socket: socket,
-                    nsp: nsp
+                    socket,
+                    nsp
                 });
 
             });
