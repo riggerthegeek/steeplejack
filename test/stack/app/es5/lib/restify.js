@@ -21,7 +21,6 @@ var restify = require("restify");
 
 /* Files */
 var Base = require("../../../../../lib/base").Base;
-var ValidationException = require("../../../../../exception/validation/index").ValidationException;
 
 
 exports.Restify = Base.extend({
@@ -49,6 +48,11 @@ exports.Restify = Base.extend({
 
     close: function () {
         this._inst.close();
+    },
+
+
+    getRawServer: function () {
+        return this._inst.server;
     },
 
 

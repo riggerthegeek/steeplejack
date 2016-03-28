@@ -16,6 +16,7 @@ var Server = require("../../../../lib/server").Server;
 
 /* Files */
 var Restify = require("./lib/restify").Restify;
+var SocketIO = require("./lib/socketio").SocketIO;
 
 
 /* Start up the server */
@@ -35,7 +36,7 @@ app.on("start", function () {
 
 app.run(function ($config) {
 
-    var server = new Server($config.server, new Restify());
+    var server = new Server($config.server, new Restify(), new SocketIO);
 
     /* Listen for errors to log */
     server.on("error", function (err) {

@@ -47,3 +47,21 @@ exports.route = function ($userController) {
     };
 
 };
+
+
+exports.socket = function () {
+
+    return {
+
+        send: function (socket) {
+
+            socket.broadcast({
+                event: "receive",
+                data: socket.params
+            });
+
+        }
+
+    };
+
+};
