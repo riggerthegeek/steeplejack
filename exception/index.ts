@@ -84,7 +84,7 @@ export abstract class Exception extends Error {
      *
      * Used for extending this class if using a
      * preprocessor that doesn't have the
-     * "class Child extends Parent".
+     * "class Child extends Parent" syntax.
      *
      * If using a language that supports class
      * extension (ES6/TypeScript/CoffeeScript)
