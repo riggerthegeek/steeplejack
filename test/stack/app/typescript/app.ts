@@ -28,6 +28,11 @@ let app = Steeplejack.app({
 });
 
 
+app.on("start", () => {
+    console.log("TypeScript started");
+});
+
+
 app.run(($config: any) => {
 
     let server = new Server($config.server, new Restify(), new SocketIO());
