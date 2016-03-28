@@ -9,6 +9,8 @@
 
 
 /* Third-party modules */
+var expect = require("chai").expect;
+var io = require("socket.io-client");
 var request = require("supertest");
 
 
@@ -144,6 +146,41 @@ describe("/user", function () {
                     emailAddress: "jenson@button.com"
                 })
                 .end(done);
+
+        });
+
+    });
+
+    describe("SOCKET", function () {
+
+        beforeEach(function () {
+
+            var port = app.server._options.port;
+            var socketUrl = "http://localhost:" + port + "/user";
+
+            this.socket = io(socketUrl);
+
+        });
+
+        it("should connect to a socket and receive something back", function (done) {
+
+            var self = this;
+
+            self.socket.on("connect", function () {
+                self.socket.emit("send", "arg1", "arg2", 3);
+            });
+
+            self.socket.on("receive", function (v1, v2, v3) {
+
+                expect(arguments).to.have.length(3);
+
+                expect(v1).to.be.equal("arg1");
+                expect(v2).to.be.equal("arg2");
+                expect(v3).to.be.equal(3);
+
+                done();
+
+            });
 
         });
 
