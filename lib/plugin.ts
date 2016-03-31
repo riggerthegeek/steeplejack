@@ -21,9 +21,10 @@ import * as _ from "lodash";
 
 /* Files */
 import {Base} from "./base";
+import {IPlugin} from "../interfaces/plugin";
 
 
-export class Plugin extends Base {
+export class Plugin extends Base implements IPlugin {
 
 
     private _modules: any[] = [];
