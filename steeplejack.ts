@@ -145,13 +145,13 @@ export class Steeplejack extends Base {
      * be a glob pattern.
      *
      * @param {object} config
-     * @param {IPlugin[]} modules
+     * @param {string[]|IPlugin[]} modules
      * @param {string} routesDir
      * @param {string} routesGlob
      */
     public constructor (
         config: Object = {},
-        modules: string[] | IPlugin[] = [],
+        modules: (string | IPlugin)[] = [],
         routesDir: string = null,
         routesGlob: string = "**/*.js"
     ) {
@@ -534,7 +534,7 @@ export class Steeplejack extends Base {
     public static app ({
         config = {},
         env = {},
-        modules = [],
+        modules = void 0,
         routesDir = null,
         routesGlob = void 0
     } : IAppFactory = {}) : Steeplejack {
