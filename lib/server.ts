@@ -23,7 +23,6 @@ import {Base} from "./base";
 import {IAddRoutes} from "../interfaces/addRoutes";
 import {IServerOptions} from "../interfaces/serverOptions";
 import {IServerStrategy} from "../interfaces/serverStrategy";
-import {ServerResponse} from "http";
 
 
 export class Server extends Base {
