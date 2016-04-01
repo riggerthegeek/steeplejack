@@ -159,6 +159,26 @@ describe("Exception test", function () {
 
             });
 
+            it("should set it's own getDetail method", function () {
+
+                class MyErr extends Exception {
+
+                    get type () {
+                        return "MyErr";
+                    }
+                    
+                    public getDetail () {
+                        return this.message;
+                    }
+
+                }
+
+                let obj = new MyErr("uh-oh");
+
+                expect(obj.getDetail()).to.be.equal("uh-oh");
+
+            });
+
         });
 
         describe("#getHttpCode", function () {

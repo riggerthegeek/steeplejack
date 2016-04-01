@@ -87,7 +87,7 @@ export abstract class Exception extends Error {
      *
      * @returns {{type: string, message: string}}
      */
-    public getDetail () {
+    public getDetail () : any {
         return {
             type: this.type,
             message: this.message
