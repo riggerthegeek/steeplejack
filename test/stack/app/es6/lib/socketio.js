@@ -64,22 +64,22 @@ export class SocketIO extends Base {
     }
 
 
-    getSocketId ({ socket }) {
+    getSocketId ({socket}) {
         return socket.id;
     }
 
 
-    joinChannel ({ socket }, channel) {
+    joinChannel ({socket}, channel) {
         socket.join(channel);
     }
 
 
-    leaveChannel ({ socket }, channel) {
+    leaveChannel ({socket}, channel) {
         socket.leave(channel);
     }
 
 
-    listen ({ socket }, event, fn) {
+    listen ({socket}, event, fn) {
         socket.on(event, fn);
     }
 
