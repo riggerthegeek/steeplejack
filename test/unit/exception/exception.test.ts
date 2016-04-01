@@ -117,4 +117,90 @@ describe("Exception test", function () {
 
     });
 
+    describe("methods", function () {
+
+        describe("#getDetail", function () {
+
+            it("should show the detail and default message", function () {
+
+                class MyErr extends Exception {
+
+                    get type () {
+                        return "MyErr";
+                    }
+
+                }
+
+                let obj = new MyErr();
+
+                expect(obj.getDetail()).to.be.eql({
+                    type: "MyErr",
+                    message: "UNKNOWN_ERROR"
+                });
+
+            });
+
+            it("should show the detail and set message", function () {
+
+                class MyErr extends Exception {
+
+                    get type () {
+                        return "MyErr";
+                    }
+
+                }
+
+                let obj = new MyErr("uh-oh");
+
+                expect(obj.getDetail()).to.be.eql({
+                    type: "MyErr",
+                    message: "uh-oh"
+                });
+
+            });
+
+        });
+
+        describe("#getHttpCode", function () {
+
+            it("should show 500 as the default HTTP code", function () {
+
+                class MyErr extends Exception {
+
+                    get type () {
+                        return "MyErr";
+                    }
+
+                }
+
+                let obj = new MyErr();
+
+                expect(obj.getHttpCode()).to.be.equal(500);
+
+            });
+
+            it("should override the HTTP code", function () {
+
+                class MyErr extends Exception {
+
+                    get type () {
+                        return "MyErr";
+                    }
+
+                    public getHttpCode () {
+                        return 403;
+                    }
+
+                }
+
+                let obj = new MyErr();
+
+                expect(obj.getHttpCode()).to.be.equal(403);
+
+            });
+
+        });
+
+    });
+
 });
