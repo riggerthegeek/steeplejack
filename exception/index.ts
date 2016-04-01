@@ -80,6 +80,35 @@ export abstract class Exception extends Error {
 
 
     /**
+     * Get Detail
+     *
+     * Decides what to display if this error
+     * bubbles-up to the output.
+     *
+     * @returns {{type: string, message: string}}
+     */
+    public getDetail () {
+        return {
+            type: this.type,
+            message: this.message
+        };
+    }
+
+
+    /**
+     * Get HTTP Code
+     *
+     * This is the HTTP status code if this error
+     * bubbles-up to the output.
+     *
+     * @returns {number}
+     */
+    public getHttpCode () : number {
+        return 500;
+    }
+
+
+    /**
      * Extend
      *
      * Used for extending this class if using a
