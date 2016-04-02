@@ -2,7 +2,8 @@
  * Socket Request
  *
  * Wraps the socket request into a consistent
- * object
+ * object. This is what is sent to a socket
+ * route instance when a socket is called.
  */
 
 "use strict";
@@ -24,34 +25,94 @@ import {ISocketStrategy} from "../interfaces/socketStrategy";
 export class SocketRequest extends Base implements ISocketRequest {
 
 
+    /**
+     * Stores the params set to the request
+     *
+     * @type {Array}
+     * @private
+     */
     protected _params: any[] = [];
 
 
+    /**
+     * Params
+     *
+     * These are the parameters that are sent
+     * over to the socket.
+     *
+     * @returns {any[]}
+     */
     public get params () {
         return this._params;
     }
 
 
+    /**
+     * Params
+     *
+     * Sets the parameters that are sent
+     * over to the socket.
+     *
+     * @param {any[]} params
+     */
     public set params (params: any[]) {
         this._params = params;
     }
 
 
+    /**
+     * Constructor
+     *
+     * The socket object is the instance of the
+     * socket library used. The strategy wires
+     * it all together.
+     *
+     * @param {*} socket
+     * @param {ISocketStrategy} _strategy
+     */
     public constructor (public socket: any, protected _strategy: ISocketStrategy) {
+
         super();
+
     }
 
 
+    /**
+     * Broadcast
+     *
+     * This is used to talk to the socket
+     * connection.
+     *
+     * @param {ISocketBroadcast} broadcast
+     */
     public broadcast (broadcast: ISocketBroadcast) {
         this.emit("broadcast", broadcast);
     }
 
 
+    /**
+     * Get ID
+     *
+     * Gets the socket connection ID
+     *
+     * @returns {string}
+     */
     public getId () : string {
         return this._strategy.getSocketId(this.socket);
     }
 
 
+    /**
+     * Join Channel
+     *
+     * Adds this socket to a given channel. This
+     * will help with broadcasting between different
+     * entities, such as when remote controlling
+     * a device.
+     *
+     * @param {string} channel
+     * @returns {SocketRequest}
+     */
     public joinChannel (channel: string) : SocketRequest {
 
         this._strategy.joinChannel(this.socket, channel);
@@ -61,6 +122,15 @@ export class SocketRequest extends Base implements ISocketRequest {
     }
 
 
+    /**
+     * Leave Channel
+     *
+     * Tells this connection to leave a particular
+     * channel.
+     *
+     * @param {string} channel
+     * @returns {SocketRequest}
+     */
     public leaveChannel (channel: string) : SocketRequest {
 
         this._strategy.leaveChannel(this.socket, channel);
