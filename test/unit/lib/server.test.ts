@@ -21,7 +21,10 @@ import {Server} from "../../../lib/server";
 import {Base} from "../../../lib/base";
 import {IAddRoutes} from "../../../interfaces/addRoutes";
 import {IServerStrategy} from "../../../interfaces/serverStrategy";
-import {expect, sinon} from "../../helpers/configure";
+import {ISocketStrategy} from "../../../interfaces/socketStrategy";
+import {ISocketRequest} from "../../../interfaces/socketRequest";
+import {ISocketBroadcast} from "../../../interfaces/socketBroadcast";
+import {expect, proxyquire, sinon} from "../../helpers/configure";
 
 
 describe("Server tests", function () {
@@ -65,8 +68,25 @@ describe("Server tests", function () {
             use (fn: Function | Function[]) { }
         }
 
+        class SocketStrategy extends EventEmitter implements ISocketStrategy {
+            broadcast: (request: ISocketRequest, broadcast: ISocketBroadcast) => void;
+            connect: (namespace: string, middleware: Function[]) => Promise<any>;
+
+            createSocket (server: IServerStrategy) {
+
+            }
+
+            getSocketId: (socket: any) => string;
+            joinChannel: (socket: any, channel: string) => void;
+            leaveChannel: (socket: any, channel: string) => void;
+            listen: (socket: any, event: string, fn: () => void) => void;
+        }
+
         this.DefaultStrategy = Strategy;
         this.serverStrategy = new Strategy();
+
+        this.DefaultSocketStrategy = SocketStrategy;
+        this.socketStrategy = new SocketStrategy;
     });
 
     describe("Methods", function () {
@@ -80,6 +100,19 @@ describe("Server tests", function () {
                     backlog: 1000,
                     hostname: "192.168.0.100"
                 }, new this.DefaultStrategy());
+
+                expect(obj).to.be.instanceof(Server)
+                    .instanceof(Base);
+
+            });
+
+            it("should receive options, a strategy object and socket strategy", function () {
+
+                let obj = new Server({
+                    port: 8080,
+                    backlog: 1000,
+                    hostname: "192.168.0.100"
+                }, new this.DefaultStrategy(), new this.DefaultSocketStrategy());
 
                 expect(obj).to.be.instanceof(Server)
                     .instanceof(Base);
@@ -508,6 +541,100 @@ describe("Server tests", function () {
                 obj.addRoutes(routes);
 
                 expect(this.addRoute).to.not.be.called;
+
+            });
+
+        });
+
+        describe("#addSockets", function () {
+
+            beforeEach(function () {
+
+                this.listen = sinon.spy();
+
+                this.socketStrategy = {
+                    connect: (<any> sinon.stub()).resolves(),
+                    createSocket: sinon.spy(),
+                    listen: sinon.spy()
+                };
+
+                this.ons = [];
+
+                let stubbedOn = (event: string, listener: any) => {
+                    this.ons.push({
+                        event,
+                        listener
+                    });
+                };
+
+                this.socketInst = {
+                    namespace: sinon.stub(),
+                    on: stubbedOn
+                };
+
+                this.socketInst.namespace.returns(this.socketInst);
+
+                this.socket = sinon.stub().returns(this.socketInst);
+
+                this.SServer = proxyquire("../../lib/server", {
+                    "./socket": {
+                        Socket: this.socket
+                    }
+                }).Server;
+
+                this.sockets = {
+                    socket1: {
+                        event1: () => {},
+                        event2: () => {}
+                    },
+                    socket2: {
+                        event1: () => {}
+                    }
+                }
+
+            });
+
+            it("should not add any sockets if not socket strategy defined", function () {
+
+                let obj = new this.SServer({
+                    port: 8080,
+                    backlog: 1000,
+                    hostname: "192.168.0.100"
+                }, new this.DefaultStrategy());
+
+                expect(obj.addSockets(this.sockets)).to.be.equal(obj);
+
+                expect(this.socketInst.namespace).to.not.be.called;
+
+            });
+
+            it("should add sockets if the socket strategy is defined", function () {
+
+                let obj = new this.SServer({
+                    port: 8080,
+                    backlog: 1000,
+                    hostname: "192.168.0.100"
+                }, new this.DefaultStrategy(), this.socketStrategy);
+
+                let emitter = sinon.spy(obj, "emit");
+
+                expect(obj.addSockets(this.sockets)).to.be.equal(obj);
+
+                expect(this.socketInst.namespace).to.be.calledTwice
+                    .calledWithExactly("socket1", this.sockets.socket1)
+                    .calledWithExactly("socket2", this.sockets.socket2);
+
+                expect(this.ons).to.have.length(2);
+
+                expect(this.ons[0].event).to.be.equal("socketAdded");
+                expect(this.ons[1].event).to.be.equal("socketAdded");
+
+                this.ons[0].listener("namespace", "event");
+                this.ons[1].listener("namespace1", "event1");
+
+                expect(emitter).to.be.calledTwice
+                    .calledWithExactly("socketAdded", "namespace", "event")
+                    .calledWithExactly("socketAdded", "namespace1", "event1");
 
             });
 
