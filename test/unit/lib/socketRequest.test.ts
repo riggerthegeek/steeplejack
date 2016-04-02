@@ -17,9 +17,7 @@ import {Promise} from "es6-promise";
 /* Files */
 import {Base} from "../../../lib/base";
 import {SocketRequest} from "../../../lib/socketRequest";
-import {ISocketRequest} from "../../../interfaces/socketRequest";
 import {ISocketBroadcast} from "../../../interfaces/socketBroadcast";
-import {IServerStrategy} from "../../../interfaces/serverStrategy";
 import {expect, sinon} from "../../helpers/configure";
 
 
