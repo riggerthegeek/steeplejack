@@ -527,7 +527,7 @@ export class Steeplejack extends Base {
             .on("socketAdded", (socketName: string, event: string) => {
                 this.sockets.push(`${socketName}:${event}`);
             });
-        
+
         /* Add in the routes to the server */
         this.server
             .addRoutes(processedRoutes.routes.getRoutes())
