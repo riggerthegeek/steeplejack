@@ -12,11 +12,11 @@
 
 
 /* Files */
-import {Base} from "../lib/base";
 import {ISocketBroadcast} from "./socketBroadcast";
 
 
-export interface ISocketRequest extends Base {
+export interface ISocketRequest {
+    emit(event: string, ...args: any[]): boolean;
     params: any[];
     socket: any;
     broadcast: (broadcast: ISocketBroadcast) => void;
