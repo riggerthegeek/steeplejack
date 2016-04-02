@@ -43,7 +43,7 @@ exports.SocketIO = Base.extend({
 
         return new Promise(function (resolve) {
 
-            let nsp = self._inst
+            var nsp = self._inst
                 .of(namespace);
 
             _.each(middleware, function (fn) {
