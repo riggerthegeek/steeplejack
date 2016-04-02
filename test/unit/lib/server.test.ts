@@ -558,18 +558,8 @@ describe("Server tests", function () {
                     listen: sinon.spy()
                 };
 
-                this.ons = [];
-
-                let stubbedOn = (event: string, listener: any) => {
-                    this.ons.push({
-                        event,
-                        listener
-                    });
-                };
-
                 this.socketInst = {
-                    namespace: sinon.stub(),
-                    on: stubbedOn
+                    namespace: sinon.stub()
                 };
 
                 this.socketInst.namespace.returns(this.socketInst);
@@ -616,7 +606,14 @@ describe("Server tests", function () {
                     hostname: "192.168.0.100"
                 }, new this.DefaultStrategy(), this.socketStrategy);
 
-                let emitter = sinon.spy(obj, "emit");
+                let ons: any[] = [];
+
+                obj.on("socketAdded", (nsp: string, eventName: string) => {
+                    ons.push({
+                        nsp,
+                        eventName
+                    });
+                });
 
                 expect(obj.addSockets(this.sockets)).to.be.equal(obj);
 
@@ -624,17 +621,15 @@ describe("Server tests", function () {
                     .calledWithExactly("socket1", this.sockets.socket1)
                     .calledWithExactly("socket2", this.sockets.socket2);
 
-                expect(this.ons).to.have.length(2);
+                expect(ons).to.have.length(3);
 
-                expect(this.ons[0].event).to.be.equal("socketAdded");
-                expect(this.ons[1].event).to.be.equal("socketAdded");
+                expect(ons[0].nsp).to.be.equal("socket1");
+                expect(ons[1].nsp).to.be.equal("socket1");
+                expect(ons[2].nsp).to.be.equal("socket2");
 
-                this.ons[0].listener("namespace", "event");
-                this.ons[1].listener("namespace1", "event1");
-
-                expect(emitter).to.be.calledTwice
-                    .calledWithExactly("socketAdded", "namespace", "event")
-                    .calledWithExactly("socketAdded", "namespace1", "event1");
+                expect(ons[0].eventName).to.be.equal("event1");
+                expect(ons[1].eventName).to.be.equal("event2");
+                expect(ons[2].eventName).to.be.equal("event1");
 
             });
 

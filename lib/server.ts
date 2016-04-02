@@ -378,11 +378,12 @@ export class Server extends Base {
         if (this._socket !== null) {
 
             _.each(sockets, (events: IAddSocket, namespace: string) => {
-                this._socket
-                    .namespace(namespace, events)
-                    .on("socketAdded", (nsp: string, event: string) => {
-                        this.emit("socketAdded", nsp, event);
-                    });
+
+                this._socket.namespace(namespace, events);
+
+                _.each(events, (event: Function, eventName: string) => {
+                    this.emit("socketAdded", namespace, eventName);
+                });
 
             });
 
