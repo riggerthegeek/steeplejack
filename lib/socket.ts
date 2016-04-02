@@ -21,13 +21,13 @@ import {Base} from "./base";
 import {SocketRequest} from "./socketRequest";
 import {IAddSocket} from "../interfaces/addSocket";
 import {ISocketBroadcast} from "../interfaces/socketBroadcast";
+import {ISocketRequest} from "../interfaces/socketRequest";
 import {ISocketStrategy} from "../interfaces/socketStrategy";
 
 
 export const CONNECT_FLAG = "connect";
 
 export const MIDDLEWARE_FLAG = "__middleware";
-
 
 export class Socket extends Base {
 
@@ -50,14 +50,24 @@ export class Socket extends Base {
     }
 
 
-    public listen (request: SocketRequest, event: string, socketFn: Function) {
+    /**
+     * Listen
+     *
+     * Makes the socket server listen for socket
+     * connections
+     *
+     * @param {ISocketRequest} request
+     * @param {string} event
+     * @param {function} socketFn
+     */
+    public listen (request: ISocketRequest, event: string, socketFn: Function) {
 
         this._strategy.listen(request.socket, event, (...params: any[]) => {
 
             /* Set the parameters received */
             request.params = params;
 
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
 
                 /* Invoke the function */
                 let result = socketFn(request);
@@ -72,6 +82,17 @@ export class Socket extends Base {
     }
 
 
+    /**
+     * Namespace
+     *
+     * Adds a new namespace to the socket
+     * server. This is synonymous with an
+     * HTTP route.
+     *
+     * @param {string} namespace
+     * @param {IAddSocket} events
+     * @returns {Socket}
+     */
     public namespace (namespace: string, events: IAddSocket) : Socket {
 
         /* Get connection listener */
@@ -114,6 +135,9 @@ export class Socket extends Base {
 
                 });
 
+            })
+            .catch(err => {
+                this.emit("connectionError", err);
             });
 
         return this;
