@@ -84,9 +84,14 @@ export class SocketRequest extends Base implements ISocketRequest {
      * connection.
      *
      * @param {ISocketBroadcast} broadcast
+     * @returns {SocketRequest}
      */
     public broadcast (broadcast: ISocketBroadcast) {
+
         this.emit("broadcast", broadcast);
+
+        return this;
+
     }
 
 
