@@ -105,7 +105,7 @@ export class Socket extends Base {
                 }
 
                 _.each(events, (fn: Function, event: string) => {
-                    
+
                     /* Listen for the event */
                     this.listen(request, event, fn);
 
