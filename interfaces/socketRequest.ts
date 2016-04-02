@@ -16,7 +16,7 @@ import {ISocketBroadcast} from "./socketBroadcast";
 
 
 export interface ISocketRequest {
-    emit(event: string, ...args: any[]): boolean;
+    emit (event: string, ...args: any[]): boolean;
     params: any[];
     socket: any;
     broadcast: (broadcast: ISocketBroadcast) => void;
