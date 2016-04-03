@@ -982,6 +982,61 @@ describe("Server tests", function () {
                         });
 
                 });
+
+                it("return empty data and set the status code to 204", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return "";
+                        })
+                        .then((data: any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(204, void 0, this.req, this.res);
+
+                        });
+
+                });
+
+                it("return undefined data and set the status code to 204", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return;
+                        })
+                        .then((data: any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(204, void 0, this.req, this.res);
+
+                        });
+
+                });
+
+                it("return null data and set the status code to 204", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return null;
+                        })
+                        .then((data: any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(204, void 0, this.req, this.res);
+
+                        });
+
+                });
+
             });
 
             describe("failed response", function () {
