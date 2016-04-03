@@ -606,7 +606,7 @@ export class Server extends Base {
      * @param {function} fn
      * @returns {Server}
      */
-    public use (fn: Function | Function[]) : Server {
+    public use (fn: Function) : Server {
 
         if (_.isFunction(fn)) {
 
