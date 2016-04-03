@@ -27,5 +27,5 @@ exports.route = function () {
         }
 
     };
-    
+
 };
