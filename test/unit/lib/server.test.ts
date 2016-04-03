@@ -1037,6 +1037,24 @@ describe("Server tests", function () {
 
                 });
 
+                it("return numeric data and not set the status code to 204", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return 2;
+                        })
+                        .then((data: any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(200, 2, this.req, this.res);
+
+                        });
+
+                });
+
             });
 
             describe("failed response", function () {

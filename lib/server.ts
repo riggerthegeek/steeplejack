@@ -539,7 +539,7 @@ export class Server extends Base {
             .then(({statusCode, output}) => {
 
                 /* Is the output empty? */
-                if (statusCode === 200 && _.isEmpty(output)) {
+                if (statusCode === 200 && _.isEmpty(output) && _.isNumber(output) === false) {
                     statusCode = 204;
                     output = void 0;
                 }
