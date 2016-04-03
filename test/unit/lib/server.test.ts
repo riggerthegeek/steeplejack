@@ -1395,39 +1395,39 @@ describe("Server tests", function () {
 
             beforeEach(function () {
 
+                this.spy = sinon.spy(this.serverStrategy, "use");
+
                 obj = new Server({
                     port: 8080
                 }, this.serverStrategy);
 
             });
 
-            it("should do one promisified function", function (done: any) {
+            it("should do one function", function () {
 
-                this.serverStrategy.use = (useFn: Function) => {
-
-                    useFn("req", "res")
-                        .then((result: any) => {
-                            expect(result).to.be.equal("myResult");
-
-                            done();
-                        });
-
-                };
-
-                var fn = function (req: any, res: any) {
-                    expect(req).to.be.equal("req");
-                    expect(res).to.be.equal("res");
-
-                    return "myResult";
-                };
+                var fn = function () { };
 
                 expect(obj.use(fn)).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly(fn);
+
+            });
+
+            it("should do an array of functions", function () {
+
+                var fn1 = function () { };
+                var fn2 = function () { };
+
+                expect(obj.use([fn1, fn2])).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledTwice
+                    .calledWithExactly(fn1)
+                    .calledWithExactly(fn2);
 
             });
 
             it("should throw an error when a non-function sent", function () {
-
-                let spy = sinon.spy(this.serverStrategy, "use");
 
                 var fail = false;
 
@@ -1444,7 +1444,7 @@ describe("Server tests", function () {
 
                     expect(fail).to.be.true;
 
-                    expect(spy).to.not.be.called;
+                    expect(this.spy).to.not.be.called;
 
                 }
 

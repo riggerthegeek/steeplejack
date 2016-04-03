@@ -117,7 +117,7 @@ export class Server extends Base {
 
             let tasks: Promise<any>[] = _.map(routeFn, (task: Function) => {
 
-                return new Promise((resolve) => {
+                return new Promise(resolve => {
 
                     /* Invoke the function */
                     let result = task(request, response);
@@ -600,23 +600,25 @@ export class Server extends Base {
      * Use
      *
      * Allows you to apply a function, or array
-     * of functions to each call. This is invoked
-     * as a promise.
+     * of functions to each call.
      *
-     * @param {function} fn
+     * @param {function|function[]} fn
      * @returns {Server}
      */
-    public use (fn: Function) : Server {
+    public use (fn: Function | Function[]) : Server {
 
-        if (_.isFunction(fn)) {
+        if (_.isArray(fn)) {
 
-            this._strategy.use((req: any, res: any) => {
-                return new Promise(resolve => {
-                    resolve(fn(req, res));
-                });
+            _.each(fn, item => {
+                this.use(item);
             });
 
+        } else if (_.isFunction(fn)) {
+
+            this._strategy.use(fn);
+
         } else {
+
             throw new TypeError("Server.use must receive a function or array of functions");
         }
 
