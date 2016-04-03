@@ -54,8 +54,8 @@ exports.SocketIO = Base.extend({
 
                 /* Send both the socket and the namespace */
                 resolve({
-                    socket,
-                    nsp
+                    socket: socket,
+                    nsp: nsp
                 });
 
             });
