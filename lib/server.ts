@@ -596,20 +596,27 @@ export class Server extends Base {
     }
 
 
+    /**
+     * Use
+     *
+     * Allows you to apply a function, or array
+     * of functions to each call. This is invoked
+     * as a promise.
+     *
+     * @param {function} fn
+     * @returns {Server}
+     */
     public use (fn: Function | Function[]) : Server {
 
-        if (_.isArray(fn)) {
+        if (_.isFunction(fn)) {
 
-            _.each(fn, item => {
-                this.use(item);
+            this._strategy.use((req: any, res: any) => {
+                return new Promise(resolve => {
+                    resolve(fn(req, res));
+                });
             });
 
-        } else if (_.isFunction(fn)) {
-
-            this._strategy.use(fn);
-
         } else {
-
             throw new TypeError("Server.use must receive a function or array of functions");
         }
 
