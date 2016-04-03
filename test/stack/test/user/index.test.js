@@ -19,6 +19,23 @@ var request = require("supertest");
 
 describe("/user", function () {
 
+    describe("/empty", function () {
+
+        describe("GET", function () {
+
+            it("should return a 204 status", function (done) {
+
+                request(app.server.getServer())
+                    .get("/user/empty")
+                    .expect(204)
+                    .end(done);
+
+            });
+
+        });
+
+    });
+
     describe("GET", function () {
 
         it("should reject a user with no auth header", function (done) {
