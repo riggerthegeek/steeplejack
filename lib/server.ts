@@ -318,7 +318,7 @@ export class Server extends Base {
         }
 
         this._strategy.addRoute(httpMethod, route, (request: any, response: any) => {
-            this._addRoute(request, response, routeFn);
+            return this._addRoute(request, response, routeFn);
         });
 
         return this;
