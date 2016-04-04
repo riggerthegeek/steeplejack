@@ -172,6 +172,139 @@ describe("Server tests", function () {
 
         });
 
+        describe("#_addRoute", function () {
+
+            beforeEach(function () {
+
+                this.spy = sinon.stub(this.serverStrategy, "addRoute");
+                this.outputHandler = sinon.stub(this.serverStrategy, "outputHandler");
+
+                this.obj = (<any> new Server({
+                    port: 8080
+                }, this.serverStrategy));
+
+            });
+
+            it("should execute a single function", function () {
+
+                this.outputHandler.resolves("outputResult");
+
+                let fns = [
+                    (req: any, res: any) => {
+
+                        expect(req).to.be.equal("req");
+                        expect(res).to.be.equal("res");
+
+                        return "result1";
+
+                    }
+                ];
+
+                return this.obj._addRoute("req", "res", fns)
+                    .then((result: any) => {
+
+                        expect(result).to.be.equal("outputResult");
+
+                        expect(this.outputHandler).to.be.calledOnce
+                            .calledWithExactly(200, "result1", "req", "res");
+
+                    });
+
+            });
+
+            it("should execute multiple functions in order", function () {
+
+                this.outputHandler.resolves("outputResult");
+
+                let order: number[] = [];
+
+                let fns = [
+                    (req: any, res: any) => {
+
+                        expect(req).to.be.equal("req");
+                        expect(res).to.be.equal("res");
+
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                order.push(0);
+                                resolve("result1");
+                            }, 200);
+                        });
+
+                    },
+                    (req: any, res: any) => {
+
+                        expect(req).to.be.equal("req");
+                        expect(res).to.be.equal("res");
+
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                order.push(1);
+                                resolve("result2");
+                            }, 100);
+                        });
+
+                    },
+                ];
+
+                return this.obj._addRoute("req", "res", fns)
+                    .then((result: any) => {
+
+                        expect(result).to.be.equal("outputResult");
+
+                        expect(order).to.be.eql([
+                            0,
+                            1
+                        ]);
+
+                        expect(this.outputHandler).to.be.calledOnce
+                            .calledWithExactly(200, "result2", "req", "res");
+
+                    });
+
+            });
+
+            it("should stop when executing multiple functions if a previous one fails", function () {
+
+                this.outputHandler.resolves("outputResult");
+
+                let fail = false;
+
+                let fns = [
+                    (req: any, res: any) => {
+
+                        expect(req).to.be.equal("req");
+                        expect(res).to.be.equal("res");
+
+                        throw new Error("some error");
+
+                    },
+                    () => {
+
+                        /* Test that this isn't called */
+                        fail = true;
+
+                        return "result2";
+
+                    },
+                ];
+
+                return this.obj._addRoute("req", "res", fns)
+                    .then((result: any) => {
+
+                        expect(result).to.be.equal("outputResult");
+
+                        expect(this.outputHandler).to.be.calledOnce
+                            .calledWithExactly(500, "some error", "req", "res");
+
+                        expect(fail).to.be.false;
+
+                    });
+
+            });
+
+        });
+
         describe("#addRoute", function () {
 
             let obj: Server;
