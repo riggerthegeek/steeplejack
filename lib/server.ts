@@ -104,37 +104,39 @@ export class Server extends Base {
      * Add Route
      *
      * Adds the route to the strategy and configures
-     * the output ready for use by the output handler
+     * the output ready for use by the output handler.
+     * The tasks are run in order, not resolving any
+     * future ones if a previous one has failed.
      *
-     * @param {string} httpMethod
-     * @param {string} route
-     * @param {Function[]} routeFn
+     * @param {any} request
+     * @param {any} response
+     * @param {function[]} tasks
+     * @returns {Promise<any>}
      * @private
      */
-    protected _addRoute (request: any, response: any, routeFn: Function[]) : Promise<any> {
-
-        let tasks: Promise<any>[] = _.map(routeFn, (task: Function) => {
-
-            return new Promise(resolve => {
-
-                /* Invoke the function */
-                let result = task(request, response);
-
-                /* Resolve the result */
-                resolve(result);
-
-            });
-
-        });
+    protected _addRoute (request: any, response: any, tasks: Function[]) : Promise<any> {
 
         /* Use the outputHandler method to output */
         return this.outputHandler(request, response, () => {
 
-            return Promise.all(tasks)
-                .then((result: any) => {
-                    /* Return the last result from the tasks as the output */
-                    return _.last(result);
+            /* Run the tasks in order */
+            return tasks.reduce((thenable: Promise<any>, task: Function) => {
+
+                return thenable.then(() => {
+
+                    return new Promise(resolve => {
+
+                        /* Invoke the function */
+                        let result = task(request, response);
+
+                        /* Resolve the result */
+                        resolve(result);
+
+                    });
+
                 });
+
+            }, Promise.resolve());
 
         });
 
