@@ -111,34 +111,30 @@ export class Server extends Base {
      * @param {Function[]} routeFn
      * @private
      */
-    protected _addRoute (httpMethod: string, route: string, routeFn: Function[]) {
+    protected _addRoute (request: any, response: any, routeFn: Function[]) : Promise<any> {
 
-        this._strategy.addRoute(httpMethod, route, (request: any, response: any) => {
+        let tasks: Promise<any>[] = _.map(routeFn, (task: Function) => {
 
-            let tasks: Promise<any>[] = _.map(routeFn, (task: Function) => {
+            return new Promise(resolve => {
 
-                return new Promise(resolve => {
+                /* Invoke the function */
+                let result = task(request, response);
 
-                    /* Invoke the function */
-                    let result = task(request, response);
+                /* Resolve the result */
+                resolve(result);
 
-                    /* Resolve the result */
-                    resolve(result);
+            });
 
+        });
+
+        /* Use the outputHandler method to output */
+        return this.outputHandler(request, response, () => {
+
+            return Promise.all(tasks)
+                .then((result: any) => {
+                    /* Return the last result from the tasks as the output */
+                    return _.last(result);
                 });
-
-            });
-
-            /* Use the outputHandler method to output */
-            return this.outputHandler(request, response, () => {
-
-                return Promise.all(tasks)
-                    .then((result: any) => {
-                        /* Return the last result from the tasks as the output */
-                        return _.last(result);
-                    });
-
-            });
 
         });
 
@@ -319,7 +315,9 @@ export class Server extends Base {
             ];
         }
 
-        this._addRoute(httpMethod, route, routeFn);
+        this._strategy.addRoute(httpMethod, route, (request: any, response: any) => {
+            this._addRoute(request, response, routeFn);
+        });
 
         return this;
 
