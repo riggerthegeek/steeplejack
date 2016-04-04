@@ -1,6 +1,6 @@
 {
   "name": "steeplejack",
-  "version": "2.0.0-13",
+  "version": "2.0.0-14",
   "description": "An opinionated way of making a Twelve Factor App in NodeJS",
   "main": "./index",
   "scripts": {
