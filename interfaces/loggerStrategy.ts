@@ -15,6 +15,7 @@
 
 
 export interface ILoggerStrategy {
+    level(level: string): void;
     fatal(...args: any[]): any;
     error(...args: any[]): any;
     warn(...args: any[]): any;

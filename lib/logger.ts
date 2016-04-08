@@ -22,7 +22,7 @@ import {ILoggerStrategy} from "../interfaces/loggerStrategy";
 export class Logger extends Base {
 
 
-    protected _level: string = "error";
+    protected _level: string;
 
 
     /**
@@ -37,6 +37,9 @@ export class Logger extends Base {
     public constructor (protected strategy: ILoggerStrategy) {
 
         super();
+
+        /* Default to error */
+        this.level = "error";
 
     }
 
@@ -68,6 +71,9 @@ export class Logger extends Base {
         /* Set the log level if valid */
         if (_.indexOf(logLevel, level) !== -1) {
             this._level = level;
+
+            /* Set the level in the strategy too */
+            this.strategy.level(level);
         }
 
     }

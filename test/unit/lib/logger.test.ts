@@ -16,17 +16,19 @@
 /* Files */
 import {Logger} from "../../../lib/logger";
 import {expect, sinon} from "../../helpers/configure";
+import {ILoggerStrategy} from "../../../interfaces/loggerStrategy";
 
 
 describe("Logger test", function () {
 
     describe("Methods", function () {
 
-        var obj: any,
+        var obj: Logger,
             strategy: any;
         beforeEach(function () {
 
             let methods = [
+                "level",
                 "fatal",
                 "error",
                 "warn",
@@ -43,6 +45,10 @@ describe("Logger test", function () {
 
             obj = new Logger(strategy);
 
+            /* Default to error */
+            expect(strategy.level).to.be.callCount(1)
+                .calledWithExactly("error");
+
         });
 
         describe("#setLevel", function () {
@@ -55,11 +61,15 @@ describe("Logger test", function () {
 
             it("should allow a string to be set", function () {
 
+                let x = 1;
+
                 Logger.getLogLevels().forEach((level:string) => {
 
                     obj.level = level;
 
                     expect(obj.level).to.be.equal(level);
+                    expect(strategy.level).to.be.callCount(++x)
+                        .calledWithExactly(level);
 
                 });
 
@@ -69,17 +79,27 @@ describe("Logger test", function () {
 
                 expect(obj.level).to.be.equal("error");
 
+                expect(strategy.level).to.be.calledOnce
+                    .calledWithExactly("error");
+
                 obj.level = "missing";
 
                 expect(obj.level).to.be.equal("error");
+
+                expect(strategy.level).to.be.calledOnce;
 
                 obj.level = "fatal";
 
                 expect(obj.level).to.be.equal("fatal");
 
+                expect(strategy.level).to.be.calledTwice
+                    .calledWithExactly("fatal");
+
                 obj.level = "spank";
 
                 expect(obj.level).to.be.equal("fatal");
+
+                expect(strategy.level).to.be.calledTwice;
 
             });
 
