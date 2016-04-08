@@ -164,6 +164,29 @@ export abstract class Model extends Base {
 
 
     /**
+     * Set Custom Function
+     *
+     * This is setting a function which is already set
+     * to this instance of the class
+     *
+     * @param {string} customFunc
+     * @param {*} value
+     * @param {*} defaultValue
+     * @returns {*}
+     * @private
+     */
+    protected _setCustomFunction (customFunc: string, value: any, defaultValue: any) : any {
+        value = (<any> this)[customFunc](value, defaultValue);
+
+        if (_.isUndefined(value)) {
+            value = defaultValue;
+        }
+
+        return value;
+    }
+
+
+    /**
      * Set Primary Key
      *
      * Sets the primary key
@@ -178,6 +201,90 @@ export abstract class Model extends Base {
         } else {
             throw new Error("CANNOT_SET_MULTIPLE_PRIMARY_KEYS");
         }
+    }
+
+
+    /**
+     * Set Standard Function
+     *
+     * This is setting a standard function which actually
+     * a function
+     *
+     * @param {function} type
+     * @param {*} value
+     * @param {*} defaultValue
+     * @returns {*}
+     * @private
+     */
+    protected _setStandardFunction (type: any, value: any, defaultValue: any) : any {
+
+        if (value instanceof type === false) {
+
+            /* No - populate the instance if something set */
+            let createNew = false;
+
+            if (_.isArray(value)) {
+                createNew = true;
+            } else {
+                value = datatypes.setObject(value, defaultValue);
+                createNew = value !== defaultValue;
+            }
+
+            if (createNew) {
+                value = new type(value);
+            }
+
+        }
+
+        return value;
+
+    }
+
+
+    /**
+     * Set String Function
+     *
+     * We're setting a function that's a description
+     * of how we want to set it
+     *
+     * @param {string} type
+     * @param {*} value
+     * @param {*} defaultValue
+     * @param {*} definition
+     * @returns {*}
+     * @private
+     */
+    protected _setStringFunction (type: string, value: any, defaultValue: any, definition: any) : any {
+
+        switch (type) {
+
+            case "enum":
+                value = datatypes.setEnum(value, definition.enum, defaultValue);
+                break;
+
+            case "mixed":
+                if (_.isUndefined(value)) {
+                    value = defaultValue;
+                }
+                break;
+
+            default:
+                if (_.has(dataCasting, type)) {
+
+                    let fnName: string = (<any> dataCasting)[type];
+                    let fn: Function = (<any> datatypes)[fnName];
+
+                    value = fn(value, defaultValue);
+
+                } else {
+                    /* Unknown datatype */
+                    throw new TypeError(`Definition.type '${type}' is not valid`);
+                }
+                break;
+        }
+
+        return value;
+
     }
 
 
@@ -345,11 +452,7 @@ export abstract class Model extends Base {
 
         if (_.isFunction((<any> this)[customFunc])) {
 
-            value = (<any> this)[customFunc](value, defaultValue);
-
-            if (_.isUndefined(value)) {
-                value = defaultValue;
-            }
+            value = this._setCustomFunction(customFunc, value, defaultValue);
 
         } else {
 
@@ -359,54 +462,12 @@ export abstract class Model extends Base {
             if (_.isFunction(type)) {
 
                 /* Yup - is it already instance of the type? */
-
-                if (value instanceof type === false) {
-
-                    /* No - populate the instance if something set */
-                    let createNew = false;
-
-                    if (_.isArray(value)) {
-                        createNew = true;
-                    } else {
-                        value = datatypes.setObject(value, defaultValue);
-                        createNew = value !== defaultValue;
-                    }
-
-                    if (createNew) {
-                        value = new type(value);
-                    }
-
-                }
+                value = this._setStandardFunction(type, value, defaultValue);
 
             } else {
 
                 /* No - treat as string */
-                switch (type) {
-
-                    case "enum":
-                        value = datatypes.setEnum(value, definition.enum, defaultValue);
-                        break;
-
-                    case "mixed":
-                        if (_.isUndefined(value)) {
-                            value = defaultValue;
-                        }
-                        break;
-
-                    default:
-                        if (_.has(dataCasting, type)) {
-
-                            let fnName: string = (<any> dataCasting)[type];
-                            let fn: Function = (<any> datatypes)[fnName];
-
-                            value = fn(value, defaultValue);
-
-                        } else {
-                            /* Unknown datatype */
-                            throw new TypeError(`Definition.type '${type}' is not valid`);
-                        }
-                        break;
-                }
+                value = this._setStringFunction(type, value, defaultValue, definition);
 
             }
 
