@@ -290,6 +290,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     reports: {
+                        "lcovonly": "./<%= config.coverage %>/lcov.info",
                         "html": "./<%= config.coverage %>/lcov-report",
                         "json": "./<%= config.coverage %>/coverage.json"
                     }
