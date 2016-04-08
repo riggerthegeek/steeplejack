@@ -105,7 +105,7 @@ MIT License
 [dependencies-image]: https://img.shields.io/david/riggerthegeek/steeplejack.svg?style=flat
 [dev-dependencies-image]: https://img.shields.io/david/dev/riggerthegeek/steeplejack.svg?style=flat
 [gitter-image]: https://img.shields.io/badge/GITTER-JOIN%20CHAT%20%E2%86%92-1DCE73.svg?style=flat
-[quality-image]: https://img.shields.io/bithound/code/github/rexxars/sse-channel.svg
+[quality-image]: https://www.bithound.io/github/riggerthegeek/steeplejack/badges/score.svg
 
 
 [npm-url]: https://npmjs.org/package/steeplejack
