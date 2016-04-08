@@ -105,7 +105,8 @@ MIT License
 [dependencies-image]: https://img.shields.io/david/riggerthegeek/steeplejack.svg?style=flat
 [dev-dependencies-image]: https://img.shields.io/david/dev/riggerthegeek/steeplejack.svg?style=flat
 [gitter-image]: https://img.shields.io/badge/GITTER-JOIN%20CHAT%20%E2%86%92-1DCE73.svg?style=flat
-[quality-image]: http://img.shields.io/codeclimate/github/riggerthegeek/steeplejack.svg?style=flat
+[quality-image]: https://img.shields.io/bithound/code/github/rexxars/sse-channel.svg
+
 
 [npm-url]: https://npmjs.org/package/steeplejack
 [node-version-url]: http://nodejs.org/download/
@@ -114,4 +115,4 @@ MIT License
 [dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack
 [dev-dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack#info=devDependencies&view=table
 [gitter-url]: https://gitter.im/riggerthegeek/steeplejack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge
-[quality-url]: https://codeclimate.com/github/riggerthegeek/steeplejack
+[quality-url]: https://www.bithound.io/github/riggerthegeek/steeplejack
