@@ -58,5 +58,17 @@
     "tslint": "^3.6.0",
     "typescript": "^1.8.9",
     "typings": "^0.7.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/riggerthegeek/steeplejack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/riggerthegeek/steeplejack/issues"
+  },
+  "homepage": "http://steeplejack.info",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
   }
 }
