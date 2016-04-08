@@ -66,7 +66,6 @@ export class Definition implements IModelDefinition {
      *
      * @param {Array|object} rule
      * @returns {Definition}
-     * @todo
      */
     public addValidation (rule: IDefinitionValidation[] = null) : Definition {
 
