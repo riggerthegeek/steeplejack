@@ -21,9 +21,10 @@ import * as _ from "lodash";
 
 /* Files */
 import {extender} from "../helpers/extender";
+import {IException} from "../interfaces/exception";
 
 
-export abstract class Exception extends Error {
+export abstract class Exception extends Error implements IException {
 
 
     public __construct: Function;
