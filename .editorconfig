@@ -19,3 +19,6 @@ quote_type = 'single'
 
 [*.jscsrc]
 indent_size = 2
+
+[*.bithoundrc]
+indent_size = 2
