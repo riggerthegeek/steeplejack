@@ -541,7 +541,23 @@ export class Steeplejack extends Base {
         /* Start the server */
         this.server.start()
             .then(() => {
+
+                /* Output current config */
+                console.log("--- Config  ---");
+                console.log(JSON.stringify(this.config, null, 4));
+
+                /* Output routes */
+                console.log("--- Routes  ---");
+                console.log(this.routes.join("\n"));
+
+                /* Output sockets */
+                console.log("--- Sockets ---");
+                console.log(this.sockets.join("\n"));
+                console.log("---------------");
+
+                /* Notify that we've started */
                 this.emit("start", this);
+
             });
 
         return this;
