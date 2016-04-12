@@ -515,9 +515,10 @@ export class Server extends Base {
      * @param {object} req
      * @param {object} res
      * @param {function} fn
+     * @param {boolean} logError
      * @returns {Promise<T>|Promise<U>}
      */
-    public outputHandler (req: Object, res: Object, fn: () => any) : Promise<any> {
+    public outputHandler (req: Object, res: Object, fn: () => any, logError: boolean = true) : Promise<any> {
 
         let task = (resolve: Function) => {
             resolve(fn());
@@ -531,7 +532,9 @@ export class Server extends Base {
             })
             .catch((err: any) => {
 
-                this.emit("error_log", err);
+                if (logError) {
+                    this.emit("error_log", err);
+                }
 
                 return this._parseError(err);
 
@@ -545,6 +548,15 @@ export class Server extends Base {
                 }
 
                 return this._strategy.outputHandler(statusCode, output, req, res);
+
+            })
+            .catch((err: Error) => {
+
+                /* Emit an uncaught exception */
+                this.emit("uncaughtException", req, res, err);
+
+                /* Throw the error so can be tested etc */
+                throw err;
 
             });
 
@@ -586,19 +598,27 @@ export class Server extends Base {
     /**
      * Uncaught Exception
      *
-     * Listens for uncaught exceptions
+     * Listens for uncaught exceptions. The listener
+     * receives three parameters, request, response
+     * and the error itself.
      *
      * @param {function} fn
      * @returns {Server}
      */
-    public uncaughtException (fn: Function) : Server {
+    public uncaughtException (fn: (req: any, res: any, err: Error) => void) : Server {
+
         if (_.isFunction(fn) === false) {
             throw new TypeError("Server.uncaughtException must receive a function");
         }
 
+        /* Listen for uncaught exceptions in the application */
+        this.on("uncaughtException", fn);
+
+        /* Listen for uncaught exceptions in the strategy */
         this._strategy.uncaughtException(fn);
 
         return this;
+
     }
 
 

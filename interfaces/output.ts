@@ -19,6 +19,7 @@ export interface IOutput {
     (
         request: Object,
         response: Object,
-        fn: () => void
+        fn: () => void,
+        logError?: boolean
     ) : Promise<any>;
 }

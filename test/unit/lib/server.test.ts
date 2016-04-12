@@ -1170,6 +1170,57 @@ describe("Server tests", function () {
 
             describe("failed response", function () {
 
+                it("should handle an error in the strategy, emitting to uncaughtException listener after resolved promise", function () {
+
+                    this.stub.rejects("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return "result";
+                        })
+                        .then(() => {
+                            throw new Error("invalid");
+                        })
+                        .catch((err: Error) => {
+
+                            expect(err).to.be.instanceof(Error)
+                            expect(err.message).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(200, "result", this.req, this.res);
+
+                            expect(this.emit).to.be.calledOnce
+                                .calledWithExactly("uncaughtException", this.req, this.res, new Error("output"));
+
+                        });
+
+                });
+
+                it("should handle an error in the strategy, emitting to uncaughtException listener after rejected promise", function () {
+
+                    this.stub.rejects("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            throw new Error("err");
+                        })
+                        .then(() => {
+                            throw new Error("invalid");
+                        })
+                        .catch((err: Error) => {
+
+                            expect(err).to.be.instanceof(Error)
+                            expect(err.message).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(500, "err", this.req, this.res);
+
+                            expect(this.emit).to.be.calledTwice
+                                .calledWithExactly("error_log", new Error("err"))
+                                .calledWithExactly("uncaughtException", this.req, this.res, new Error("output"));
+
+                        });
+
+                });
+
                 it("should dispatch to the strategy, resolving a promise", function () {
 
                     this.stub.returns("output");
@@ -1300,6 +1351,28 @@ describe("Server tests", function () {
 
                             expect(this.emit).to.be.calledOnce
                                 .calledWithExactly("error_log", err);
+
+                        });
+
+                });
+
+                it("should handle an ordinary error and not emit it", function () {
+
+                    this.stub.returns("output");
+
+                    let err = new Error("uh-oh");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(err);
+                        }, false)
+                        .then((data:any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(500, "uh-oh", this.req, this.res);
+
+                            expect(this.emit).to.not.be.called;
 
                         });
 
@@ -1535,6 +1608,8 @@ describe("Server tests", function () {
                     port: 8080
                 }, this.serverStrategy);
 
+                this.onSpy = sinon.spy(obj, "on");
+
             });
 
             it("should send through to the uncaughtException method", function () {
@@ -1543,8 +1618,11 @@ describe("Server tests", function () {
 
                 expect(obj.uncaughtException(fn)).to.be.equal(obj);
 
+                expect(this.onSpy).to.be.calledOnce
+                    .calledWithExactly("uncaughtException", fn);
+
                 expect(this.spy).to.be.calledOnce
-                    .calledWith(fn);
+                    .calledWithExactly(fn);
 
             });
 

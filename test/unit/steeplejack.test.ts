@@ -279,7 +279,7 @@ describe("Steeplejack test", function () {
 
         describe("#createOutputHandler", function () {
 
-            it("should register the method to the IOC container - result", function () {
+            it("should register the method to the IOC container - result and default error logging", function () {
 
                 var obj = new Steeplejack();
 
@@ -312,6 +312,8 @@ describe("Steeplejack test", function () {
                     port: 3000
                 }, new Strategy());
 
+                let outputHandlerSpy = sinon.spy(server, "outputHandler");
+
                 let handler = obj.createOutputHandler(server);
 
                 expect(handler).to.be.a("function");
@@ -319,10 +321,12 @@ describe("Steeplejack test", function () {
                 let req = {hello:"req"};
                 let res = {hello:"res"};
 
-                /* Ensure it exits at finally */
-                handler(req, res, () => {
+                let fn = () => {
                     return "result";
-                })
+                };
+
+                /* Ensure it exits at finally */
+                handler(req, res, fn)
                     .then((result: any) => {
 
                         expect(result).to.be.eql({
@@ -331,6 +335,73 @@ describe("Steeplejack test", function () {
                             request: req,
                             result: res
                         });
+
+                        expect(outputHandlerSpy).to.be.calledOnce
+                            .calledWithExactly(req, res, fn, true);
+
+                    });
+
+            });
+
+            it("should register the method to the IOC container - result and no error logging", function () {
+
+                var obj = new Steeplejack();
+
+                class Strategy extends EventEmitter implements IServerStrategy {
+                    acceptParser: (options: any, strict: boolean) => void;
+                    addRoute: (httpMethod: string, route: string) => any;
+                    after: (fn: Function) => void;
+                    before: (fn: Function) => void;
+                    bodyParser: () => void;
+                    close: () => void;
+                    enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getServer: () => Object;
+                    gzipResponse: () => void;
+                    queryParser: (mapParser: boolean) => void;
+                    start: (port: number, hostname: string, backlog: number) => any;
+                    uncaughtException: (fn: Function) => void;
+                    use: (fn: Function | Function[]) => void;
+
+                    outputHandler (err: any, data: any, request: Object, result: Object) : any {
+                        return {
+                            err,
+                            data,
+                            request,
+                            result
+                        };
+                    }
+                }
+
+                let server = new Server({
+                    port: 3000
+                }, new Strategy());
+
+                let outputHandlerSpy = sinon.spy(server, "outputHandler");
+
+                let handler = obj.createOutputHandler(server);
+
+                expect(handler).to.be.a("function");
+
+                let req = {hello:"req"};
+                let res = {hello:"res"};
+
+                let fn = () => {
+                    return "result";
+                };
+
+                /* Ensure it exits at finally */
+                handler(req, res, fn, false)
+                    .then((result: any) => {
+
+                        expect(result).to.be.eql({
+                            err: null,
+                            data: "result",
+                            request: req,
+                            result: res
+                        });
+
+                        expect(outputHandlerSpy).to.be.calledOnce
+                            .calledWithExactly(req, res, fn, false);
 
                     });
 

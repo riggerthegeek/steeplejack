@@ -475,8 +475,13 @@ export class Steeplejack extends Base {
     public createOutputHandler (server: Server) : IOutput {
 
         /* Get the server output handler */
-        let outputHandler = (request: Object, response: Object, fn: () => void) : Promise<any> => {
-            return server.outputHandler(request, response, fn);
+        let outputHandler = (
+            request: Object,
+            response: Object,
+            fn: () => void,
+            logError: boolean = true
+        ) : Promise<any> => {
+            return server.outputHandler(request, response, fn, logError);
         };
 
         /* Store in the injector */
