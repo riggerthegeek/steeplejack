@@ -1094,28 +1094,6 @@ describe("Server tests", function () {
 
                 });
 
-                it("should dispatch to the strategy, resolving a promise", function () {
-
-                    this.stub.rejects("output");
-
-                    return obj.outputHandler(this.req, this.res, () => {
-                            return "result";
-                        })
-                        .then(() => {
-                            throw new Error("invalid");
-                        })
-                        .catch((err: any) => {
-
-                            expect(err).to.be.instanceof(Error);
-                            expect(err.message).to.be.equal("output");
-
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(200, "result", this.req, this.res);
-
-                        });
-
-                });
-
                 it("return empty data and set the status code to 204", function () {
 
                     this.stub.returns("output");
