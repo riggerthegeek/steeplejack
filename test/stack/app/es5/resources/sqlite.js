@@ -56,7 +56,7 @@ _.extend(SQLite3.prototype, {
 
     },
 
-    insert function (table, input) {
+    insert: function (table, input) {
 
         var self = this;
 
