@@ -183,13 +183,6 @@ module.exports = function (grunt) {
                     src: "<%= config.test %>/**/*.json",
                     dest: "./<%= config.tmp %>/compiled"
                 }]
-            },
-            stackDb: {
-                files: [{
-                    expand: true,
-                    src: "<%= config.test %>/**/*.db",
-                    dest: "./<%= config.tmp %>/compiled"
-                }]
             }
         },
 
@@ -454,7 +447,6 @@ module.exports = function (grunt) {
         "ts:all",
 
         /* Copy test files over */
-        "copy:stackDb",
         "copy:jsonTest",
         "wrap:coffeescript",
         "wrap:es5",
