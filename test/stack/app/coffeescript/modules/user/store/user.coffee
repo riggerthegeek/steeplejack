@@ -27,41 +27,14 @@ UserStore = ($poolGrabber, $SQLiteResource) ->
 
             $poolGrabber $SQLiteResource, (db) ->
 
-                map =
-                    "$firstName": "first_name"
-                    "$lastName": "last_name"
-                    "$emailAddress": "email_address"
-
-                sql = "INSERT INTO users (first_name, last_name, email_address)" +
-                    "VALUES($firstName, $lastName, $emailAddress)"
-
-                values = _.reduce map, (result, dataKey, valueKey) ->
-
-                    result[valueKey] = data[dataKey];
-
-                    return result
-
-                , {}
-
-                defer = Bluebird.defer()
-
-                db.run sql, values, (err) ->
-
-                    if err
-                        return defer.reject err
-
-                    data.id = this.lastID;
-
-                    defer.resolve data
-
-                defer.promise
+                db.insert "users", data
 
 
         getUserById: (userId) ->
 
             $poolGrabber $SQLiteResource, (db) ->
 
-                db.allAsync "SELECT * FROM users WHERE id = ? LIMIT 1", userId
+                db.get "users", {id: userId}, 1
                     .then (result) ->
                         result[0]
 

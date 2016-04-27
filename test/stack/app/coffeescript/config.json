@@ -1,6 +1,6 @@
 {
   "sqlite": {
-    "filename": "../stack.db"
+    "filename": "../stack.json"
   },
   "server": {
     "port": 3000
