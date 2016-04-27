@@ -11,7 +11,6 @@
 
 /* Third-party modules */
 import {_} from "lodash";
-import Bluebird from "bluebird";
 
 
 /* Files */
