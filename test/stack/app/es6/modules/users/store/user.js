@@ -33,38 +33,7 @@ function UserStore ($poolGrabber, $SQLiteResource) {
 
             return $poolGrabber($SQLiteResource, function (db) {
 
-                var map = {
-                    "$firstName": "first_name",
-                    "$lastName": "last_name",
-                    "$emailAddress": "email_address"
-                };
-
-                var sql = "INSERT INTO users (first_name, last_name, email_address)" +
-                    "VALUES($firstName, $lastName, $emailAddress)";
-
-                var values = _.reduce(map, function (result, dataKey, valueKey) {
-
-                    result[valueKey] = data[dataKey];
-
-                    return result;
-
-                }, {});
-
-                var defer = Bluebird.defer();
-
-                db.run(sql, values, function (err) {
-
-                    if (err) {
-                        return defer.reject(err);
-                    }
-
-                    data.id = this.lastID;
-
-                    defer.resolve(data);
-
-                });
-
-                return defer.promise;
+                return db.insert("users", data);
 
             });
 
@@ -75,7 +44,7 @@ function UserStore ($poolGrabber, $SQLiteResource) {
 
             return $poolGrabber($SQLiteResource, (db) => {
 
-                return db.allAsync("SELECT * FROM users WHERE id = ? LIMIT 1", userId)
+                return db.get("users", {id: userId}, 1)
                     .then((result) => {
                         return result[0];
                     });
