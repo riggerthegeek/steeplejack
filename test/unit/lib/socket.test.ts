@@ -96,7 +96,8 @@ describe("socket test", function () {
                     joinChannel: sinon.spy(),
                     leaveChannel: sinon.spy(),
                     socket: "socket",
-                    params: <any[]> []
+                    params: <any[]> [],
+                    data: {}
                 };
 
                 this.strategy.listen = (socket: any, event: any, iterator: (...params: any[]) => Promise<any>) => {
@@ -141,7 +142,8 @@ describe("socket test", function () {
                     joinChannel: sinon.spy(),
                     leaveChannel: sinon.spy(),
                     socket: "sockety",
-                    params: <any[]> []
+                    params: <any[]> [],
+                    data: {}
                 };
 
                 this.strategy.listen = (socket: any, event: any, iterator: (...params: any[]) => Promise<any>) => {
@@ -187,7 +189,8 @@ describe("socket test", function () {
                     joinChannel: sinon.spy(),
                     leaveChannel: sinon.spy(),
                     socket: "sockety",
-                    params: <any[]> []
+                    params: <any[]> [],
+                    data: {}
                 };
 
                 this.strategy.listen = (socket: any, event: any, iterator: (...params: any[]) => Promise<any>) => {

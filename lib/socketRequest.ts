@@ -35,6 +35,18 @@ export class SocketRequest extends Base implements ISocketRequest {
 
 
     /**
+     * Data
+     *
+     * Any data that we wish to attach to this
+     * request is stored here. This might contain
+     * user data or similar.
+     *
+     * @type {object}
+     */
+    public data = {};
+
+
+    /**
      * Params
      *
      * These are the parameters that are sent
