@@ -47,6 +47,9 @@ exports.SocketIO = class SocketIO extends Base
     createSocket: (server) ->
         @_inst = io(server.getRawServer())
         return
+        
+    disconnect: (obj) ->
+        obj.socket.disconnect()
 
     getSocketId: (obj) ->
         obj.socket.id

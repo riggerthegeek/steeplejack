@@ -70,6 +70,11 @@ exports.SocketIO = Base.extend({
     },
 
 
+    disconnect: function (obj) {
+        obj.socket.disconnect();
+    },
+
+
     getSocketId: function (obj) {
         return obj.socket.id;
     },

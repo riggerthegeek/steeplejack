@@ -64,6 +64,11 @@ export class SocketIO extends Base {
     }
 
 
+    disconnect ({socket}) {
+        socket.disconnect();
+    }
+
+
     getSocketId ({socket}) {
         return socket.id;
     }
