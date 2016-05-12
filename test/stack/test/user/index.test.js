@@ -201,6 +201,29 @@ describe("/user", function () {
 
         });
 
+        it("should disconnect from the socket", function (done) {
+
+            var port = app.server._options.port;
+            var socketUrl = "http://localhost:" + port + "/disconnection";
+
+            var socket = io(socketUrl);
+
+            var hasConnected = false;
+
+            socket.on("connect", function () {
+                hasConnected = true;
+            });
+
+            socket.on("disconnect", function () {
+
+                expect(hasConnected).to.be.true;
+
+                done();
+
+            });
+
+        });
+
     });
 
 });

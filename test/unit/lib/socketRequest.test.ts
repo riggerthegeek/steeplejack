@@ -118,10 +118,10 @@ describe("socketRequest test", function () {
 
             it("should dispatch to the strategy's disconnect method", function () {
 
-                expect(this.obj.disconnect("reason")).to.be.undefined;
+                expect(this.obj.disconnect()).to.be.undefined;
 
                 expect(this.strategy.disconnect).to.be.calledOnce
-                    .calledWithExactly(this.obj.socket, "reason");
+                    .calledWithExactly(this.obj.socket);
 
             });
 

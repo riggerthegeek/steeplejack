@@ -75,7 +75,7 @@ describe("Server tests", function () {
             createSocket (server: IServerStrategy) {
 
             }
-            disconnect: (socket: any, reason: string) => void;
+            disconnect: (socket: any) => void;
             getSocketId: (socket: any) => string;
             joinChannel: (socket: any, channel: string) => void;
             leaveChannel: (socket: any, channel: string) => void;

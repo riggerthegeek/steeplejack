@@ -111,11 +111,9 @@ export class SocketRequest extends Base implements ISocketRequest {
      * Disconnect
      *
      * Kills the socket connection
-     *
-     * @param {string} reason
      */
-    public disconnect (reason: string) {
-        this._strategy.disconnect(this.socket, reason);
+    public disconnect () {
+        this._strategy.disconnect(this.socket);
     }
 
 

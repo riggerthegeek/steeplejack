@@ -20,7 +20,7 @@ export interface ISocketRequest {
     params: any[];
     socket: any;
     broadcast: (broadcast: ISocketBroadcast) => void;
-    disconnect: (reason: string) => void;
+    disconnect: () => void;
     getId: () => string;
     joinChannel: (channel: string) => ISocketRequest;
     leaveChannel: (channel: string) => ISocketRequest;
