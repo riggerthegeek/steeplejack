@@ -92,6 +92,7 @@ describe("socket test", function () {
                 let request = {
                     emit: sinon.spy(),
                     broadcast: sinon.spy(),
+                    disconnect: sinon.spy(),
                     getId: sinon.spy(),
                     joinChannel: sinon.spy(),
                     leaveChannel: sinon.spy(),
@@ -138,6 +139,7 @@ describe("socket test", function () {
                 let request = {
                     emit: sinon.spy(),
                     broadcast: sinon.spy(),
+                    disconnect: sinon.spy(),
                     getId: sinon.spy(),
                     joinChannel: sinon.spy(),
                     leaveChannel: sinon.spy(),
@@ -185,6 +187,7 @@ describe("socket test", function () {
                 let request = {
                     emit: sinon.spy(),
                     broadcast: sinon.spy(),
+                    disconnect: sinon.spy(),
                     getId: sinon.spy(),
                     joinChannel: sinon.spy(),
                     leaveChannel: sinon.spy(),

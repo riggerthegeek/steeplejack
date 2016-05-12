@@ -1555,6 +1555,7 @@ describe("Steeplejack test", function () {
                         return Promise.resolve("connection");
                     }
                     createSocket (server: IServerStrategy) { }
+                    disconnect: (socket: any, reason: string) => void;
                     getSocketId: (socket: any) => string;
                     joinChannel: (socket: any, channel: string) => void;
                     leaveChannel: (socket: any, channel: string) => void;

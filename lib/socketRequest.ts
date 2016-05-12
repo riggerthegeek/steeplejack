@@ -108,6 +108,18 @@ export class SocketRequest extends Base implements ISocketRequest {
 
 
     /**
+     * Disconnect
+     *
+     * Kills the socket connection
+     *
+     * @param {string} reason
+     */
+    public disconnect (reason: string) {
+        this._strategy.disconnect(this.socket, reason);
+    }
+
+
+    /**
      * Get ID
      *
      * Gets the socket connection ID

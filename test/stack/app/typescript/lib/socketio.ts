@@ -70,6 +70,11 @@ export class SocketIO extends Base implements ISocketStrategy {
         this._inst = io(server.getRawServer());
     }
 
+    
+    public disconnect (socket: any, reason: string) : void {
+        socket.disconnect(reason);
+    }
+
 
     public getSocketId ({ socket }: any) : string {
         return socket.id;

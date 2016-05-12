@@ -29,6 +29,7 @@ describe("socketRequest test", function () {
             broadcast: sinon.spy(),
             connect: sinon.spy(),
             createSocket: sinon.spy(),
+            disconnect: sinon.spy(),
             getSocketId: sinon.stub(),
             joinChannel: sinon.spy(),
             leaveChannel: sinon.spy(),
@@ -108,6 +109,19 @@ describe("socketRequest test", function () {
                         hello: "world"
                     }
                 })).to.be.equal(this.obj);
+
+            });
+
+        });
+
+        describe("#disconnect", function () {
+
+            it("should dispatch to the strategy's disconnect method", function () {
+
+                expect(this.obj.disconnect("reason")).to.be.undefined;
+
+                expect(this.strategy.disconnect).to.be.calledOnce
+                    .calledWithExactly(this.obj.socket, "reason");
 
             });
 

@@ -22,6 +22,7 @@ export interface ISocketStrategy {
     broadcast: (request: ISocketRequest, broadcast: ISocketBroadcast) => void;
     connect: (namespace: string, middleware: Function[]) => Promise<any>;
     createSocket: (server: IServerStrategy) => void;
+    disconnect: (socket: any, reason: string) => void;
     getSocketId: (socket: any) => string;
     joinChannel: (socket: any, channel: string) => void;
     leaveChannel: (socket: any, channel: string) => void;
