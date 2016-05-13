@@ -40,7 +40,7 @@ exports.SocketIO = Base.extend({
     connect: function (namespace, middleware)  {
 
         var self = this;
-        
+
         var nsp = self._inst
             .of(namespace);
 
@@ -57,9 +57,9 @@ exports.SocketIO = Base.extend({
             });
 
         });
-        
+
         return self;
-        
+
     },
 
 

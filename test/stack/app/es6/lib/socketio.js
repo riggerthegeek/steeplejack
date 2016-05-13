@@ -50,9 +50,9 @@ export class SocketIO extends Base {
             });
 
         });
-        
+
         return this;
-        
+
     }
 
 
