@@ -70,7 +70,9 @@ describe("Server tests", function () {
 
         class SocketStrategy extends EventEmitter implements ISocketStrategy {
             broadcast: (request: ISocketRequest, broadcast: ISocketBroadcast) => void;
-            connect: (namespace: string, middleware: Function[]) => Promise<any>;
+            connect (namespace: string, middleware: Function[]) {
+                return this;
+            };
 
             createSocket (server: IServerStrategy) {
 

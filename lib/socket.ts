@@ -111,7 +111,7 @@ export class Socket extends Base {
         ]));
 
         this._strategy.connect(namespace, middleware)
-            .then(connection => {
+            .on("connected", (connection: any) => {
 
                 let request = new SocketRequest(connection, this._strategy);
 
@@ -135,9 +135,6 @@ export class Socket extends Base {
 
                 });
 
-            })
-            .catch(err => {
-                this.emit("connectionError", err);
             });
 
         return this;

@@ -40,29 +40,27 @@ export class SocketIO extends Base implements ISocketStrategy {
     }
 
 
-    public connect (namespace: string, middleware: Function[]) : Promise<any> {
+    public connect (namespace: string, middleware: Function[]) : this {
+        
+        let nsp = this._inst
+            .of(namespace);
 
-        return new Promise((resolve: any) => {
+        _.each(middleware, (fn: Function) => {
+            nsp.use(fn);
+        });
 
-            let nsp = this._inst
-                .of(namespace);
+        nsp.on("connection", (socket: any) => {
 
-            _.each(middleware, (fn: Function) => {
-                nsp.use(fn);
-            });
-
-            nsp.on("connection", (socket: any) => {
-
-                /* Send both the socket and the namespace */
-                resolve({
-                    socket,
-                    nsp
-                });
-
+            /* Send both the socket and the namespace */
+            this.emit("connected", {
+                socket,
+                nsp
             });
 
         });
-
+        
+        return this;
+        
     }
 
 
