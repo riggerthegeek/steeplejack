@@ -34,28 +34,25 @@ export class SocketIO extends Base {
 
 
     connect (namespace, middleware)  {
+        let nsp = this._inst
+            .of(namespace);
 
-        return new Promise(resolve => {
+        _.each(middleware, fn => {
+            nsp.use(fn);
+        });
 
-            let nsp = this._inst
-                .of(namespace);
+        nsp.on("connection", socket => {
 
-            _.each(middleware, fn => {
-                nsp.use(fn);
-            });
-
-            nsp.on("connection", socket => {
-
-                /* Send both the socket and the namespace */
-                resolve({
-                    socket,
-                    nsp
-                });
-
+            /* Send both the socket and the namespace */
+            this.emit("connected", {
+                socket,
+                nsp
             });
 
         });
-
+        
+        return this;
+        
     }
 
 

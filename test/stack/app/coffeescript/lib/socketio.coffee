@@ -29,25 +29,24 @@ exports.SocketIO = class SocketIO extends Base
 
     connect: (namespace, middleware) ->
 
-        new Promise (resolve) =>
-            nsp = @_inst.of(namespace)
-            _.each middleware, (fn) =>
-                nsp.use fn
-                return
-            nsp.on 'connection', (socket) =>
-
-                ### Send both the socket and the namespace ###
-
-                resolve
-                    socket: socket
-                    nsp: nsp
-                return
+        nsp = @_inst.of(namespace)
+        _.each middleware, (fn) =>
+            nsp.use fn
             return
+        nsp.on 'connection', (socket) =>
+
+            ### Send both the socket and the namespace ###
+            this.emit "connected",
+                socket: socket
+                nsp: nsp
+            return
+        
+        return @
 
     createSocket: (server) ->
         @_inst = io(server.getRawServer())
         return
-        
+
     disconnect: (obj) ->
         obj.socket.disconnect()
 

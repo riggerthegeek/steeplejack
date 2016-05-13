@@ -40,28 +40,26 @@ exports.SocketIO = Base.extend({
     connect: function (namespace, middleware)  {
 
         var self = this;
+        
+        var nsp = self._inst
+            .of(namespace);
 
-        return new Promise(function (resolve) {
+        _.each(middleware, function (fn) {
+            nsp.use(fn);
+        });
 
-            var nsp = self._inst
-                .of(namespace);
+        nsp.on("connection", function (socket) {
 
-            _.each(middleware, function (fn) {
-                nsp.use(fn);
-            });
-
-            nsp.on("connection", function (socket) {
-
-                /* Send both the socket and the namespace */
-                resolve({
-                    socket: socket,
-                    nsp: nsp
-                });
-
+            /* Send both the socket and the namespace */
+            self.emit("connected", {
+                socket: socket,
+                nsp: nsp
             });
 
         });
-
+        
+        return self;
+        
     },
 
 
