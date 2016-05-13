@@ -24,7 +24,5 @@ export interface ISocketRequest {
     getId: () => string;
     joinChannel: (channel: string) => ISocketRequest;
     leaveChannel: (channel: string) => ISocketRequest;
-    data: {
-        [key: string]: any;
-    };
+    data: any;
 }
