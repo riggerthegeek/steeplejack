@@ -1552,7 +1552,7 @@ describe("Steeplejack test", function () {
                 class SocketStrategy extends EventEmitter implements ISocketStrategy {
                     broadcast: (request: ISocketRequest, broadcast: ISocketBroadcast) => void;
                     connect (namespace: string, middleware: Function[]) {
-                        return Promise.resolve("connection");
+                        return this;
                     }
                     createSocket (server: IServerStrategy) { }
                     disconnect: (socket: any) => void;

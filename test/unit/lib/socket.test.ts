@@ -8,6 +8,7 @@
 
 
 /* Node modules */
+import {EventEmitter} from "events";
 
 
 /* Third-party modules */
@@ -247,36 +248,6 @@ describe("socket test", function () {
 
             });
 
-            it("should simulate a connection error", function (done: any) {
-
-                this.strategy.connect = (nsp: any, mid: any) => {
-
-                    expect(nsp).to.be.equal("namespace");
-                    expect(mid).to.be.eql([]);
-
-                    return Promise.reject(new Error("some connection error"));
-
-                };
-
-                let obj = new Socket(this.strategy);
-
-                let event: IAddSocket = {
-                    event1: () => {},
-                    event2: () => {}
-                };
-
-                obj.namespace("namespace", event)
-                    .on("connectionError", (err: Error) => {
-
-                        expect(err).to.be.instanceof(Error);
-                        expect(err.message).to.be.equal("some connection error");
-
-                        done();
-
-                    });
-
-            });
-
             it("should wrap the namespace with some events, no connect or middleware", function (done: any) {
 
                 let socketRequestInst = {
@@ -297,7 +268,13 @@ describe("socket test", function () {
                     expect(nsp).to.be.equal("namespace");
                     expect(mid).to.be.eql([]);
 
-                    return Promise.resolve("socketConnection");
+                    let emitter = new EventEmitter();
+
+                    setTimeout(() => {
+                        emitter.emit("connected", "socketConnection");
+                    }, 1);
+
+                    return emitter;
 
                 };
 
@@ -364,7 +341,13 @@ describe("socket test", function () {
                     expect(nsp).to.be.equal("namespace");
                     expect(mid).to.be.equal(event.__middleware);
 
-                    return Promise.resolve("socketConnection");
+                    let emitter = new EventEmitter();
+
+                    setTimeout(() => {
+                        emitter.emit("connected", "socketConnection");
+                    });
+
+                    return emitter;
 
                 };
 

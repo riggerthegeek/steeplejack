@@ -9,7 +9,6 @@
 
 
 /* Third-party modules */
-import {Promise} from "es6-promise";
 
 
 /* Files */
@@ -20,7 +19,9 @@ import {ISocketRequest} from "./socketRequest";
 
 export interface ISocketStrategy {
     broadcast: (request: ISocketRequest, broadcast: ISocketBroadcast) => void;
-    connect: (namespace: string, middleware: Function[]) => Promise<any>;
+    connect: (namespace: string, middleware: Function[]) => {
+        on: (event: string, listener: (connection: any) => void) => any
+    };
     createSocket: (server: IServerStrategy) => void;
     disconnect: (socket: any) => void;
     getSocketId: (socket: any) => string;
