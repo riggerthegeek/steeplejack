@@ -352,7 +352,7 @@ describe("Collection test", function () {
                     string: "string"
                 };
 
-                expect(obj.addOne(model1)).to.be.equal(obj);
+                expect(obj.addOne(model1)).to.be.equal(obj.getAll()[0].id);
 
                 expect(obj.getCount()).to.be.equal(1);
                 expect(obj.getAll()).to.be.an("array")
@@ -368,7 +368,7 @@ describe("Collection test", function () {
                 expect(this.emitSpy).to.be.calledOnce
                     .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id);
 
-                expect(obj.addOne(model2)).to.be.equal(obj);
+                expect(obj.addOne(model2)).to.be.equal(obj.getAll()[1].id);
 
                 expect(obj.getCount()).to.be.equal(2);
                 expect(obj.getAll()).to.be.an("array")
@@ -384,7 +384,6 @@ describe("Collection test", function () {
                 expect(this.emitSpy).to.be.calledTwice
                     .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id)
                     .calledWithExactly("model_added", obj.getByKey(1), 1, obj.getAll()[1].id);
-
 
             });
 
@@ -406,7 +405,7 @@ describe("Collection test", function () {
                     string: "string"
                 });
 
-                expect(obj.addOne(model1)).to.be.equal(obj);
+                expect(obj.addOne(model1)).to.be.equal(obj.getAll()[0].id);
 
                 expect(obj.getCount()).to.be.equal(1);
                 expect(obj.getAll()).to.be.an("array")
@@ -422,7 +421,7 @@ describe("Collection test", function () {
                 expect(this.emitSpy).to.be.calledOnce
                     .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id);
 
-                expect(obj.addOne(model2)).to.be.equal(obj);
+                expect(obj.addOne(model2)).to.be.equal(obj.getAll()[1].id);
 
                 expect(obj.getCount()).to.be.equal(2);
                 expect(obj.getAll()).to.be.an("array")
@@ -446,11 +445,11 @@ describe("Collection test", function () {
 
                 expect(obj.addOne([{
                     boolean: true
-                }])).to.be.equal(obj);
+                }])).to.be.null;
 
                 expect(obj.getCount()).to.be.equal(0);
 
-                expect(obj.addOne()).to.be.equal(obj);
+                expect(obj.addOne()).to.be.null;
 
                 expect(obj.getCount()).to.be.equal(0);
 

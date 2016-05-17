@@ -85,9 +85,9 @@ export abstract class Collection extends Base {
      * Adds one object to the collection
      *
      * @param {any} data
-     * @returns {Collection}
+     * @returns {string}
      */
-    public addOne (data: any = null) : Collection {
+    public addOne (data: any = null) : string {
 
         if (_.isObject(data) && _.isArray(data) === false) {
 
@@ -109,9 +109,11 @@ export abstract class Collection extends Base {
 
             this.emit("model_added", model, this._order.length - 1, id);
 
+            return id;
+
         }
 
-        return this;
+        return null;
 
     }
 
