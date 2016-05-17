@@ -107,6 +107,8 @@ export abstract class Collection extends Base {
             this._order.push(id);
             this._data[id] = model;
 
+            this.emit("model_added", model, this._order.length - 1, id);
+
         }
 
         return this;
@@ -542,11 +544,22 @@ export abstract class Collection extends Base {
     public removeById (id: string) : boolean {
 
         if (_.has(this._data, id)) {
+
+            let model = this.getById(id);
+            let position = _.indexOf(this._order, id);
+
+            /* Delete the data */
             delete this._data[id];
+
+            // this.emit("model_added", model, this._order.length - 1, id);
             _.remove(this._order, orderId => {
                 return orderId === id;
             });
+
+            this.emit("model_removed", model, position, id);
+
             return true;
+
         }
 
         return false;

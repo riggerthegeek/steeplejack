@@ -16,7 +16,7 @@ import * as uuid from "node-uuid";
 
 
 /* Files */
-import {expect} from "../../helpers/configure";
+import {expect, sinon} from "../../helpers/configure";
 import {Definition} from "../../../lib/definition";
 import {Model} from "../../../lib/model";
 import {Collection} from "../../../lib/collection";
@@ -201,6 +201,8 @@ describe("Collection test", function () {
             beforeEach(function () {
                 obj = new this.Children();
 
+                this.emitSpy = sinon.spy(obj, "emit");
+
                 expect(obj.getCount()).to.be.equal(0);
                 expect(obj.getAll()).to.be.eql([]);
             });
@@ -247,6 +249,9 @@ describe("Collection test", function () {
                     .match(UUID_V4);
                 expect(obj.getAll()[1].model).to.be.eql(new this.Child(model2));
 
+                expect(this.emitSpy).to.be.calledTwice
+                    .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id)
+                    .calledWithExactly("model_added", obj.getByKey(1), 1, obj.getAll()[1].id);
 
             });
 
@@ -291,6 +296,10 @@ describe("Collection test", function () {
                 expect(obj.getAll()[1].id).to.be.a("string")
                     .match(UUID_V4);
                 expect(obj.getAll()[1].model).to.be.equal(model2);
+
+                expect(this.emitSpy).to.be.calledTwice
+                    .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id)
+                    .calledWithExactly("model_added", obj.getByKey(1), 1, obj.getAll()[1].id);
 
 
             });
@@ -307,6 +316,8 @@ describe("Collection test", function () {
 
                 expect(obj.getCount()).to.be.equal(0);
 
+                expect(this.emitSpy).to.not.be.called;
+
             });
 
         });
@@ -316,6 +327,8 @@ describe("Collection test", function () {
             let obj: any;
             beforeEach(function () {
                 obj = new this.Children();
+
+                this.emitSpy = sinon.spy(obj, "emit");
 
                 expect(obj.getCount()).to.be.equal(0);
                 expect(obj.getAll()).to.be.eql([]);
@@ -352,6 +365,9 @@ describe("Collection test", function () {
                     .match(UUID_V4);
                 expect(obj.getAll()[0].model).to.be.eql(new this.Child(model1));
 
+                expect(this.emitSpy).to.be.calledOnce
+                    .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id);
+
                 expect(obj.addOne(model2)).to.be.equal(obj);
 
                 expect(obj.getCount()).to.be.equal(2);
@@ -364,6 +380,10 @@ describe("Collection test", function () {
                 expect(obj.getAll()[1].id).to.be.a("string")
                     .match(UUID_V4);
                 expect(obj.getAll()[1].model).to.be.eql(new this.Child(model2));
+
+                expect(this.emitSpy).to.be.calledTwice
+                    .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id)
+                    .calledWithExactly("model_added", obj.getByKey(1), 1, obj.getAll()[1].id);
 
 
             });
@@ -399,6 +419,9 @@ describe("Collection test", function () {
                     .match(UUID_V4);
                 expect(obj.getAll()[0].model).to.be.equal(model1);
 
+                expect(this.emitSpy).to.be.calledOnce
+                    .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id);
+
                 expect(obj.addOne(model2)).to.be.equal(obj);
 
                 expect(obj.getCount()).to.be.equal(2);
@@ -411,6 +434,10 @@ describe("Collection test", function () {
                 expect(obj.getAll()[1].id).to.be.a("string")
                     .match(UUID_V4);
                 expect(obj.getAll()[1].model).to.be.equal(model2);
+
+                expect(this.emitSpy).to.be.calledTwice
+                    .calledWithExactly("model_added", obj.getByKey(0), 0, obj.getAll()[0].id)
+                    .calledWithExactly("model_added", obj.getByKey(1), 1, obj.getAll()[1].id);
 
 
             });
@@ -426,6 +453,8 @@ describe("Collection test", function () {
                 expect(obj.addOne()).to.be.equal(obj);
 
                 expect(obj.getCount()).to.be.equal(0);
+
+                expect(this.emitSpy).to.not.be.called;
 
             });
 
@@ -1307,6 +1336,8 @@ describe("Collection test", function () {
 
                 obj = new this.Children(raw);
 
+                this.emitSpy = sinon.spy(obj, "emit");
+
                 expect(obj.getCount()).to.be.equal(3);
             });
 
@@ -1317,21 +1348,37 @@ describe("Collection test", function () {
 
                 expect(obj.getCount()).to.be.equal(3);
 
+                expect(this.emitSpy).to.not.be.called;
+
             });
 
             it("should return true if removed", function () {
+
+                let models = obj.getAll();
 
                 let ids = obj.getIds();
 
                 expect(obj.removeById(ids[0])).to.be.true;
 
+                expect(this.emitSpy).to.be.calledOnce
+                    .calledWithExactly("model_removed", models[0].model, 0, ids[0]);
+
                 expect(obj.getCount()).to.be.equal(2);
 
-                expect(obj.removeById(ids[1])).to.be.true;
+                expect(obj.removeById(ids[2])).to.be.true;
+
+                expect(this.emitSpy).to.be.calledTwice
+                    .calledWithExactly("model_removed", models[0].model, 0, ids[0])
+                    .calledWithExactly("model_removed", models[2].model, 1, ids[2]);
 
                 expect(obj.getCount()).to.be.equal(1);
 
-                expect(obj.removeById(ids[2])).to.be.true;
+                expect(obj.removeById(ids[1])).to.be.true;
+
+                expect(this.emitSpy).to.be.calledThrice
+                    .calledWithExactly("model_removed", models[0].model, 0, ids[0])
+                    .calledWithExactly("model_removed", models[2].model, 1, ids[2])
+                    .calledWithExactly("model_removed", models[1].model, 0, ids[1]);
 
                 expect(obj.getCount()).to.be.equal(0);
 
@@ -1367,6 +1414,8 @@ describe("Collection test", function () {
 
                 obj = new this.Children(raw);
 
+                this.emitSpy = sinon.spy(obj, "emit");
+
                 expect(obj.getCount()).to.be.equal(3);
             });
 
@@ -1376,26 +1425,37 @@ describe("Collection test", function () {
 
                 expect(obj.getCount()).to.be.equal(3);
 
+                expect(this.emitSpy).to.not.be.called;
+
             });
 
             it("should return true if removed", function () {
 
-                let models = _.reduce(obj.getAll(), (result: Model[], data: ICollectionData) => {
-                    result.push(data.model);
-                    return result;
-                }, []);
+                let models = obj.getAll();
 
-                expect(obj.removeByModel(models[0])).to.be.true;
+                expect(obj.removeByModel(models[0].model)).to.be.true;
 
                 expect(obj.getCount()).to.be.equal(2);
 
-                expect(obj.removeByModel(models[1])).to.be.true;
+                expect(this.emitSpy).to.be.calledOnce
+                    .calledWithExactly("model_removed", models[0].model, 0, models[0].id);
+
+                expect(obj.removeByModel(models[2].model)).to.be.true;
+
+                expect(this.emitSpy).to.be.calledTwice
+                    .calledWithExactly("model_removed", models[0].model, 0, models[0].id)
+                    .calledWithExactly("model_removed", models[2].model, 1, models[2].id);
 
                 expect(obj.getCount()).to.be.equal(1);
 
-                expect(obj.removeByModel(models[2])).to.be.true;
+                expect(obj.removeByModel(models[1].model)).to.be.true;
 
                 expect(obj.getCount()).to.be.equal(0);
+
+                expect(this.emitSpy).to.be.calledThrice
+                    .calledWithExactly("model_removed", models[0].model, 0, models[0].id)
+                    .calledWithExactly("model_removed", models[2].model, 1, models[2].id)
+                    .calledWithExactly("model_removed", models[1].model, 0, models[1].id);
 
             });
 
