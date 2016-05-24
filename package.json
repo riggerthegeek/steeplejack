@@ -4,9 +4,9 @@
   "description": "An easy way of making a Twelve Factor App in NodeJS",
   "main": "./index",
   "scripts": {
-    "postinstall": "typings install",
     "postversion": "git push && git push --tags",
-    "test": "grunt watch:test"
+    "test": "grunt watch:test",
+    "typings": "typings install"
   },
   "author": "Simon Emms <simon@simonemms.com>",
   "license": "MIT",
