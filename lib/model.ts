@@ -666,15 +666,30 @@ export abstract class Model extends Base {
         let model = Object.create(this.prototype);
         this.apply(model, []);
 
-        let definition: IDefinitionColumns[] = (model.getColumnKeys());
+        let definition: IDefinitionColumns[] = model.getColumnKeys();
 
         /* Set the column data to the model */
         _.each(definition, item => {
 
-            let key = item.key;
+            const key = item.key;
             let value = data[item.column];
+            const modelDefinition = model.getDefinition(key);
+            const type = modelDefinition.type;
 
-            model[key] = value;
+            if (value !== modelDefinition.value && value !== void 0) {
+
+                if (_.isFunction(type.toModels)) {
+                    /* It's a collection */
+                    value = type.toModels(value).getData();
+                } else if (_.isFunction(type.toModel)) {
+                    /* It's a model */
+                    value = type.toModel(value).getData();
+                }
+
+            }
+
+            /* Set the data to the model */
+            model.set(key, value);
 
         });
 

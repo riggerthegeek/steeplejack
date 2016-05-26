@@ -3408,6 +3408,84 @@ describe("Model test", function () {
 
             });
 
+            it("should cast collection models correctly", function () {
+
+                class User extends Model {
+
+                    protected _schema () {
+                        return {
+                            userId: {
+                                type: "string",
+                                column: "FK_userId"
+                            },
+                            type: {
+                                type: "enum",
+                                enum: [
+                                    "admin",
+                                    "user"
+                                ]
+                            }
+                        };
+                    }
+
+                }
+
+                class Users extends Collection {
+
+                    protected _model () {
+                        return User;
+                    }
+
+                }
+
+                class Child extends Model {
+
+                    protected _schema() {
+                        return {
+                            users: {
+                                type: Users
+                            },
+                            user: {
+                                type: User
+                            }
+                        };
+                    }
+                }
+
+                let data = {
+                    users: [{
+                        FK_userId: "1234",
+                        type: "admin"
+                    }, {
+                        FK_userId: 1235,
+                        type: "user"
+                    }],
+                    user: {
+                        FK_userId: 1235,
+                        type: "user"
+                    }
+                };
+
+                let obj = Child.toModel(data);
+
+                expect(obj).to.be.instanceof(Child)
+                    .instanceof(Model);
+
+                expect(obj.getData()).to.be.eql({
+                    users: [{
+                        userId: "1234",
+                        type: "admin"
+                    }, {
+                        userId: "1235",
+                        type: "user"
+                    }],
+                    user: {
+                        userId: "1235",
+                        type: "user"
+                    }
+                });
+
+            });
 
         });
 
