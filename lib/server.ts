@@ -397,8 +397,8 @@ export class Server extends Base {
     /**
      * After
      *
-     * This function is run at the end of the
-     * functional chain.
+     * This function is run after the routes/sockets
+     * are added.
      *
      * @param {function} fn
      * @returns {Server}
@@ -409,25 +409,6 @@ export class Server extends Base {
         }
 
         this._strategy.after(fn);
-        return this;
-    }
-
-
-    /**
-     * Before
-     *
-     * This function is run at the start of
-     * the functional chain.
-     *
-     * @param {function} fn
-     * @returns {Server}
-     */
-    public before (fn: Function) : Server {
-        if (_.isFunction(fn) === false) {
-            throw new TypeError("Server.before must receive a function");
-        }
-
-        this._strategy.before(fn);
         return this;
     }
 
