@@ -1559,12 +1559,21 @@ describe("Server tests", function () {
 
             });
 
-            it("should send the static directory to the strategy", function () {
+            it("should send the static directory to the strategy - no virtual path", function () {
 
                 expect(this.obj.staticDir("/path/to/dir")).to.be.equal(this.obj);
 
                 expect(this.spy).to.be.calledOnce
-                    .calledWithExactly("/path/to/dir");
+                    .calledWithExactly("/path/to/dir", null);
+
+            });
+
+            it("should send the static directory to the strategy - virtual path", function () {
+
+                expect(this.obj.staticDir("/path/to/my/dir", "/public")).to.be.equal(this.obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly("/path/to/my/dir", "/public");
 
             });
 
