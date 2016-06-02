@@ -598,7 +598,8 @@ export class Server extends Base {
      * @returns {*}
      */
     public staticDir (dir: string) {
-        return this._strategy.staticDir(dir);
+        this._strategy.staticDir(dir);
+        return this;
     }
 
 

@@ -1561,7 +1561,7 @@ describe("Server tests", function () {
 
             it("should send the static directory to the strategy", function () {
 
-                this.obj.staticDir("/path/to/dir");
+                expect(this.obj.staticDir("/path/to/dir")).to.be.equal(this.obj);
 
                 expect(this.spy).to.be.calledOnce
                     .calledWithExactly("/path/to/dir");
