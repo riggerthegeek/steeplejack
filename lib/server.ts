@@ -621,28 +621,16 @@ export class Server extends Base {
     /**
      * Use
      *
-     * Allows you to apply a function, or array
-     * of functions to each call.
+     * Allows you to apply anything to the call. Although
+     * this will usually be a function or array of functions,
+     * it doesn't have to be.
      *
-     * @param {function|function[]} fn
+     * @param {*} args
      * @returns {Server}
      */
-    public use (fn: Function | Function[]) : Server {
+    public use (...args: any[]) : Server {
 
-        if (_.isArray(fn)) {
-
-            _.each(fn, item => {
-                this.use(item);
-            });
-
-        } else if (_.isFunction(fn)) {
-
-            this._strategy.use(fn);
-
-        } else {
-
-            throw new TypeError("Server.use must receive a function or array of functions");
-        }
+        this._strategy.use(...args);
 
         return this;
 

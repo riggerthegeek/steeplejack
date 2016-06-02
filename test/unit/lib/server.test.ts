@@ -1625,6 +1625,17 @@ describe("Server tests", function () {
 
             });
 
+            it("should do many args", function () {
+
+                var fn = function () { };
+
+                expect(obj.use(fn, 2, 3, "hello")).to.be.equal(obj);
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly(fn, 2, 3, "hello");
+
+            });
+
             it("should do an array of functions", function () {
 
                 var fn1 = function () { };
@@ -1632,32 +1643,11 @@ describe("Server tests", function () {
 
                 expect(obj.use([fn1, fn2])).to.be.equal(obj);
 
-                expect(this.spy).to.be.calledTwice
-                    .calledWithExactly(fn1)
-                    .calledWithExactly(fn2);
-
-            });
-
-            it("should throw an error when a non-function sent", function () {
-
-                var fail = false;
-
-                try {
-                    obj.use(null);
-                } catch (err) {
-
-                    fail = true;
-
-                    expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("Server.use must receive a function or array of functions");
-
-                } finally {
-
-                    expect(fail).to.be.true;
-
-                    expect(this.spy).to.not.be.called;
-
-                }
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly([
+                        fn1,
+                        fn2
+                    ]);
 
             });
 

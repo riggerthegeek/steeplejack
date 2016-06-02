@@ -29,5 +29,5 @@ export interface IServerStrategy extends NodeJS.EventEmitter {
     queryParser: (mapParams: boolean) => void;
     start: (port: number, hostname: string, backlog: number) => any;
     uncaughtException: (fn: Function) => void;
-    use: (fn: Function | Function[]) => void;
+    use: (...args: any[]) => void;
 }
