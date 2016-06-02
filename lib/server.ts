@@ -585,9 +585,20 @@ export class Server extends Base {
      * @returns {Promise}
      */
     public start () {
-
         return this._strategy.start(this._options.port, this._options.hostname, this._options.backlog);
+    }
 
+
+    /**
+     * Static Dir
+     *
+     * Sets the static directory for the project
+     *
+     * @param {string} dir
+     * @returns {*}
+     */
+    public staticDir (dir: string) {
+        return this._strategy.staticDir(dir);
     }
 
 

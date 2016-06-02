@@ -63,6 +63,8 @@ describe("Server tests", function () {
                 });
             }
 
+            staticDir () { }
+
             uncaughtException (fn: Function) { }
 
             use (fn: Function | Function[]) { }
@@ -1540,6 +1542,29 @@ describe("Server tests", function () {
 
                     })
                     .finally(done);
+
+            });
+
+        });
+
+        describe("#staticDir", function () {
+
+            beforeEach(function () {
+
+                this.spy = sinon.spy(this.serverStrategy, "staticDir");
+
+                this.obj = new Server({
+                    port: 8080
+                }, this.serverStrategy);
+
+            });
+
+            it("should send the static directory to the strategy", function () {
+
+                this.obj.staticDir("/path/to/dir");
+
+                expect(this.spy).to.be.calledOnce
+                    .calledWithExactly("/path/to/dir");
 
             });
 
