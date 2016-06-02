@@ -36,6 +36,18 @@ export class Server extends Base {
 
 
     /**
+     * After Use
+     *
+     * These will be added to the use stack
+     * after the routes have been added
+     *
+     * @type {Array}
+     * @private
+     */
+    public afterUse: any[] = [];
+
+
+    /**
      * Methods
      *
      * The HTTP methods that can be called. There is
@@ -400,16 +412,19 @@ export class Server extends Base {
      * This function is run after the routes/sockets
      * are added.
      *
-     * @param {function} fn
+     * @param {*} args
      * @returns {Server}
      */
-    public after (fn: Function) : Server {
-        if (_.isFunction(fn) === false) {
-            throw new TypeError("Server.after must receive a function");
-        }
+    public after (...args: any[]) : Server {
 
-        this._strategy.after(fn);
+        const closure = () => {
+            return args;
+        };
+
+        this.afterUse.push(closure);
+
         return this;
+
     }
 
 

@@ -555,12 +555,14 @@ describe("Steeplejack test", function () {
                 this.createOutputHandler = sinon.stub(this.obj, "createOutputHandler");
 
                 this.server = {
+                    afterUse: [],
                     addRoutes: sinon.stub(),
                     addSockets: sinon.stub(),
                     close: sinon.spy(),
                     on: sinon.stub(),
                     outputHandler: sinon.spy(),
-                    start: sinon.stub()
+                    start: sinon.stub(),
+                    use: sinon.spy()
                 };
 
                 this.server.addRoutes.returns(this.server);
@@ -635,6 +637,21 @@ describe("Steeplejack test", function () {
 
                 });
 
+                this.server.afterUse = [
+                    () => {
+                        return [
+                            2
+                        ];
+                    },
+                    () => {
+                        return [
+                            2,
+                            3,
+                            4
+                        ];
+                    }
+                ];
+
                 this.server.start.resolves();
 
                 var createServer = function () {};
@@ -666,6 +683,10 @@ describe("Steeplejack test", function () {
                     .calledWithExactly("$output");
 
                 expect(this.obj.server).to.be.equal(this.server);
+
+                expect(this.server.use).to.be.calledTwice
+                    .calledWithExactly(2)
+                    .calledWithExactly(2, 3, 4);
 
             });
 
@@ -726,6 +747,8 @@ describe("Steeplejack test", function () {
 
                 expect(this.getComponent).to.be.calledOnce
                     .calledWithExactly("$output");
+
+                expect(this.server.use).to.not.be.called;
 
             });
 

@@ -776,8 +776,6 @@ describe("Server tests", function () {
 
             beforeEach(function () {
 
-                this.spy = sinon.spy(this.serverStrategy, "after");
-
                 obj = new Server({
                     port: 8080
                 }, this.serverStrategy);
@@ -787,34 +785,33 @@ describe("Server tests", function () {
             it("should send through to the after method", function () {
 
                 var fn = function () { };
+                var fn2 = function () { };
+                var fn3 = function () { };
+
+                expect(obj.afterUse).to.be.an("array")
+                    .to.have.length(0);
 
                 expect(obj.after(fn)).to.be.equal(obj);
 
-                expect(this.spy).to.be.calledOnce
-                    .calledWith(fn);
+                expect(obj.afterUse).to.be.an("array")
+                    .to.have.length(1);
 
-            });
+                expect(obj.afterUse[0]()).to.be.eql([
+                    fn
+                ]);
 
-            it("should throw an error if a non-function received", function () {
+                expect(obj.after(fn2, fn3)).to.be.equal(obj);
 
-                var fail = false;
+                expect(obj.afterUse).to.be.an("array")
+                    .to.have.length(2);
 
-                try {
-                    obj.after(null);
-                } catch (err) {
-
-                    fail = true;
-
-                    expect(err).to.be.instanceof(TypeError);
-                    expect(err.message).to.be.equal("Server.after must receive a function");
-
-                } finally {
-
-                    expect(fail).to.be.true;
-
-                    expect(this.spy).to.not.be.called;
-
-                }
+                expect(obj.afterUse[0]()).to.be.eql([
+                    fn
+                ]);
+                expect(obj.afterUse[1]()).to.be.eql([
+                    fn2,
+                    fn3
+                ]);
 
             });
 

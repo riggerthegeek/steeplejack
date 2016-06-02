@@ -18,7 +18,6 @@ import {Promise} from "es6-promise";
 export interface IServerStrategy extends NodeJS.EventEmitter {
     acceptParser: (options: string[], strict: boolean) => void;
     addRoute: (httpMethod: string, route: string, iterator: (request: any, response: any) => any) => void;
-    after: (fn: Function) => void;
     before: (fn: Function) => void;
     bodyParser: () => void;
     close: () => void;

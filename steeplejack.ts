@@ -538,6 +538,12 @@ export class Steeplejack extends Base {
             .addRoutes(processedRoutes.routes.getRoutes())
             .addSockets(processedRoutes.sockets.getRoutes());
 
+        this.server
+            .afterUse
+            .forEach((fn: any) => {
+                this.server.use(...fn());
+            });
+
         /* Listen for close events */
         this.on("close", () => {
             this.server.close();
