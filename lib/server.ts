@@ -595,10 +595,11 @@ export class Server extends Base {
      * Sets the static directory for the project
      *
      * @param {string} dir
+     * @param {string} virtualPath
      * @returns {*}
      */
-    public staticDir (dir: string) {
-        this._strategy.staticDir(dir);
+    public staticDir (dir: string, virtualPath: string = null) {
+        this._strategy.staticDir(dir, virtualPath);
         return this;
     }
 
