@@ -15,6 +15,7 @@
 
 /* Files */
 import {expect} from "../../helpers/configure";
+import {Base} from "../../../lib/base";
 import {View} from "../../../lib/view";
 
 
@@ -32,6 +33,9 @@ describe("view test", function () {
                         hello: "world"
                     }
                 });
+
+                expect(obj).to.be.instanceof(View)
+                    .instanceof(Base);
 
                 expect(obj.getRenderTemplate()).to.be.equal("some template");
                 expect(obj.getRenderData()).to.be.eql({

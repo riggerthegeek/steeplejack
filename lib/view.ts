@@ -14,9 +14,10 @@
 
 
 /* Files */
+import {Base} from "./base";
 
 
-export class View {
+export class View extends Base {
 
 
     protected _data: any = {};
@@ -26,6 +27,8 @@ export class View {
 
 
     public constructor ({ template, data }: { template: string, data: any }) {
+
+        super();
 
         this._template = template;
         this._data = data;
