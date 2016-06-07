@@ -51,7 +51,7 @@ exports.SocketIO = Base.extend({
         nsp.on("connection", function (socket) {
 
             /* Send both the socket and the namespace */
-            self.emit("connected", {
+            self.emit(namespace + "_connected", {
                 socket: socket,
                 nsp: nsp
             });

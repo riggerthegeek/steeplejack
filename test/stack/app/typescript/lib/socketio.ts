@@ -41,7 +41,7 @@ export class SocketIO extends Base implements ISocketStrategy {
 
 
     public connect (namespace: string, middleware: Function[]) : this {
-        
+
         let nsp = this._inst
             .of(namespace);
 
@@ -52,15 +52,15 @@ export class SocketIO extends Base implements ISocketStrategy {
         nsp.on("connection", (socket: any) => {
 
             /* Send both the socket and the namespace */
-            this.emit("connected", {
+            this.emit(`${namespace}_connected`, {
                 socket,
                 nsp
             });
 
         });
-        
+
         return this;
-        
+
     }
 
 

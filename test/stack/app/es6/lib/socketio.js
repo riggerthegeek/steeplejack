@@ -44,7 +44,7 @@ export class SocketIO extends Base {
         nsp.on("connection", socket => {
 
             /* Send both the socket and the namespace */
-            this.emit("connected", {
+            this.emit(`${namespace}_connected`, {
                 socket,
                 nsp
             });
