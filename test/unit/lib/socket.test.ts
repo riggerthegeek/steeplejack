@@ -271,7 +271,7 @@ describe("socket test", function () {
                     let emitter = new EventEmitter();
 
                     setTimeout(() => {
-                        emitter.emit("connected", "socketConnection");
+                        emitter.emit("namespace_connected", "socketConnection");
                     }, 1);
 
                     return emitter;
@@ -344,7 +344,7 @@ describe("socket test", function () {
                     let emitter = new EventEmitter();
 
                     setTimeout(() => {
-                        emitter.emit("connected", "socketConnection");
+                        emitter.emit("namespace_connected", "socketConnection");
                     });
 
                     return emitter;

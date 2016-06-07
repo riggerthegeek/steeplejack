@@ -111,7 +111,7 @@ export class Socket extends Base {
         ]));
 
         this._strategy.connect(namespace, middleware)
-            .on("connected", (connection: any) => {
+            .on(`${namespace}_connected`, (connection: any) => {
 
                 let request = new SocketRequest(connection, this._strategy);
 
