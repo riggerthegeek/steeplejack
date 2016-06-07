@@ -254,6 +254,7 @@ module.exports = function (grunt) {
             generateReport: {
                 options: {
                     recursive: true,
+                    require: "source-map-support/register",
                     root: "./<%= config.tmp %>/compiled"
                 },
                 src: "./<%= config.tmp %>/compiled/test/unit/**/*.js"
@@ -264,6 +265,7 @@ module.exports = function (grunt) {
         mochaTest: {
             options: {
                 reporter: "spec",
+                require: "source-map-support/register",
                 ui: "bdd"
             },
             stacktest: {
