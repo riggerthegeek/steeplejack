@@ -553,7 +553,6 @@ export abstract class Collection extends Base {
             /* Delete the data */
             delete this._data[id];
 
-            // this.emit("model_added", model, this._order.length - 1, id);
             _.remove(this._order, orderId => {
                 return orderId === id;
             });
