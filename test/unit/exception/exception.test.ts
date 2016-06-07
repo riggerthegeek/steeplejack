@@ -8,6 +8,7 @@
 
 
 /* Node modules */
+import * as path from "path";
 
 
 /* Third-party modules */
@@ -93,7 +94,7 @@ describe("Exception test", function () {
             expect(obj.arg2).to.be.equal("arg2");
 
             expect(obj.stack).to.be.a("string")
-                .to.contain(require.resolve("../../../exception/index"));
+                .to.contain(path.join(process.cwd(), "exception", "index.ts"));
 
         });
 
@@ -168,7 +169,7 @@ describe("Exception test", function () {
                     get type () {
                         return "MyErr";
                     }
-                    
+
                     public getDetail () {
                         return this.message;
                     }

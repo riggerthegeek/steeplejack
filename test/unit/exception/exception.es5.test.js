@@ -6,6 +6,7 @@
 
 
 /* Node modules */
+var path = require("path");
 
 
 /* Third-party modules */
@@ -101,7 +102,7 @@ describe("Exception ES5 test", function () {
             expect(obj.arg2).to.be.equal("arg2");
 
             expect(obj.stack).to.be.a("string")
-                .to.contain(require.resolve("../../../exception/index"));
+                .to.contain(path.join(process.cwd(), "exception", "index.ts"));
 
         });
 
