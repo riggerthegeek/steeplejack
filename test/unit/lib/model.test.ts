@@ -1207,6 +1207,118 @@ describe("Model test", function () {
 
         });
 
+        describe("#getSchema", function () {
+
+            beforeEach(function () {
+
+                class MyModel extends Model {
+                    protected _schema (child: any = {}) : any {
+                        return Model.merge(child, {
+                            id: {
+                                type: "string"
+                            },
+                            val: {
+                                type: "string"
+                            }
+                        });
+                    }
+                }
+
+                class MySubModel1 extends MyModel {
+                    protected _schema () : any {
+                        return super._schema({
+                            otherValue: {
+                                type: "string"
+                            }
+                        });
+                    }
+                }
+
+                class MySubModel2 extends MyModel {
+                    protected _schema () : any {
+                        return super._schema({
+                            id: {
+                                type: "integer",
+                                value: 0
+                            },
+                            otherValue2: {
+                                type: "string"
+                            }
+                        });
+                    }
+                }
+
+                this.MyModel = MyModel;
+                this.MySubModel1 = MySubModel1;
+                this.MySubModel2 = MySubModel2;
+
+            });
+
+            it("should get the schema of just this class if not extended", function () {
+
+                const obj = new this.MyModel();
+
+                expect(obj).to.be.instanceof(Model)
+                    .instanceof(this.MyModel);
+
+                expect(obj.getSchema()).to.be.eql({
+                    id: {
+                        type: "string"
+                    },
+                    val: {
+                        type: "string"
+                    }
+                });
+
+            });
+
+            it("should combine the schema of both this and a parent class", function () {
+
+                const obj = new this.MySubModel1();
+
+                expect(obj).to.be.instanceof(Model)
+                    .instanceof(this.MyModel)
+                    .instanceof(this.MySubModel1);
+
+                expect(obj.getSchema()).to.be.eql({
+                    id: {
+                        type: "string"
+                    },
+                    val: {
+                        type: "string"
+                    },
+                    otherValue: {
+                        type: "string"
+                    }
+                });
+
+            });
+
+            it("should combine and overwrite the schema of both this and a parent class", function () {
+
+                const obj = new this.MySubModel2();
+
+                expect(obj).to.be.instanceof(Model)
+                    .instanceof(this.MyModel)
+                    .instanceof(this.MySubModel2);
+
+                expect(obj.getSchema()).to.be.eql({
+                    id: {
+                        type: "integer",
+                        value: 0
+                    },
+                    val: {
+                        type: "string"
+                    },
+                    otherValue2: {
+                        type: "string"
+                    }
+                });
+
+            });
+
+        });
+
         describe("#toDb", function () {
 
             it("should convert a submodel to it's data representation", function () {

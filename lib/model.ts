@@ -80,7 +80,7 @@ export abstract class Model extends Base {
      *
      * @private
      */
-    protected abstract _schema () : any;
+    protected abstract _schema (child?: any) : any;
 
 
     /**
@@ -113,7 +113,7 @@ export abstract class Model extends Base {
     protected _configureDefinition () : void {
 
         /* Written like this (not with _.reduce) as the setter needs to access the definition */
-        _.each(this._schema(), (schemaItem: IModelDefinition, key: string) => {
+        _.each(this.getSchema(), (schemaItem: IModelDefinition, key: string) => {
 
             let definition = Definition.toDefinition(key, schemaItem);
 
@@ -646,6 +646,23 @@ export abstract class Model extends Base {
 
         return _.isEqual(current, target);
 
+    }
+
+
+    /**
+     * Merge
+     *
+     * Wraps the lodash defaultsDeep method. This
+     * exists purely as a helper method so that
+     * any user can merge their schema objects
+     * without having to have lodash as a dependency.
+     *
+     * @param {*} object
+     * @param {*} sources
+     * @returns {*}
+     */
+    static merge (object: any, ...sources: any[]) : any {
+        return _.defaultsDeep(object, ...sources);
     }
 
 
