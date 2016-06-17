@@ -224,14 +224,16 @@ export class Server extends Base {
                 output.error = err.getErrors();
             }
 
+        } else if (_.isFunction(err.getHttpCode) && _.isFunction(err.getDetail)) {
+
+            /* It's a Steeplejack error - output as normal */
+            statusCode = err.getHttpCode();
+            output = err.getDetail();
+
         } else {
 
-            /* Convert to a friendly error */
-            if (_.isFunction(err.getHttpCode)) {
-                statusCode = err.getHttpCode();
-            }
-
-            output = _.isFunction(err.getDetail) ? err.getDetail() : err.message;
+            /* Could be anything - treat as uncaught exception */
+            throw err;
 
         }
 
@@ -528,11 +530,15 @@ export class Server extends Base {
             })
             .catch((err: any) => {
 
+                /* This may throw an error */
+                const parsedError = this._parseError(err);
+
+                /* A thrown error is an uncaught exception */
                 if (logError) {
                     this.emit("error_log", err);
                 }
 
-                return this._parseError(err);
+                return parsedError;
 
             })
             .then(({statusCode, output}) => {
@@ -547,12 +553,23 @@ export class Server extends Base {
 
             })
             .catch((err: Error) => {
+                
+                if (this.listenerCount("uncaughtException") === 0) {
+                    console.error("--- UNCAUGHT EXCEPTION ---");
+                    if (err.stack) {
+                        console.error(err.stack);
+                    } else {
+                        console.error(err);
+                    }
+
+                    /* Throw the error for the outputHandler to show */
+                    throw err;
+                }
 
                 /* Emit an uncaught exception */
                 this.emit("uncaughtException", req, res, err);
 
-                /* Throw the error so can be tested etc */
-                throw err;
+                /* No throwing as uncaught exception handler will deal with the outputting */
 
             });
 

@@ -268,7 +268,9 @@ describe("Server tests", function () {
 
             });
 
-            it("should stop when executing multiple functions if a previous one fails", function () {
+            it("should stop when executing multiple functions if a previous one fails - Error", function () {
+
+                const spy = sinon.spy(console, "error");
 
                 this.outputHandler.resolves("outputResult");
 
@@ -294,14 +296,72 @@ describe("Server tests", function () {
                 ];
 
                 return this.obj._addRoute("req", "res", fns)
-                    .then((result: any) => {
+                    .then(() => {
+                        throw new Error("invalid error");
+                    })
+                    .catch((err: any) => {
 
-                        expect(result).to.be.equal("outputResult");
+                        expect(err).to.be.instanceof(Error);
+                        expect(err.message).to.be.equal("some error");
 
-                        expect(this.outputHandler).to.be.calledOnce
-                            .calledWithExactly(500, "some error", "req", "res");
+                        expect(spy).to.be.calledTwice
+                            .calledWithExactly("--- UNCAUGHT EXCEPTION ---")
+                            .calledWithExactly(err.stack);
+
+                        expect(this.outputHandler).to.not.be.called;
 
                         expect(fail).to.be.false;
+
+                        spy.restore();
+
+                    });
+
+            });
+
+            it("should stop when executing multiple functions if a previous one fails - non-Error", function () {
+
+                const spy = sinon.spy(console, "error");
+
+                this.outputHandler.resolves("outputResult");
+
+                let fail = false;
+
+                let fns = [
+                    (req: any, res: any) => {
+
+                        expect(req).to.be.equal("req");
+                        expect(res).to.be.equal("res");
+
+                        throw "some error";
+
+                    },
+                    () => {
+
+                        /* Test that this isn't called */
+                        fail = true;
+
+                        return "result2";
+
+                    },
+                ];
+
+                return this.obj._addRoute("req", "res", fns)
+                    .then(() => {
+                        throw new Error("invalid error");
+                    })
+                    .catch((err: any) => {
+
+                        expect(err).to.be.equal("some error");
+
+                        expect(spy).to.be.calledTwice
+                            .calledWithExactly("--- UNCAUGHT EXCEPTION ---")
+                            .calledWithExactly(err);
+
+                        expect(this.outputHandler).to.not.be.called;
+
+                        expect(fail).to.be.false;
+
+                        spy.restore();
 
                     });
 
@@ -1121,240 +1181,325 @@ describe("Server tests", function () {
 
             describe("failed response", function () {
 
-                it("should handle an error in the strategy, emitting to uncaughtException listener after resolved promise", function () {
+                describe("no uncaught exception listeners", function () {
 
-                    this.stub.rejects("output");
+                    it("should handle an error in the strategy, emitting to uncaughtException listener after resolved promise", function () {
 
-                    return obj.outputHandler(this.req, this.res, () => {
+                        this.stub.rejects("output");
+
+                        return obj.outputHandler(this.req, this.res, () => {
                             return "result";
                         })
-                        .then(() => {
-                            throw new Error("invalid");
+                            .then(() => {
+                                throw new Error("invalid");
+                            })
+                            .catch((err:Error) => {
+
+                                expect(err).to.be.instanceof(Error)
+                                expect(err.message).to.be.equal("output");
+
+                                expect(this.stub).to.be.calledOnce
+                                    .calledWithExactly(200, "result", this.req, this.res);
+
+                                expect(this.emit).to.not.be.called;
+
+                            });
+
+                    });
+
+                    it("should handle an error in the function, emitting to uncaughtException listener", function () {
+
+                        const spy = sinon.spy(console, "error");
+
+                        return obj.outputHandler(this.req, this.res, () => {
+                            throw new Error("output");
                         })
-                        .catch((err: Error) => {
+                            .then(() => {
+                                throw new Error("invalid");
+                            })
+                            .catch((err:Error) => {
 
-                            expect(err).to.be.instanceof(Error)
-                            expect(err.message).to.be.equal("output");
+                                expect(err).to.be.instanceof(Error);
+                                expect(err.message).to.be.equal("output");
 
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(200, "result", this.req, this.res);
+                                expect(this.stub).to.not.be.called;
 
-                            expect(this.emit).to.be.calledOnce
-                                .calledWithExactly("uncaughtException", this.req, this.res, new Error("output"));
+                                expect(this.emit).to.not.be.called;
 
-                        });
+                                expect(spy).to.be.calledTwice
+                                    .calledWithExactly("--- UNCAUGHT EXCEPTION ---")
+                                    .calledWithExactly(err.stack);
 
-                });
+                                spy.restore();
 
-                it("should handle an error in the strategy, emitting to uncaughtException listener after rejected promise", function () {
+                            });
 
-                    this.stub.rejects("output");
+                    });
 
-                    return obj.outputHandler(this.req, this.res, () => {
-                            throw new Error("err");
+                    it("should handle a rejected promise in the function, emitting to uncaughtException listener", function () {
+
+                        const spy = sinon.spy(console, "error");
+
+                        return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject({
+                                hello: "world"
+                            })
                         })
-                        .then(() => {
-                            throw new Error("invalid");
-                        })
-                        .catch((err: Error) => {
+                            .then(() => {
+                                throw new Error("invalid");
+                            })
+                            .catch((err:Error) => {
 
-                            expect(err).to.be.instanceof(Error)
-                            expect(err.message).to.be.equal("output");
+                                expect(err).to.be.eql({
+                                    hello: "world"
+                                });
 
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(500, "err", this.req, this.res);
+                                expect(this.stub).to.not.be.called;
 
-                            expect(this.emit).to.be.calledTwice
-                                .calledWithExactly("error_log", new Error("err"))
-                                .calledWithExactly("uncaughtException", this.req, this.res, new Error("output"));
+                                expect(this.emit).to.not.be.called;
 
-                        });
+                                expect(spy).to.be.calledTwice
+                                    .calledWithExactly("--- UNCAUGHT EXCEPTION ---")
+                                    .calledWithExactly(err);
 
-                });
+                                spy.restore();
 
-                it("should dispatch to the strategy, resolving a promise", function () {
+                            });
 
-                    this.stub.returns("output");
+                    });
 
-                    let err = new Error("rejected");
+                    it("should return the status code and empty output", function () {
 
-                    return obj.outputHandler(this.req, this.res, () => {
-                            return Promise.reject(err);
-                        })
-                        .then((data:any) => {
+                        this.stub.returns("output");
 
-                            expect(data).to.be.equal("output");
-
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(500, "rejected", this.req, this.res);
-
-                            expect(this.emit).to.be.calledOnce
-                                .calledWithExactly("error_log", err);
-
-                        });
-
-                });
-
-                it("should return the status code and empty output", function () {
-
-                    this.stub.returns("output");
-
-                    return obj.outputHandler(this.req, this.res, () => {
+                        return obj.outputHandler(this.req, this.res, () => {
                             return Promise.reject(506);
                         })
-                        .then((data:any) => {
+                            .then((data:any) => {
 
-                            expect(data).to.be.equal("output");
+                                expect(data).to.be.equal("output");
 
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(506, void 0, this.req, this.res);
+                                expect(this.stub).to.be.calledOnce
+                                    .calledWithExactly(506, void 0, this.req, this.res);
 
-                            expect(this.emit).to.be.calledOnce
-                                .calledWithExactly("error_log", 506);
+                                expect(this.emit).to.be.calledOnce
+                                    .calledWithExactly("error_log", 506);
 
-                        });
+                            });
 
-                });
+                    });
 
-                it("should handle a validation error - no errors", function () {
+                    it("should handle a validation error - no errors", function () {
 
-                    this.stub.returns("output");
+                        this.stub.returns("output");
 
-                    let err = {
-                        type: "errcode",
-                        message: "errmessage",
-                        hasErrors: () => {
-                            return false;
-                        }
-                    };
+                        let err = {
+                            type: "errcode",
+                            message: "errmessage",
+                            hasErrors: () => {
+                                return false;
+                            }
+                        };
 
-                    return obj.outputHandler(this.req, this.res, () => {
+                        return obj.outputHandler(this.req, this.res, () => {
                             return Promise.reject(err);
                         })
-                        .then((data:any) => {
+                            .then((data:any) => {
 
-                            expect(data).to.be.equal("output");
+                                expect(data).to.be.equal("output");
 
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(400, {
-                                    code: "errcode",
-                                    message: "errmessage"
-                                }, this.req, this.res);
+                                expect(this.stub).to.be.calledOnce
+                                    .calledWithExactly(400, {
+                                        code: "errcode",
+                                        message: "errmessage"
+                                    }, this.req, this.res);
 
-                            expect(this.emit).to.be.calledOnce
-                                .calledWithExactly("error_log", err);
+                                expect(this.emit).to.be.calledOnce
+                                    .calledWithExactly("error_log", err);
 
-                        });
+                            });
 
-                });
+                    });
 
-                it("should handle a validation error - some errors", function () {
+                    it("should handle a validation error - some errors", function () {
 
-                    this.stub.returns("output");
+                        this.stub.returns("output");
 
-                    let err = {
-                        type: "errcode2",
-                        message: "errmessage2",
-                        getErrors: () => {
-                            return "err list";
-                        },
-                        hasErrors: () => {
-                            return true;
-                        }
-                    };
+                        let err = {
+                            type: "errcode2",
+                            message: "errmessage2",
+                            getErrors: () => {
+                                return "err list";
+                            },
+                            hasErrors: () => {
+                                return true;
+                            }
+                        };
 
-                    return obj.outputHandler(this.req, this.res, () => {
+                        return obj.outputHandler(this.req, this.res, () => {
                             return Promise.reject(err);
                         })
-                        .then((data:any) => {
+                            .then((data:any) => {
 
-                            expect(data).to.be.equal("output");
+                                expect(data).to.be.equal("output");
 
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(400, {
-                                    code: "errcode2",
-                                    message: "errmessage2",
-                                    error: "err list"
-                                }, this.req, this.res);
+                                expect(this.stub).to.be.calledOnce
+                                    .calledWithExactly(400, {
+                                        code: "errcode2",
+                                        message: "errmessage2",
+                                        error: "err list"
+                                    }, this.req, this.res);
 
-                            expect(this.emit).to.be.calledOnce
-                                .calledWithExactly("error_log", err);
+                                expect(this.emit).to.be.calledOnce
+                                    .calledWithExactly("error_log", err);
 
-                        });
+                            });
 
-                });
+                    });
 
-                it("should handle an ordinary error", function () {
+                    it("should handle an ordinary error and not emit it", function () {
 
-                    this.stub.returns("output");
+                        let err = {
+                            type: "errcode2",
+                            message: "errmessage2",
+                            getErrors: () => {
+                                return "err list";
+                            },
+                            hasErrors: () => {
+                                return true;
+                            }
+                        };
 
-                    let err = new Error("uh-oh");
+                        this.stub.resolves("output");
 
-                    return obj.outputHandler(this.req, this.res, () => {
-                            return Promise.reject(err);
-                        })
-                        .then((data:any) => {
-
-                            expect(data).to.be.equal("output");
-
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(500, "uh-oh", this.req, this.res);
-
-                            expect(this.emit).to.be.calledOnce
-                                .calledWithExactly("error_log", err);
-
-                        });
-
-                });
-
-                it("should handle an ordinary error and not emit it", function () {
-
-                    this.stub.returns("output");
-
-                    let err = new Error("uh-oh");
-
-                    return obj.outputHandler(this.req, this.res, () => {
+                        return obj.outputHandler(this.req, this.res, () => {
                             return Promise.reject(err);
                         }, false)
-                        .then((data:any) => {
+                            .then((data: any) => {
 
-                            expect(data).to.be.equal("output");
+                                expect(data).to.be.equal("output");
 
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(500, "uh-oh", this.req, this.res);
+                                expect(this.stub).to.be.calledOnce
+                                    .calledWithExactly(400, {
+                                        code: "errcode2",
+                                        message: "errmessage2",
+                                        error: "err list"
+                                    }, this.req, this.res);
 
-                            expect(this.emit).to.not.be.called;
+                                expect(this.emit).to.not.be.called;
 
-                        });
+                            });
+
+                    });
+
+                    it("should handle an ordinary error - getHttpCode and getDetail methods", function () {
+
+                        this.stub.returns("output");
+
+                        let err = new Error("uh-oh crap");
+                        (<any> err).getHttpCode = () => {
+                            return 401;
+                        };
+                        (<any> err).getDetail = () => {
+                            return "detail";
+                        };
+
+                        return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject(err);
+                        })
+                            .then((data:any) => {
+
+                                expect(data).to.be.equal("output");
+
+                                expect(this.stub).to.be.calledOnce
+                                    .calledWithExactly(401, "detail", this.req, this.res);
+
+                                expect(this.emit).to.be.calledOnce
+                                    .calledWithExactly("error_log", err);
+
+                            });
+
+                    });
 
                 });
 
-                it("should handle an ordinary error - getHttpCode and getDetail methods", function () {
+                describe("an uncaught exception listener", function () {
 
-                    this.stub.returns("output");
+                    it("should handle an error in the strategy, emitting to uncaughtException listener after resolved promise", function (done: any) {
 
-                    let err = new Error("uh-oh crap");
-                    (<any> err).getHttpCode = () => {
-                        return 401;
-                    };
-                    (<any> err).getDetail = () => {
-                        return "detail";
-                    };
+                        obj.on("uncaughtException", (req: any, res: any, err: Error) => {
 
-                    return obj.outputHandler(this.req, this.res, () => {
-                            return Promise.reject(err);
-                        })
-                        .then((data:any) => {
+                            try {
 
-                            expect(data).to.be.equal("output");
+                                expect(req).to.be.equal(this.req);
+                                expect(res).to.be.equal(this.res);
+                                expect(err).to.be.eql(new Error("output"));
 
-                            expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(401, "detail", this.req, this.res);
+                                done();
 
-                            expect(this.emit).to.be.calledOnce
-                                .calledWithExactly("error_log", err);
+                            } catch (err) {
+                                done(err);
+                            }
 
                         });
+
+                        this.stub.rejects("output");
+
+                        return obj.outputHandler(this.req, this.res, () => {
+                            return "result";
+                        })
+                            .then((result: any) => {
+
+                                try {
+
+                                    expect(result).to.be.undefined;
+
+                                    expect(this.stub).to.be.calledOnce
+                                        .calledWithExactly(200, "result", this.req, this.res);
+
+                                    expect(this.emit).to.be.calledOnce
+                                        .calledWithExactly("uncaughtException", this.req, this.res, new Error("output"));
+
+                                } catch (err) {
+                                    done(err);
+                                }
+
+                            });
+
+                    });
+
+                    it("should handle an error in the function, emitting to uncaughtException listener", function (done: any) {
+
+                        obj.on("uncaughtException", (req: any, res: any, err: Error) => {
+
+                            expect(req).to.be.equal(this.req);
+                            expect(res).to.be.equal(this.res);
+                            expect(err).to.be.eql(new Error("output"));
+
+                            done()
+                        });
+
+                        const spy = sinon.spy(console, "error");
+
+                        return obj.outputHandler(this.req, this.res, () => {
+                            throw new Error("output");
+                        })
+                            .then((result: any) => {
+
+                                expect(result).to.be.undefined;
+
+                                expect(this.stub).to.not.be.called;
+
+                                expect(this.emit).to.be.calledOnce
+                                    .calledWithExactly("uncaughtException", this.req, this.res, new Error("output"));
+
+                                expect(spy).to.not.be.called;
+
+                                spy.restore();
+
+                            });
+
+                    });
 
                 });
 
