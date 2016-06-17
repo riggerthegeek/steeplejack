@@ -554,7 +554,7 @@ export class Server extends Base {
             })
             .catch((err: Error) => {
 
-                if (this.listenerCount("uncaughtException") === 0) {
+                if (this.listeners("uncaughtException").length === 0) {
                     console.error("--- UNCAUGHT EXCEPTION ---");
                     if (err.stack) {
                         console.error(err.stack);
