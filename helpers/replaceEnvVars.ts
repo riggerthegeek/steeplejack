@@ -27,16 +27,10 @@ export function replaceEnvVars (obj: any) {
             replaceEnvVars(envVar);
         } else {
 
-            /*
-                Check envvar passed in
-
-                If envvar passed in, use the value of
-                that envvar
-             */
-            if (/^\$/.test(envVar)) {
-                envVar = envVar.replace(/^\$/, "");
-
-                envVar = process.env[envVar];
+            /* Check if envvar passed in - begins "$" recursive */
+            while (/^\$/.test(process.env[envVar])) {
+                envVar = process.env[envVar]
+                    .replace(/^\$/, "");
             }
 
             if (_.has(process.env, envVar)) {
