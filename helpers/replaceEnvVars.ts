@@ -27,6 +27,18 @@ export function replaceEnvVars (obj: any) {
             replaceEnvVars(envVar);
         } else {
 
+            /*
+                Check envvar passed in
+
+                If envvar passed in, use the value of
+                that envvar
+             */
+            if (/^\$/.test(envVar)) {
+                envVar = envVar.replace(/^\$/, "");
+
+                envVar = process.env[envVar];
+            }
+
             if (_.has(process.env, envVar)) {
 
                 /* Replace the value with the envVar */
