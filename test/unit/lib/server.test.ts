@@ -1123,6 +1123,24 @@ describe("Server tests", function () {
 
                 });
 
+                it("should return an empty object", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                        return {};
+                    })
+                        .then((data: any) => {
+
+                            expect(data).to.be.equal("output");
+
+                            expect(this.stub).to.be.calledOnce
+                                .calledWithExactly(200, {}, this.req, this.res);
+
+                        });
+
+                });
+
                 it("return undefined data and set the status code to 204", function () {
 
                     this.stub.returns("output");
