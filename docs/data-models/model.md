@@ -72,7 +72,7 @@ interface IModelDefinition {
 
 This is a required field. If the `type` is a string, it should be one of the following:
 
- - array - consider using an instance of Collection instance
+ - array - consider using a `Collection` instance
  - boolean
  - date
  - enum - this requires the [enum](#enum-any) array
