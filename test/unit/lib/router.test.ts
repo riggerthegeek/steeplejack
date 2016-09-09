@@ -234,6 +234,7 @@ describe("Router test", function () {
                 beforeEach(function () {
 
                     let stubs: any = _.reduce({
+                        "/path/to/dir/v1-0/path/var/:id/endpoint": "/path/to/dir/v1-0/path/var/:id/endpoint",
                         "/path/to/dir/v1-0/path/dir/endpoint": "/path/to/dir/v1-0/path/dir/endpoint",
                         "/path/to/dir/v1_0/path/dir/endpoint": "/path/to/dir/v1_0/path/dir/endpoint",
                         "/path/to/dir/v1.0/path/dir/endpoint": "/path/to/dir/v1.0/path/dir/endpoint",
@@ -340,6 +341,9 @@ describe("Router test", function () {
                         name: "socket/only",
                         path: "/path/to/dir"
                     }, {
+                        name: "v1-0/path/var/:id/endpoint",
+                        path: "/path/to/dir"
+                    }, {
                         name: "v1_0/path/dir/endpoint",
                         path: "/path/to/dir"
                     }, {
@@ -374,6 +378,7 @@ describe("Router test", function () {
                         "route/only",
                         "socket/only",
                         "v1_0/path/dir/endpoint",
+                        "v1-0/path/var/:id/endpoint",
                         "v1-0/path/dir/endpoint",
                         "v1.0/path/dir/endpoint",
                         "dir/endpoint",
@@ -392,6 +397,9 @@ describe("Router test", function () {
 
                     expect(obj["v1_0/path/dir/endpoint"].route()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
                     expect(obj["v1_0/path/dir/endpoint"].socket()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
+
+                    expect(obj["v1-0/path/var/:id/endpoint"].route()).to.be.equal("/path/to/dir/v1-0/path/var/:id/endpoint");
+                    expect(obj["v1-0/path/var/:id/endpoint"].socket()).to.be.equal("/path/to/dir/v1-0/path/var/:id/endpoint");
 
                     expect(obj["v1-0/path/dir/endpoint"].route()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
                     expect(obj["v1-0/path/dir/endpoint"].socket()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
