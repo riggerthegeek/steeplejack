@@ -1463,7 +1463,7 @@ describe("Server tests", function () {
 
                         this.stub.rejects("output");
 
-                        return obj.outputHandler(this.req, this.res, () => {
+                        obj.outputHandler(this.req, this.res, () => {
                             return "result";
                         })
                             .then((result: any) => {
@@ -1499,7 +1499,7 @@ describe("Server tests", function () {
 
                         const spy = sinon.spy(console, "error");
 
-                        return obj.outputHandler(this.req, this.res, () => {
+                        obj.outputHandler(this.req, this.res, () => {
                             throw new Error("output");
                         })
                             .then((result: any) => {
@@ -1691,7 +1691,7 @@ describe("Server tests", function () {
                     hostname: "193.168.0.100"
                 }, new Strategy());
 
-                return obj.start()
+                obj.start()
                     .then((result: Object) => {
 
                         expect(result).to.be.eql({
