@@ -20,6 +20,8 @@ before_install:
 - npm install -g grunt-cli
 - date
 script:
+# Use this rather than a postinstall - that runs even when this is a dependency
+- npm run typings
 - grunt ci
 before_deploy:
 - grunt
