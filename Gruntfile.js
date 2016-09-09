@@ -254,7 +254,9 @@ module.exports = function (grunt) {
             generateReport: {
                 options: {
                     recursive: true,
-                    require: "source-map-support/register",
+                    require: [
+                        "source-map-support/register"
+                    ],
                     root: "./<%= config.tmp %>/compiled"
                 },
                 src: "./<%= config.tmp %>/compiled/test/unit/**/*.js"
