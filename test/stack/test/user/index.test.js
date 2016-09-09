@@ -227,3 +227,41 @@ describe("/user", function () {
     });
 
 });
+
+describe("/var", function () {
+
+    describe("/:id", function () {
+
+        describe("index", function () {
+
+            describe("GET", function () {
+
+                it("should return the variable parameter", function (done) {
+
+                    request(app.server.getServer())
+                        .get("/var/some-param")
+                        .expect(200, {
+                            id: "some-param"
+                        })
+                        .end(done);
+
+                });
+
+                it("should return another variable parameter", function (done) {
+
+                    request(app.server.getServer())
+                        .get("/var/hello")
+                        .expect(200, {
+                            id: "hello"
+                        })
+                        .end(done);
+
+                });
+
+            });
+
+        });
+
+    });
+
+});
