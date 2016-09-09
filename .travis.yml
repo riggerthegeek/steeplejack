@@ -20,7 +20,6 @@ before_install:
 - npm install -g grunt-cli
 - date
 script:
-- npm run typings
 - grunt ci
 before_deploy:
 - grunt
