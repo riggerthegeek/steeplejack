@@ -44,7 +44,7 @@
     "grunt-wrap": "^0.3.0",
     "istanbul": "^0.4.3",
     "load-grunt-tasks": "^3.5.0",
-    "mocha": "^3.0.2",
+    "mocha": "^2.4.5",
     "proxyquire": "^1.7.4",
     "remap-istanbul": "^0.6.3",
     "restify": "^4.0.4",
