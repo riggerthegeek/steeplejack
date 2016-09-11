@@ -428,11 +428,12 @@ export abstract class Collection extends Base {
      *
      * Returns the models in order
      *
+     * @param {boolean} parse
      * @returns {any[]}
      */
-    public getData () : any[] {
+    public getData (parse: boolean = void 0) : any[] {
         return _.map(this.getAll(), (item: ICollectionData) => {
-            return item.model.getData();
+            return item.model.getData(parse);
         });
     }
 

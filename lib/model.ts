@@ -352,14 +352,21 @@ export abstract class Model extends Base {
      * This allows us to access the static
      * property set in the child.
      *
+     * If parsing the data, it will run it
+     * through any getter functions. Otherwise,
+     * it will just be the raw data.
+     *
+     * @param {boolean} parse
      * @returns {any}
      */
-    public getData () : any {
+    public getData (parse: boolean = true) : any {
 
         return _.reduce(this._data, (result: any, data: any, key: string) => {
 
             if (_.isObject(data) && _.isFunction(data.getData)) {
                 data = data.getData();
+            } else if (parse) {
+                data = this.get(key);
             }
 
             result[key] = data;

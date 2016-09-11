@@ -987,6 +987,57 @@ describe("Collection test", function () {
 
         });
 
+        describe("#getData", function () {
+
+            it("should allow retrieval of the parsed getter data", function () {
+
+                class Mod extends Model {
+                    protected _schema () {
+                        return {
+                            string: {
+                                type: "string"
+                            }
+                        };
+                    }
+                    protected _getString (value: string) : string {
+                        return `hello ${value}`;
+                    }
+                }
+
+                class Col extends Collection {
+                    _model () {
+                        return Mod;
+                    }
+                }
+
+                const obj = new Col([{
+                    string: "world"
+                }, {
+                    string: "Dave"
+                }]);
+
+                expect(obj.getData()).to.be.eql([{
+                    string: "hello world"
+                }, {
+                    string: "hello Dave"
+                }]);
+
+                expect(obj.getData(true)).to.be.eql([{
+                    string: "hello world"
+                }, {
+                    string: "hello Dave"
+                }]);
+
+                expect(obj.getData(false)).to.be.eql([{
+                    string: "world"
+                }, {
+                    string: "Dave"
+                }]);
+
+            });
+
+        });
+
         describe("getters", function () {
 
             let obj: any,

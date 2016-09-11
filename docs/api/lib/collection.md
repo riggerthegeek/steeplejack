@@ -127,9 +127,10 @@ Counts the number of Models in the Collection
 
 ---
 
-### getData () => Object[]
+### getData (parse: boolean = true) => Object[]
 
-Returns the array of Models in order. This will return an array of objects.
+Returns the array of Models in order. This will return an array of objects. If the `parse` argument is `true`, it will
+get the data through any getters. If it is `false`, it will be the raw data set to the model.
 
 ---
 

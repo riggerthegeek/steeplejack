@@ -1168,6 +1168,39 @@ describe("Model test", function () {
 
             });
 
+            it("should export the getters value", function () {
+
+                class Child extends Model {
+                    protected _schema () {
+                        return {
+                            string: {
+                                type: "string"
+                            }
+                        };
+                    }
+                    protected _getString (value: string) : string {
+                        return `hello ${value}`;
+                    }
+                }
+
+                const obj = new Child({
+                    string: "world"
+                });
+
+                expect(obj.getData()).to.be.eql({
+                    string: "hello world"
+                });
+
+                expect(obj.getData(true)).to.be.eql({
+                    string: "hello world"
+                });
+
+                expect(obj.getData(false)).to.be.eql({
+                    string: "world"
+                });
+
+            });
+
         });
 
         describe("#getDefinition", function () {
