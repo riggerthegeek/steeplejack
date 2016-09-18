@@ -9,6 +9,41 @@ pages:
     - 'Modules': getting-started/modules.md
     - 'Config': getting-started/config.md
     - 'Testing': getting-started/testing.md
+  - 'Dependency injection':
+    - 'Introduction': dependency-injection/intro.md
+    - 'Class injector': dependency-injection/class-injector.md
+    - 'Factory injector': dependency-injection/factory-injector.md
+    - 'Singleton injector': dependency-injection/singleton-injector.md
+    - 'Config injector': dependency-injection/config-injector.md
+  - 'Data models':
+    - 'Introduction': data-models/intro.md
+    - 'Model': data-models/model.md
+    - 'Collection': data-models/collection.md
+  - 'Plugins':
+    - 'Introduction': 'plugins/intro.md'
+    - 'HTTP Strategies': 'plugins/http-strategies.md'
+  - 'Strategies':
+    - 'Introduction': strategies/intro.md
+  - 'API Reference':
+    - 'Steeplejack': api/steeplejack.md
+    - '/decorators':
+      - 'inject': api/decorators/inject.md
+    - '/exception':
+      - 'exception': api/exception/exception.md
+      - 'fatal': api/exception/fatal.md
+      - 'validation': api/exception/validation.md
+    - '/lib':
+      - 'base': api/lib/base.md
+      - 'collection': api/lib/collection.md
+      - 'injector': api/lib/injector.md
+      - 'logger': api/lib/logger.md
+      - 'model': api/lib/model.md
+      - 'plugin': api/lib/plugin.md
+      - 'router': api/lib/router.md
+      - 'server': api/lib/server.md
+      - 'socket': api/lib/socket.md
+      - 'socketRequest': api/lib/socketRequest.md
+      - 'view': api/lib/view.md
 repo_url: https://github.com/riggerthegeek/steeplejack
 site_name: Steeplejack documentation
 theme: readthedocs
