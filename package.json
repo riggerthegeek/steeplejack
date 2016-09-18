@@ -6,7 +6,7 @@
   "scripts": {
     "build": "mkdocs build --clean",
     "deploy": "mkdocs gh-deploy --clean",
-    "serve": "mkdocs serve --clean"
+    "serve": "mkdocs serve"
   },
   "repository": {
     "type": "git",
