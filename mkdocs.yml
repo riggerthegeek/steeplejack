@@ -1,2 +1,14 @@
-site_name: My Docs
+copyright: Simon Emms
+google_analytics: ['UA-68581184-2', 'steeplejack.info']
+pages:
+  - Home: index.md
+  - Getting started:
+    - 'Installation': getting-started/index.md
+    - 'Your first app': getting-started/your-first-app.md
+    - 'Routing': getting-started/routing.md
+    - 'Modules': getting-started/modules.md
+    - 'Config': getting-started/config.md
+    - 'Testing': getting-started/testing.md
+repo_url: https://github.com/riggerthegeek/steeplejack
+site_name: Steeplejack documentation
 theme: readthedocs
