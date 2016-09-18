@@ -1037,13 +1037,13 @@
         }, 
         {
             "location": "/api/lib/view/", 
-            "text": "View", 
+            "text": "Views", 
             "title": "view"
         }, 
         {
-            "location": "/api/lib/view/#view", 
+            "location": "/api/lib/view/#views", 
             "text": "", 
-            "title": "View"
+            "title": "Views"
         }
     ]
 }
