@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>collection - Steeplejack documentation</title>
+  
+
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "collection";
+    var mkdocs_page_input_path = "api/lib/collection.md";
+    var mkdocs_page_url = "/api/lib/collection/";
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script>
+  <script src="../../../js/theme.js"></script> 
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68581184-2', 'steeplejack.info');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Steeplejack documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Getting started</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../getting-started/">Installation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../getting-started/your-first-app/">Your first app</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../getting-started/routing/">Routing</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../getting-started/modules/">Modules</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../getting-started/config/">Config</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../getting-started/testing/">Testing</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Dependency injection</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../dependency-injection/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../dependency-injection/class-injector/">Class injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../dependency-injection/factory-injector/">Factory injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../dependency-injection/singleton-injector/">Singleton injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../dependency-injection/config-injector/">Config injector</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Data models</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../data-models/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../data-models/model/">Model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../data-models/collection/">Collection</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Plugins</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../plugins/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../plugins/http-strategies/">HTTP Strategies</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Strategies</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../strategies/intro/">Introduction</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API Reference</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../steeplejack/">Steeplejack</a>
+        
+    </li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/decorators</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../decorators/inject/">inject</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/exception</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../exception/exception/">exception</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../exception/fatal/">fatal</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../exception/validation/">validation</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../base/">base</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">collection</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#collection">Collection</a></li>
+                
+                    <li><a class="toctree-l4" href="#methods">Methods</a></li>
+                
+                    <li><a class="toctree-l4" href="#static-methods">Static Methods</a></li>
+                
+                    <li><a class="toctree-l4" href="#usage">Usage</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../injector/">injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../logger/">logger</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../model/">model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../plugin/">plugin</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../router/">router</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../server/">server</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../socket/">socket</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../socketRequest/">socketRequest</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../view/">view</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Steeplejack documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API Reference &raquo;</li>
+        
+      
+        
+          <li>/lib &raquo;</li>
+        
+      
+    
+    <li>collection</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="collection">Collection</h1>
+<p>A Collection is simply a series of <a href="../model/">Model instances</a> - if a Model is a single object of data then a Collection is an array of
+those object. If you were to define a <code>Person</code> model to represent one person, then the Collection may be called <code>People</code> to represent
+many <code>Person</code> Models. At the very minimum, you must define the Model (see <a href="#usage">Usage</a>) the Collection is using. You can also add any
+number of additional methods to your Collections.</p>
+<p>This is an <a href="https://en.wikipedia.org/wiki/Abstract_type">abstract class</a>, meaning it cannot be instantiated directly - this only applies to
+TypeScript applications, but still should be extended in all other versions of JavaScript.</p>
+<pre><code class="javascript">import {Collection} from &quot;steeplejack/lib/collection&quot;;
+</code></pre>
+
+<p><strong>Extends:</strong> <a href="../base/">Base</a></p>
+<h2 id="methods">Methods</h2>
+<h3 id="constructor-data-object-void">constructor (data: Object[]) =&gt; void</h3>
+<p>Creates a new instance of the collection. All data gets sent to the <a href="#add-data-object--collection">add</a> method.</p>
+<hr />
+<h3 id="add-data-object-collection">add (data: Object[]) =&gt; Collection</h3>
+<p>Adds each object in the array to the collection. Dispatches to the <a href="#addone-data-object--collection">addOne</a> method.</p>
+<hr />
+<h3 id="addone-data-object-collection">addOne (data: Object) =&gt; Collection</h3>
+<p>Adds a single data object to the collection. If it's already an instance of the Model defined in the protected <code>_model</code> method, it will just
+add it. If not, it will create an instance of the Model with the data object sent to it.</p>
+<hr />
+<h3 id="each-iterator-function-thisarg-object-collection">each (iterator: Function, thisArg: Object) =&gt; Collection</h3>
+<p>Cycles through each model in the collection and runs the iterator function on it. The <code>thisArg</code> is for ES5 compatibility, which sets the
+scope of the iterator function. The order starts with the <em>0th</em> model and ends with the last.</p>
+<pre><code class="javascript">obj.each((model, id, collection) =&gt; {
+    console.log(model);
+});
+// 'model' is the instance of the Model that we're iterating through
+// 'id' is the position in the collection, starting from 0
+// 'collection' is the instance of the collection (identical to 'obj' in this example)
+</code></pre>
+
+<hr />
+<h3 id="eachright-iterator-function-thisarg-object-collection">eachRight (iterator: Function, thisArg: Object) =&gt; Collection</h3>
+<p>Identical to <a href="#each-iterator-function-thisarg-object--collection">each</a> method, except that it starts with the last model and ends with the
+<em>0th</em>.</p>
+<hr />
+<h3 id="filter-properties-object-collection">filter (properties: Object) =&gt; Collection</h3>
+<p>Anything that matches is removed from the Collection. This is the opposite of <a href="#where-properties-object--collection">where</a>.</p>
+<hr />
+<h3 id="find-properties-object-model">find (properties: Object) =&gt; Model</h3>
+<p>Similar to the <a href="#where-properties-object--collection">where</a> method, except that returns the first Model that matches. This may mean that
+there are additional models that would match.</p>
+<hr />
+<h3 id="findlast-properties-object-model">findLast (properties: Object) =&gt; Model</h3>
+<p>This reverses the <a href="#find-properties-object--model">find</a> method, returning the final matching Model in the collection.</p>
+<hr />
+<h3 id="getall-icollectiondata">getAll () =&gt; ICollectionData[]</h3>
+<p>Returns the data array.</p>
+<hr />
+<h3 id="getallbyid-ids-string-model">getAllById (ids: string[]) =&gt; Model[]</h3>
+<p>Gets all the Models that match the given ids in the array. These will be in the
+<a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_.28random.29">UUID v4 format</a>.</p>
+<hr />
+<h3 id="getallbykey-keys-number-model">getAllByKey (keys: number[]) =&gt; Model[]</h3>
+<p>Get all the Models that match the given keys in the array. These will reflect the order of the Models, starting with the <em>0th</em>.</p>
+<hr />
+<h3 id="getallbymodel-models-model-model">getAllByModel (models: Model[]) =&gt; Model[]</h3>
+<p>Gets all the Models that match the given Models in the array.</p>
+<hr />
+<h3 id="getbyid-id-string-model">getById (id: string) =&gt; Model</h3>
+<p>Searches through the Collection for the given ID. This will be a
+<a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_.28random.29">UUID v4</a>.</p>
+<hr />
+<h3 id="getbykey-key-number-model">getByKey (key: number) =&gt; Model</h3>
+<p>Searches through the Collection for the key.</p>
+<hr />
+<h3 id="getbymodel-model-model-model">getByModel (model: Model) =&gt; Model</h3>
+<p>Search through Collection for the Model.</p>
+<hr />
+<h3 id="getcount-number">getCount () =&gt; Number</h3>
+<p>Counts the number of Models in the Collection</p>
+<hr />
+<h3 id="getdata-parse-boolean-true-object">getData (parse: boolean = true) =&gt; Object[]</h3>
+<p>Returns the array of Models in order. This will return an array of objects. If the <code>parse</code> argument is <code>true</code>, it will
+get the data through any getters. If it is <code>false</code>, it will be the raw data set to the model.</p>
+<hr />
+<h3 id="getids-string">getIds () =&gt; string[]</h3>
+<p>Returns all the IDs in order.</p>
+<hr />
+<h3 id="getmodel-object">getModel () =&gt; Object</h3>
+<p>Gets the Model constructor.</p>
+<hr />
+<h3 id="limit-limit-number-offset-number-collection">limit (limit: number, offset: number) =&gt; Collection</h3>
+<p>Limits in the same way as MySQL limits.  The first is the limit, which is the maximum number of items we can keep.  The second is the
+offset, which is the number of items we pad.</p>
+<p>On a collection with 5 items, <code>limit(2, 2)</code> will only keep the data at position 2 and 3, dropping 0, 1 and 4 out.</p>
+<hr />
+<h3 id="reset-boolean">reset () =&gt; boolean</h3>
+<p>Resets the collection back to it's original (empty) state.</p>
+<hr />
+<h3 id="removebyid-id-string-boolean">removeById (id: string) =&gt; boolean</h3>
+<p>Removes the model by the ID</p>
+<hr />
+<h3 id="removebymodel-removemodel-model-boolean">removeByModel (removeModel: Model) =&gt; boolean</h3>
+<p>Removes the given model</p>
+<hr />
+<h3 id="sort-fn-a-any-b-any-number-collection">sort (fn: (a: any, b: any) =&gt; number) =&gt; Collection</h3>
+<p>Sort by the given sortation function. This works in the same way as the
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">Array.prototype.sort</a> method.</p>
+<hr />
+<h3 id="sortby-properties-isortproperty-collection">sortBy (properties: ISortProperty) =&gt; Collection</h3>
+<p>This sorts by a key (or keys) in the model. The params should be an object, with the key as the key and the direction as the value.  The
+acceptable direction values are <code>"ASC"</code> or <code>"DESC"</code>.  This works in broadly the same way as MySQLs sorting.</p>
+<hr />
+<h3 id="todb-object">toDb () =&gt; Object[]</h3>
+<p>Returns the database representation of the models in order.</p>
+<hr />
+<h3 id="validate-boolean">validate () =&gt; boolean</h3>
+<p>Validates all the models in the Collection. If any of the Models have an error, it will aggregate them into one <code>ValidationError</code></p>
+<hr />
+<h3 id="where-properties-object-collection">where (properties: Object) =&gt; Collection</h3>
+<p>Performs a where query on the Collection.  Removes anything that doesn't meet the criteria from the Collection. This is the opposite of
+<a href="#filter-properties-object--collection">filter</a>.</p>
+<hr />
+<h2 id="static-methods">Static Methods</h2>
+<h3 id="tomodels-data-object-collection">toModels (data: Object[]) =&gt; Collection</h3>
+<p>This converts an array of objects in the Model <em>data</em> format - the same as returned by the <a href="#todb---object">toDb</a> method. This will
+return an instance of the Collection.</p>
+<hr />
+<h2 id="usage">Usage</h2>
+<pre><code class="javascript">class Person extends Model { ... } // See the Model docs for how to define this
+
+class People extends Collection {
+    _model () {
+        // Return the Person constructor
+        return Person;
+    }
+}
+
+let obj = new People([{
+    firstName: &quot;John&quot;,
+    lastName: &quot;Smith&quot;
+}]);
+
+console.log(obj.getData()); // [{ &quot;firstName&quot;: &quot;John&quot;, &quot;lastName&quot;: &quot;Smith&quot; }]
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../injector/" class="btn btn-neutral float-right" title="injector">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../base/" class="btn btn-neutral" title="base"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Simon Emms</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../base/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../injector/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

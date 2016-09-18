@@ -8,7 +8,7 @@
   
   
   
-  <title>My Docs</title>
+  <title>Steeplejack documentation</title>
   
 
   <link rel="shortcut icon" href="./img/favicon.ico">
@@ -34,6 +34,16 @@
   <script src="./js/theme.js"></script> 
 
   
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68581184-2', 'steeplejack.info');
+      ga('send', 'pageview');
+  </script>
+  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -43,7 +53,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href="." class="icon icon-home"> My Docs</a>
+        <a href="." class="icon icon-home"> Steeplejack documentation</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -60,16 +70,331 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#welcome-to-mkdocs">Welcome to MkDocs</a></li>
+                <li class="toctree-l3"><a href="#steeplejack">Steeplejack</a></li>
                 
-                    <li><a class="toctree-l4" href="#commands">Commands</a></li>
+                    <li><a class="toctree-l4" href="#what-is-steeplejack">What is Steeplejack?</a></li>
                 
-                    <li><a class="toctree-l4" href="#project-layout">Project layout</a></li>
+                    <li><a class="toctree-l4" href="#what-makes-the-twelve-factor-app-so-great">What makes the Twelve Factor App so great?</a></li>
+                
+                    <li><a class="toctree-l4" href="#config">Config</a></li>
+                
+                    <li><a class="toctree-l4" href="#data-modelling">Data Modelling</a></li>
+                
+                    <li><a class="toctree-l4" href="#typescript-es6-coffeescript-or-es5">TypeScript, ES6, CoffeeScript or ES5?</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#whys-it-called-steeplejack">Why's it called 'Steeplejack'?</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#license">License</a></li>
                 
             
             </ul>
         
     </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Getting started</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="getting-started/">Installation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="getting-started/your-first-app/">Your first app</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="getting-started/routing/">Routing</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="getting-started/modules/">Modules</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="getting-started/config/">Config</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="getting-started/testing/">Testing</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Dependency injection</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="dependency-injection/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="dependency-injection/class-injector/">Class injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="dependency-injection/factory-injector/">Factory injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="dependency-injection/singleton-injector/">Singleton injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="dependency-injection/config-injector/">Config injector</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Data models</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="data-models/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="data-models/model/">Model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="data-models/collection/">Collection</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Plugins</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="plugins/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="plugins/http-strategies/">HTTP Strategies</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Strategies</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="strategies/intro/">Introduction</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API Reference</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/steeplejack/">Steeplejack</a>
+        
+    </li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/decorators</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/decorators/inject/">inject</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/exception</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/exception/exception/">exception</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/exception/fatal/">fatal</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/exception/validation/">validation</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/base/">base</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/collection/">collection</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/injector/">injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/logger/">logger</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/model/">model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/plugin/">plugin</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/router/">router</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/server/">server</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/socket/">socket</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/socketRequest/">socketRequest</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="api/lib/view/">view</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
 <li>
           
         </ul>
@@ -82,7 +407,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href=".">My Docs</a>
+        <a href=".">Steeplejack documentation</a>
       </nav>
 
       
@@ -97,6 +422,10 @@
     <li>Home</li>
     <li class="wy-breadcrumbs-aside">
       
+        
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github"> Edit on GitHub</a>
+        
+      
     </li>
   </ul>
   <hr/>
@@ -104,31 +433,100 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="http://mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
+                <h1 id="steeplejack">Steeplejack</h1>
+<p><a href="https://gitter.im/riggerthegeek/steeplejack?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=body_badge"><img alt="Gitter" src="https://img.shields.io/badge/GITTER-JOIN%20CHAT%20%E2%86%92-1DCE73.svg?style=flat" /></a>
+<a href="https://npmjs.org/package/steeplejack"><img alt="NPM Version" src="https://img.shields.io/npm/v/steeplejack.svg?style=flat" /></a>
+<a href="https://npmjs.org/package/steeplejack"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/steeplejack.svg?style=flat" /></a>
+<a href="http://nodejs.org/download/"><img alt="Node.js Version" src="https://img.shields.io/badge/node.js-%3E%3D_0.10-brightgreen.svg?style=flat" /></a>
+<a href="https://travis-ci.org/riggerthegeek/steeplejack"><img alt="Build Status" src="https://img.shields.io/travis/riggerthegeek/steeplejack.svg?style=flat" /></a>
+<a href="https://www.bithound.io/github/riggerthegeek/steeplejack"><img alt="Code Quality" src="https://www.bithound.io/github/riggerthegeek/steeplejack/badges/score.svg" /></a>
+<a href="https://david-dm.org/riggerthegeek/steeplejack"><img alt="Dependencies" src="https://img.shields.io/david/riggerthegeek/steeplejack.svg?style=flat" /></a>
+<a href="https://david-dm.org/riggerthegeek/steeplejack#info=devDependencies&amp;view=table"><img alt="Dev Depedencies" src="https://img.shields.io/david/dev/riggerthegeek/steeplejack.svg?style=flat" /></a></p>
+<p>An easy way of making a <a href="http://12factor.net">Twelve Factor App</a> in NodeJS</p>
+<h2 id="what-is-steeplejack">What is Steeplejack?</h2>
+<p>The goal of this project is to write reusable applications, using reusable components in whatever flavour of JavaScript
+you want.</p>
+<p>When creating a new project, you need to set up the same things over and over again - your data models and collections,
+your dependency injection, your HTTP server, your routing and your logging. With Steeplejack, this is all there by
+default allowing you to get straight into your coding.</p>
+<p>This is not a framework, it is scaffolding for module. It doesn't tell you how to write your software, it just lets you do
+it. You can use <a href="http://expressjs.com">Express</a> or <a href="http://restify.com">Restify</a> as your HTTP strategy or even one of your
+own. So long as it satisfies the strategy, it doesn't care.</p>
+<p>Almost every application will require some form of data storage. It's likely there will be some form of user management
+too. In the most part, these will be the same across all your projects. So, write these as plugins and use them across
+multiple projects rather than write it afresh each time.</p>
+<h2 id="what-makes-the-twelve-factor-app-so-great">What makes the Twelve Factor App so great?</h2>
+<p>Pick any of the following reasons:</p>
 <ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs help</code> - Print this help message.</li>
+<li>makes your software more robust</li>
+<li>makes your software truly scalable</li>
+<li>you can give true long-term support for your software</li>
+<li>happier developers</li>
 </ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre>
+<p>Steeplejack adds to this by:</p>
+<ul>
+<li>allowing you to reuse your code in the form of plugins</li>
+<li>being stupidly easy to set up a new server</li>
+<li>things needed in every piece of software - error logging, data modelling and routing - are provided out-of-the-box</li>
+</ul>
+<h2 id="config">Config</h2>
+<blockquote>
+<p>A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be
+made open source at any moment, without compromising any credentials.</p>
+<p><a href="http://12factor.net/config">Twelve Factor App: Config</a></p>
+</blockquote>
+<p>A lot of developers still specify all the different config environments in their config file. That was great when we
+wrote PHP and there were only three instances; dev, test and live. The power of NodeJS comes from it's scalability - how
+scalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to get out of
+bed and add in a new environment in your config file?</p>
+<p>Get rid of all the environments out of your config file and just have one (the development one, so you don't have to dig
+around each time you download from the repo). For all other deployments of your software, use environment variables.
+Then it's the deployer's responsibility to put in the right config and you can stay in bed.</p>
+<p>Steeplejack offers a single config file that can be overwritten by either environment variables or command line
+arguments. The application then has one single source of truth with your config and it's your choice how to specify the
+deployment config.</p>
+<h2 id="data-modelling">Data Modelling</h2>
+<p>The Twelve Factor App is all about loose coupling to your attached resources. You might start by using
+<a href="https://www.mongodb.org/">MongoDB</a>, but there will be a time when that isn't the best solution. If you're using something like
+<a href="http://mongoosejs.com/">Mongoose</a>, you are tied-in to MongoDB regardless.</p>
+<p>The data modelling in Steeplejack is all about the data - it doesn't care where you store it, if indeed anywhere. The
+data is designed to be used by your application and stored in a way you decide. If your model doesn't match your data
+store exactly, no problem. There is a loose link between the model and the storage.</p>
+<p>When you're dealing with lots of models, you can create a collection. Maybe you get your data from multiple sources
+and want to sort it in the application. Steeplejack allows you to write a simple method to do that.</p>
+<h2 id="typescript-es6-coffeescript-or-es5">TypeScript, ES6, CoffeeScript or ES5?</h2>
+<p>It's up to you. Steeplejack is written in <a href="http://typescriptlang.org">TypeScript</a> because it's the most enterprise-ready
+form of JavaScript with it's additional features, like interfaces. But if you want to write in a different flavour of
+JavaScript because that's what you know best then you can.</p>
+<p>And if you're still writing your NodeJS in ES5, then Steeplejack makes your life a little easier. The Base and Exception
+classes have a little <code>.extend</code> static method on them to allow you to simplify
+<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">prototypical inheritance</a>.</p>
+<h1 id="whys-it-called-steeplejack">Why's it called 'Steeplejack'?</h1>
+<p>When I started thinking about a scaffolding project, I was watching a <a href="http://www.freddibnahheritagecentre.com">Fred Dibnah</a> documentary.
+Fred was a great enthusiast of beautiful engineering. It struck me as a great metaphor for what I was trying to achieve. By trade, Fred
+was a steeplejack, so the name is a little nod to him.</p>
+<p><a href="http://www.youtube.com/watch?v=3R3-YwDZrzg"><img alt="Fred Dibnah" src="http://img.youtube.com/vi/3R3-YwDZrzg/0.jpg" /></a></p>
+<h1 id="license">License</h1>
+<p>MIT License</p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="getting-started/" class="btn btn-neutral float-right" title="Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
   
 
   <hr/>
 
   <div role="contentinfo">
     <!-- Copyright etc -->
+    
+      <p>Simon Emms</p>
     
   </div>
 
@@ -145,7 +543,11 @@ docs/
 <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
+      
+      
+        <span style="margin-left: 15px"><a href="getting-started/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
@@ -155,5 +557,5 @@ docs/
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-09-18 17:47:51.114885
+Build Date UTC : 2016-09-18 20:59:42.645089
 -->

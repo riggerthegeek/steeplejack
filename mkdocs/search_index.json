@@ -2,23 +2,1048 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "text": "Steeplejack\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAn easy way of making a \nTwelve Factor App\n in NodeJS\n\n\nWhat is Steeplejack?\n\n\nThe goal of this project is to write reusable applications, using reusable components in whatever flavour of JavaScript\nyou want.\n\n\nWhen creating a new project, you need to set up the same things over and over again - your data models and collections,\nyour dependency injection, your HTTP server, your routing and your logging. With Steeplejack, this is all there by\ndefault allowing you to get straight into your coding.\n\n\nThis is not a framework, it is scaffolding for module. It doesn't tell you how to write your software, it just lets you do\nit. You can use \nExpress\n or \nRestify\n as your HTTP strategy or even one of your\nown. So long as it satisfies the strategy, it doesn't care.\n\n\nAlmost every application will require some form of data storage. It's likely there will be some form of user management\ntoo. In the most part, these will be the same across all your projects. So, write these as plugins and use them across\nmultiple projects rather than write it afresh each time.\n\n\nWhat makes the Twelve Factor App so great?\n\n\nPick any of the following reasons:\n\n\n\n\nmakes your software more robust\n\n\nmakes your software truly scalable\n\n\nyou can give true long-term support for your software\n\n\nhappier developers\n\n\n\n\nSteeplejack adds to this by:\n\n\n\n\nallowing you to reuse your code in the form of plugins\n\n\nbeing stupidly easy to set up a new server\n\n\nthings needed in every piece of software - error logging, data modelling and routing - are provided out-of-the-box\n\n\n\n\nConfig\n\n\n\n\nA litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be\nmade open source at any moment, without compromising any credentials.\n\n\nTwelve Factor App: Config\n\n\n\n\nA lot of developers still specify all the different config environments in their config file. That was great when we\nwrote PHP and there were only three instances; dev, test and live. The power of NodeJS comes from it's scalability - how\nscalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to get out of\nbed and add in a new environment in your config file?\n\n\nGet rid of all the environments out of your config file and just have one (the development one, so you don't have to dig\naround each time you download from the repo). For all other deployments of your software, use environment variables.\nThen it's the deployer's responsibility to put in the right config and you can stay in bed.\n\n\nSteeplejack offers a single config file that can be overwritten by either environment variables or command line\narguments. The application then has one single source of truth with your config and it's your choice how to specify the\ndeployment config.\n\n\nData Modelling\n\n\nThe Twelve Factor App is all about loose coupling to your attached resources. You might start by using\n\nMongoDB\n, but there will be a time when that isn't the best solution. If you're using something like\n\nMongoose\n, you are tied-in to MongoDB regardless.\n\n\nThe data modelling in Steeplejack is all about the data - it doesn't care where you store it, if indeed anywhere. The\ndata is designed to be used by your application and stored in a way you decide. If your model doesn't match your data\nstore exactly, no problem. There is a loose link between the model and the storage.\n\n\nWhen you're dealing with lots of models, you can create a collection. Maybe you get your data from multiple sources\nand want to sort it in the application. Steeplejack allows you to write a simple method to do that.\n\n\nTypeScript, ES6, CoffeeScript or ES5?\n\n\nIt's up to you. Steeplejack is written in \nTypeScript\n because it's the most enterprise-ready\nform of JavaScript with it's additional features, like interfaces. But if you want to write in a different flavour of\nJavaScript because that's what you know best then you can.\n\n\nAnd if you're still writing your NodeJS in ES5, then Steeplejack makes your life a little easier. The Base and Exception\nclasses have a little \n.extend\n static method on them to allow you to simplify\n\nprototypical inheritance\n.\n\n\nWhy's it called 'Steeplejack'?\n\n\nWhen I started thinking about a scaffolding project, I was watching a \nFred Dibnah\n documentary.\nFred was a great enthusiast of beautiful engineering. It struck me as a great metaphor for what I was trying to achieve. By trade, Fred\nwas a steeplejack, so the name is a little nod to him.\n\n\n\n\nLicense\n\n\nMIT License", 
             "title": "Home"
         }, 
         {
-            "location": "/#welcome-to-mkdocs", 
-            "text": "For full documentation visit  mkdocs.org .", 
-            "title": "Welcome to MkDocs"
+            "location": "/#steeplejack", 
+            "text": "An easy way of making a  Twelve Factor App  in NodeJS", 
+            "title": "Steeplejack"
         }, 
         {
-            "location": "/#commands", 
-            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.", 
-            "title": "Commands"
+            "location": "/#what-is-steeplejack", 
+            "text": "The goal of this project is to write reusable applications, using reusable components in whatever flavour of JavaScript\nyou want.  When creating a new project, you need to set up the same things over and over again - your data models and collections,\nyour dependency injection, your HTTP server, your routing and your logging. With Steeplejack, this is all there by\ndefault allowing you to get straight into your coding.  This is not a framework, it is scaffolding for module. It doesn't tell you how to write your software, it just lets you do\nit. You can use  Express  or  Restify  as your HTTP strategy or even one of your\nown. So long as it satisfies the strategy, it doesn't care.  Almost every application will require some form of data storage. It's likely there will be some form of user management\ntoo. In the most part, these will be the same across all your projects. So, write these as plugins and use them across\nmultiple projects rather than write it afresh each time.", 
+            "title": "What is Steeplejack?"
         }, 
         {
-            "location": "/#project-layout", 
-            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
-            "title": "Project layout"
+            "location": "/#what-makes-the-twelve-factor-app-so-great", 
+            "text": "Pick any of the following reasons:   makes your software more robust  makes your software truly scalable  you can give true long-term support for your software  happier developers   Steeplejack adds to this by:   allowing you to reuse your code in the form of plugins  being stupidly easy to set up a new server  things needed in every piece of software - error logging, data modelling and routing - are provided out-of-the-box", 
+            "title": "What makes the Twelve Factor App so great?"
+        }, 
+        {
+            "location": "/#config", 
+            "text": "A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be\nmade open source at any moment, without compromising any credentials.  Twelve Factor App: Config   A lot of developers still specify all the different config environments in their config file. That was great when we\nwrote PHP and there were only three instances; dev, test and live. The power of NodeJS comes from it's scalability - how\nscalable is it going to be if, every time the operations guy wants to add a new server at 2am, you need to get out of\nbed and add in a new environment in your config file?  Get rid of all the environments out of your config file and just have one (the development one, so you don't have to dig\naround each time you download from the repo). For all other deployments of your software, use environment variables.\nThen it's the deployer's responsibility to put in the right config and you can stay in bed.  Steeplejack offers a single config file that can be overwritten by either environment variables or command line\narguments. The application then has one single source of truth with your config and it's your choice how to specify the\ndeployment config.", 
+            "title": "Config"
+        }, 
+        {
+            "location": "/#data-modelling", 
+            "text": "The Twelve Factor App is all about loose coupling to your attached resources. You might start by using MongoDB , but there will be a time when that isn't the best solution. If you're using something like Mongoose , you are tied-in to MongoDB regardless.  The data modelling in Steeplejack is all about the data - it doesn't care where you store it, if indeed anywhere. The\ndata is designed to be used by your application and stored in a way you decide. If your model doesn't match your data\nstore exactly, no problem. There is a loose link between the model and the storage.  When you're dealing with lots of models, you can create a collection. Maybe you get your data from multiple sources\nand want to sort it in the application. Steeplejack allows you to write a simple method to do that.", 
+            "title": "Data Modelling"
+        }, 
+        {
+            "location": "/#typescript-es6-coffeescript-or-es5", 
+            "text": "It's up to you. Steeplejack is written in  TypeScript  because it's the most enterprise-ready\nform of JavaScript with it's additional features, like interfaces. But if you want to write in a different flavour of\nJavaScript because that's what you know best then you can.  And if you're still writing your NodeJS in ES5, then Steeplejack makes your life a little easier. The Base and Exception\nclasses have a little  .extend  static method on them to allow you to simplify prototypical inheritance .", 
+            "title": "TypeScript, ES6, CoffeeScript or ES5?"
+        }, 
+        {
+            "location": "/#whys-it-called-steeplejack", 
+            "text": "When I started thinking about a scaffolding project, I was watching a  Fred Dibnah  documentary.\nFred was a great enthusiast of beautiful engineering. It struck me as a great metaphor for what I was trying to achieve. By trade, Fred\nwas a steeplejack, so the name is a little nod to him.", 
+            "title": "Why's it called 'Steeplejack'?"
+        }, 
+        {
+            "location": "/#license", 
+            "text": "MIT License", 
+            "title": "License"
+        }, 
+        {
+            "location": "/getting-started/", 
+            "text": "Installation\n\n\n\n\nThis example app can be downloaded from \nGitHub\n\n\n\n\nCreate a new directory called \nmyapp\n. In that directory, you\u2019ll need to run the following commands:\n\n\n\n\nRun \nnpm init\n to set up your NodeJS project. Follow the prompts and this will also generate a package.json file for\n  you. This example assumes that your main file is \napp.js\n.\n\n\nInstall the steeplejack dependencies:\n\n\nnpm install steeplejack --save\n\n\nnpm install steeplejack-restify --save\n - this example uses the \nRestify\n HTTP strategy\n\n\n\n\n\n\n\n\nNow we have Steeplejack installed, let\u2019s now look at creating your first app.", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/getting-started/#installation", 
+            "text": "This example app can be downloaded from  GitHub   Create a new directory called  myapp . In that directory, you\u2019ll need to run the following commands:   Run  npm init  to set up your NodeJS project. Follow the prompts and this will also generate a package.json file for\n  you. This example assumes that your main file is  app.js .  Install the steeplejack dependencies:  npm install steeplejack --save  npm install steeplejack-restify --save  - this example uses the  Restify  HTTP strategy     Now we have Steeplejack installed, let\u2019s now look at creating your first app.", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/getting-started/your-first-app/", 
+            "text": "Your First App\n\n\n\n\nSteeplejack v2 allows you to write in any language that compiles to JavaScript.\n\n\nThis example is written in ES6 and will require transpiling with \nBabel\n. It will require\nthe \nES2015\n preset and the\n\nLegacy Transform Decorators\n plugin to be configured.\n\n\n\n\nLet's create a simple RESTful application using \nRestify\n. Create a folder in your project called \n/src\n and in it\nthe following files.\n\n\n/src/config.json\n\n\n{\n    \nserver\n: {\n        \nname\n: \nsteeplejack-example\n,\n        \nport\n: 3000\n    }\n}\n\n\n\n\nsrc/app.js\n\n\n/* Import your dependencies */\nimport {Steeplejack} from \nsteeplejack\n;\nimport {Server} from \nsteeplejack/lib/server\n;\nimport {Restify} from \nsteeplejack-restify\n;\n\n/* Create and configure the steeplejack app */\nlet app = Steeplejack.app({\n    config: require(\n./config.json\n),\n    routesDir: \nsrc/routes\n\n});\n\n/* Configure the server strategy */\napp.run($config =\n {\n\n    /* Configure the Restify strategy */\n    let restify = new Restify({\n        name: $config.server.name\n    });\n\n    /* Create the server instance */\n    let server = new Server($config.server, restify);\n\n    /* Configure the server */\n    server\n        .bodyParser()\n        .gzipResponse();\n\n    return server;\n\n});\n\n/* Export the instance */\nexport {app};\n\n\n\n\nStart up the server with \nbabel-node src/app\n and go to \nhttp://localhost:3000\n. If it's running correctly, you ought\nto see:\n\n\n{\n    \ncode\n: \nResourceNotFound\n,\n    \nmessage\n: \n/ does not exist\n\n}", 
+            "title": "Your first app"
+        }, 
+        {
+            "location": "/getting-started/your-first-app/#your-first-app", 
+            "text": "Steeplejack v2 allows you to write in any language that compiles to JavaScript.  This example is written in ES6 and will require transpiling with  Babel . It will require\nthe  ES2015  preset and the Legacy Transform Decorators  plugin to be configured.   Let's create a simple RESTful application using  Restify . Create a folder in your project called  /src  and in it\nthe following files.", 
+            "title": "Your First App"
+        }, 
+        {
+            "location": "/getting-started/your-first-app/#srcconfigjson", 
+            "text": "{\n     server : {\n         name :  steeplejack-example ,\n         port : 3000\n    }\n}", 
+            "title": "/src/config.json"
+        }, 
+        {
+            "location": "/getting-started/your-first-app/#srcappjs", 
+            "text": "/* Import your dependencies */\nimport {Steeplejack} from  steeplejack ;\nimport {Server} from  steeplejack/lib/server ;\nimport {Restify} from  steeplejack-restify ;\n\n/* Create and configure the steeplejack app */\nlet app = Steeplejack.app({\n    config: require( ./config.json ),\n    routesDir:  src/routes \n});\n\n/* Configure the server strategy */\napp.run($config =  {\n\n    /* Configure the Restify strategy */\n    let restify = new Restify({\n        name: $config.server.name\n    });\n\n    /* Create the server instance */\n    let server = new Server($config.server, restify);\n\n    /* Configure the server */\n    server\n        .bodyParser()\n        .gzipResponse();\n\n    return server;\n\n});\n\n/* Export the instance */\nexport {app};  Start up the server with  babel-node src/app  and go to  http://localhost:3000 . If it's running correctly, you ought\nto see:  {\n     code :  ResourceNotFound ,\n     message :  / does not exist \n}", 
+            "title": "src/app.js"
+        }, 
+        {
+            "location": "/getting-started/routing/", 
+            "text": "Routing\n\n\nNow you've got the server running, you need to add some HTTP routes to deal with traffic. The routing is file-based routing. This\nmeans that the URL is generated from the location of the file in the routing directory. For example, to create an endpoint at\n\n/hello/world\n, you would create a folder called \n/hello\n and, in it, a file called \nworld.js\n.\n\n\n\n\nThere are actually a few ways you could create this. You could create a file called \nhello.js\n and an endpoint \n/world\n in the file\nor directories \n/hello/world\n and a file called \nindex.js\n. You should nest your routing files so they make the most sense to you.\n\n\n\n\n/src/routes/hello/world.js\n\n\nexport let route = () =\n {\n    return {\n        \n/\n: {\n            get: (req, res) =\n {\n                return {\n                    hello: \nworld\n\n                };\n            }\n        }\n    };\n};\n\n\n\n\nRight, there's a lot going on here which we need to understand. To specify an HTTP route, the file should export a function on\n\nexports.route\n. This function returns an object of all the endpoints, in this case an HTTP GET on \n/\n.\n\n\nOnce we are at the HTTP verb, this is just an ordinary \nRestify routing\n function. The only difference is\nthat, unlike in Restify, this is parsed as a \nPromise\n.\nWhatever this function resolves is sent to the HTTP output, in this case \n{\"hello\":\"world\"}\n.", 
+            "title": "Routing"
+        }, 
+        {
+            "location": "/getting-started/routing/#routing", 
+            "text": "Now you've got the server running, you need to add some HTTP routes to deal with traffic. The routing is file-based routing. This\nmeans that the URL is generated from the location of the file in the routing directory. For example, to create an endpoint at /hello/world , you would create a folder called  /hello  and, in it, a file called  world.js .   There are actually a few ways you could create this. You could create a file called  hello.js  and an endpoint  /world  in the file\nor directories  /hello/world  and a file called  index.js . You should nest your routing files so they make the most sense to you.", 
+            "title": "Routing"
+        }, 
+        {
+            "location": "/getting-started/routing/#srcrouteshelloworldjs", 
+            "text": "export let route = () =  {\n    return {\n         / : {\n            get: (req, res) =  {\n                return {\n                    hello:  world \n                };\n            }\n        }\n    };\n};  Right, there's a lot going on here which we need to understand. To specify an HTTP route, the file should export a function on exports.route . This function returns an object of all the endpoints, in this case an HTTP GET on  / .  Once we are at the HTTP verb, this is just an ordinary  Restify routing  function. The only difference is\nthat, unlike in Restify, this is parsed as a  Promise .\nWhatever this function resolves is sent to the HTTP output, in this case  {\"hello\":\"world\"} .", 
+            "title": "/src/routes/hello/world.js"
+        }, 
+        {
+            "location": "/getting-started/modules/", 
+            "text": "Modules\n\n\nThe modules are where the main application logic will live. You have complete freedom as to how to structure your modules - a modular\nstructure is favoured as it's easier to spin these off into their own packages should you wish to reuse it.\n\n\nsrc\n\u251c\u2500\u2500 modules\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 user\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 collection\n\u2502\u00a0\u00a0     \u2502\u00a0\u00a0 \u2514\u2500\u2500 Users.js\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 model\n\u2502\u00a0\u00a0     \u2502\u00a0\u00a0 \u2514\u2500\u2500 User.js\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 store\n\u2502\u00a0\u00a0     \u2502\u00a0\u00a0 \u2514\u2500\u2500 user.js\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 service.js\n\u251c\u2500\u2500 resources\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 mongodb.js\n\u251c\u2500\u2500 routes\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 hello\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 world.js\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 user\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 index.js\n\u251c\u2500\u2500 app.js\n\u251c\u2500\u2500 config.json\n\u2514\u2500\u2500 envvars.json\n\n\n\n\nAutoloading of files and dependency injection\n\n\nTo simplify your development and promote extreme testability, files in Steeplejack should be loaded automatically and your dependencies\nreflectively loaded. This means you don't need to know the relative paths for files outside your module and means testing your files becomes\nas easy as injecting a stubbed dependency.\n\n\nTo load your modules, you need to add a \nmodules\n array to your initial factory. This accepts globbed paths.\n\n\nlet app = Steeplejack.app({\n    config: require(\n./config.json\n),\n    modules: [\n        \nsrc/!(routes)/**/*.js\n\n    ],\n    routesDir: \nsrc/routes\n\n});\n\n\n\n\nNaming convention of modules\n\n\nIn no way enforced, but this is a good convention.\n\n\n\n\nCross-cutting concerns (ie, something used outside a module) should start with \n$\n, eg \n$userService\n\n\nFactory classes that would be invoked with \nnew\n start with a capital letter, eg \nUserModel\n\n\nCamel case for ordinary instances that would normally just be used within a module, eg \nuserStore\n\n\n\n\n/src/routes/user/index.js\n\n\nCreate a new endpoint on \nGET:/user\n. This dispatches to the \n$userService\n.\n\n\nexport let route = ($output, $userService) =\n {\n    return {\n        \n/\n: {\n            get: [\n                (req, res) =\n {\n\n                    let emailAddress = req.query.emailAddress;\n\n                    $output(req, res, () =\n {\n\n                        return $userService.getUserByEmailAddress(emailAddress);\n\n                    });\n\n                }\n            ]\n        }\n    };\n};\n\n\n\n\n/src/modules/user/service.js\n\n\nThis creates the \n$userService\n. It's a class that has two injected dependencies, \nUserModel\n and \nuserStore\n, which are resolved\nautomatically. The \n@Inject\n decorator describe this file for the dependency injector - the minimum is the \nname\n of it.\n\n\nimport {Steeplejack} from \nsteeplejack\n;\nimport {Inject} from \nsteeplejack/decorators/inject\n;\nimport {ValidationException} from \nsteeplejack/exception/validation\n;\n\n@Inject({\n    name: \n$userService\n\n})\nexport class UserService {\n\n    constructor (UserModel, userStore) {\n        this._deps = {\n            UserModel,\n            userStore\n        };\n    }\n\n    getUserByEmailAddress (emailAddress) {\n\n        /* Check input is an email */\n        try {\n            Steeplejack.validation.email(emailAddress);\n        } catch (err) {\n            throw new ValidationException(\nemailAddress is required\n);\n        }\n\n        /* Check the database for the user */\n        return this._deps.userStore.getUserByEmailAddress(emailAddress)\n            .then(res =\n {\n\n                if (res) {\n                    return new this._deps.UserModel(res);\n                }\n\n            });\n\n    }\n}\n\n\n\n\n/src/modules/user/model/User.js\n\n\nThis is the \nUserModel\n. The schema has four items to it. Also notice how the \n@Inject\n now has a \nfactory\n boolean. This tells the\ndependency injector that this class must not be instantiated, but any dependencies set as static methods.\n\n\nimport {Inject} from \nsteeplejack/decorators/inject\n;\nimport {Model} from \nsteeplejack/lib/model\n;\n\n@Inject({\n    name: \nUserModel\n,\n    factory: true\n})\nexport class User extends Model {\n    _schema () {\n        return {\n            id: {\n                type: \ninteger\n\n            },\n            firstName: {\n                type: \nstring\n\n            },\n            lastName: {\n                type: \nstring\n\n            },\n            emailAddress: {\n                type: \nstring\n\n            }\n        };\n    }\n}\n\n\n\n\n/src/modules/user/store/user.js\n\n\nFinally the \nuserStore\n. This would ordinarily connect to a database, but for this example it just searches a static array.\n\n\nimport {_} from \nlodash\n;\nimport {Inject} from \nsteeplejack/decorators/inject\n;\nimport {Promise} from \nes6-promise\n;\n\n/* Data - this would normally be in a DB */\nconst data = [{\n    id: 1,\n    firstName: \nTest\n,\n    lastName: \nTestington\n,\n    emailAddress: \ntest@test.com\n\n}];\n\n@Inject({\n    name: \nuserStore\n\n})\nexport class UserStore {\n\n    getUserByEmailAddress (emailAddress) {\n\n        return new Promise(resolve =\n {\n\n            let user = _.reduce(data, (result, user) =\n {\n\n                if (user.emailAddress === emailAddress) {\n                    result = user;\n                }\n\n                return result;\n\n            }, null);\n\n            resolve(user);\n\n        });\n\n    }\n\n}", 
+            "title": "Modules"
+        }, 
+        {
+            "location": "/getting-started/modules/#modules", 
+            "text": "The modules are where the main application logic will live. You have complete freedom as to how to structure your modules - a modular\nstructure is favoured as it's easier to spin these off into their own packages should you wish to reuse it.  src\n\u251c\u2500\u2500 modules\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 user\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 collection\n\u2502\u00a0\u00a0     \u2502\u00a0\u00a0 \u2514\u2500\u2500 Users.js\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 model\n\u2502\u00a0\u00a0     \u2502\u00a0\u00a0 \u2514\u2500\u2500 User.js\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 store\n\u2502\u00a0\u00a0     \u2502\u00a0\u00a0 \u2514\u2500\u2500 user.js\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 service.js\n\u251c\u2500\u2500 resources\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 mongodb.js\n\u251c\u2500\u2500 routes\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 hello\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 world.js\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 user\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 index.js\n\u251c\u2500\u2500 app.js\n\u251c\u2500\u2500 config.json\n\u2514\u2500\u2500 envvars.json", 
+            "title": "Modules"
+        }, 
+        {
+            "location": "/getting-started/modules/#autoloading-of-files-and-dependency-injection", 
+            "text": "To simplify your development and promote extreme testability, files in Steeplejack should be loaded automatically and your dependencies\nreflectively loaded. This means you don't need to know the relative paths for files outside your module and means testing your files becomes\nas easy as injecting a stubbed dependency.  To load your modules, you need to add a  modules  array to your initial factory. This accepts globbed paths.  let app = Steeplejack.app({\n    config: require( ./config.json ),\n    modules: [\n         src/!(routes)/**/*.js \n    ],\n    routesDir:  src/routes \n});", 
+            "title": "Autoloading of files and dependency injection"
+        }, 
+        {
+            "location": "/getting-started/modules/#naming-convention-of-modules", 
+            "text": "In no way enforced, but this is a good convention.   Cross-cutting concerns (ie, something used outside a module) should start with  $ , eg  $userService  Factory classes that would be invoked with  new  start with a capital letter, eg  UserModel  Camel case for ordinary instances that would normally just be used within a module, eg  userStore", 
+            "title": "Naming convention of modules"
+        }, 
+        {
+            "location": "/getting-started/modules/#srcroutesuserindexjs", 
+            "text": "Create a new endpoint on  GET:/user . This dispatches to the  $userService .  export let route = ($output, $userService) =  {\n    return {\n         / : {\n            get: [\n                (req, res) =  {\n\n                    let emailAddress = req.query.emailAddress;\n\n                    $output(req, res, () =  {\n\n                        return $userService.getUserByEmailAddress(emailAddress);\n\n                    });\n\n                }\n            ]\n        }\n    };\n};", 
+            "title": "/src/routes/user/index.js"
+        }, 
+        {
+            "location": "/getting-started/modules/#srcmodulesuserservicejs", 
+            "text": "This creates the  $userService . It's a class that has two injected dependencies,  UserModel  and  userStore , which are resolved\nautomatically. The  @Inject  decorator describe this file for the dependency injector - the minimum is the  name  of it.  import {Steeplejack} from  steeplejack ;\nimport {Inject} from  steeplejack/decorators/inject ;\nimport {ValidationException} from  steeplejack/exception/validation ;\n\n@Inject({\n    name:  $userService \n})\nexport class UserService {\n\n    constructor (UserModel, userStore) {\n        this._deps = {\n            UserModel,\n            userStore\n        };\n    }\n\n    getUserByEmailAddress (emailAddress) {\n\n        /* Check input is an email */\n        try {\n            Steeplejack.validation.email(emailAddress);\n        } catch (err) {\n            throw new ValidationException( emailAddress is required );\n        }\n\n        /* Check the database for the user */\n        return this._deps.userStore.getUserByEmailAddress(emailAddress)\n            .then(res =  {\n\n                if (res) {\n                    return new this._deps.UserModel(res);\n                }\n\n            });\n\n    }\n}", 
+            "title": "/src/modules/user/service.js"
+        }, 
+        {
+            "location": "/getting-started/modules/#srcmodulesusermodeluserjs", 
+            "text": "This is the  UserModel . The schema has four items to it. Also notice how the  @Inject  now has a  factory  boolean. This tells the\ndependency injector that this class must not be instantiated, but any dependencies set as static methods.  import {Inject} from  steeplejack/decorators/inject ;\nimport {Model} from  steeplejack/lib/model ;\n\n@Inject({\n    name:  UserModel ,\n    factory: true\n})\nexport class User extends Model {\n    _schema () {\n        return {\n            id: {\n                type:  integer \n            },\n            firstName: {\n                type:  string \n            },\n            lastName: {\n                type:  string \n            },\n            emailAddress: {\n                type:  string \n            }\n        };\n    }\n}", 
+            "title": "/src/modules/user/model/User.js"
+        }, 
+        {
+            "location": "/getting-started/modules/#srcmodulesuserstoreuserjs", 
+            "text": "Finally the  userStore . This would ordinarily connect to a database, but for this example it just searches a static array.  import {_} from  lodash ;\nimport {Inject} from  steeplejack/decorators/inject ;\nimport {Promise} from  es6-promise ;\n\n/* Data - this would normally be in a DB */\nconst data = [{\n    id: 1,\n    firstName:  Test ,\n    lastName:  Testington ,\n    emailAddress:  test@test.com \n}];\n\n@Inject({\n    name:  userStore \n})\nexport class UserStore {\n\n    getUserByEmailAddress (emailAddress) {\n\n        return new Promise(resolve =  {\n\n            let user = _.reduce(data, (result, user) =  {\n\n                if (user.emailAddress === emailAddress) {\n                    result = user;\n                }\n\n                return result;\n\n            }, null);\n\n            resolve(user);\n\n        });\n\n    }\n\n}", 
+            "title": "/src/modules/user/store/user.js"
+        }, 
+        {
+            "location": "/getting-started/config/", 
+            "text": "Config\n\n\n\n\nA litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be\nmade open source at any moment, without compromising any credentials.\n\n\nTwelve Factor App: Config\n\n\n\n\nThe config is designed as a single source of truth. A good \nTwelve Factor App\n allows you to override\nyour configuration with environment variables. The same is true of a Steeplejack application. There are two ways of overriding\nyour config - environment variables and command line arguments.\n\n\nAny overridden config is typecast into an appropriate data type.\n\n\nEnvironment Variables\n\n\nTo use environment variables, you need to add an \nenv\n to your initial factory.\n\n\n/src/app.js\n\n\nlet app = Steeplejack.app({\n    config: require(\n./config.json\n),\n    env: require(\n./envvars.json\n),\n    modules: [\n        \nsrc/!(routes)/**/*.js\n\n    ],\n    routesDir: \nsrc/routes\n\n});\n\n\n\n\n/src/envvars.json\n\n\n{\n  \nserver\n: {\n    \nname\n: \nAPP_SERVER_NAME\n,\n    \nport\n: \nAPP_SERVER_PORT\n\n  }\n}\n\n\n\n\nNotice how the \nenvvars.json\n file is the same structure as the \nconfig.json\n.  The value in the object is the name of the\nenvironment variable.\n\n\nAPP_SERVER_PORT=8080 babel-node src/app\n\n\n\nNow you'll be able view the application on \nhttp://localhost:8080\n\n\nCommand Line Arguments\n\n\nThe command line arguments require no set up.  By using dot notation, you can put anything you want in:\n\n\nbabel-node src/app server.port=7777 hello.world=foobar dev production=false\n\n\n\nThis will make the config object look like this\n\n\n{\n    \nserver\n: {\n        \nname\n: \nsteeplejack-example\n,\n        \nport\n: 7777\n    },\n    \nhello\n: {\n        \nworld\n: \nfoobar\n\n    },\n    \ndev\n: true,\n    \nproduction\n: false\n}\n\n\n\n\nNotice how \nhello.world=foobar\n created an object. If it receives no value, like \ndev\n, it will default to \ntrue\n.\n\n\nOrder of precedence\n\n\nIf you have both an environment variable and a command line argument for the same config item, the application will use the command\nline argument.\n\n\nAPP_SERVER_PORT=8080 babel-node src/app server.port=7777\n\n\n\nThe server will be run on port 7777", 
+            "title": "Config"
+        }, 
+        {
+            "location": "/getting-started/config/#config", 
+            "text": "A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be\nmade open source at any moment, without compromising any credentials.  Twelve Factor App: Config   The config is designed as a single source of truth. A good  Twelve Factor App  allows you to override\nyour configuration with environment variables. The same is true of a Steeplejack application. There are two ways of overriding\nyour config - environment variables and command line arguments.  Any overridden config is typecast into an appropriate data type.", 
+            "title": "Config"
+        }, 
+        {
+            "location": "/getting-started/config/#environment-variables", 
+            "text": "To use environment variables, you need to add an  env  to your initial factory.", 
+            "title": "Environment Variables"
+        }, 
+        {
+            "location": "/getting-started/config/#srcappjs", 
+            "text": "let app = Steeplejack.app({\n    config: require( ./config.json ),\n    env: require( ./envvars.json ),\n    modules: [\n         src/!(routes)/**/*.js \n    ],\n    routesDir:  src/routes \n});", 
+            "title": "/src/app.js"
+        }, 
+        {
+            "location": "/getting-started/config/#srcenvvarsjson", 
+            "text": "{\n   server : {\n     name :  APP_SERVER_NAME ,\n     port :  APP_SERVER_PORT \n  }\n}  Notice how the  envvars.json  file is the same structure as the  config.json .  The value in the object is the name of the\nenvironment variable.  APP_SERVER_PORT=8080 babel-node src/app  Now you'll be able view the application on  http://localhost:8080", 
+            "title": "/src/envvars.json"
+        }, 
+        {
+            "location": "/getting-started/config/#command-line-arguments", 
+            "text": "The command line arguments require no set up.  By using dot notation, you can put anything you want in:  babel-node src/app server.port=7777 hello.world=foobar dev production=false  This will make the config object look like this  {\n     server : {\n         name :  steeplejack-example ,\n         port : 7777\n    },\n     hello : {\n         world :  foobar \n    },\n     dev : true,\n     production : false\n}  Notice how  hello.world=foobar  created an object. If it receives no value, like  dev , it will default to  true .", 
+            "title": "Command Line Arguments"
+        }, 
+        {
+            "location": "/getting-started/config/#order-of-precedence", 
+            "text": "If you have both an environment variable and a command line argument for the same config item, the application will use the command\nline argument.  APP_SERVER_PORT=8080 babel-node src/app server.port=7777  The server will be run on port 7777", 
+            "title": "Order of precedence"
+        }, 
+        {
+            "location": "/getting-started/testing/", 
+            "text": "Testing\n\n\n\n\nThe example is done with \nMocha\n and \nChai\n. If you don't want to use those libraries, you\ncan choose to create your tests however you want.\n\n\n\n\nAlthough last in this tutorial, a testable application is crucial for enterprise software and Steeplejack makes this really easy. If you follow\nthe \nSOLID Principles\n, you won't go far wrong.\n\n\nYou can look through all the tests in the \nSteeplejack example\n project. To show how\neasy it can be, let's take a look at the \n$userService\n and how we can test it.\n\n\n/test/unit/modules/service.test.js\n\n\nNotice how we have a \nbeforeEach\n function that defines the instance of the \n$userService\n. By defining the dependencies we want to rely\nupon, this is largely how the dependency injector works underneath. It also means we can easily stub the dependencies so we can test how\neach unit of code behaves.\n\n\nimport {ValidationException} from \nsteeplejack/exception/validation\n;\nimport {expect, sinon} from \n../../../helpers/config\n;\nimport {User} from \n../../../../src/modules/user/model/User\n;\nimport {UserService} from \n../../../../src/modules/user/service\n;\n\ndescribe(\nUserService test\n, function () {\n\n    beforeEach(function () {\n\n        this.userStore = {\n            getUserByEmailAddress: sinon.stub()\n        };\n\n        this.$userService = new UserService(User, this.userStore);\n\n    });\n\n    describe(\nmethods\n, function () {\n\n        it(\nshould throw an error when no emailAddress\n, function () {\n\n            let fail = false;\n\n            try {\n                this.$userService.getUserByEmailAddress();\n            } catch (err) {\n                fail = true;\n\n                expect(err).to.be.instanceof(ValidationException);\n                expect(err.message).to.be.equal(\nemailAddress is required\n);\n            } finally {\n                expect(fail).to.be.true;\n            }\n\n        });\n\n        it(\nshould throw an error when invalid emailAddress\n, function () {\n\n            let fail = false;\n\n            try {\n                this.$userService.getUserByEmailAddress(\nnot an email\n);\n            } catch (err) {\n                fail = true;\n\n                expect(err).to.be.instanceof(ValidationException);\n                expect(err.message).to.be.equal(\nemailAddress is required\n);\n            } finally {\n                expect(fail).to.be.true;\n            }\n\n        });\n\n        it(\nshould return undefined if nothing found\n, function () {\n\n            this.userStore.getUserByEmailAddress.resolves(null);\n\n            return this.$userService.getUserByEmailAddress(\ntest@test.com\n)\n                .then(result =\n {\n\n                    expect(result).to.be.undefined;\n\n                    expect(this.userStore.getUserByEmailAddress).to.be.calledOnce\n                        .calledWithExactly(\ntest@test.com\n);\n\n                });\n\n        });\n\n        it(\nshould return UserModel if data found\n, function () {\n\n            this.userStore.getUserByEmailAddress.resolves({\n                id: 1234,\n                firstName: \nBarry\n,\n                lastName: \nScott\n,\n                emailAddress: \nbarry@cillitbang.com\n\n            });\n\n            return this.$userService.getUserByEmailAddress(\nbarry@cillitbang.com\n)\n                .then(result =\n {\n\n                    expect(result).to.be.instanceof(User);\n\n                    expect(result.getData()).to.be.eql({\n                        id: 1234,\n                        firstName: \nBarry\n,\n                        lastName: \nScott\n,\n                        emailAddress: \nbarry@cillitbang.com\n\n                    });\n\n                    expect(this.userStore.getUserByEmailAddress).to.be.calledOnce\n                        .calledWithExactly(\nbarry@cillitbang.com\n);\n\n                });\n\n        });\n\n    });\n\n});\n\n\n\n\nIn fewer than 100 lines of code, we have achieved 100% code coverage on the \n$userService\n. By following these principles, you can easily\nachieve 100% code coverage throughout your entire application.\n\n\nThe \nUser\n model we have used is the concrete class which has been used to simplify things in this example. We could just as easily have\ncreated a stubbed class so we're testing the interface only - indeed, this would be better in a production application.", 
+            "title": "Testing"
+        }, 
+        {
+            "location": "/getting-started/testing/#testing", 
+            "text": "The example is done with  Mocha  and  Chai . If you don't want to use those libraries, you\ncan choose to create your tests however you want.   Although last in this tutorial, a testable application is crucial for enterprise software and Steeplejack makes this really easy. If you follow\nthe  SOLID Principles , you won't go far wrong.  You can look through all the tests in the  Steeplejack example  project. To show how\neasy it can be, let's take a look at the  $userService  and how we can test it.", 
+            "title": "Testing"
+        }, 
+        {
+            "location": "/getting-started/testing/#testunitmodulesservicetestjs", 
+            "text": "Notice how we have a  beforeEach  function that defines the instance of the  $userService . By defining the dependencies we want to rely\nupon, this is largely how the dependency injector works underneath. It also means we can easily stub the dependencies so we can test how\neach unit of code behaves.  import {ValidationException} from  steeplejack/exception/validation ;\nimport {expect, sinon} from  ../../../helpers/config ;\nimport {User} from  ../../../../src/modules/user/model/User ;\nimport {UserService} from  ../../../../src/modules/user/service ;\n\ndescribe( UserService test , function () {\n\n    beforeEach(function () {\n\n        this.userStore = {\n            getUserByEmailAddress: sinon.stub()\n        };\n\n        this.$userService = new UserService(User, this.userStore);\n\n    });\n\n    describe( methods , function () {\n\n        it( should throw an error when no emailAddress , function () {\n\n            let fail = false;\n\n            try {\n                this.$userService.getUserByEmailAddress();\n            } catch (err) {\n                fail = true;\n\n                expect(err).to.be.instanceof(ValidationException);\n                expect(err.message).to.be.equal( emailAddress is required );\n            } finally {\n                expect(fail).to.be.true;\n            }\n\n        });\n\n        it( should throw an error when invalid emailAddress , function () {\n\n            let fail = false;\n\n            try {\n                this.$userService.getUserByEmailAddress( not an email );\n            } catch (err) {\n                fail = true;\n\n                expect(err).to.be.instanceof(ValidationException);\n                expect(err.message).to.be.equal( emailAddress is required );\n            } finally {\n                expect(fail).to.be.true;\n            }\n\n        });\n\n        it( should return undefined if nothing found , function () {\n\n            this.userStore.getUserByEmailAddress.resolves(null);\n\n            return this.$userService.getUserByEmailAddress( test@test.com )\n                .then(result =  {\n\n                    expect(result).to.be.undefined;\n\n                    expect(this.userStore.getUserByEmailAddress).to.be.calledOnce\n                        .calledWithExactly( test@test.com );\n\n                });\n\n        });\n\n        it( should return UserModel if data found , function () {\n\n            this.userStore.getUserByEmailAddress.resolves({\n                id: 1234,\n                firstName:  Barry ,\n                lastName:  Scott ,\n                emailAddress:  barry@cillitbang.com \n            });\n\n            return this.$userService.getUserByEmailAddress( barry@cillitbang.com )\n                .then(result =  {\n\n                    expect(result).to.be.instanceof(User);\n\n                    expect(result.getData()).to.be.eql({\n                        id: 1234,\n                        firstName:  Barry ,\n                        lastName:  Scott ,\n                        emailAddress:  barry@cillitbang.com \n                    });\n\n                    expect(this.userStore.getUserByEmailAddress).to.be.calledOnce\n                        .calledWithExactly( barry@cillitbang.com );\n\n                });\n\n        });\n\n    });\n\n});  In fewer than 100 lines of code, we have achieved 100% code coverage on the  $userService . By following these principles, you can easily\nachieve 100% code coverage throughout your entire application.  The  User  model we have used is the concrete class which has been used to simplify things in this example. We could just as easily have\ncreated a stubbed class so we're testing the interface only - indeed, this would be better in a production application.", 
+            "title": "/test/unit/modules/service.test.js"
+        }, 
+        {
+            "location": "/dependency-injection/intro/", 
+            "text": "Dependency Injection\n\n\nWhat is dependency injection?\n\n\nDependency injection is a software design pattern that allows dependencies to be resolved automatically from the module that is consuming\nthem.\n\n\nFor more on dependency injection, read the \nWikipedia article\n.\n\n\nWhy do we want to use dependency injection?\n\n\n\n\nIt makes your code really easily testable. If you're testing a database query, your unit tests can use stubbed data to test how your\n modules should behave when it finds some data, no data or has a connection error.\n\n\nIt encourages loose-coupling between your modules, only relying upon abstracted interfaces rather than concrete implementations.\n\n\nAs modules are automatically loaded, there is very little boilerplate.\n\n\nIt encourages code reuse. Rather than writing the same things in each application, you can spin reusable modules into external\n \nPlugins\n for use across multiple applications.\n\n\n\n\nHow to register modules\n\n\nFirst, tell the \nSteeplejack.app\n factory where to find your modules.\n\n\nconst app = Steeplejack.app({\n    modules: [\n        \npath/to/modules/**/*.js\n\n    ]\n});\n\n\n\n\nNow you've done that, you just need to define how to register your module. There are three different ways of doing this (the Class and\nFactory Injector do the same job - use the Class injector if you can and these shouldn't be mixed).\n\n\n\n\nClass Injector\n\n\nFactory Injector\n\n\n\n\n\n\nSingleton Injector\n\n\nConfig Injector\n\n\n\n\nThat's it. Simple eh?\n\n\nAutomatically registered depdendencies\n\n\nThese dependencies are always registered:\n\n\n\n\n$config\n: this is the main config object which is resolved from the environment variable and command line arguments.\n\n\n$injector\n: this is the dependency injector container. This is defined in \nInjector\n and for dynamically\n declaring dependencies.\n\n\n$output\n: the is the function that you can use to output to the web. This is defined in \nServer.outputHandler", 
+            "title": "Introduction"
+        }, 
+        {
+            "location": "/dependency-injection/intro/#dependency-injection", 
+            "text": "", 
+            "title": "Dependency Injection"
+        }, 
+        {
+            "location": "/dependency-injection/intro/#what-is-dependency-injection", 
+            "text": "Dependency injection is a software design pattern that allows dependencies to be resolved automatically from the module that is consuming\nthem.  For more on dependency injection, read the  Wikipedia article .", 
+            "title": "What is dependency injection?"
+        }, 
+        {
+            "location": "/dependency-injection/intro/#why-do-we-want-to-use-dependency-injection", 
+            "text": "It makes your code really easily testable. If you're testing a database query, your unit tests can use stubbed data to test how your\n modules should behave when it finds some data, no data or has a connection error.  It encourages loose-coupling between your modules, only relying upon abstracted interfaces rather than concrete implementations.  As modules are automatically loaded, there is very little boilerplate.  It encourages code reuse. Rather than writing the same things in each application, you can spin reusable modules into external\n  Plugins  for use across multiple applications.", 
+            "title": "Why do we want to use dependency injection?"
+        }, 
+        {
+            "location": "/dependency-injection/intro/#how-to-register-modules", 
+            "text": "First, tell the  Steeplejack.app  factory where to find your modules.  const app = Steeplejack.app({\n    modules: [\n         path/to/modules/**/*.js \n    ]\n});  Now you've done that, you just need to define how to register your module. There are three different ways of doing this (the Class and\nFactory Injector do the same job - use the Class injector if you can and these shouldn't be mixed).   Class Injector  Factory Injector    Singleton Injector  Config Injector   That's it. Simple eh?", 
+            "title": "How to register modules"
+        }, 
+        {
+            "location": "/dependency-injection/intro/#automatically-registered-depdendencies", 
+            "text": "These dependencies are always registered:   $config : this is the main config object which is resolved from the environment variable and command line arguments.  $injector : this is the dependency injector container. This is defined in  Injector  and for dynamically\n declaring dependencies.  $output : the is the function that you can use to output to the web. This is defined in  Server.outputHandler", 
+            "title": "Automatically registered depdendencies"
+        }, 
+        {
+            "location": "/dependency-injection/class-injector/", 
+            "text": "Class Injector\n\n\n\n\nThis uses \nES7 decorators\n. If you are compiling\nyour application with either \nTypeScript\n or \nBabel\n and can support decorators, you\nshould use this way of injecting dependencies.\n\n\n\n\nExamples\n\n\nAn instance registered with dependencies resolved automatically\n\n\nThis will register an instance of this class to \ndep3\n, resolving \ndep1\n and \ndep2\n in the \nconstructor\n method.\n\n\nimport {Inject} from \nsteeplejack/decorators/inject\n;\n\n@Inject({\n    name: \ndep3\n\n})\nclass Dep3 {\n\n    constructor (dep1, dep2) {\n        this._dep1 = dep1;\n        this._dep2 = dep2;\n    }\n\n}\n\n\n\n\nAn instance registered with dependencies resolved manually\n\n\nThis will register an instance of this class to \ndep4\n, resolving \ndep1\n and \ndep2\n in the \nconstructor\n method. The names of the\ndependencies in the constructor can be anything you like as the \ndeps\n array in the decorator define the dependencies to use.\n\n\nimport {Inject} from \nsteeplejack/decorators/inject\n;\n\n@Inject({\n    name: \ndep4\n,\n    deps: [\n        \ndep1\n,\n        \ndep2\n\n    ]\n})\nclass Dep4 {\n\n    constructor (myDep1, myDep2) {\n        this._myDep1 = myDep1;\n        this._myDep2 = myDep2;\n    }\n\n}\n\n\n\n\nThe class constructor registered with no dependencies\n\n\nSometimes you will want to register a class but not automatically create an instance. This is useful when you're registering a\n\nModel\n or \nCollection\n.  This will be registered to the injector under \nMyClass\n\nand have no external dependencies.\n\n\nimport {Inject} from \nsteeplejack/decorators/inject\n;\n\n@Inject({\n    name: \nMyClass\n,\n    factory: true\n})\nclass MyClass {\n\n    constructor (obj) { ... }\n\n}\n\n\n\n\nThe class constructor registered with some dependencies\n\n\nIf you want a class constructor with some dependencies, you'll need to define them in the \ndeps\n array. This will register \nMySecondClass\n\nto the injector and it will have \nMyClass\n and \ndep2\n as dependencies. These dependencies are set as static methods on the class.\n\n\nimport {Inject} from \nsteeplejack/decorators/inject\n;\n\n@Inject({\n    name: \nMySecondClass\n,\n    factory: true,\n    deps: [\n        \nMyClass\n,\n        \ndep2\n\n    ]\n})\nclass MySecondClass {\n\n    constructor (obj) {\n        MySecondClass.MyClass; // The MyClass dependency\n        MySecondClass.dep2; // The dep2 dependency\n        obj; // Whatever is sent through when invoking\n    }\n\n}", 
+            "title": "Class injector"
+        }, 
+        {
+            "location": "/dependency-injection/class-injector/#class-injector", 
+            "text": "This uses  ES7 decorators . If you are compiling\nyour application with either  TypeScript  or  Babel  and can support decorators, you\nshould use this way of injecting dependencies.", 
+            "title": "Class Injector"
+        }, 
+        {
+            "location": "/dependency-injection/class-injector/#examples", 
+            "text": "", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/dependency-injection/class-injector/#an-instance-registered-with-dependencies-resolved-automatically", 
+            "text": "This will register an instance of this class to  dep3 , resolving  dep1  and  dep2  in the  constructor  method.  import {Inject} from  steeplejack/decorators/inject ;\n\n@Inject({\n    name:  dep3 \n})\nclass Dep3 {\n\n    constructor (dep1, dep2) {\n        this._dep1 = dep1;\n        this._dep2 = dep2;\n    }\n\n}", 
+            "title": "An instance registered with dependencies resolved automatically"
+        }, 
+        {
+            "location": "/dependency-injection/class-injector/#an-instance-registered-with-dependencies-resolved-manually", 
+            "text": "This will register an instance of this class to  dep4 , resolving  dep1  and  dep2  in the  constructor  method. The names of the\ndependencies in the constructor can be anything you like as the  deps  array in the decorator define the dependencies to use.  import {Inject} from  steeplejack/decorators/inject ;\n\n@Inject({\n    name:  dep4 ,\n    deps: [\n         dep1 ,\n         dep2 \n    ]\n})\nclass Dep4 {\n\n    constructor (myDep1, myDep2) {\n        this._myDep1 = myDep1;\n        this._myDep2 = myDep2;\n    }\n\n}", 
+            "title": "An instance registered with dependencies resolved manually"
+        }, 
+        {
+            "location": "/dependency-injection/class-injector/#the-class-constructor-registered-with-no-dependencies", 
+            "text": "Sometimes you will want to register a class but not automatically create an instance. This is useful when you're registering a Model  or  Collection .  This will be registered to the injector under  MyClass \nand have no external dependencies.  import {Inject} from  steeplejack/decorators/inject ;\n\n@Inject({\n    name:  MyClass ,\n    factory: true\n})\nclass MyClass {\n\n    constructor (obj) { ... }\n\n}", 
+            "title": "The class constructor registered with no dependencies"
+        }, 
+        {
+            "location": "/dependency-injection/class-injector/#the-class-constructor-registered-with-some-dependencies", 
+            "text": "If you want a class constructor with some dependencies, you'll need to define them in the  deps  array. This will register  MySecondClass \nto the injector and it will have  MyClass  and  dep2  as dependencies. These dependencies are set as static methods on the class.  import {Inject} from  steeplejack/decorators/inject ;\n\n@Inject({\n    name:  MySecondClass ,\n    factory: true,\n    deps: [\n         MyClass ,\n         dep2 \n    ]\n})\nclass MySecondClass {\n\n    constructor (obj) {\n        MySecondClass.MyClass; // The MyClass dependency\n        MySecondClass.dep2; // The dep2 dependency\n        obj; // Whatever is sent through when invoking\n    }\n\n}", 
+            "title": "The class constructor registered with some dependencies"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/", 
+            "text": "Factory Injector\n\n\nThe factory injector can be thought of as the legacy version of the \nClass Injector\n. If you're using a version of\nJavaScript that can support \nES7 decorators\n - eg, Babel\nand TypeScript - you should use the Class Injector instead.\n\n\nThe __factory object\n\n\nTo define a module as a factory, it must have a \n__factory\n object exported.  This needs to have two properties, \nname\n and \nfactory\n. If\nyou are familiar with Angular's V1 dependency injector, then it works largely the same as that.\n\n\nname: string\n\n\nThis is the name with which to register the module to the dependency injector.\n\n\nfactory: function | []\n\n\nThis can accept either a function, or an array. There are no constraints as to what can be returned. Whatever is returned will be what is\nresolved when that dependency is called.\n\n\nfunction\n\n\nIf a simple function is passed in to the \nfactory\n then any arguments will be resolved as dependencies by the injector.  If a dependency\ndoesn't exist, it will throw an error.\n\n\narray\n\n\nIf an array is passed in, then the final item must be an object. All other elements must be a string as these will be what is searched for\nin the dependency injector.\n\n\nExamples\n\n\nA function registered to factory\n\n\nThis will return an object with a function on \nmethod1\n. It will have access to two dependencies: \ndep1\n and \ndep2\n. This dependency can be\naccessed by requiring \ndep3\n.\n\n\nvar name = \ndep3\n;\n\nfunction factory (dep1, dep2) {\n\n    return {\n        method1: function () { ... }\n    };\n\n}\n\nexports.__factory = {\n    name: name,\n    factory: factory\n};\n\n\n\n\nAn array registered to factory\n\n\nThis will return a function. The will have access to two dependencies from the injector, \ndep1\n and \ndep2\n but will be assigned to the\nvariables \nmyDep1\n and \nmyDep2\n.\n\n\nvar name = \ndep4\n;\n\nfunction factory (myDep1, myDep2) {\n\n    return function () { ... };\n\n}\n\nexports.__factory = {\n    name: name,\n    factory: factory\n};", 
+            "title": "Factory injector"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#factory-injector", 
+            "text": "The factory injector can be thought of as the legacy version of the  Class Injector . If you're using a version of\nJavaScript that can support  ES7 decorators  - eg, Babel\nand TypeScript - you should use the Class Injector instead.", 
+            "title": "Factory Injector"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#the-__factory-object", 
+            "text": "To define a module as a factory, it must have a  __factory  object exported.  This needs to have two properties,  name  and  factory . If\nyou are familiar with Angular's V1 dependency injector, then it works largely the same as that.", 
+            "title": "The __factory object"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#name-string", 
+            "text": "This is the name with which to register the module to the dependency injector.", 
+            "title": "name: string"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#factory-function", 
+            "text": "This can accept either a function, or an array. There are no constraints as to what can be returned. Whatever is returned will be what is\nresolved when that dependency is called.", 
+            "title": "factory: function | []"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#function", 
+            "text": "If a simple function is passed in to the  factory  then any arguments will be resolved as dependencies by the injector.  If a dependency\ndoesn't exist, it will throw an error.", 
+            "title": "function"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#array", 
+            "text": "If an array is passed in, then the final item must be an object. All other elements must be a string as these will be what is searched for\nin the dependency injector.", 
+            "title": "array"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#examples", 
+            "text": "", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#a-function-registered-to-factory", 
+            "text": "This will return an object with a function on  method1 . It will have access to two dependencies:  dep1  and  dep2 . This dependency can be\naccessed by requiring  dep3 .  var name =  dep3 ;\n\nfunction factory (dep1, dep2) {\n\n    return {\n        method1: function () { ... }\n    };\n\n}\n\nexports.__factory = {\n    name: name,\n    factory: factory\n};", 
+            "title": "A function registered to factory"
+        }, 
+        {
+            "location": "/dependency-injection/factory-injector/#an-array-registered-to-factory", 
+            "text": "This will return a function. The will have access to two dependencies from the injector,  dep1  and  dep2  but will be assigned to the\nvariables  myDep1  and  myDep2 .  var name =  dep4 ;\n\nfunction factory (myDep1, myDep2) {\n\n    return function () { ... };\n\n}\n\nexports.__factory = {\n    name: name,\n    factory: factory\n};", 
+            "title": "An array registered to factory"
+        }, 
+        {
+            "location": "/dependency-injection/singleton-injector/", 
+            "text": "Singleton Injector\n\n\nThe singleton is a much simpler than the other injectors. It accepts no dependencies and only returns what is set. This would normally be\na non-function value.\n\n\nThe __singleton object\n\n\nTo register a singleton module, it must have a \n__singleton\n object. This needs to have properties, \nname\n and \nsingleton\n.\n\n\nname: string\n\n\nThis is the name with which to register the module to the dependency injector.\n\n\nsingleton: any\n\n\nThis can accept anything. There is no parsing whatsoever and is returned exactly as registered here.\n\n\nExamples\n\n\nRegistering an object to the injector\n\n\nThis will register the object to the injector under the name \ndep1\n\n\nvar name = \ndep1\n;\n\nvar singleton = {\n    hello: \nworld\n\n};\n\nexports.__singleton = {\n    name: name,\n    singleton: singleton\n};", 
+            "title": "Singleton injector"
+        }, 
+        {
+            "location": "/dependency-injection/singleton-injector/#singleton-injector", 
+            "text": "The singleton is a much simpler than the other injectors. It accepts no dependencies and only returns what is set. This would normally be\na non-function value.", 
+            "title": "Singleton Injector"
+        }, 
+        {
+            "location": "/dependency-injection/singleton-injector/#the-__singleton-object", 
+            "text": "To register a singleton module, it must have a  __singleton  object. This needs to have properties,  name  and  singleton .", 
+            "title": "The __singleton object"
+        }, 
+        {
+            "location": "/dependency-injection/singleton-injector/#name-string", 
+            "text": "This is the name with which to register the module to the dependency injector.", 
+            "title": "name: string"
+        }, 
+        {
+            "location": "/dependency-injection/singleton-injector/#singleton-any", 
+            "text": "This can accept anything. There is no parsing whatsoever and is returned exactly as registered here.", 
+            "title": "singleton: any"
+        }, 
+        {
+            "location": "/dependency-injection/singleton-injector/#examples", 
+            "text": "", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/dependency-injection/singleton-injector/#registering-an-object-to-the-injector", 
+            "text": "This will register the object to the injector under the name  dep1  var name =  dep1 ;\n\nvar singleton = {\n    hello:  world \n};\n\nexports.__singleton = {\n    name: name,\n    singleton: singleton\n};", 
+            "title": "Registering an object to the injector"
+        }, 
+        {
+            "location": "/dependency-injection/config-injector/", 
+            "text": "Config Injector\n\n\nUnlike the other injectors, the config injector is invoked immediately. It is a function that receives only the config object. These are\nuseful for creating resources that need to be configured before they can be used, such as logging objects.\n\n\nThe __config object\n\n\nTo register a config module, it must have a \n__config\n object. This needs to have properties, \nname\n and \nconfig\n.\n\n\nname: string\n\n\nThis is the name with which to register the module to the dependency injector.\n\n\nconfig: (config: Object) =\n any\n\n\nThis is a function that receives the application config object. Whatever is returned from this function is what is set to the injector. It\nis registered using the \nSingleton Injector\n\n\nExamples\n\n\nRegistering a module that needs to be invoked with config\n\n\nThis will register the object to the injector under the name \ndep1\n. The \n$config\n is what the main config object. The \nDe[\n class is a\nhypothetical object where we're only interesting in working with the instance.\n\n\nvar name = \ndep1\n;\n\nvar config = function ($config) {\n\n    return new Dep($config.dep);\n\n};\n\nexports.__config = {\n    name: name,\n    config: config\n};", 
+            "title": "Config injector"
+        }, 
+        {
+            "location": "/dependency-injection/config-injector/#config-injector", 
+            "text": "Unlike the other injectors, the config injector is invoked immediately. It is a function that receives only the config object. These are\nuseful for creating resources that need to be configured before they can be used, such as logging objects.", 
+            "title": "Config Injector"
+        }, 
+        {
+            "location": "/dependency-injection/config-injector/#the-__config-object", 
+            "text": "To register a config module, it must have a  __config  object. This needs to have properties,  name  and  config .", 
+            "title": "The __config object"
+        }, 
+        {
+            "location": "/dependency-injection/config-injector/#name-string", 
+            "text": "This is the name with which to register the module to the dependency injector.", 
+            "title": "name: string"
+        }, 
+        {
+            "location": "/dependency-injection/config-injector/#config-config-object-any", 
+            "text": "This is a function that receives the application config object. Whatever is returned from this function is what is set to the injector. It\nis registered using the  Singleton Injector", 
+            "title": "config: (config: Object) =&gt; any"
+        }, 
+        {
+            "location": "/dependency-injection/config-injector/#examples", 
+            "text": "", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/dependency-injection/config-injector/#registering-a-module-that-needs-to-be-invoked-with-config", 
+            "text": "This will register the object to the injector under the name  dep1 . The  $config  is what the main config object. The  De[  class is a\nhypothetical object where we're only interesting in working with the instance.  var name =  dep1 ;\n\nvar config = function ($config) {\n\n    return new Dep($config.dep);\n\n};\n\nexports.__config = {\n    name: name,\n    config: config\n};", 
+            "title": "Registering a module that needs to be invoked with config"
+        }, 
+        {
+            "location": "/data-models/intro/", 
+            "text": "Data Models\n\n\nThe data model exists to logically define data in a consistent way. One of the most powerful features of JavaScript is the duck-typing.\nHowever, this can be problematic when it comes to your business logic - sometimes, you need to know the data type of a variable. Therefore,\nthe model is to sensibly coerce data.\n\n\nAnother feature missing in JavaScript that is present in most other languages is that it doesn't differentiate between integers and\nfloating point numbers. The Steeplejack models are able to overcome this.\n\n\nYou could use tools like \nMongoose\n as your data modeller, however there's a couple of reasons why you might not want\nto. Mongoose is logically connected to a MongoDB - using the Steeplejack models do not imply any database connection. This means that the\nmodel won't need to change if you change the data store.\n\n\nAlso, there may not be 1:1 parity between what's stored in your database and what you want in your business logic. This easily maps the\nobject name names across between the two representations.\n\n\n\n\nModel\n\n\nCollection", 
+            "title": "Introduction"
+        }, 
+        {
+            "location": "/data-models/intro/#data-models", 
+            "text": "The data model exists to logically define data in a consistent way. One of the most powerful features of JavaScript is the duck-typing.\nHowever, this can be problematic when it comes to your business logic - sometimes, you need to know the data type of a variable. Therefore,\nthe model is to sensibly coerce data.  Another feature missing in JavaScript that is present in most other languages is that it doesn't differentiate between integers and\nfloating point numbers. The Steeplejack models are able to overcome this.  You could use tools like  Mongoose  as your data modeller, however there's a couple of reasons why you might not want\nto. Mongoose is logically connected to a MongoDB - using the Steeplejack models do not imply any database connection. This means that the\nmodel won't need to change if you change the data store.  Also, there may not be 1:1 parity between what's stored in your database and what you want in your business logic. This easily maps the\nobject name names across between the two representations.   Model  Collection", 
+            "title": "Data Models"
+        }, 
+        {
+            "location": "/data-models/model/", 
+            "text": "Model\n\n\nModel API\n\n\nA model is a block of data. If you think of the attributes of a \nPerson\n, you would have a first and last name, perhaps a date of birth. You\nmight also have optional data, like their gender or address history. Crucially, the model will have consistent data types and validation.\n\n\nYou are required to define a schema for your model. This describes the model, data types and validation.\n\n\n\n\nAlthough a widely-used (if not formally adopted) standard, JSON schema is not used by design. This is because JSON schema is designed to\nbe a flat structure. In Steeplejack, we want to allow custom validation - it is not inconceivable that you will want to use a validation\nmethod that cannot be achieved using JSON schema. We use this by defining our own validation functions, something not possible using JSON\nschema.\n\n\n\n\nLet's define a simple model. It has fource properties - \nid\n, \nfirstName\n, \nlastName\n and \nemailAddress\n. The ID is an integer and the\nother three are strings. If nothing is set to these elements, the default value will be \nnull\n and there is no validation on this model. In the database, the\n\nlastName\n is actually called \nsurname\n.\n\n\nThe \nemailAddress\n is a required field and it also must be an email address.\n\n\nimport {Model} from \nsteeplejack/lib/model\n;\n\nclass Person extends Model {\n\n    _schema () {\n\n        return {\n            id: {\n                type: \ninteger\n\n            },\n            firstName: {\n                type: \nstring\n\n            },\n            lastName: {\n                type: \nstring\n,\n                column: \nsurname\n\n            },\n            emailAddress: {\n                type: \nstring\n,\n                validation: [{\n                    rule: \nrequired\n\n                }, {\n                    rule: \nemail\n\n                }]\n            }\n        };\n\n    }\n\n}\n\n\n\n\nSchema definition\n\n\nYour \n_schema\n needs to return an object. The object keys are the schema key. Each key should then have a definition object on it. Let's\nfirst look at the full definition object:\n\n\ninterface IModelDefinition {\n    type: any;\n    value?: any;\n    column?: string;\n    primaryKey?: boolean;\n    validation?: IDefinitionValidation[];\n    enum?: any[];\n    settings?: object;\n}\n\n\n\n\ntype: any\n\n\nThis is a required field. If the \ntype\n is a string, it should be one of the following:\n\n\n\n\narray - consider using a \nCollection\n instance\n\n\nboolean\n\n\ndate\n\n\nenum - this requires the \nenum\n array\n\n\nfloat\n\n\ninteger\n\n\nmixed\n\n\nobject - consider using an instance of Model instance\n\n\nstring\n\n\n\n\nYou can also set a Collection or Model constructor. This means that you can nest your data - if your model needed to have a collection of\nAddress models, you could simply set that Collection to your type.\n\n\nvalue: any\n\n\nThis is the default value. If no value is set, it will use this. Importantly, this can be whatever data type you want, regardless of what\nis set in type. If nothing is set, it will be \nnull\n.\n\n\ncolumn: string\n\n\nThe \ncolumn\n is to be used if you want to have a different key name stored in your database. Look at the \nColumn names\n\nsection for more detail\n\n\nprimaryKey: boolean\n\n\nAllows you to specify a primary key on a model. This would normally be a unique ID.\n\n\nvalidation: IDefinitionValidation[]\n\n\nAn array of validation functions. This is covered in \nValidation\n;\n\n\nenum: any[]\n\n\nIf your type is \nenum\n, this allows you to set the allowed values.\n\n\nsettings: Object\n\n\nAn object of anything you want. This allows you to store any meta information about your entry.\n\n\n\n\nValidation\n\n\nOnce you've defined your model, you might want to validate your data. The Steeplejack validation is very flexible. For the most part, you\nwill be able to use the provided validation functions. And, if they don't work for you, you can write your own.\n\n\ninterface IDefinitionValidation {\n    rule: string | ((model: Model, value: any) =\n boolean);\n    param?: any[];\n}\n\n\n\n\nrule: string | ((currentValue: any, model: Model) =\n boolean)\n\n\n    {\n        \nvalidation\n: [{\n            \nrule\n: \nrequired\n\n        }, {\n            \nrule\n: (value) =\n {\n                if (value !== \ndesired value\n) {\n                    throw new Error(\nnot my value\n);\n                }\n                return true;\n            }\n        }]\n    }\n\n\n\n\n\n\nIf you have created your model using \nclass\n, the value of \nthis\n will be the same as \nmodel\n. The \nmodel\n is mainly here for ES5\nusage.\n\n\n\n\nAt it's simplest form, you will just be passing a string through to the validation object. This wraps the\n\nDatautils\n package, so any function available in there can be passed through as\na string. For most cases, this will be enough.\n\n\nIf you want more control over your validation you can pass in a function. This will allow you to perform fine-grain validation. To tell that\nwe have passed validation, simply \nreturn true\n. To return a useful error, you should throw the error you want to be added to the stack.\n\n\n\n\nYou can also \nreturn false\n to signify an error. This is not recommended as it just marks as a generic error.\n\n\n\n\nAvailable string functions\n\n\nThe \nvalue\n gets passed in automatically. Any additional arguments must be passed into the \nparam\n array.\n\n\n\n\nemail (value: string) - checks the \nvalue\n matches an email regular expression\n\n\nequal (value: any, match: any) - checks the \nvalue\n is the same as \nmatch\n\n\ngreaterThan (value: any, target: any) - checks the \nvalue\n is greater than the \ntarget\n\n\ngreaterThanOrEqual (value: any, target: any) - checks the \nvalue\n is greater than or equal to the \ntarget\n\n\nlength (value: any, length: number) - checks the length of the \nvalue\n is equal to the \nlength\n\n\nlengthBetween (value: any, minLength: number, maxLength: number) - checks the \nvalue\n is between \nminLength\n and \nmaxLength\n\n\nlessThan (value: any, target: any) - checks the \nvalue\n is less than the \ntarget\n\n\nlessThanOrEqual (value: any, target: any) - checks the \nvalue\n is less than or equal to the \ntarget\n\n\nmatch (value: any, key: string) - checks the \nvalue\n matches the \nkey\n in the model\n\n\nmaxLength (value: any, length: number) - checks the length of \nvalue\n is less than \nlength\n\n\nminLength (value: any, length: number) - checks the length of \nvalue\n is more than \nlength\n\n\nregex (value: string, regex: RegExp | string) - checks the \nvalue\n matches the \nregex\n\n\nrequired (value: any) - checks that \nvalue\n is not empty\n\n\n\n\nparam: any[]\n\n\nThis is only used when you are using a function name in the \nrule\n that requires additional arguments, eg, used in the \nequal\n rule but\n\nnot\n used in the \nemail\n rule.\n\n\nYou should pass through the same number of arguments that the \nrule\n requires, in the order and type that it requires it.\n\n\n    {\n        \nvalidation\n: [{\n            \nrule\n: \nlengthBetween\n,\n            \nparam\n: [\n                5, 15\n            ]\n        }]\n    }\n\n\n\n\nIf you used this object on a validation, it would ensure that the string was between 5 and 15 characters long.\n\n\n\n\nColumn names\n\n\nIn our example \nPerson\n model, we want to use \nlastName\n in our application. However, the data is stored under \nsurname\n in the database.\nAlthough perhaps a contrived example, there will be many times when your data model and your database will diverge.\n\n\nWhen you use the constructor, this will receive an object that is in the same shape as the model.\n\n\nlet obj1 = new Person({\n    id: 1,\n    firstName: \nTest\n,\n    lastName: \nTestington\n\n});\n\n\n\n\nIf you want to convert that back into a plain object in this shape, you need the \ngetData()\n method.\n\n\nobj1.getData();\n\n\n\n\n{\n    \nid\n: 1,\n    \nfirstName\n: \nTest\n,\n    \nlastName\n: \nTestington\n\n}\n\n\n\n\nNow, converting to the data representation. To create an instance from the database version, use the \ntoModel()\n static method.\n\n\nlet obj2 = Person.toModel({\n    id: 1,\n    firstName: \nTest\n,\n    surname: \nTestington\n\n});\n\n\n\n\nThe values of \nobj1\n and \nobj2\n will be the same. To get the database representation from the instance, use the \ntoDb\n method.\n\n\nobj2.toDb();\n\n\n\n\n{\n    \nid\n: 1,\n    \nfirstName\n: \nTest\n,\n    \nsurname\n: \nTestington\n\n}", 
+            "title": "Model"
+        }, 
+        {
+            "location": "/data-models/model/#model", 
+            "text": "Model API  A model is a block of data. If you think of the attributes of a  Person , you would have a first and last name, perhaps a date of birth. You\nmight also have optional data, like their gender or address history. Crucially, the model will have consistent data types and validation.  You are required to define a schema for your model. This describes the model, data types and validation.   Although a widely-used (if not formally adopted) standard, JSON schema is not used by design. This is because JSON schema is designed to\nbe a flat structure. In Steeplejack, we want to allow custom validation - it is not inconceivable that you will want to use a validation\nmethod that cannot be achieved using JSON schema. We use this by defining our own validation functions, something not possible using JSON\nschema.   Let's define a simple model. It has fource properties -  id ,  firstName ,  lastName  and  emailAddress . The ID is an integer and the\nother three are strings. If nothing is set to these elements, the default value will be  null  and there is no validation on this model. In the database, the lastName  is actually called  surname .  The  emailAddress  is a required field and it also must be an email address.  import {Model} from  steeplejack/lib/model ;\n\nclass Person extends Model {\n\n    _schema () {\n\n        return {\n            id: {\n                type:  integer \n            },\n            firstName: {\n                type:  string \n            },\n            lastName: {\n                type:  string ,\n                column:  surname \n            },\n            emailAddress: {\n                type:  string ,\n                validation: [{\n                    rule:  required \n                }, {\n                    rule:  email \n                }]\n            }\n        };\n\n    }\n\n}", 
+            "title": "Model"
+        }, 
+        {
+            "location": "/data-models/model/#schema-definition", 
+            "text": "Your  _schema  needs to return an object. The object keys are the schema key. Each key should then have a definition object on it. Let's\nfirst look at the full definition object:  interface IModelDefinition {\n    type: any;\n    value?: any;\n    column?: string;\n    primaryKey?: boolean;\n    validation?: IDefinitionValidation[];\n    enum?: any[];\n    settings?: object;\n}", 
+            "title": "Schema definition"
+        }, 
+        {
+            "location": "/data-models/model/#type-any", 
+            "text": "This is a required field. If the  type  is a string, it should be one of the following:   array - consider using a  Collection  instance  boolean  date  enum - this requires the  enum  array  float  integer  mixed  object - consider using an instance of Model instance  string   You can also set a Collection or Model constructor. This means that you can nest your data - if your model needed to have a collection of\nAddress models, you could simply set that Collection to your type.", 
+            "title": "type: any"
+        }, 
+        {
+            "location": "/data-models/model/#value-any", 
+            "text": "This is the default value. If no value is set, it will use this. Importantly, this can be whatever data type you want, regardless of what\nis set in type. If nothing is set, it will be  null .", 
+            "title": "value: any"
+        }, 
+        {
+            "location": "/data-models/model/#column-string", 
+            "text": "The  column  is to be used if you want to have a different key name stored in your database. Look at the  Column names \nsection for more detail", 
+            "title": "column: string"
+        }, 
+        {
+            "location": "/data-models/model/#primarykey-boolean", 
+            "text": "Allows you to specify a primary key on a model. This would normally be a unique ID.", 
+            "title": "primaryKey: boolean"
+        }, 
+        {
+            "location": "/data-models/model/#validation-idefinitionvalidation", 
+            "text": "An array of validation functions. This is covered in  Validation ;", 
+            "title": "validation: IDefinitionValidation[]"
+        }, 
+        {
+            "location": "/data-models/model/#enum-any", 
+            "text": "If your type is  enum , this allows you to set the allowed values.", 
+            "title": "enum: any[]"
+        }, 
+        {
+            "location": "/data-models/model/#settings-object", 
+            "text": "An object of anything you want. This allows you to store any meta information about your entry.", 
+            "title": "settings: Object"
+        }, 
+        {
+            "location": "/data-models/model/#validation", 
+            "text": "Once you've defined your model, you might want to validate your data. The Steeplejack validation is very flexible. For the most part, you\nwill be able to use the provided validation functions. And, if they don't work for you, you can write your own.  interface IDefinitionValidation {\n    rule: string | ((model: Model, value: any) =  boolean);\n    param?: any[];\n}", 
+            "title": "Validation"
+        }, 
+        {
+            "location": "/data-models/model/#rule-string-currentvalue-any-model-model-boolean", 
+            "text": "{\n         validation : [{\n             rule :  required \n        }, {\n             rule : (value) =  {\n                if (value !==  desired value ) {\n                    throw new Error( not my value );\n                }\n                return true;\n            }\n        }]\n    }   If you have created your model using  class , the value of  this  will be the same as  model . The  model  is mainly here for ES5\nusage.   At it's simplest form, you will just be passing a string through to the validation object. This wraps the Datautils  package, so any function available in there can be passed through as\na string. For most cases, this will be enough.  If you want more control over your validation you can pass in a function. This will allow you to perform fine-grain validation. To tell that\nwe have passed validation, simply  return true . To return a useful error, you should throw the error you want to be added to the stack.   You can also  return false  to signify an error. This is not recommended as it just marks as a generic error.", 
+            "title": "rule: string | ((currentValue: any, model: Model) =&gt; boolean)"
+        }, 
+        {
+            "location": "/data-models/model/#available-string-functions", 
+            "text": "The  value  gets passed in automatically. Any additional arguments must be passed into the  param  array.   email (value: string) - checks the  value  matches an email regular expression  equal (value: any, match: any) - checks the  value  is the same as  match  greaterThan (value: any, target: any) - checks the  value  is greater than the  target  greaterThanOrEqual (value: any, target: any) - checks the  value  is greater than or equal to the  target  length (value: any, length: number) - checks the length of the  value  is equal to the  length  lengthBetween (value: any, minLength: number, maxLength: number) - checks the  value  is between  minLength  and  maxLength  lessThan (value: any, target: any) - checks the  value  is less than the  target  lessThanOrEqual (value: any, target: any) - checks the  value  is less than or equal to the  target  match (value: any, key: string) - checks the  value  matches the  key  in the model  maxLength (value: any, length: number) - checks the length of  value  is less than  length  minLength (value: any, length: number) - checks the length of  value  is more than  length  regex (value: string, regex: RegExp | string) - checks the  value  matches the  regex  required (value: any) - checks that  value  is not empty", 
+            "title": "Available string functions"
+        }, 
+        {
+            "location": "/data-models/model/#param-any", 
+            "text": "This is only used when you are using a function name in the  rule  that requires additional arguments, eg, used in the  equal  rule but not  used in the  email  rule.  You should pass through the same number of arguments that the  rule  requires, in the order and type that it requires it.      {\n         validation : [{\n             rule :  lengthBetween ,\n             param : [\n                5, 15\n            ]\n        }]\n    }  If you used this object on a validation, it would ensure that the string was between 5 and 15 characters long.", 
+            "title": "param: any[]"
+        }, 
+        {
+            "location": "/data-models/model/#column-names", 
+            "text": "In our example  Person  model, we want to use  lastName  in our application. However, the data is stored under  surname  in the database.\nAlthough perhaps a contrived example, there will be many times when your data model and your database will diverge.  When you use the constructor, this will receive an object that is in the same shape as the model.  let obj1 = new Person({\n    id: 1,\n    firstName:  Test ,\n    lastName:  Testington \n});  If you want to convert that back into a plain object in this shape, you need the  getData()  method.  obj1.getData();  {\n     id : 1,\n     firstName :  Test ,\n     lastName :  Testington \n}  Now, converting to the data representation. To create an instance from the database version, use the  toModel()  static method.  let obj2 = Person.toModel({\n    id: 1,\n    firstName:  Test ,\n    surname:  Testington \n});  The values of  obj1  and  obj2  will be the same. To get the database representation from the instance, use the  toDb  method.  obj2.toDb();  {\n     id : 1,\n     firstName :  Test ,\n     surname :  Testington \n}", 
+            "title": "Column names"
+        }, 
+        {
+            "location": "/data-models/collection/", 
+            "text": "Collection\n\n\nCollection API\n\n\nA collection is simply multiple models put in order. If you had defined a collection for multiple \nPerson\n models, you might want to create\na \nPeople\n collection.  Once you have your collection object, you can have a series of methods for sorting, filtering and finding data\ninside that model.  Normally, this might be done as part of your database call - however, this gives you the flexibility to do that outside\nof your database if that is appropriate. You also have a \nvalidate\n method, which runs the \nvalidate\n method on each model.\n\n\nAt the very minimum, your collection requires a \nModel\n constructor.\n\n\nimport {Collection} from \nsteeplejack/lib/collection\n;\n\nclass People extends Collection {\n\n    _model () {\n        return Person;\n    }\n\n}\n\n\n\n\nColumn names\n\n\nHave a look at the \nModel section\n first.\n\n\nTo convert an array of database representations, use the \ntoModels\n static method. You can convert your Collection back to a plain array\nby using the \ntoDb\n method.", 
+            "title": "Collection"
+        }, 
+        {
+            "location": "/data-models/collection/#collection", 
+            "text": "Collection API  A collection is simply multiple models put in order. If you had defined a collection for multiple  Person  models, you might want to create\na  People  collection.  Once you have your collection object, you can have a series of methods for sorting, filtering and finding data\ninside that model.  Normally, this might be done as part of your database call - however, this gives you the flexibility to do that outside\nof your database if that is appropriate. You also have a  validate  method, which runs the  validate  method on each model.  At the very minimum, your collection requires a  Model  constructor.  import {Collection} from  steeplejack/lib/collection ;\n\nclass People extends Collection {\n\n    _model () {\n        return Person;\n    }\n\n}", 
+            "title": "Collection"
+        }, 
+        {
+            "location": "/data-models/collection/#column-names", 
+            "text": "Have a look at the  Model section  first.  To convert an array of database representations, use the  toModels  static method. You can convert your Collection back to a plain array\nby using the  toDb  method.", 
+            "title": "Column names"
+        }, 
+        {
+            "location": "/plugins/intro/", 
+            "text": "Plugins", 
+            "title": "Introduction"
+        }, 
+        {
+            "location": "/plugins/intro/#plugins", 
+            "text": "", 
+            "title": "Plugins"
+        }, 
+        {
+            "location": "/plugins/http-strategies/", 
+            "text": "HTTP Strategies", 
+            "title": "HTTP Strategies"
+        }, 
+        {
+            "location": "/plugins/http-strategies/#http-strategies", 
+            "text": "", 
+            "title": "HTTP Strategies"
+        }, 
+        {
+            "location": "/strategies/intro/", 
+            "text": "Introduction to the Strategy Pattern\n\n\n\n\nThis is an introduction to the strategy design pattern. If you know how that works already, you can skip this.", 
+            "title": "Introduction"
+        }, 
+        {
+            "location": "/strategies/intro/#introduction-to-the-strategy-pattern", 
+            "text": "This is an introduction to the strategy design pattern. If you know how that works already, you can skip this.", 
+            "title": "Introduction to the Strategy Pattern"
+        }, 
+        {
+            "location": "/api/steeplejack/", 
+            "text": "Steeplejack", 
+            "title": "Steeplejack"
+        }, 
+        {
+            "location": "/api/steeplejack/#steeplejack", 
+            "text": "", 
+            "title": "Steeplejack"
+        }, 
+        {
+            "location": "/api/decorators/inject/", 
+            "text": "Inject\n\n\nThis is a decorator function to configure classes to work with the dependency injector.\n\n\nimport {Inject} from \nsteeplejack/decorators/inject\n;\n\n\n\n\nInject ({name: string, factory: boolean = false, deps: string[] = []}) =\n void\n\n\nname\n\n\nThis is the only required property. This is the name that the instance is registered with in the dependency injector.\n\n\nfactory\n\n\nIf set to \nfalse\n, an instance of the class will be created with the dependencies sent through when instantiated. If \ntrue\n, the dependencies\nwill be set as a static method with the dependency name.\n\n\ndeps\n\n\nIf \nfactory\n is \nfalse\n, by default the dependency list will be reflected generated by what's in the class \nconstructor\n method. You can\noverride the names in there by defining them in the \ndeps\n.\n\n\nIf \nfactory\n is \ntrue\n, you must set your dependencies in this array.\n\n\nUsage\n\n\nBasic usage\n\n\n\n\nThis will store an instance of this class in the injector under the name \nchildClass\n with two dependencies, \ndep1\n and \ndep2\n.\n\n\n\n\n@Inject({\n    name: \nchildClass\n\n})\nclass Child {\n\n    constructor (dep1, dep2) {}\n\n}\n\n\n\n\nSpecified dependencies\n\n\n\n\nThis will an instance of thisclass in the injector under the name \nchildClass\n. Again, the dependencies called will by \ndep1\n and \ndep2\n,\nbut they will be referred to internally as \n_dep1\n and \n_dep2\n.\n\n\n\n\n@Inject({\n    name: \nchildClass\n,\n    deps: [\n        \ndep1\n,\n        \ndep2\n,\n    ]\n})\nclass Child {\n\n    constructor (_dep1, _dep2) {}\n\n}\n\n\n\n\nExporting the constructor\n\n\n\n\nThis is a factory method, meaning it can be called with \nnew ChildClass()\n. The two dependencies are \ndep1\n and \ndep2\n and set as static\nmethods on the class.\n\n\n\n\n@Inject({\n    name: \nChildClass\n,\n    factory: true,\n    deps: [\n        \ndep1\n,\n        \ndep2\n,\n    ]\n})\nclass Child {\n\n    constructor () {\n        console.log(Child.dep1);\n        console.log(Child.dep2);\n    }\n\n}", 
+            "title": "inject"
+        }, 
+        {
+            "location": "/api/decorators/inject/#inject", 
+            "text": "This is a decorator function to configure classes to work with the dependency injector.  import {Inject} from  steeplejack/decorators/inject ;", 
+            "title": "Inject"
+        }, 
+        {
+            "location": "/api/decorators/inject/#inject-name-string-factory-boolean-false-deps-string-void", 
+            "text": "", 
+            "title": "Inject ({name: string, factory: boolean = false, deps: string[] = []}) =&gt; void"
+        }, 
+        {
+            "location": "/api/decorators/inject/#name", 
+            "text": "This is the only required property. This is the name that the instance is registered with in the dependency injector.", 
+            "title": "name"
+        }, 
+        {
+            "location": "/api/decorators/inject/#factory", 
+            "text": "If set to  false , an instance of the class will be created with the dependencies sent through when instantiated. If  true , the dependencies\nwill be set as a static method with the dependency name.", 
+            "title": "factory"
+        }, 
+        {
+            "location": "/api/decorators/inject/#deps", 
+            "text": "If  factory  is  false , by default the dependency list will be reflected generated by what's in the class  constructor  method. You can\noverride the names in there by defining them in the  deps .  If  factory  is  true , you must set your dependencies in this array.", 
+            "title": "deps"
+        }, 
+        {
+            "location": "/api/decorators/inject/#usage", 
+            "text": "", 
+            "title": "Usage"
+        }, 
+        {
+            "location": "/api/decorators/inject/#basic-usage", 
+            "text": "This will store an instance of this class in the injector under the name  childClass  with two dependencies,  dep1  and  dep2 .   @Inject({\n    name:  childClass \n})\nclass Child {\n\n    constructor (dep1, dep2) {}\n\n}", 
+            "title": "Basic usage"
+        }, 
+        {
+            "location": "/api/decorators/inject/#specified-dependencies", 
+            "text": "This will an instance of thisclass in the injector under the name  childClass . Again, the dependencies called will by  dep1  and  dep2 ,\nbut they will be referred to internally as  _dep1  and  _dep2 .   @Inject({\n    name:  childClass ,\n    deps: [\n         dep1 ,\n         dep2 ,\n    ]\n})\nclass Child {\n\n    constructor (_dep1, _dep2) {}\n\n}", 
+            "title": "Specified dependencies"
+        }, 
+        {
+            "location": "/api/decorators/inject/#exporting-the-constructor", 
+            "text": "This is a factory method, meaning it can be called with  new ChildClass() . The two dependencies are  dep1  and  dep2  and set as static\nmethods on the class.   @Inject({\n    name:  ChildClass ,\n    factory: true,\n    deps: [\n         dep1 ,\n         dep2 ,\n    ]\n})\nclass Child {\n\n    constructor () {\n        console.log(Child.dep1);\n        console.log(Child.dep2);\n    }\n\n}", 
+            "title": "Exporting the constructor"
+        }, 
+        {
+            "location": "/api/exception/exception/", 
+            "text": "Exception\n\n\nThis is the main error object for the library. It is an extension of the JavaScript Error object. If you are still using ES5, this simplifies\nprototypical inheritance with the \nextend\n static method.\n\n\nThis is an \nabstract class\n, meaning it cannot be instantiated directly - this only applies to\nTypeScript applications, but still should be extended in all other versions of JavaScript.\n\n\nimport {Exception} from \nsteeplejack/exception\n;\n\n\n\n\nExtends:\n \nError\n\n\nMethods\n\n\nconstructor (message: any = null, ...args: any[]) =\n void\n\n\nIf an ES5 class, it calls the \n__construct\n method. As ES5 doesn't really have a constructor method, the \n__construct\n method is a method\nwhich mimics the behaviour. All arguments that are received are sent through to the \n__construct\n method.\n\n\nIf the \nmessage\n is an instance of \nError\n class then it uses it's \nmessage\n and \nstack\n. If not, then it will use the message string and\ngenerate an error stack.\n\n\n\n\nProperties\n\n\nmessage =\n string\n\n\nThe human-readable description of the error message. Defaults to \"UNKNOWN_ERROR\".\n\n\n\n\ntype =\n string\n\n\nAllows a description of the type when extending this class. This is a required value.\n\n\n\n\nStatic Methods\n\n\nextend (properties: Object, staticProperties: Object) =\n Function\n\n\nThis is a polyfill for ES5. Modern compiled JavaScript languages have a \nclass\n sugar which simplifies extending. ES5 doesn't have this\nfeature so this is there to simplify it.  The first object is your prototypical methods, the second being your static methods. If you provide\na \n__construct\n object on your prototypical methods object, this will be called when the class is invoked.", 
+            "title": "exception"
+        }, 
+        {
+            "location": "/api/exception/exception/#exception", 
+            "text": "This is the main error object for the library. It is an extension of the JavaScript Error object. If you are still using ES5, this simplifies\nprototypical inheritance with the  extend  static method.  This is an  abstract class , meaning it cannot be instantiated directly - this only applies to\nTypeScript applications, but still should be extended in all other versions of JavaScript.  import {Exception} from  steeplejack/exception ;  Extends:   Error", 
+            "title": "Exception"
+        }, 
+        {
+            "location": "/api/exception/exception/#methods", 
+            "text": "", 
+            "title": "Methods"
+        }, 
+        {
+            "location": "/api/exception/exception/#constructor-message-any-null-args-any-void", 
+            "text": "If an ES5 class, it calls the  __construct  method. As ES5 doesn't really have a constructor method, the  __construct  method is a method\nwhich mimics the behaviour. All arguments that are received are sent through to the  __construct  method.  If the  message  is an instance of  Error  class then it uses it's  message  and  stack . If not, then it will use the message string and\ngenerate an error stack.", 
+            "title": "constructor (message: any = null, ...args: any[]) =&gt; void"
+        }, 
+        {
+            "location": "/api/exception/exception/#properties", 
+            "text": "", 
+            "title": "Properties"
+        }, 
+        {
+            "location": "/api/exception/exception/#message-string", 
+            "text": "The human-readable description of the error message. Defaults to \"UNKNOWN_ERROR\".", 
+            "title": "message =&gt; string"
+        }, 
+        {
+            "location": "/api/exception/exception/#type-string", 
+            "text": "Allows a description of the type when extending this class. This is a required value.", 
+            "title": "type =&gt; string"
+        }, 
+        {
+            "location": "/api/exception/exception/#static-methods", 
+            "text": "", 
+            "title": "Static Methods"
+        }, 
+        {
+            "location": "/api/exception/exception/#extend-properties-object-staticproperties-object-function", 
+            "text": "This is a polyfill for ES5. Modern compiled JavaScript languages have a  class  sugar which simplifies extending. ES5 doesn't have this\nfeature so this is there to simplify it.  The first object is your prototypical methods, the second being your static methods. If you provide\na  __construct  object on your prototypical methods object, this will be called when the class is invoked.", 
+            "title": "extend (properties: Object, staticProperties: Object) =&gt; Function"
+        }, 
+        {
+            "location": "/api/exception/fatal/", 
+            "text": "Fatal\n\n\nThis is an error that should be thrown when a fatal error has occurred. A fatal error happens when there is nothing the user can do to fix it\nand requires intervention from the software team. Unlike a \nValidation\n error, you may want to hide the full reason for the\nerror as this could expose sensitive information about your server.\n\n\nExamples of this would be when a database fails or an expected connection is not there.\n\n\nimport {FatalException} from \nsteeplejack/exception/fatal\n;\n\n\n\n\nExtends:\n \nException", 
+            "title": "fatal"
+        }, 
+        {
+            "location": "/api/exception/fatal/#fatal", 
+            "text": "This is an error that should be thrown when a fatal error has occurred. A fatal error happens when there is nothing the user can do to fix it\nand requires intervention from the software team. Unlike a  Validation  error, you may want to hide the full reason for the\nerror as this could expose sensitive information about your server.  Examples of this would be when a database fails or an expected connection is not there.  import {FatalException} from  steeplejack/exception/fatal ;  Extends:   Exception", 
+            "title": "Fatal"
+        }, 
+        {
+            "location": "/api/exception/validation/", 
+            "text": "Validation\n\n\nThis is an error that should be thrown when a recoverable error has happened. Typically, this would be when a user has not provided the\ncorrect data for a request. Unlike a \nFatal\n error, you may want to give the full reasons for the error as they ought to be able\nto correct their payload.\n\n\nExamples of this would be when a POST request doesn't have the correct HTTP body.\n\n\nimport {ValidationException} from \nsteeplejack/exception/validation\n;\n\n\n\n\nExtends:\n \nException\n\n\nMethods\n\n\naddError (key: string, value: any, message: string, additional: any = void 0) : ValidationException\n\n\nAdds a new validation error. \nkey\n, \nvalue\n and \nmessage\n are all required fields. The \nadditional\n can be anything that is needed\nto provided additional information, but it's sensible to use an object literal.\n\n\n\n\ngetErrors () =\n Object\n\n\nGets all the errors that have been added using the \naddError\n method.\n\n\n\n\nhasErrors () =\n boolean\n\n\nHave there been any errors added using the \naddError\n method?", 
+            "title": "validation"
+        }, 
+        {
+            "location": "/api/exception/validation/#validation", 
+            "text": "This is an error that should be thrown when a recoverable error has happened. Typically, this would be when a user has not provided the\ncorrect data for a request. Unlike a  Fatal  error, you may want to give the full reasons for the error as they ought to be able\nto correct their payload.  Examples of this would be when a POST request doesn't have the correct HTTP body.  import {ValidationException} from  steeplejack/exception/validation ;  Extends:   Exception", 
+            "title": "Validation"
+        }, 
+        {
+            "location": "/api/exception/validation/#methods", 
+            "text": "", 
+            "title": "Methods"
+        }, 
+        {
+            "location": "/api/exception/validation/#adderror-key-string-value-any-message-string-additional-any-void-0-validationexception", 
+            "text": "Adds a new validation error.  key ,  value  and  message  are all required fields. The  additional  can be anything that is needed\nto provided additional information, but it's sensible to use an object literal.", 
+            "title": "addError (key: string, value: any, message: string, additional: any = void 0) : ValidationException"
+        }, 
+        {
+            "location": "/api/exception/validation/#geterrors-object", 
+            "text": "Gets all the errors that have been added using the  addError  method.", 
+            "title": "getErrors () =&gt; Object"
+        }, 
+        {
+            "location": "/api/exception/validation/#haserrors-boolean", 
+            "text": "Have there been any errors added using the  addError  method?", 
+            "title": "hasErrors () =&gt; boolean"
+        }, 
+        {
+            "location": "/api/lib/base/", 
+            "text": "Base\n\n\nThe Base class is at the heart of every Steeplejack class to provide a consistent foundation. If you are still using ES5, this simplifies\nprototypical inheritance with the \nextend\n static method.\n\n\nimport {Base} from \nsteeplejack/lib/base\n;\n\n\n\n\nExtends:\n \nEventEmitter\n\n\nMethods\n\n\nconstructor (...args: any[]) =\n void\n\n\nIf an ES5 class, it calls the \n__construct\n method. As ES5 doesn't really have a constructor method, the \n__construct\n method is a method\nwhich mimics the behaviour. All arguments that are received are sent through to the \n__construct\n method.\n\n\nFor TypeScript/CoffeeScript/ES6, this does nothing special as the \n__construct\n method will not exist.\n\n\n\n\nclone () =\n any\n\n\nClones the instance of the object, returning a new instance of this object but with the same values.\n\n\n\n\nStatic Methods\n\n\nextend (properties: Object, staticProperties: Object) =\n Function\n\n\nThis is a polyfill for ES5. Modern compiled JavaScript languages have a \nclass\n sugar which simplifies extending. ES5 doesn't have this\nfeature so this is there to simplify it.  The first object is your prototypical methods, the second being your static methods. If you provide\na \n__construct\n object on your prototypical methods object, this will be called when the class is invoked.\n\n\n\n\nStatic Properties\n\n\ndatatypes\n\n\nReturns the data parameter from the \ndatautils\n package\n\n\n\n\nvalidation\n\n\nReturns the validation parameter from the \ndatautils\n package\n\n\n\n\nUsage\n\n\nTypeScript/CoffeeScript/ES6\n\n\nclass Child extends Base {\n\n    constructor () {}\n\n    method () {}\n\n    static staticMethod () {}\n\n}\n\n\n\n\nES5\n\n\nvar Child = Base.extend({\n\n    __construct: function () {},\n\n    method: function () {}\n\n}, {\n\n    staticMethod: function () {}\n\n});", 
+            "title": "base"
+        }, 
+        {
+            "location": "/api/lib/base/#base", 
+            "text": "The Base class is at the heart of every Steeplejack class to provide a consistent foundation. If you are still using ES5, this simplifies\nprototypical inheritance with the  extend  static method.  import {Base} from  steeplejack/lib/base ;  Extends:   EventEmitter", 
+            "title": "Base"
+        }, 
+        {
+            "location": "/api/lib/base/#methods", 
+            "text": "", 
+            "title": "Methods"
+        }, 
+        {
+            "location": "/api/lib/base/#constructor-args-any-void", 
+            "text": "If an ES5 class, it calls the  __construct  method. As ES5 doesn't really have a constructor method, the  __construct  method is a method\nwhich mimics the behaviour. All arguments that are received are sent through to the  __construct  method.  For TypeScript/CoffeeScript/ES6, this does nothing special as the  __construct  method will not exist.", 
+            "title": "constructor (...args: any[]) =&gt; void"
+        }, 
+        {
+            "location": "/api/lib/base/#clone-any", 
+            "text": "Clones the instance of the object, returning a new instance of this object but with the same values.", 
+            "title": "clone () =&gt; any"
+        }, 
+        {
+            "location": "/api/lib/base/#static-methods", 
+            "text": "", 
+            "title": "Static Methods"
+        }, 
+        {
+            "location": "/api/lib/base/#extend-properties-object-staticproperties-object-function", 
+            "text": "This is a polyfill for ES5. Modern compiled JavaScript languages have a  class  sugar which simplifies extending. ES5 doesn't have this\nfeature so this is there to simplify it.  The first object is your prototypical methods, the second being your static methods. If you provide\na  __construct  object on your prototypical methods object, this will be called when the class is invoked.", 
+            "title": "extend (properties: Object, staticProperties: Object) =&gt; Function"
+        }, 
+        {
+            "location": "/api/lib/base/#static-properties", 
+            "text": "", 
+            "title": "Static Properties"
+        }, 
+        {
+            "location": "/api/lib/base/#datatypes", 
+            "text": "Returns the data parameter from the  datautils  package", 
+            "title": "datatypes"
+        }, 
+        {
+            "location": "/api/lib/base/#validation", 
+            "text": "Returns the validation parameter from the  datautils  package", 
+            "title": "validation"
+        }, 
+        {
+            "location": "/api/lib/base/#usage", 
+            "text": "", 
+            "title": "Usage"
+        }, 
+        {
+            "location": "/api/lib/base/#typescriptcoffeescriptes6", 
+            "text": "class Child extends Base {\n\n    constructor () {}\n\n    method () {}\n\n    static staticMethod () {}\n\n}", 
+            "title": "TypeScript/CoffeeScript/ES6"
+        }, 
+        {
+            "location": "/api/lib/base/#es5", 
+            "text": "var Child = Base.extend({\n\n    __construct: function () {},\n\n    method: function () {}\n\n}, {\n\n    staticMethod: function () {}\n\n});", 
+            "title": "ES5"
+        }, 
+        {
+            "location": "/api/lib/collection/", 
+            "text": "Collection\n\n\nA Collection is simply a series of \nModel instances\n - if a Model is a single object of data then a Collection is an array of\nthose object. If you were to define a \nPerson\n model to represent one person, then the Collection may be called \nPeople\n to represent\nmany \nPerson\n Models. At the very minimum, you must define the Model (see \nUsage\n) the Collection is using. You can also add any\nnumber of additional methods to your Collections.\n\n\nThis is an \nabstract class\n, meaning it cannot be instantiated directly - this only applies to\nTypeScript applications, but still should be extended in all other versions of JavaScript.\n\n\nimport {Collection} from \nsteeplejack/lib/collection\n;\n\n\n\n\nExtends:\n \nBase\n\n\nMethods\n\n\nconstructor (data: Object[]) =\n void\n\n\nCreates a new instance of the collection. All data gets sent to the \nadd\n method.\n\n\n\n\nadd (data: Object[]) =\n Collection\n\n\nAdds each object in the array to the collection. Dispatches to the \naddOne\n method.\n\n\n\n\naddOne (data: Object) =\n Collection\n\n\nAdds a single data object to the collection. If it's already an instance of the Model defined in the protected \n_model\n method, it will just\nadd it. If not, it will create an instance of the Model with the data object sent to it.\n\n\n\n\neach (iterator: Function, thisArg: Object) =\n Collection\n\n\nCycles through each model in the collection and runs the iterator function on it. The \nthisArg\n is for ES5 compatibility, which sets the\nscope of the iterator function. The order starts with the \n0th\n model and ends with the last.\n\n\nobj.each((model, id, collection) =\n {\n    console.log(model);\n});\n// 'model' is the instance of the Model that we're iterating through\n// 'id' is the position in the collection, starting from 0\n// 'collection' is the instance of the collection (identical to 'obj' in this example)\n\n\n\n\n\n\neachRight (iterator: Function, thisArg: Object) =\n Collection\n\n\nIdentical to \neach\n method, except that it starts with the last model and ends with the\n\n0th\n.\n\n\n\n\nfilter (properties: Object) =\n Collection\n\n\nAnything that matches is removed from the Collection. This is the opposite of \nwhere\n.\n\n\n\n\nfind (properties: Object) =\n Model\n\n\nSimilar to the \nwhere\n method, except that returns the first Model that matches. This may mean that\nthere are additional models that would match.\n\n\n\n\nfindLast (properties: Object) =\n Model\n\n\nThis reverses the \nfind\n method, returning the final matching Model in the collection.\n\n\n\n\ngetAll () =\n ICollectionData[]\n\n\nReturns the data array.\n\n\n\n\ngetAllById (ids: string[]) =\n Model[]\n\n\nGets all the Models that match the given ids in the array. These will be in the\n\nUUID v4 format\n.\n\n\n\n\ngetAllByKey (keys: number[]) =\n Model[]\n\n\nGet all the Models that match the given keys in the array. These will reflect the order of the Models, starting with the \n0th\n.\n\n\n\n\ngetAllByModel (models: Model[]) =\n Model[]\n\n\nGets all the Models that match the given Models in the array.\n\n\n\n\ngetById (id: string) =\n Model\n\n\nSearches through the Collection for the given ID. This will be a\n\nUUID v4\n.\n\n\n\n\ngetByKey (key: number) =\n Model\n\n\nSearches through the Collection for the key.\n\n\n\n\ngetByModel (model: Model) =\n Model\n\n\nSearch through Collection for the Model.\n\n\n\n\ngetCount () =\n Number\n\n\nCounts the number of Models in the Collection\n\n\n\n\ngetData (parse: boolean = true) =\n Object[]\n\n\nReturns the array of Models in order. This will return an array of objects. If the \nparse\n argument is \ntrue\n, it will\nget the data through any getters. If it is \nfalse\n, it will be the raw data set to the model.\n\n\n\n\ngetIds () =\n string[]\n\n\nReturns all the IDs in order.\n\n\n\n\ngetModel () =\n Object\n\n\nGets the Model constructor.\n\n\n\n\nlimit (limit: number, offset: number) =\n Collection\n\n\nLimits in the same way as MySQL limits.  The first is the limit, which is the maximum number of items we can keep.  The second is the\noffset, which is the number of items we pad.\n\n\nOn a collection with 5 items, \nlimit(2, 2)\n will only keep the data at position 2 and 3, dropping 0, 1 and 4 out.\n\n\n\n\nreset () =\n boolean\n\n\nResets the collection back to it's original (empty) state.\n\n\n\n\nremoveById (id: string) =\n boolean\n\n\nRemoves the model by the ID\n\n\n\n\nremoveByModel (removeModel: Model) =\n boolean\n\n\nRemoves the given model\n\n\n\n\nsort (fn: (a: any, b: any) =\n number) =\n Collection\n\n\nSort by the given sortation function. This works in the same way as the\n\nArray.prototype.sort\n method.\n\n\n\n\nsortBy (properties: ISortProperty) =\n Collection\n\n\nThis sorts by a key (or keys) in the model. The params should be an object, with the key as the key and the direction as the value.  The\nacceptable direction values are \n\"ASC\"\n or \n\"DESC\"\n.  This works in broadly the same way as MySQLs sorting.\n\n\n\n\ntoDb () =\n Object[]\n\n\nReturns the database representation of the models in order.\n\n\n\n\nvalidate () =\n boolean\n\n\nValidates all the models in the Collection. If any of the Models have an error, it will aggregate them into one \nValidationError\n\n\n\n\nwhere (properties: Object) =\n Collection\n\n\nPerforms a where query on the Collection.  Removes anything that doesn't meet the criteria from the Collection. This is the opposite of\n\nfilter\n.\n\n\n\n\nStatic Methods\n\n\ntoModels (data: Object[]) =\n Collection\n\n\nThis converts an array of objects in the Model \ndata\n format - the same as returned by the \ntoDb\n method. This will\nreturn an instance of the Collection.\n\n\n\n\nUsage\n\n\nclass Person extends Model { ... } // See the Model docs for how to define this\n\nclass People extends Collection {\n    _model () {\n        // Return the Person constructor\n        return Person;\n    }\n}\n\nlet obj = new People([{\n    firstName: \nJohn\n,\n    lastName: \nSmith\n\n}]);\n\nconsole.log(obj.getData()); // [{ \nfirstName\n: \nJohn\n, \nlastName\n: \nSmith\n }]", 
+            "title": "collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#collection", 
+            "text": "A Collection is simply a series of  Model instances  - if a Model is a single object of data then a Collection is an array of\nthose object. If you were to define a  Person  model to represent one person, then the Collection may be called  People  to represent\nmany  Person  Models. At the very minimum, you must define the Model (see  Usage ) the Collection is using. You can also add any\nnumber of additional methods to your Collections.  This is an  abstract class , meaning it cannot be instantiated directly - this only applies to\nTypeScript applications, but still should be extended in all other versions of JavaScript.  import {Collection} from  steeplejack/lib/collection ;  Extends:   Base", 
+            "title": "Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#methods", 
+            "text": "", 
+            "title": "Methods"
+        }, 
+        {
+            "location": "/api/lib/collection/#constructor-data-object-void", 
+            "text": "Creates a new instance of the collection. All data gets sent to the  add  method.", 
+            "title": "constructor (data: Object[]) =&gt; void"
+        }, 
+        {
+            "location": "/api/lib/collection/#add-data-object-collection", 
+            "text": "Adds each object in the array to the collection. Dispatches to the  addOne  method.", 
+            "title": "add (data: Object[]) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#addone-data-object-collection", 
+            "text": "Adds a single data object to the collection. If it's already an instance of the Model defined in the protected  _model  method, it will just\nadd it. If not, it will create an instance of the Model with the data object sent to it.", 
+            "title": "addOne (data: Object) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#each-iterator-function-thisarg-object-collection", 
+            "text": "Cycles through each model in the collection and runs the iterator function on it. The  thisArg  is for ES5 compatibility, which sets the\nscope of the iterator function. The order starts with the  0th  model and ends with the last.  obj.each((model, id, collection) =  {\n    console.log(model);\n});\n// 'model' is the instance of the Model that we're iterating through\n// 'id' is the position in the collection, starting from 0\n// 'collection' is the instance of the collection (identical to 'obj' in this example)", 
+            "title": "each (iterator: Function, thisArg: Object) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#eachright-iterator-function-thisarg-object-collection", 
+            "text": "Identical to  each  method, except that it starts with the last model and ends with the 0th .", 
+            "title": "eachRight (iterator: Function, thisArg: Object) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#filter-properties-object-collection", 
+            "text": "Anything that matches is removed from the Collection. This is the opposite of  where .", 
+            "title": "filter (properties: Object) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#find-properties-object-model", 
+            "text": "Similar to the  where  method, except that returns the first Model that matches. This may mean that\nthere are additional models that would match.", 
+            "title": "find (properties: Object) =&gt; Model"
+        }, 
+        {
+            "location": "/api/lib/collection/#findlast-properties-object-model", 
+            "text": "This reverses the  find  method, returning the final matching Model in the collection.", 
+            "title": "findLast (properties: Object) =&gt; Model"
+        }, 
+        {
+            "location": "/api/lib/collection/#getall-icollectiondata", 
+            "text": "Returns the data array.", 
+            "title": "getAll () =&gt; ICollectionData[]"
+        }, 
+        {
+            "location": "/api/lib/collection/#getallbyid-ids-string-model", 
+            "text": "Gets all the Models that match the given ids in the array. These will be in the UUID v4 format .", 
+            "title": "getAllById (ids: string[]) =&gt; Model[]"
+        }, 
+        {
+            "location": "/api/lib/collection/#getallbykey-keys-number-model", 
+            "text": "Get all the Models that match the given keys in the array. These will reflect the order of the Models, starting with the  0th .", 
+            "title": "getAllByKey (keys: number[]) =&gt; Model[]"
+        }, 
+        {
+            "location": "/api/lib/collection/#getallbymodel-models-model-model", 
+            "text": "Gets all the Models that match the given Models in the array.", 
+            "title": "getAllByModel (models: Model[]) =&gt; Model[]"
+        }, 
+        {
+            "location": "/api/lib/collection/#getbyid-id-string-model", 
+            "text": "Searches through the Collection for the given ID. This will be a UUID v4 .", 
+            "title": "getById (id: string) =&gt; Model"
+        }, 
+        {
+            "location": "/api/lib/collection/#getbykey-key-number-model", 
+            "text": "Searches through the Collection for the key.", 
+            "title": "getByKey (key: number) =&gt; Model"
+        }, 
+        {
+            "location": "/api/lib/collection/#getbymodel-model-model-model", 
+            "text": "Search through Collection for the Model.", 
+            "title": "getByModel (model: Model) =&gt; Model"
+        }, 
+        {
+            "location": "/api/lib/collection/#getcount-number", 
+            "text": "Counts the number of Models in the Collection", 
+            "title": "getCount () =&gt; Number"
+        }, 
+        {
+            "location": "/api/lib/collection/#getdata-parse-boolean-true-object", 
+            "text": "Returns the array of Models in order. This will return an array of objects. If the  parse  argument is  true , it will\nget the data through any getters. If it is  false , it will be the raw data set to the model.", 
+            "title": "getData (parse: boolean = true) =&gt; Object[]"
+        }, 
+        {
+            "location": "/api/lib/collection/#getids-string", 
+            "text": "Returns all the IDs in order.", 
+            "title": "getIds () =&gt; string[]"
+        }, 
+        {
+            "location": "/api/lib/collection/#getmodel-object", 
+            "text": "Gets the Model constructor.", 
+            "title": "getModel () =&gt; Object"
+        }, 
+        {
+            "location": "/api/lib/collection/#limit-limit-number-offset-number-collection", 
+            "text": "Limits in the same way as MySQL limits.  The first is the limit, which is the maximum number of items we can keep.  The second is the\noffset, which is the number of items we pad.  On a collection with 5 items,  limit(2, 2)  will only keep the data at position 2 and 3, dropping 0, 1 and 4 out.", 
+            "title": "limit (limit: number, offset: number) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#reset-boolean", 
+            "text": "Resets the collection back to it's original (empty) state.", 
+            "title": "reset () =&gt; boolean"
+        }, 
+        {
+            "location": "/api/lib/collection/#removebyid-id-string-boolean", 
+            "text": "Removes the model by the ID", 
+            "title": "removeById (id: string) =&gt; boolean"
+        }, 
+        {
+            "location": "/api/lib/collection/#removebymodel-removemodel-model-boolean", 
+            "text": "Removes the given model", 
+            "title": "removeByModel (removeModel: Model) =&gt; boolean"
+        }, 
+        {
+            "location": "/api/lib/collection/#sort-fn-a-any-b-any-number-collection", 
+            "text": "Sort by the given sortation function. This works in the same way as the Array.prototype.sort  method.", 
+            "title": "sort (fn: (a: any, b: any) =&gt; number) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#sortby-properties-isortproperty-collection", 
+            "text": "This sorts by a key (or keys) in the model. The params should be an object, with the key as the key and the direction as the value.  The\nacceptable direction values are  \"ASC\"  or  \"DESC\" .  This works in broadly the same way as MySQLs sorting.", 
+            "title": "sortBy (properties: ISortProperty) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#todb-object", 
+            "text": "Returns the database representation of the models in order.", 
+            "title": "toDb () =&gt; Object[]"
+        }, 
+        {
+            "location": "/api/lib/collection/#validate-boolean", 
+            "text": "Validates all the models in the Collection. If any of the Models have an error, it will aggregate them into one  ValidationError", 
+            "title": "validate () =&gt; boolean"
+        }, 
+        {
+            "location": "/api/lib/collection/#where-properties-object-collection", 
+            "text": "Performs a where query on the Collection.  Removes anything that doesn't meet the criteria from the Collection. This is the opposite of filter .", 
+            "title": "where (properties: Object) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#static-methods", 
+            "text": "", 
+            "title": "Static Methods"
+        }, 
+        {
+            "location": "/api/lib/collection/#tomodels-data-object-collection", 
+            "text": "This converts an array of objects in the Model  data  format - the same as returned by the  toDb  method. This will\nreturn an instance of the Collection.", 
+            "title": "toModels (data: Object[]) =&gt; Collection"
+        }, 
+        {
+            "location": "/api/lib/collection/#usage", 
+            "text": "class Person extends Model { ... } // See the Model docs for how to define this\n\nclass People extends Collection {\n    _model () {\n        // Return the Person constructor\n        return Person;\n    }\n}\n\nlet obj = new People([{\n    firstName:  John ,\n    lastName:  Smith \n}]);\n\nconsole.log(obj.getData()); // [{  firstName :  John ,  lastName :  Smith  }]", 
+            "title": "Usage"
+        }, 
+        {
+            "location": "/api/lib/injector/", 
+            "text": "Injector", 
+            "title": "injector"
+        }, 
+        {
+            "location": "/api/lib/injector/#injector", 
+            "text": "", 
+            "title": "Injector"
+        }, 
+        {
+            "location": "/api/lib/logger/", 
+            "text": "Logger\n\n\nA simple logging strategy pattern. The default error level is \nerror\n.\n\n\nimport {Logger} from \nsteeplejack/lib/logger\n;\n\n\n\n\nExtends:\n \nBase\n\n\nMethods\n\n\nconstructor (strategy: ILoggerStrategy) =\n void\n\n\nSets the logging strategy to use.\n\n\n\n\ndebug (...args: any[]) =\n Logger\n\n\nLog the message at the debug level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.\n\n\n\n\nerror (...args: any[]) =\n Logger\n\n\nLog the message at the error level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.\n\n\n\n\nfatal (...args: any[]) =\n Logger\n\n\nLog the message at the fatal level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.\n\n\n\n\ninfo (...args: any[]) =\n Logger\n\n\nLog the message at the info level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.\n\n\n\n\ntrace (...args: any[]) =\n Logger\n\n\nLog the message at the trace level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.\n\n\n\n\nwarn (...args: any[]) =\n Logger\n\n\nLog the message at the warn level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.\n\n\n\n\nProperties\n\n\nlevel =\n string\n\n\nSetter and getter of the error level - below that level, logs are not stored. Must be one of \ngetLogLevel\n array.\n\n\n\n\nStatic Methods\n\n\ngetLogLevels () =\n string[]\n\n\nDefines the logging levels in priority order:\n\n\n\n\nfatal\n\n\nerror\n\n\nwarn\n\n\ninfo\n\n\ndebug\n\n\ntrace\n\n\n\n\n\n\nUsage\n\n\nclass LogStrategy {\n    debug (...args: any[]) {}\n    error (...args: any[]) {}\n    fatal (...args: any[]) {}\n    info (...args: any[]) {}\n    trace (...args: any[]) {}\n    warn (...args: any[]) {}\n}\n\nlet log = new Logger(new LogStrategy());\n\nlog.fatal(\na fatal error occurred\n);", 
+            "title": "logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#logger", 
+            "text": "A simple logging strategy pattern. The default error level is  error .  import {Logger} from  steeplejack/lib/logger ;  Extends:   Base", 
+            "title": "Logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#methods", 
+            "text": "", 
+            "title": "Methods"
+        }, 
+        {
+            "location": "/api/lib/logger/#constructor-strategy-iloggerstrategy-void", 
+            "text": "Sets the logging strategy to use.", 
+            "title": "constructor (strategy: ILoggerStrategy) =&gt; void"
+        }, 
+        {
+            "location": "/api/lib/logger/#debug-args-any-logger", 
+            "text": "Log the message at the debug level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.", 
+            "title": "debug (...args: any[]) =&gt; Logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#error-args-any-logger", 
+            "text": "Log the message at the error level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.", 
+            "title": "error (...args: any[]) =&gt; Logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#fatal-args-any-logger", 
+            "text": "Log the message at the fatal level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.", 
+            "title": "fatal (...args: any[]) =&gt; Logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#info-args-any-logger", 
+            "text": "Log the message at the info level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.", 
+            "title": "info (...args: any[]) =&gt; Logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#trace-args-any-logger", 
+            "text": "Log the message at the trace level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.", 
+            "title": "trace (...args: any[]) =&gt; Logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#warn-args-any-logger", 
+            "text": "Log the message at the warn level. Any number of arguments can be passed, depending on what requires logging. At the very least, it should\nbe an error message.", 
+            "title": "warn (...args: any[]) =&gt; Logger"
+        }, 
+        {
+            "location": "/api/lib/logger/#properties", 
+            "text": "", 
+            "title": "Properties"
+        }, 
+        {
+            "location": "/api/lib/logger/#level-string", 
+            "text": "Setter and getter of the error level - below that level, logs are not stored. Must be one of  getLogLevel  array.", 
+            "title": "level =&gt; string"
+        }, 
+        {
+            "location": "/api/lib/logger/#static-methods", 
+            "text": "", 
+            "title": "Static Methods"
+        }, 
+        {
+            "location": "/api/lib/logger/#getloglevels-string", 
+            "text": "Defines the logging levels in priority order:   fatal  error  warn  info  debug  trace", 
+            "title": "getLogLevels () =&gt; string[]"
+        }, 
+        {
+            "location": "/api/lib/logger/#usage", 
+            "text": "class LogStrategy {\n    debug (...args: any[]) {}\n    error (...args: any[]) {}\n    fatal (...args: any[]) {}\n    info (...args: any[]) {}\n    trace (...args: any[]) {}\n    warn (...args: any[]) {}\n}\n\nlet log = new Logger(new LogStrategy());\n\nlog.fatal( a fatal error occurred );", 
+            "title": "Usage"
+        }, 
+        {
+            "location": "/api/lib/model/", 
+            "text": "Model", 
+            "title": "model"
+        }, 
+        {
+            "location": "/api/lib/model/#model", 
+            "text": "", 
+            "title": "Model"
+        }, 
+        {
+            "location": "/api/lib/plugin/", 
+            "text": "Plugin\n\n\nManages the registration and use of a steeplejack plugin.  This is so that whole sections of code, written in Steeplejack-friendly syntax,\ncan be exported as a separate package and reused. These will be imported into the \nSteeplejack\n modules in the \napp\n factory.\n\n\nIsn't \nDRY code\n marvellous?\n\n\nimport {Plugin} from \nsteeplejack/lib/plugin\n;\n\n\n\n\nExtends:\n \nBase\n\n\nMethods\n\n\nconstructor (files: any[] = null) =\n void\n\n\n\n\nmodules =\n any[]\n\n\nParameter where the files for this module are stored. This can be anything, but will usually be the resolved files that have been called by\n\nrequire", 
+            "title": "plugin"
+        }, 
+        {
+            "location": "/api/lib/plugin/#plugin", 
+            "text": "Manages the registration and use of a steeplejack plugin.  This is so that whole sections of code, written in Steeplejack-friendly syntax,\ncan be exported as a separate package and reused. These will be imported into the  Steeplejack  modules in the  app  factory.  Isn't  DRY code  marvellous?  import {Plugin} from  steeplejack/lib/plugin ;  Extends:   Base", 
+            "title": "Plugin"
+        }, 
+        {
+            "location": "/api/lib/plugin/#methods", 
+            "text": "", 
+            "title": "Methods"
+        }, 
+        {
+            "location": "/api/lib/plugin/#constructor-files-any-null-void", 
+            "text": "", 
+            "title": "constructor (files: any[] = null) =&gt; void"
+        }, 
+        {
+            "location": "/api/lib/plugin/#modules-any", 
+            "text": "Parameter where the files for this module are stored. This can be anything, but will usually be the resolved files that have been called by require", 
+            "title": "modules =&gt; any[]"
+        }, 
+        {
+            "location": "/api/lib/router/", 
+            "text": "Router", 
+            "title": "router"
+        }, 
+        {
+            "location": "/api/lib/router/#router", 
+            "text": "", 
+            "title": "Router"
+        }, 
+        {
+            "location": "/api/lib/server/", 
+            "text": "Server", 
+            "title": "server"
+        }, 
+        {
+            "location": "/api/lib/server/#server", 
+            "text": "", 
+            "title": "Server"
+        }, 
+        {
+            "location": "/api/lib/socket/", 
+            "text": "Socket", 
+            "title": "socket"
+        }, 
+        {
+            "location": "/api/lib/socket/#socket", 
+            "text": "", 
+            "title": "Socket"
+        }, 
+        {
+            "location": "/api/lib/socketRequest/", 
+            "text": "Socket Request", 
+            "title": "socketRequest"
+        }, 
+        {
+            "location": "/api/lib/socketRequest/#socket-request", 
+            "text": "", 
+            "title": "Socket Request"
+        }, 
+        {
+            "location": "/api/lib/view/", 
+            "text": "View", 
+            "title": "view"
+        }, 
+        {
+            "location": "/api/lib/view/#view", 
+            "text": "", 
+            "title": "View"
         }
     ]
 }

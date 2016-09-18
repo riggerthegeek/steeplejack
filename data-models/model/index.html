@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Model - Steeplejack documentation</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Model";
+    var mkdocs_page_input_path = "data-models/model.md";
+    var mkdocs_page_url = "/data-models/model/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68581184-2', 'steeplejack.info');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Steeplejack documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Getting started</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/">Installation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/your-first-app/">Your first app</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/routing/">Routing</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/modules/">Modules</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/config/">Config</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/testing/">Testing</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Dependency injection</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/class-injector/">Class injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/factory-injector/">Factory injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/singleton-injector/">Singleton injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/config-injector/">Config injector</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Data models</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Model</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#model">Model</a></li>
+                
+                    <li><a class="toctree-l4" href="#schema-definition">Schema definition</a></li>
+                
+                    <li><a class="toctree-l4" href="#validation">Validation</a></li>
+                
+                    <li><a class="toctree-l4" href="#column-names">Column names</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../collection/">Collection</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Plugins</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../plugins/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../plugins/http-strategies/">HTTP Strategies</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Strategies</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../strategies/intro/">Introduction</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API Reference</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/steeplejack/">Steeplejack</a>
+        
+    </li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/decorators</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/decorators/inject/">inject</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/exception</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/exception/">exception</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/fatal/">fatal</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/validation/">validation</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/base/">base</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/collection/">collection</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/injector/">injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/logger/">logger</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/model/">model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/plugin/">plugin</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/router/">router</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/server/">server</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/socket/">socket</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/socketRequest/">socketRequest</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/view/">view</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Steeplejack documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Data models &raquo;</li>
+        
+      
+    
+    <li>Model</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="model">Model</h1>
+<p><a href="../../api/lib/model/">Model API</a></p>
+<p>A model is a block of data. If you think of the attributes of a <code>Person</code>, you would have a first and last name, perhaps a date of birth. You
+might also have optional data, like their gender or address history. Crucially, the model will have consistent data types and validation.</p>
+<p>You are required to define a schema for your model. This describes the model, data types and validation.</p>
+<blockquote>
+<p>Although a widely-used (if not formally adopted) standard, JSON schema is not used by design. This is because JSON schema is designed to
+be a flat structure. In Steeplejack, we want to allow custom validation - it is not inconceivable that you will want to use a validation
+method that cannot be achieved using JSON schema. We use this by defining our own validation functions, something not possible using JSON
+schema.</p>
+</blockquote>
+<p>Let's define a simple model. It has fource properties - <code>id</code>, <code>firstName</code>, <code>lastName</code> and <code>emailAddress</code>. The ID is an integer and the
+other three are strings. If nothing is set to these elements, the default value will be <code>null</code> and there is no validation on this model. In the database, the
+<code>lastName</code> is actually called <code>surname</code>.</p>
+<p>The <code>emailAddress</code> is a required field and it also must be an email address.</p>
+<pre><code class="javascript">import {Model} from &quot;steeplejack/lib/model&quot;;
+
+class Person extends Model {
+
+    _schema () {
+
+        return {
+            id: {
+                type: &quot;integer&quot;
+            },
+            firstName: {
+                type: &quot;string&quot;
+            },
+            lastName: {
+                type: &quot;string&quot;,
+                column: &quot;surname&quot;
+            },
+            emailAddress: {
+                type: &quot;string&quot;,
+                validation: [{
+                    rule: &quot;required&quot;
+                }, {
+                    rule: &quot;email&quot;
+                }]
+            }
+        };
+
+    }
+
+}
+</code></pre>
+
+<h2 id="schema-definition">Schema definition</h2>
+<p>Your <code>_schema</code> needs to return an object. The object keys are the schema key. Each key should then have a definition object on it. Let's
+first look at the full definition object:</p>
+<pre><code class="javascript">interface IModelDefinition {
+    type: any;
+    value?: any;
+    column?: string;
+    primaryKey?: boolean;
+    validation?: IDefinitionValidation[];
+    enum?: any[];
+    settings?: object;
+}
+</code></pre>
+
+<h3 id="type-any">type: any</h3>
+<p>This is a required field. If the <code>type</code> is a string, it should be one of the following:</p>
+<ul>
+<li>array - consider using a <code>Collection</code> instance</li>
+<li>boolean</li>
+<li>date</li>
+<li>enum - this requires the <a href="#enum-any">enum</a> array</li>
+<li>float</li>
+<li>integer</li>
+<li>mixed</li>
+<li>object - consider using an instance of Model instance</li>
+<li>string</li>
+</ul>
+<p>You can also set a Collection or Model constructor. This means that you can nest your data - if your model needed to have a collection of
+Address models, you could simply set that Collection to your type.</p>
+<h3 id="value-any">value: any</h3>
+<p>This is the default value. If no value is set, it will use this. Importantly, this can be whatever data type you want, regardless of what
+is set in type. If nothing is set, it will be <code>null</code>.</p>
+<h3 id="column-string">column: string</h3>
+<p>The <code>column</code> is to be used if you want to have a different key name stored in your database. Look at the <a href="#column-names">Column names</a>
+section for more detail</p>
+<h3 id="primarykey-boolean">primaryKey: boolean</h3>
+<p>Allows you to specify a primary key on a model. This would normally be a unique ID.</p>
+<h3 id="validation-idefinitionvalidation">validation: IDefinitionValidation[]</h3>
+<p>An array of validation functions. This is covered in <a href="#validation">Validation</a>;</p>
+<h3 id="enum-any">enum: any[]</h3>
+<p>If your type is <code>enum</code>, this allows you to set the allowed values.</p>
+<h3 id="settings-object">settings: Object</h3>
+<p>An object of anything you want. This allows you to store any meta information about your entry.</p>
+<hr />
+<h2 id="validation">Validation</h2>
+<p>Once you've defined your model, you might want to validate your data. The Steeplejack validation is very flexible. For the most part, you
+will be able to use the provided validation functions. And, if they don't work for you, you can write your own.</p>
+<pre><code class="javascript">interface IDefinitionValidation {
+    rule: string | ((model: Model, value: any) =&gt; boolean);
+    param?: any[];
+}
+</code></pre>
+
+<h3 id="rule-string-currentvalue-any-model-model-boolean">rule: string | ((currentValue: any, model: Model) =&gt; boolean)</h3>
+<pre><code class="javascript">    {
+        &quot;validation&quot;: [{
+            &quot;rule&quot;: &quot;required&quot;
+        }, {
+            &quot;rule&quot;: (value) =&gt; {
+                if (value !== &quot;desired value&quot;) {
+                    throw new Error(&quot;not my value&quot;);
+                }
+                return true;
+            }
+        }]
+    }
+</code></pre>
+
+<blockquote>
+<p>If you have created your model using <code>class</code>, the value of <code>this</code> will be the same as <code>model</code>. The <code>model</code> is mainly here for ES5
+usage.</p>
+</blockquote>
+<p>At it's simplest form, you will just be passing a string through to the validation object. This wraps the
+<a href="https://github.com/riggerthegeek/datautils-js#validation">Datautils</a> package, so any function available in there can be passed through as
+a string. For most cases, this will be enough.</p>
+<p>If you want more control over your validation you can pass in a function. This will allow you to perform fine-grain validation. To tell that
+we have passed validation, simply <code>return true</code>. To return a useful error, you should throw the error you want to be added to the stack.</p>
+<blockquote>
+<p>You can also <code>return false</code> to signify an error. This is not recommended as it just marks as a generic error.</p>
+</blockquote>
+<h4 id="available-string-functions">Available string functions</h4>
+<p>The <code>value</code> gets passed in automatically. Any additional arguments must be passed into the <a href="#param-any"><code>param</code></a> array.</p>
+<ul>
+<li>email (value: string) - checks the <code>value</code> matches an email regular expression</li>
+<li>equal (value: any, match: any) - checks the <code>value</code> is the same as <code>match</code></li>
+<li>greaterThan (value: any, target: any) - checks the <code>value</code> is greater than the <code>target</code></li>
+<li>greaterThanOrEqual (value: any, target: any) - checks the <code>value</code> is greater than or equal to the <code>target</code></li>
+<li>length (value: any, length: number) - checks the length of the <code>value</code> is equal to the <code>length</code></li>
+<li>lengthBetween (value: any, minLength: number, maxLength: number) - checks the <code>value</code> is between <code>minLength</code> and <code>maxLength</code></li>
+<li>lessThan (value: any, target: any) - checks the <code>value</code> is less than the <code>target</code></li>
+<li>lessThanOrEqual (value: any, target: any) - checks the <code>value</code> is less than or equal to the <code>target</code></li>
+<li>match (value: any, key: string) - checks the <code>value</code> matches the <code>key</code> in the model</li>
+<li>maxLength (value: any, length: number) - checks the length of <code>value</code> is less than <code>length</code></li>
+<li>minLength (value: any, length: number) - checks the length of <code>value</code> is more than <code>length</code></li>
+<li>regex (value: string, regex: RegExp | string) - checks the <code>value</code> matches the <code>regex</code></li>
+<li>required (value: any) - checks that <code>value</code> is not empty</li>
+</ul>
+<h3 id="param-any">param: any[]</h3>
+<p>This is only used when you are using a function name in the <code>rule</code> that requires additional arguments, eg, used in the <code>equal</code> rule but
+<strong><u>not</u></strong> used in the <code>email</code> rule.</p>
+<p>You should pass through the same number of arguments that the <code>rule</code> requires, in the order and type that it requires it.</p>
+<pre><code class="json">    {
+        &quot;validation&quot;: [{
+            &quot;rule&quot;: &quot;lengthBetween&quot;,
+            &quot;param&quot;: [
+                5, 15
+            ]
+        }]
+    }
+</code></pre>
+
+<p>If you used this object on a validation, it would ensure that the string was between 5 and 15 characters long.</p>
+<hr />
+<h2 id="column-names">Column names</h2>
+<p>In our example <code>Person</code> model, we want to use <code>lastName</code> in our application. However, the data is stored under <code>surname</code> in the database.
+Although perhaps a contrived example, there will be many times when your data model and your database will diverge.</p>
+<p>When you use the constructor, this will receive an object that is in the same shape as the model.</p>
+<pre><code class="javascript">let obj1 = new Person({
+    id: 1,
+    firstName: &quot;Test&quot;,
+    lastName: &quot;Testington&quot;
+});
+</code></pre>
+
+<p>If you want to convert that back into a plain object in this shape, you need the <code>getData()</code> method.</p>
+<pre><code class="javascript">obj1.getData();
+</code></pre>
+
+<pre><code class="json">{
+    &quot;id&quot;: 1,
+    &quot;firstName&quot;: &quot;Test&quot;,
+    &quot;lastName&quot;: &quot;Testington&quot;
+}
+</code></pre>
+
+<p>Now, converting to the data representation. To create an instance from the database version, use the <code>toModel()</code> static method.</p>
+<pre><code class="javascript">let obj2 = Person.toModel({
+    id: 1,
+    firstName: &quot;Test&quot;,
+    surname: &quot;Testington&quot;
+});
+</code></pre>
+
+<p>The values of <code>obj1</code> and <code>obj2</code> will be the same. To get the database representation from the instance, use the <code>toDb</code> method.</p>
+<pre><code class="javascript">obj2.toDb();
+</code></pre>
+
+<pre><code class="json">{
+    &quot;id&quot;: 1,
+    &quot;firstName&quot;: &quot;Test&quot;,
+    &quot;surname&quot;: &quot;Testington&quot;
+}
+</code></pre>
+
+<hr />
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../collection/" class="btn btn-neutral float-right" title="Collection">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../intro/" class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Simon Emms</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../intro/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../collection/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

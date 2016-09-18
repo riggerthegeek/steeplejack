@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Modules - Steeplejack documentation</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Modules";
+    var mkdocs_page_input_path = "getting-started/modules.md";
+    var mkdocs_page_url = "/getting-started/modules/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68581184-2', 'steeplejack.info');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Steeplejack documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Getting started</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../">Installation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../your-first-app/">Your first app</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../routing/">Routing</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Modules</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#modules">Modules</a></li>
+                
+                    <li><a class="toctree-l4" href="#autoloading-of-files-and-dependency-injection">Autoloading of files and dependency injection</a></li>
+                
+                    <li><a class="toctree-l4" href="#srcroutesuserindexjs">/src/routes/user/index.js</a></li>
+                
+                    <li><a class="toctree-l4" href="#srcmodulesuserservicejs">/src/modules/user/service.js</a></li>
+                
+                    <li><a class="toctree-l4" href="#srcmodulesusermodeluserjs">/src/modules/user/model/User.js</a></li>
+                
+                    <li><a class="toctree-l4" href="#srcmodulesuserstoreuserjs">/src/modules/user/store/user.js</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../config/">Config</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../testing/">Testing</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Dependency injection</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/class-injector/">Class injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/factory-injector/">Factory injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/singleton-injector/">Singleton injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/config-injector/">Config injector</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Data models</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-models/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-models/model/">Model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-models/collection/">Collection</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Plugins</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../plugins/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../plugins/http-strategies/">HTTP Strategies</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Strategies</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../strategies/intro/">Introduction</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API Reference</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/steeplejack/">Steeplejack</a>
+        
+    </li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/decorators</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/decorators/inject/">inject</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/exception</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/exception/">exception</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/fatal/">fatal</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/validation/">validation</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/base/">base</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/collection/">collection</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/injector/">injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/logger/">logger</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/model/">model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/plugin/">plugin</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/router/">router</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/server/">server</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/socket/">socket</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/socketRequest/">socketRequest</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/view/">view</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Steeplejack documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting started &raquo;</li>
+        
+      
+    
+    <li>Modules</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="modules">Modules</h1>
+<p>The modules are where the main application logic will live. You have complete freedom as to how to structure your modules - a modular
+structure is favoured as it's easier to spin these off into their own packages should you wish to reuse it.</p>
+<pre><code class="shell">src
+├── modules
+│   └── user
+│       ├── collection
+│       │   └── Users.js
+│       ├── model
+│       │   └── User.js
+│       ├── store
+│       │   └── user.js
+│       └── service.js
+├── resources
+│   └── mongodb.js
+├── routes
+│   ├── hello
+│   │   └── world.js
+│   └── user
+│       └── index.js
+├── app.js
+├── config.json
+└── envvars.json
+</code></pre>
+
+<h2 id="autoloading-of-files-and-dependency-injection">Autoloading of files and dependency injection</h2>
+<p>To simplify your development and promote extreme testability, files in Steeplejack should be loaded automatically and your dependencies
+reflectively loaded. This means you don't need to know the relative paths for files outside your module and means testing your files becomes
+as easy as injecting a stubbed dependency.</p>
+<p>To load your modules, you need to add a <code>modules</code> array to your initial factory. This accepts globbed paths.</p>
+<pre><code class="javascript">let app = Steeplejack.app({
+    config: require(&quot;./config.json&quot;),
+    modules: [
+        &quot;src/!(routes)/**/*.js&quot;
+    ],
+    routesDir: &quot;src/routes&quot;
+});
+</code></pre>
+
+<h3 id="naming-convention-of-modules">Naming convention of modules</h3>
+<p>In no way enforced, but this is a good convention.</p>
+<ul>
+<li>Cross-cutting concerns (ie, something used outside a module) should start with <code>$</code>, eg <code>$userService</code></li>
+<li>Factory classes that would be invoked with <code>new</code> start with a capital letter, eg <code>UserModel</code></li>
+<li>Camel case for ordinary instances that would normally just be used within a module, eg <code>userStore</code></li>
+</ul>
+<h2 id="srcroutesuserindexjs">/src/routes/user/index.js</h2>
+<p>Create a new endpoint on <code>GET:/user</code>. This dispatches to the <code>$userService</code>.</p>
+<pre><code class="javascript">export let route = ($output, $userService) =&gt; {
+    return {
+        &quot;/&quot;: {
+            get: [
+                (req, res) =&gt; {
+
+                    let emailAddress = req.query.emailAddress;
+
+                    $output(req, res, () =&gt; {
+
+                        return $userService.getUserByEmailAddress(emailAddress);
+
+                    });
+
+                }
+            ]
+        }
+    };
+};
+</code></pre>
+
+<h2 id="srcmodulesuserservicejs">/src/modules/user/service.js</h2>
+<p>This creates the <code>$userService</code>. It's a class that has two injected dependencies, <code>UserModel</code> and <code>userStore</code>, which are resolved
+automatically. The <code>@Inject</code> decorator describe this file for the dependency injector - the minimum is the <code>name</code> of it.</p>
+<pre><code class="javascript">import {Steeplejack} from &quot;steeplejack&quot;;
+import {Inject} from &quot;steeplejack/decorators/inject&quot;;
+import {ValidationException} from &quot;steeplejack/exception/validation&quot;;
+
+@Inject({
+    name: &quot;$userService&quot;
+})
+export class UserService {
+
+    constructor (UserModel, userStore) {
+        this._deps = {
+            UserModel,
+            userStore
+        };
+    }
+
+    getUserByEmailAddress (emailAddress) {
+
+        /* Check input is an email */
+        try {
+            Steeplejack.validation.email(emailAddress);
+        } catch (err) {
+            throw new ValidationException(&quot;emailAddress is required&quot;);
+        }
+
+        /* Check the database for the user */
+        return this._deps.userStore.getUserByEmailAddress(emailAddress)
+            .then(res =&gt; {
+
+                if (res) {
+                    return new this._deps.UserModel(res);
+                }
+
+            });
+
+    }
+}
+</code></pre>
+
+<h2 id="srcmodulesusermodeluserjs">/src/modules/user/model/User.js</h2>
+<p>This is the <code>UserModel</code>. The schema has four items to it. Also notice how the <code>@Inject</code> now has a <code>factory</code> boolean. This tells the
+dependency injector that this class must not be instantiated, but any dependencies set as static methods.</p>
+<pre><code class="javascript">import {Inject} from &quot;steeplejack/decorators/inject&quot;;
+import {Model} from &quot;steeplejack/lib/model&quot;;
+
+@Inject({
+    name: &quot;UserModel&quot;,
+    factory: true
+})
+export class User extends Model {
+    _schema () {
+        return {
+            id: {
+                type: &quot;integer&quot;
+            },
+            firstName: {
+                type: &quot;string&quot;
+            },
+            lastName: {
+                type: &quot;string&quot;
+            },
+            emailAddress: {
+                type: &quot;string&quot;
+            }
+        };
+    }
+}
+</code></pre>
+
+<h2 id="srcmodulesuserstoreuserjs">/src/modules/user/store/user.js</h2>
+<p>Finally the <code>userStore</code>. This would ordinarily connect to a database, but for this example it just searches a static array.</p>
+<pre><code class="javascript">import {_} from &quot;lodash&quot;;
+import {Inject} from &quot;steeplejack/decorators/inject&quot;;
+import {Promise} from &quot;es6-promise&quot;;
+
+/* Data - this would normally be in a DB */
+const data = [{
+    id: 1,
+    firstName: &quot;Test&quot;,
+    lastName: &quot;Testington&quot;,
+    emailAddress: &quot;test@test.com&quot;
+}];
+
+@Inject({
+    name: &quot;userStore&quot;
+})
+export class UserStore {
+
+    getUserByEmailAddress (emailAddress) {
+
+        return new Promise(resolve =&gt; {
+
+            let user = _.reduce(data, (result, user) =&gt; {
+
+                if (user.emailAddress === emailAddress) {
+                    result = user;
+                }
+
+                return result;
+
+            }, null);
+
+            resolve(user);
+
+        });
+
+    }
+
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../config/" class="btn btn-neutral float-right" title="Config">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../routing/" class="btn btn-neutral" title="Routing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Simon Emms</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../routing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../config/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

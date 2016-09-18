@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Testing - Steeplejack documentation</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Testing";
+    var mkdocs_page_input_path = "getting-started/testing.md";
+    var mkdocs_page_url = "/getting-started/testing/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68581184-2', 'steeplejack.info');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Steeplejack documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Getting started</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../">Installation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../your-first-app/">Your first app</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../routing/">Routing</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../modules/">Modules</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../config/">Config</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Testing</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#testing">Testing</a></li>
+                
+                    <li><a class="toctree-l4" href="#testunitmodulesservicetestjs">/test/unit/modules/service.test.js</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Dependency injection</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/class-injector/">Class injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/factory-injector/">Factory injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/singleton-injector/">Singleton injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dependency-injection/config-injector/">Config injector</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Data models</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-models/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-models/model/">Model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-models/collection/">Collection</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Plugins</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../plugins/intro/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../plugins/http-strategies/">HTTP Strategies</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Strategies</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../strategies/intro/">Introduction</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API Reference</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/steeplejack/">Steeplejack</a>
+        
+    </li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/decorators</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/decorators/inject/">inject</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/exception</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/exception/">exception</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/fatal/">fatal</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/exception/validation/">validation</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>/lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/base/">base</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/collection/">collection</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/injector/">injector</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/logger/">logger</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/model/">model</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/plugin/">plugin</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/router/">router</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/server/">server</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/socket/">socket</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/socketRequest/">socketRequest</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/lib/view/">view</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Steeplejack documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting started &raquo;</li>
+        
+      
+    
+    <li>Testing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="testing">Testing</h1>
+<blockquote>
+<p>The example is done with <a href="https://mochajs.org">Mocha</a> and <a href="http://chaijs.com/api/bdd">Chai</a>. If you don't want to use those libraries, you
+can choose to create your tests however you want.</p>
+</blockquote>
+<p>Although last in this tutorial, a testable application is crucial for enterprise software and Steeplejack makes this really easy. If you follow
+the <a href="https://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29">SOLID Principles</a>, you won't go far wrong.</p>
+<p>You can look through all the tests in the <a href="https://github.com/riggerthegeek/steeplejack-example">Steeplejack example</a> project. To show how
+easy it can be, let's take a look at the <code>$userService</code> and how we can test it.</p>
+<h2 id="testunitmodulesservicetestjs">/test/unit/modules/service.test.js</h2>
+<p>Notice how we have a <code>beforeEach</code> function that defines the instance of the <code>$userService</code>. By defining the dependencies we want to rely
+upon, this is largely how the dependency injector works underneath. It also means we can easily stub the dependencies so we can test how
+each unit of code behaves.</p>
+<pre><code class="javascript">import {ValidationException} from &quot;steeplejack/exception/validation&quot;;
+import {expect, sinon} from &quot;../../../helpers/config&quot;;
+import {User} from &quot;../../../../src/modules/user/model/User&quot;;
+import {UserService} from &quot;../../../../src/modules/user/service&quot;;
+
+describe(&quot;UserService test&quot;, function () {
+
+    beforeEach(function () {
+
+        this.userStore = {
+            getUserByEmailAddress: sinon.stub()
+        };
+
+        this.$userService = new UserService(User, this.userStore);
+
+    });
+
+    describe(&quot;methods&quot;, function () {
+
+        it(&quot;should throw an error when no emailAddress&quot;, function () {
+
+            let fail = false;
+
+            try {
+                this.$userService.getUserByEmailAddress();
+            } catch (err) {
+                fail = true;
+
+                expect(err).to.be.instanceof(ValidationException);
+                expect(err.message).to.be.equal(&quot;emailAddress is required&quot;);
+            } finally {
+                expect(fail).to.be.true;
+            }
+
+        });
+
+        it(&quot;should throw an error when invalid emailAddress&quot;, function () {
+
+            let fail = false;
+
+            try {
+                this.$userService.getUserByEmailAddress(&quot;not an email&quot;);
+            } catch (err) {
+                fail = true;
+
+                expect(err).to.be.instanceof(ValidationException);
+                expect(err.message).to.be.equal(&quot;emailAddress is required&quot;);
+            } finally {
+                expect(fail).to.be.true;
+            }
+
+        });
+
+        it(&quot;should return undefined if nothing found&quot;, function () {
+
+            this.userStore.getUserByEmailAddress.resolves(null);
+
+            return this.$userService.getUserByEmailAddress(&quot;test@test.com&quot;)
+                .then(result =&gt; {
+
+                    expect(result).to.be.undefined;
+
+                    expect(this.userStore.getUserByEmailAddress).to.be.calledOnce
+                        .calledWithExactly(&quot;test@test.com&quot;);
+
+                });
+
+        });
+
+        it(&quot;should return UserModel if data found&quot;, function () {
+
+            this.userStore.getUserByEmailAddress.resolves({
+                id: 1234,
+                firstName: &quot;Barry&quot;,
+                lastName: &quot;Scott&quot;,
+                emailAddress: &quot;barry@cillitbang.com&quot;
+            });
+
+            return this.$userService.getUserByEmailAddress(&quot;barry@cillitbang.com&quot;)
+                .then(result =&gt; {
+
+                    expect(result).to.be.instanceof(User);
+
+                    expect(result.getData()).to.be.eql({
+                        id: 1234,
+                        firstName: &quot;Barry&quot;,
+                        lastName: &quot;Scott&quot;,
+                        emailAddress: &quot;barry@cillitbang.com&quot;
+                    });
+
+                    expect(this.userStore.getUserByEmailAddress).to.be.calledOnce
+                        .calledWithExactly(&quot;barry@cillitbang.com&quot;);
+
+                });
+
+        });
+
+    });
+
+});
+</code></pre>
+
+<p>In fewer than 100 lines of code, we have achieved 100% code coverage on the <code>$userService</code>. By following these principles, you can easily
+achieve 100% code coverage throughout your entire application.</p>
+<p>The <code>User</code> model we have used is the concrete class which has been used to simplify things in this example. We could just as easily have
+created a stubbed class so we're testing the interface only - indeed, this would be better in a production application.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../dependency-injection/intro/" class="btn btn-neutral float-right" title="Introduction">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../config/" class="btn btn-neutral" title="Config"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Simon Emms</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/riggerthegeek/steeplejack" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../config/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../dependency-injection/intro/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
