@@ -1,0 +1,22 @@
+{
+  "name": "steeplejack-docs",
+  "version": "1.0.0",
+  "description": "Steeplejack documentation",
+  "main": "index.js",
+  "scripts": {
+    "build": "mkdocs build --clean",
+    "deploy": "mkdocs gh-deploy --clean",
+    "serve": "mkdocs serve --clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riggerthegeek/steeplejack.git"
+  },
+  "author": "Simon Emms <simon@simonemms.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/riggerthegeek/steeplejack/issues"
+  },
+  "homepage": "https://github.com/riggerthegeek/steeplejack#readme"
+  "private": true
+}
