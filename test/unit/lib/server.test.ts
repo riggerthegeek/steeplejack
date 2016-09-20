@@ -1195,11 +1195,75 @@ describe("Server tests", function () {
 
                 });
 
+                it("should send to the preSend function", function () {
+
+                    let calledPreSend = false;
+
+                    obj.preSend((statusCode: number, output: any, req: any, res: any) : any => {
+
+                        calledPreSend = true;
+
+                        expect(statusCode).to.be.equal(200);
+                        expect(output).to.be.eql({
+                            hello: "world"
+                        });
+                        expect(req).to.be.equal(this.req);
+                        expect(res).to.be.equal(this.res);
+
+                        return {
+                            statusCode: 201,
+                            output: "output"
+                        };
+
+                    });
+
+                    this.stub.returns("some output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                        return {
+                            hello: "world"
+                        };
+                    }).then((data: any) => {
+
+                        expect(data).to.be.equal("some output");
+
+                        expect(calledPreSend).to.be.true;
+
+                        expect(this.stub).to.be.calledOnce
+                            .calledWithExactly(201, "output", this.req, this.res);
+
+                    });
+
+                });
+
             });
 
             describe("failed response", function () {
 
                 describe("no uncaught exception listeners", function () {
+
+                    it("should not call the preSend if it's an error response", function () {
+
+                        let callPreSend = false;
+
+                        obj.preSend((statusCode: number, output: any, req: any, res: any) : any => {
+                            callPreSend = true;
+                        });
+
+                        return obj.outputHandler(this.req, this.res, () => {
+                            return Promise.reject("rejected promise");
+                        }).then(() => {
+                            throw new Error("invalid");
+                        })
+                        .catch((err: Error) => {
+
+                            expect(callPreSend).to.be.false;
+
+                            expect(err).to.be.equal("rejected promise");
+
+                        });
+
+                    });
 
                     it("should handle an error in the strategy, emitting to uncaughtException listener after resolved promise", function () {
 

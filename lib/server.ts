@@ -69,6 +69,28 @@ export class Server extends Base {
 
 
     /**
+     * Pre Send
+     *
+     * Store the preSend hook for later use
+     *
+     * @type {any}
+     * @private
+     */
+    protected _preSend: (
+        statusCode: number,
+        output: any,
+        req: Object,
+        res: Object
+    ) => Promise<({
+        statusCode: number,
+        output: any
+    })> | {
+        statusCode: number,
+        output: any
+    } = null;
+
+
+    /**
      * Socket
      *
      * This is the instance of the socket connection.
@@ -161,12 +183,12 @@ export class Server extends Base {
      * Parses the data output
      *
      * @param {*} data
-     * @returns {{statusCode: Number, output: any}}
+     * @returns {{statusCode: number, output: any}}
      * @private
      */
     protected _parseData (data: any) {
 
-        let statusCode: Number = 200;
+        let statusCode: number = 200;
         let output: any;
 
         /* Some data to display */
@@ -197,12 +219,12 @@ export class Server extends Base {
      * Parses the error output
      *
      * @param {*} err
-     * @returns {{statusCode: Number, output: any}}
+     * @returns {{statusCode: number, output: any}}
      * @private
      */
     protected _parseError (err: any) {
 
-        let statusCode: Number = 500;
+        let statusCode: number = 500;
         let output: any;
 
         /* Work out the appropriate error message */
@@ -524,9 +546,17 @@ export class Server extends Base {
 
         return new Promise(task)
             .then((data: any) => {
-
                 return this._parseData(data);
-
+            })
+            .then(({statusCode, output}) => {
+                if (this._preSend) {
+                    return this._preSend(statusCode, output, req, res);
+                } else {
+                    return {
+                        statusCode,
+                        output
+                    };
+                }
             })
             .catch((err: any) => {
 
@@ -596,6 +626,35 @@ export class Server extends Base {
         this._strategy.queryParser(mapParams);
         return this;
 
+    }
+
+
+    /**
+     * Pre Send
+     *
+     * Similar to .use and .after, this is a hook that is
+     * called immediately before the data is sent. This is
+     * only run when there is a successful (2xx) response
+     * and is designed for inspecting the data object so
+     * HTTP caching can be configured.
+     *
+     * @param {function} fn
+     * @returns {Server}
+     */
+    public preSend (fn: (
+        statusCode: number,
+        output: any,
+        req: Object,
+        res: Object
+    ) => Promise<({
+        statusCode: number,
+        output: any
+    })> | {
+        statusCode: number,
+        output: any
+    }) : Server {
+        this._preSend = fn;
+        return this;
     }
 
 
