@@ -20,7 +20,7 @@ When creating a new project, you need to set up the same things over and over ag
 your dependency injection, your HTTP server, your routing and your logging. With Steeplejack, this is all there by
 default allowing you to get straight into your coding.
 
-This is not a framework, it is scaffolding for module. It doesn't tell you how to write your software, it just lets you do
+This is not a framework, it is scaffolding for modules. It doesn't tell you how to write your software, it just lets you do
 it. You can use [Express](http://expressjs.com) or [Restify](http://restify.com) as your HTTP strategy or even one of your
 own. So long as it satisfies the strategy, it doesn't care.
 
