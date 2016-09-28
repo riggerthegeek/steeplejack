@@ -459,7 +459,7 @@ export abstract class Collection extends Base {
      *
      * @returns {Object}
      */
-    public getModel () : Object {
+    public getModel () : any {
         return this._model();
     }
 

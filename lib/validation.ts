@@ -95,13 +95,16 @@ export class Validation {
 
         } else if (_.isString(rule)) {
 
-            /* Set the required status */
-            required = (<string> rule).toUpperCase() === "REQUIRED";
+            /* Treat the rule as a string */
+            const ruleName: string = rule;
 
-            if ((<string> rule).toUpperCase() === "MATCH") {
+            /* Set the required status */
+            required = ruleName.toUpperCase() === "REQUIRED";
+
+            if ((<string> ruleName).toUpperCase() === "MATCH") {
                 /* Use the special match rule */
                 ruleFn = Validation.match;
-            } else if (_.isFunction((<any> validation)[rule])) {
+            } else if (_.isFunction((<any> validation)[ruleName])) {
 
                 /* Valid rule in the validation utils package */
                 ruleFn = function (value: string, model: Model, ...args: any[]) {
@@ -109,7 +112,7 @@ export class Validation {
                     /* Add the value as first element */
                     args.unshift(value);
 
-                    return (<any> validation)[rule](...args);
+                    return (<any> validation)[ruleName](...args);
 
                 };
 
