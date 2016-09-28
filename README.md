@@ -92,7 +92,9 @@ When I started thinking about a scaffolding project, I was watching a [Fred Dibn
 Fred was a great enthusiast of beautiful engineering. It struck me as a great metaphor for what I was trying to achieve. By trade, Fred
 was a steeplejack, so the name is a little nod to him.
 
-[![Fred Dibnah](http://img.youtube.com/vi/3R3-YwDZrzg/0.jpg)](http://www.youtube.com/watch?v=3R3-YwDZrzg)
+<div style="text-align: center">
+    [![Fred Dibnah](http://img.youtube.com/vi/3R3-YwDZrzg/0.jpg)](http://www.youtube.com/watch?v=3R3-YwDZrzg)
+</div>
 
 # License
 
