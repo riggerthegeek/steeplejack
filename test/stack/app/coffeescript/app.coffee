@@ -35,11 +35,12 @@ app.on "start", () ->
 
 app.run ($config) ->
 
-    server = new Server $config.server, new Restify, new SocketIO
+    restify = new Restify;
 
-    server
-        .bodyParser()
-        .gzipResponse()
+    restify.bodyParser()
+    restify.gzipResponse()
+
+    server = new Server $config.server, restify, new SocketIO
 
     server
 

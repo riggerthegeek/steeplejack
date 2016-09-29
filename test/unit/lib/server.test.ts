@@ -144,40 +144,6 @@ describe("Server tests", function () {
 
         });
 
-        describe("#acceptParser", function () {
-
-            let obj: Server;
-
-            beforeEach(function () {
-
-                this.spy = sinon.spy(this.serverStrategy, "acceptParser");
-
-                obj = new Server({
-                    port: 8080
-                }, this.serverStrategy);
-
-            });
-
-            it("should send to strategy acceptParser method", function () {
-
-                expect(obj.acceptParser("options")).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly("options", false);
-
-            });
-
-            it("should send to strategy acceptParser method in strict mode", function () {
-
-                expect(obj.acceptParser("options", true)).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly("options", true);
-
-            });
-
-        });
-
         describe("#_addRoute", function () {
 
             beforeEach(function () {
@@ -881,31 +847,6 @@ describe("Server tests", function () {
 
         });
 
-        describe("#bodyParser", function () {
-
-            let obj: Server;
-
-            beforeEach(function () {
-
-                this.spy = sinon.spy(this.serverStrategy, "bodyParser");
-
-                obj = new Server({
-                    port: 8080
-                }, this.serverStrategy);
-
-            });
-
-            it("should defer to the strategy method", function () {
-
-                expect(obj.bodyParser()).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly();
-
-            });
-
-        });
-
         describe("#close", function () {
 
             let obj: Server;
@@ -926,47 +867,6 @@ describe("Server tests", function () {
 
                 expect(this.spy).to.be.calledOnce
                     .calledWithExactly();
-
-            });
-
-        });
-
-        describe("#enableCORS", function () {
-
-            let obj: Server;
-
-            beforeEach(function () {
-
-                this.spy = sinon.spy(this.serverStrategy, "enableCORS");
-
-                obj = new Server({
-                    port: 8080
-                }, this.serverStrategy);
-
-            });
-
-            it("should defer with the default params", function () {
-
-                expect(obj.enableCORS()).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly(["*"], []);
-
-            });
-
-            it("should defer to the _enableClose method", function () {
-
-                var origins = [
-                    "http://example.com"
-                ];
-                var addHeaders = [
-                    "auth"
-                ];
-
-                expect(obj.enableCORS(origins, addHeaders)).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly(origins, addHeaders);
 
             });
 
@@ -993,31 +893,6 @@ describe("Server tests", function () {
                 expect(obj.getServer()).to.be.equal("server");
 
                 expect(this.stub).to.be.calledOnce
-                    .calledWithExactly();
-
-            });
-
-        });
-
-        describe("#gzipResponse", function () {
-
-            let obj: Server;
-
-            beforeEach(function () {
-
-                this.spy = sinon.spy(this.serverStrategy, "gzipResponse");
-
-                obj = new Server({
-                    port: 8080
-                }, this.serverStrategy);
-
-            });
-
-            it("should dispatch to the strategy", function () {
-
-                expect(obj.gzipResponse()).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
                     .calledWithExactly();
 
             });
@@ -1591,40 +1466,6 @@ describe("Server tests", function () {
 
         });
 
-        describe("#queryParser", function () {
-
-            let obj: Server;
-
-            beforeEach(function () {
-
-                this.spy = sinon.spy(this.serverStrategy, "queryParser");
-
-                obj = new Server({
-                    port: 8080
-                }, this.serverStrategy);
-
-            });
-
-            it("should dispatch to the strategy", function () {
-
-                expect(obj.queryParser()).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly(false);
-
-            });
-
-            it("should dispatch to the strategy - set mapParams to true", function () {
-
-                expect(obj.queryParser(true)).to.be.equal(obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly(true);
-
-            });
-
-        });
-
         describe("#start", function () {
 
             it("should start a server with just the port", function () {
@@ -1774,38 +1615,6 @@ describe("Server tests", function () {
 
                     })
                     .finally(done);
-
-            });
-
-        });
-
-        describe("#staticDir", function () {
-
-            beforeEach(function () {
-
-                this.spy = sinon.spy(this.serverStrategy, "staticDir");
-
-                this.obj = new Server({
-                    port: 8080
-                }, this.serverStrategy);
-
-            });
-
-            it("should send the static directory to the strategy - no virtual path", function () {
-
-                expect(this.obj.staticDir("/path/to/dir")).to.be.equal(this.obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly("/path/to/dir", null);
-
-            });
-
-            it("should send the static directory to the strategy - virtual path", function () {
-
-                expect(this.obj.staticDir("/path/to/my/dir", "/public")).to.be.equal(this.obj);
-
-                expect(this.spy).to.be.calledOnce
-                    .calledWithExactly("/path/to/my/dir", "/public");
 
             });
 

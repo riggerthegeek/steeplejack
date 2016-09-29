@@ -34,18 +34,19 @@ app.on("start", () => {
 });
 
 
-app.run(($config) => {
+app.run($config => {
 
-    let server = new Server($config.server, new Restify(), new SocketIO());
+    const restify = new Restify();
+
+    restify.bodyParser();
+    restify.gzipResponse();
+
+    let server = new Server($config.server, restify, new SocketIO());
 
     /* Listen for errors to log */
     server.on("error", function (err) {
 
     });
-
-    server
-        .bodyParser()
-        .gzipResponse();
 
     return server;
 

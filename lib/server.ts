@@ -268,25 +268,6 @@ export class Server extends Base {
 
 
     /**
-     * Accept Parser
-     *
-     * Makes the server use the accept parse. Returns
-     * this to make the method chainable.
-     *
-     * If it's in strict mode then it must match
-     * the accept header exactly.
-     *
-     * @param {*} options
-     * @param {boolean} strict
-     * @returns {Server}
-     */
-    public acceptParser (options: any, strict: boolean = false) : Server {
-        this._strategy.acceptParser(options, strict);
-        return this;
-    }
-
-
-    /**
      * Add Route
      *
      * Adds a single route to the stack
@@ -453,20 +434,6 @@ export class Server extends Base {
 
 
     /**
-     * Body Parser
-     *
-     * Allows the server to receive the HTTP body. Returns
-     * this to make it chainable.
-     *
-     * @returns {Server}
-     */
-    public bodyParser () : Server {
-        this._strategy.bodyParser();
-        return this;
-    }
-
-
-    /**
      * Close
      *
      * Closes the server
@@ -480,24 +447,6 @@ export class Server extends Base {
 
 
     /**
-     * Enable CORS
-     *
-     * Enables cross-origin resource sharing.  This should
-     * be done with care as can lead to a major security
-     * vulnerability.
-     *
-     * @link http://en.wikipedia.org/wiki/Cross-origin_resource_sharing
-     * @param {string[]} origins
-     * @param {string[]} addHeaders
-     * @returns {Server}
-     */
-    public enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) : Server {
-        this._strategy.enableCORS(origins, addHeaders);
-        return this;
-    }
-
-
-    /**
      * Get Server
      *
      * Gets the server instance
@@ -506,20 +455,6 @@ export class Server extends Base {
      */
     public getServer () : Object {
         return this._strategy.getServer();
-    }
-
-
-    /**
-     * GZIP Response
-     *
-     * Makes the response GZIP compressed.  Returns
-     * this to make it chainable.
-     *
-     * @returns {exports}
-     */
-    public gzipResponse () : Server {
-        this._strategy.gzipResponse();
-        return this;
     }
 
 
@@ -612,24 +547,6 @@ export class Server extends Base {
 
 
     /**
-     * Query Parser
-     *
-     * Parses the query strings.  The mapParams option
-     * allows you to decide if you want to map req.query
-     * to req.params - false by default.  Returns this
-     * to make it chainable.
-     *
-     * @param {boolean} mapParams
-     * @returns {Server}
-     */
-    public queryParser (mapParams: boolean = false) : Server {
-        this._strategy.queryParser(mapParams);
-        return this;
-
-    }
-
-
-    /**
      * Pre Send
      *
      * Similar to .use and .after, this is a hook that is
@@ -667,21 +584,6 @@ export class Server extends Base {
      */
     public start () {
         return this._strategy.start(this._options.port, this._options.hostname, this._options.backlog);
-    }
-
-
-    /**
-     * Static Dir
-     *
-     * Sets the static directory for the project
-     *
-     * @param {string} dir
-     * @param {string} virtualPath
-     * @returns {*}
-     */
-    public staticDir (dir: string, virtualPath: string = null) {
-        this._strategy.staticDir(dir, virtualPath);
-        return this;
     }
 
 

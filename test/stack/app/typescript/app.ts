@@ -35,13 +35,14 @@ app.on("start", () => {
 
 app.run(($config: any) => {
 
-    let server = new Server($config.server, new Restify(), new SocketIO());
+    const restify = new Restify();
+
+    restify.bodyParser();
+    restify.gzipResponse();
+
+    let server = new Server($config.server, restify, new SocketIO());
 
     console.log($config);
-
-    server
-        .bodyParser()
-        .gzipResponse();
 
     return server;
 

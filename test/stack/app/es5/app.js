@@ -36,16 +36,17 @@ app.on("start", function () {
 
 app.run(function ($config) {
 
-    var server = new Server($config.server, new Restify(), new SocketIO());
+    var restify = new Restify();
+
+    restify.bodyParser();
+    restify.gzipResponse();
+
+    var server = new Server($config.server, restify, new SocketIO());
 
     /* Listen for errors to log */
     server.on("error", function (err) {
 
     });
-
-    server
-        .bodyParser()
-        .gzipResponse();
 
     return server;
 
