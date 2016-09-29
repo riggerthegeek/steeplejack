@@ -9,7 +9,6 @@
 
 
 /* Third-party modules */
-import {Promise} from "es6-promise";
 
 
 /* Files */
