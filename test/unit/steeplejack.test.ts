@@ -291,6 +291,7 @@ describe("Steeplejack test", function () {
                     bodyParser: () => void;
                     close: () => void;
                     enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getRawServer: () => Object;
                     getServer: () => Object;
                     gzipResponse: () => void;
                     queryParser: (mapParser: boolean) => void;
@@ -355,6 +356,7 @@ describe("Steeplejack test", function () {
                     bodyParser: () => void;
                     close: () => void;
                     enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getRawServer: () => Object;
                     getServer: () => Object;
                     gzipResponse: () => void;
                     queryParser: (mapParser: boolean) => void;
@@ -419,6 +421,7 @@ describe("Steeplejack test", function () {
                     bodyParser: () => void;
                     close: () => void;
                     enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getRawServer: () => Object;
                     getServer: () => Object;
                     gzipResponse: () => void;
                     //outputHandler: (err: any, data: any, request: Object, result: Object) => any;
@@ -1555,6 +1558,7 @@ describe("Steeplejack test", function () {
                     bodyParser: () => void;
                     close: () => void;
                     enableCORS: (origins: string[], addHeaders: string[]) => void;
+                    getRawServer: () => Object;
                     getServer: () => Object;
                     gzipResponse: () => void;
                     queryParser: (mapParser: boolean) => void;

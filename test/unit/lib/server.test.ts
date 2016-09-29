@@ -45,6 +45,8 @@ describe("Server tests", function () {
 
             enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
 
+            getRawServer: () => Object;
+
             getServer () : Object {
                 return {
                     method: function () {}
@@ -1634,6 +1636,7 @@ describe("Server tests", function () {
                     bodyParser () { }
                     close () { }
                     enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
+                    getRawServer: () => Object;
                     gzipResponse () : void { }
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
@@ -1681,6 +1684,7 @@ describe("Server tests", function () {
                     bodyParser () { }
                     close () { }
                     enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
+                    getRawServer: () => Object;
                     gzipResponse () : void { }
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
@@ -1730,6 +1734,7 @@ describe("Server tests", function () {
                     bodyParser () { }
                     close () { }
                     enableCORS (origins: string[] = ["*"], addHeaders: string[] = []) { }
+                    getRawServer: () => Object;
                     gzipResponse () : void { }
                     queryParser () : void { }
                     uncaughtException (fn: Function) { }
