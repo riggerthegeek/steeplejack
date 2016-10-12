@@ -200,6 +200,8 @@ export class Server extends Base {
         } else if (_.isObject(data) && _.isFunction(data.getData)) {
             /* Get the data from a function */
             output = data.getData();
+        } else if (data === "end") {
+            statusCode = 999;
         } else {
             /* Just output the data */
             output = data;
@@ -484,7 +486,7 @@ export class Server extends Base {
                 return this._parseData(data);
             })
             .then(({statusCode, output}) => {
-                if (this._preSend) {
+                if (this._preSend && statusCode !== 999) {
                     return this._preSend(statusCode, output, req, res);
                 } else {
                     return {
@@ -519,7 +521,9 @@ export class Server extends Base {
                     output = void 0;
                 }
 
-                return this._strategy.outputHandler(statusCode, output, req, res);
+                if (statusCode !== 999) {
+                    return this._strategy.outputHandler(statusCode, output, req, res);
+                }
 
             })
             .catch((err: Error) => {

@@ -1113,6 +1113,23 @@ describe("Server tests", function () {
 
                 });
 
+                it("should receive 'end' and not send the output", function () {
+
+                    this.stub.returns("output");
+
+                    return obj.outputHandler(this.req, this.res, () => {
+                        return "end";
+                    })
+                        .then((data:any) => {
+
+                            expect(data).to.be.undefined;
+
+                            expect(this.stub).to.not.be.called;
+
+                        });
+
+                });
+
             });
 
             describe("failed response", function () {
