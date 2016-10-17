@@ -38,9 +38,6 @@ export class Logger extends Base {
 
         super();
 
-        /* Default to error */
-        this.level = "error";
-
     }
 
 

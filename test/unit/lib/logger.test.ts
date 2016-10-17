@@ -45,17 +45,13 @@ describe("Logger test", function () {
 
             obj = new Logger(strategy);
 
-            /* Default to error */
-            expect(strategy.level).to.be.callCount(1)
-                .calledWithExactly("error");
-
         });
 
         describe("#setLevel", function () {
 
             it("should default the level to error when not set", function () {
 
-                expect(obj.level).to.be.equal("error");
+                expect(obj.level).to.be.undefined;
 
             });
 
@@ -68,7 +64,7 @@ describe("Logger test", function () {
                     obj.level = level;
 
                     expect(obj.level).to.be.equal(level);
-                    expect(strategy.level).to.be.callCount(++x)
+                    expect(strategy.level).to.be.callCount(x++)
                         .calledWithExactly(level);
 
                 });
@@ -77,29 +73,28 @@ describe("Logger test", function () {
 
             it("should keep the existing logLevel if not in the getLogLevels method", function () {
 
-                expect(obj.level).to.be.equal("error");
+                expect(obj.level).to.be.undefined;
 
-                expect(strategy.level).to.be.calledOnce
-                    .calledWithExactly("error");
+                expect(strategy.level).to.not.be.called;
 
                 obj.level = "missing";
 
-                expect(obj.level).to.be.equal("error");
+                expect(obj.level).to.be.undefined;
 
-                expect(strategy.level).to.be.calledOnce;
+                expect(strategy.level).to.not.be.called;
 
                 obj.level = "fatal";
 
                 expect(obj.level).to.be.equal("fatal");
 
-                expect(strategy.level).to.be.calledTwice
+                expect(strategy.level).to.be.calledOnce
                     .calledWithExactly("fatal");
 
                 obj.level = "spank";
 
                 expect(obj.level).to.be.equal("fatal");
 
-                expect(strategy.level).to.be.calledTwice;
+                expect(strategy.level).to.be.calledOnce;
 
             });
 
