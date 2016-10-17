@@ -32,9 +32,9 @@ export class Logger extends Base {
      * class and ensures the concrete strategy
      * object is set
      *
-     * @param {ILoggerStrategy} strategy
+     * @param {ILoggerStrategy} _strategy
      */
-    public constructor (protected strategy: ILoggerStrategy) {
+    public constructor (protected _strategy: ILoggerStrategy) {
 
         super();
 
@@ -73,7 +73,7 @@ export class Logger extends Base {
             this._level = level;
 
             /* Set the level in the strategy too */
-            this.strategy.level(level);
+            this._strategy.level(level);
         }
 
     }
@@ -97,7 +97,7 @@ export class Logger extends Base {
      * @returns {Logger}
      */
     public fatal (...args: any[]) : Logger {
-        this.strategy.fatal(...args);
+        this._strategy.fatal(...args);
         return this;
     }
 
@@ -109,7 +109,7 @@ export class Logger extends Base {
      * @returns {Logger}
      */
     public error (...args: any[]) : Logger {
-        this.strategy.error(...args);
+        this._strategy.error(...args);
         return this;
     }
 
@@ -121,7 +121,7 @@ export class Logger extends Base {
      * @returns {Logger}
      */
     public warn (...args: any[]) : Logger {
-        this.strategy.warn(...args);
+        this._strategy.warn(...args);
         return this;
     }
 
@@ -133,7 +133,7 @@ export class Logger extends Base {
      * @returns {Logger}
      */
     public info (...args: any[]) : Logger {
-        this.strategy.info(...args);
+        this._strategy.info(...args);
         return this;
     }
 
@@ -145,7 +145,7 @@ export class Logger extends Base {
      * @returns {Logger}
      */
     public debug (...args: any[]) : Logger {
-        this.strategy.debug(...args);
+        this._strategy.debug(...args);
         return this;
     }
 
@@ -161,7 +161,7 @@ export class Logger extends Base {
      * @returns {Logger}
      */
     public trace (...args: any[]) : Logger {
-        this.strategy.trace(...args);
+        this._strategy.trace(...args);
         return this;
     }
 
