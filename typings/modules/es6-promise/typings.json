@@ -1,0 +1,10 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/typings/typed-es6-promise/94aac67ef7a14a8de8e9e1d3c1f9a26caa0d9fb1/typings.json",
+    "raw": "github:typings/typed-es6-promise#94aac67ef7a14a8de8e9e1d3c1f9a26caa0d9fb1",
+    "main": "dist/es6-promise.d.ts",
+    "name": "es6-promise",
+    "type": "typings"
+  }
+}

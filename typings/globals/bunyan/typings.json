@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/44db8b563316354d4a6c7a418fe86d377e6f6142/bunyan/bunyan.d.ts",
+    "raw": "github:DefinitelyTyped/DefinitelyTyped/bunyan/bunyan.d.ts#44db8b563316354d4a6c7a418fe86d377e6f6142",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/44db8b563316354d4a6c7a418fe86d377e6f6142/bunyan/bunyan.d.ts"
+  }
+}

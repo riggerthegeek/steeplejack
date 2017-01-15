@@ -1,0 +1,29 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/Users/semms/Documents/Development/Steeplejack/steeplejack/node_modules/datautils/typings.json",
+    "raw": "npm:datautils",
+    "main": "datautils.d.ts",
+    "version": "3.1.7",
+    "global": false,
+    "dependencies": {
+      "lodash": {
+        "src": "/Users/semms/Documents/Development/Steeplejack/steeplejack/node_modules/datautils/node_modules/lodash/package.json",
+        "raw": "npm:lodash",
+        "main": "lodash.js",
+        "version": "4.0.1",
+        "global": false,
+        "name": "lodash"
+      },
+      "moment": {
+        "src": "/Users/semms/Documents/Development/Steeplejack/steeplejack/node_modules/moment/package.json",
+        "raw": "npm:moment",
+        "main": "./moment.js",
+        "version": "2.11.2",
+        "global": false,
+        "name": "moment"
+      }
+    },
+    "name": "datautils"
+  }
+}

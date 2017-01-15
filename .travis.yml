@@ -1,39 +1,38 @@
-# @todo https://medium.com/@nthgergo/publishing-gh-pages-with-travis-ci-53a8270e87db#.kwnowod8n
 language: node_js
+
 node_js:
-- 'node'
-- '5.11'
-- '4.4'
-- 'iojs'
-- '0.12'
-- '0.10'
+- '7'
+- '6'
+- '5'
+- '4'
+
 matrix:
   fast_finish: true
+
 sudo: false
+
 env:
   matrix:
   - TZ=Etc/UTC
   - TZ=America/Los_Angeles
-  global:
-    secure: Zh2Z8FyRQMFM5vez1OmIxVZ8s18K6qEzFa3C3g3XNYBxRQ4GzpSN8S3M0QjvnrrGi+XbMmdcV9DRYgOfGHqq55IamhLH9l5neTgPG3IqArRnWDLMulWRZrRznLACZCr1U0+z09WE+ndOCyfRWKNgkGaNdWRQhaQUZjEOevtqjvs=
+
 before_install:
-- npm install -g grunt-cli
 - date
+
 script:
-# Use this rather than a postinstall - that runs even when this is a dependency
-- npm run typings
-- grunt ci
+- npm run ci
+
 before_deploy:
-- grunt
+- npm run compile
+
 deploy:
-  provider: npm
-  email: simon@simonemms.com
-  api_key:
-    secure: sjeE2VqUFprtBzZk+q0CnIDwhWaLpkpqCxbBUl70D5yTu29Vrw0pKdwpmDGyH3nC9JOauKtS9xIIB4r7dWK0ijFEmbdsZRjpE1pcjyX9kFIVvjiSyYmhNg6S7UWvyeLQtbElrYKJHC69U4/6Pebk/7pcZ6p469XwccvKCnludDc=
+  provider: script
+  script: ./deploy.sh
+  skip_cleanup: true
   on:
-    all_branches: true
     tags: true
-    repo: riggerthegeek/steeplejack
+    repo: steeplejack-js/core
+
 notifications:
   webhooks:
     urls:

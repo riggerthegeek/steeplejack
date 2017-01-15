@@ -1,8 +1,0 @@
-{
-  "sqlite": {
-    "filename": "../stack.json"
-  },
-  "server": {
-    "port": 3001
-  }
-}
