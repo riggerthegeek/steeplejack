@@ -76,16 +76,6 @@ store exactly, no problem. There is a loose link between the model and the stora
 When you're dealing with lots of models, you can create a collection. Maybe you get your data from multiple sources
 and want to sort it in the application. Steeplejack allows you to write a simple method to do that.
 
-## TypeScript, ES6, CoffeeScript or ES5?
-
-It's up to you. Steeplejack is written in [TypeScript](http://typescriptlang.org) because it's the most enterprise-ready
-form of JavaScript with it's additional features, like interfaces. But if you want to write in a different flavour of
-JavaScript because that's what you know best then you can.
-
-And if you're still writing your NodeJS in ES5, then Steeplejack makes your life a little easier. The Base and Exception
-classes have a little `.extend` static method on them to allow you to simplify
-[prototypical inheritance](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain).
-
 # Why's it called 'Steeplejack'?
 
 When I started thinking about a scaffolding project, I was watching a [Fred Dibnah](http://www.freddibnahheritagecentre.com) documentary.
