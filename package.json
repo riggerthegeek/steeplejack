@@ -34,22 +34,26 @@
     "coverage": "cross-env NODE_ENV=test nyc mocha --ui bdd --recursive test/unit",
     "postversion": "git push --tags && git push",
     "test": "npm run test:lint -s && npm run test:unit -s",
+    "test:e2e": "mocha --compilers js:babel-register --throw-deprecation --ui bdd --full-trace --recursive test/e2e/test",
     "test:lint": "eslint src",
     "test:unit": "mocha --compilers js:babel-register --throw-deprecation --ui bdd --full-trace --recursive test/unit",
     "watch:coverage": "nodemon --exec 'npm run coverage -s' --legacy-watch",
     "watch:test": "nodemon --exec 'npm run test -s' --legacy-watch",
+    "watch:test:e2e": "nodemon --exec 'npm run test:e2e -s' --legacy-watch",
     "watch:test:lint": "nodemon --exec 'npm run test:lint -s' --legacy-watch",
     "watch:test:unit": "nodemon --exec 'npm run test:unit -s' --legacy-watch"
   },
   "author": "Simon Emms <simon@simonemms.com>",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-plugin-istanbul": "^3.1.2",
     "babel-preset-env": "^1.1.8",
     "babel-register": "^6.18.0",
+    "bluebird": "^3.4.7",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "cross-env": "^3.1.4",
@@ -63,9 +67,12 @@
     "nodemon": "^1.11.0",
     "nyc": "^10.0.0",
     "proxyquire": "^1.7.10",
+    "restify": "^4.3.0",
     "sinon": "^1.17.7",
     "sinon-as-promised": "^4.0.2",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "socket.io": "^1.7.2",
+    "supertest-as-promised": "^4.0.2"
   },
   "repository": {
     "type": "git",
