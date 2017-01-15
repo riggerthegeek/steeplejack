@@ -1,10 +1,9 @@
 # Pull Requests, Features and Contributions
 
  - All tests **MUST** pass (run `npm test`)
- - Follow existing coding style (there are stylistic tests run using [JSHint](http://jshint.com/) and
-    [JSCS](http://jscs.info/) on the code which must pass)
- - You must maintain 100% code coverage (run `grunt coverage`). If you fix a bug, please add a test.
- - It must pass the continuous integration test suite (run `grunt ci`)
+ - Follow existing coding style (there are stylistic tests run using [ESLint](http://eslint.org/) on the code which must pass)
+ - You must maintain 100% code coverage (run `npm run coverage`). If you fix a bug, please add a test.
+ - It must pass the continuous integration test suite (run `npm run ci`)
 
 # Raising an issue
 
