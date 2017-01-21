@@ -10,8 +10,6 @@ import Server from '../../../src/lib/server';
 import Steeplejack from '../../../src/steeplejack';
 
 /* Files */
-import Restify from './lib/restify';
-import SocketIO from './lib/socketio';
 
 const app = Steeplejack.app({
   config: require('./config'),
@@ -21,14 +19,18 @@ const app = Steeplejack.app({
   routesDir: path.join(__dirname, 'routes')
 });
 
-app.run($config => {
+const deps = [
+  '$config',
+  'Restify',
+  'SocketIO',
+];
 
+app.run(deps, function run (config, Restify, SocketIO) {
   const restify = new Restify();
 
   const socket = new SocketIO();
 
-  return new Server($config.server, restify, socket);
-
+  return new Server(config.server, restify, socket);
 });
 
 export default app;

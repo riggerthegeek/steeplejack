@@ -1,29 +1,29 @@
 /**
- * steeplejack
+ * Steeplejack
+ *
+ * An easy way of making a Twelve Factor App in NodeJS
+ *
+ * @license MIT
+ * @link http://www.steeplejack.info
  */
 
 /* Node modules */
+import path from 'path';
 
 /* Third-party modules */
 import { Base } from '@steeplejack/core';
 import { _ } from 'lodash';
+import { sync as glob } from 'glob';
 import yargs from 'yargs';
+import Injector from './lib/injector';
 
 /* Files */
 import cliParameters from './helpers/cliParameters';
+import processRoutes from './helpers/processRoutes';
 import replaceEnvVars from './helpers/replaceEnvVars';
+import Router from './lib/router';
 
 export default class Steeplejack extends Base {
-
-  get config () {
-    return this._config || {};
-  }
-
-  set config (config) {
-    if (_.isObject) {
-      this._config = config;
-    }
-  }
 
   /**
    * Constructor
@@ -61,17 +61,118 @@ export default class Steeplejack extends Base {
    * be a glob pattern.
    *
    * @param {object} config
-   * @param {string[]|plugin[]} modules
+   * @param {*[]} modules
    * @param {string} routesDir
    * @param {string} routesGlob
    */
   constructor (config = {}, modules = [], routesDir = null, routesGlob = '**/*.js') {
-
     super();
 
-    /* Store the config object */
-    this.config = config;
+    /* Routing paths */
+    this.routing = {
+      routes: {},
+      sockets: {}
+    };
 
+    /* Array of injected modules */
+    this.modules = [];
+
+    /* Store the config object */
+    if (_.isObject) {
+      this.config = config;
+    }
+
+    this.injector = new Injector();
+
+    /* Register system components */
+    this.injector.registerComponent({
+      name: '$injector',
+      instance: this.injector,
+    }).registerComponent({
+      name: '$config',
+      instance: this.config,
+    });
+
+    modules.forEach(module => this.addModule(module));
+
+    /* Configure the routes - pass in the absolute path */
+    if (routesDir) {
+      if (path.isAbsolute(routesDir) === false) {
+        routesDir = path.join(process.cwd(), routesDir);
+      }
+
+      /* Get the route files */
+      const routeFiles = Router.getFileList(routesDir, routesGlob);
+
+      this.routeFactories = Router.discoverRoutes(routeFiles);
+    }
+  }
+
+  /**
+   * Add Modules
+   *
+   * Takes a new module and loads it into the
+   * application. The modules can be relative
+   * to the application, an absolute path or
+   * an instance of Plugin.
+   *
+   * For paths, globbed paths are recommended.
+   *
+   * @param {string|{modules: string[]}} module
+   * @return {Steeplejack}
+   */
+  addModule (module) {
+    /* Check if it's a plugin */
+    if (_.isArray(module.modules)) {
+      /* Yes - get the modules */
+      module.modules.forEach(mod => this.modules.push(mod));
+      return this;
+    }
+
+    /* Ensure path is a string */
+    if (_.isString(module) === false) {
+      throw new TypeError('Steeplejack.addModule can only accept a string or a Plugin instance');
+    }
+
+    /* Ensure an absolute path */
+    let modulePath;
+    if (path.isAbsolute(module)) {
+      modulePath = module;
+    } else {
+      modulePath = path.join(process.cwd(), module);
+    }
+
+    /* Get the modules and add to the modules array */
+    glob(modulePath)
+      .forEach(file => this.modules.push(file));
+
+    return this;
+  }
+
+  /**
+   * Create Output Handler
+   *
+   * Creates the output handler.  This is registered
+   * in the IOC as value of Steeplejack.outputHandlerName.
+   * It returns the handler so it can be used during
+   * the run phase.
+   *
+   * @param {{ outputHandler: Function }} server
+   * @return {Function}
+   */
+  createOutputHandler (server) {
+    /* Get the server output handler */
+    const instance = (request, response, fn, logError) => server
+      .outputHandler(request, response, fn, logError);
+
+    /* Store in the injector */
+    this.injector.registerComponent({
+      name: Steeplejack.outputHandlerName,
+      instance,
+    });
+
+    /* Return so can be used elsewhere */
+    return instance;
   }
 
   /**
@@ -81,17 +182,48 @@ export default class Steeplejack extends Base {
    * receive a function which configures the server
    * instance.
    *
+   * @param {string[]} deps
    * @param {function} factory
    * @return {Steeplejack}
    */
-  run (factory) {
-
+  run (deps, factory) {
     if (_.isFunction(factory) === false) {
-      throw new TypeError("Steeplejack.run must receive a factory to create the server");
+      throw new TypeError('Steeplejack.run must receive a factory to create the server');
     }
 
-    return this;
+    this.modules.forEach(module => this.injector.register(module));
 
+    /* Run the server factory through the injector */
+    this.server = this.injector.process(factory, deps);
+
+    /* Create the outputHandler and register to injector if not already done */
+    if (this.injector.getComponent(Steeplejack.outputHandlerName) === null) {
+      this.createOutputHandler(this.server);
+    }
+
+    /* Process the routes through the injector */
+    const processedRoutes = processRoutes(this.injector, this.routeFactories);
+
+    /* Get list of routes */
+    this.server
+      .on("routeAdded", (httpMethod, route) => {
+        console.log(httpMethod);
+        console.log(route);
+        process.exit();
+        this.routes.push(`${httpMethod}:${route}`);
+      })
+      .on("socketAdded", (socketName, event) => {
+        this.sockets.push(`${socketName}:${event}`);
+      });
+
+    console.log('run exit');
+    process.exit();
+
+    return this;
+  }
+
+  static get outputHandlerName () {
+    return '$output';
   }
 
   /**
@@ -109,10 +241,15 @@ export default class Steeplejack extends Base {
    * @param {string} routesGlob
    * @return {Steeplejack}
    */
-  static app ({config = {}, env = {}, modules = undefined, routesDir = undefined, routesGlob = undefined }) {
-
+  static app ({
+    config = {},
+    env = {},
+    modules = undefined,
+    routesDir = undefined,
+    routesGlob = undefined,
+  }) {
     /* Pull in the parameters from the command line */
-    let cliArgs = cliParameters(...yargs.argv._);
+    const cliArgs = cliParameters(...yargs.argv._);
 
     /* Merge config and envvars */
     config = _.merge(config, replaceEnvVars(env));
@@ -121,7 +258,7 @@ export default class Steeplejack extends Base {
     config = _.merge(config, cliArgs);
 
     return new Steeplejack(config, modules, routesDir, routesGlob);
-
   }
+
 
 }
