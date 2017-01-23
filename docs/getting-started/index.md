@@ -5,7 +5,7 @@
 Create a new directory called `myapp`. In that directory, you’ll need to run the following commands:
 
  - Run `npm init` to set up your NodeJS project. Follow the prompts and this will also generate a package.json file for
-  you. This example assumes that your main file is `app.js`.
+  you. This example assumes that your main file is `app.es6`.
  - Install the steeplejack dependencies:
     - `npm install steeplejack --save`
     - `npm install steeplejack-restify --save` - this example uses the [Restify](http://restify.com) HTTP strategy

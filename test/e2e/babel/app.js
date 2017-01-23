@@ -25,7 +25,7 @@ const deps = [
   'SocketIO',
 ];
 
-app.run(deps, function run (config, Restify, SocketIO) {
+app.run(deps, (config, Restify, SocketIO) => {
   const restify = new Restify();
 
   const socket = new SocketIO();

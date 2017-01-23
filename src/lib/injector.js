@@ -30,7 +30,7 @@ const construct = (constructor, args) => {
   return new Factory();
 };
 
-export default class Injector extends Base {
+class Injector extends Base {
 
   constructor () {
     super();
@@ -113,3 +113,5 @@ export default class Injector extends Base {
   }
 
 }
+
+module.exports = Injector;

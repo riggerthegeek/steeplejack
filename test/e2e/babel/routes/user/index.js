@@ -11,6 +11,9 @@
 export default userController => ({
   '/': {
     get (req) {
+      return {
+        hello: 'world'
+      };
       /* Simulate a valid bearer token */
       if (req.headers.authorization !== 'bearer valid') {
         return 401;

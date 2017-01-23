@@ -20,7 +20,7 @@ the following files.
 }
 ```
 
-## src/app.js
+## src/app.es6
 
 ```javascript
 /* Import your dependencies */

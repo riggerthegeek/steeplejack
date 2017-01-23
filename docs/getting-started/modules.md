@@ -20,8 +20,8 @@ src
 │   ├── hello
 │   │   └── world.js
 │   └── user
-│       └── index.js
-├── app.js
+│       └── index.es6
+├── app.es6
 ├── config.json
 └── envvars.json
 ```
@@ -52,7 +52,7 @@ In no way enforced, but this is a good convention.
  - Factory classes that would be invoked with `new` start with a capital letter, eg `UserModel`
  - Camel case for ordinary instances that would normally just be used within a module, eg `userStore`
 
-## /src/routes/user/index.js
+## /src/routes/user/index.es6
 
 Create a new endpoint on `GET:/user`. This dispatches to the `$userService`.
 

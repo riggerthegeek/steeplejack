@@ -89,7 +89,7 @@
 # v1.0.2
 
  - Fixed an issue with the router that meant nested route files (below 3 subdirectories) didn't load correctly. Files
- that far down were assuming the file was `index.js`
+ that far down were assuming the file was `index.es6`
 
 ---
 

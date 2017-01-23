@@ -23,7 +23,7 @@ import processRoutes from './helpers/processRoutes';
 import replaceEnvVars from './helpers/replaceEnvVars';
 import Router from './lib/router';
 
-export default class Steeplejack extends Base {
+class Steeplejack extends Base {
 
   /**
    * Constructor
@@ -70,8 +70,8 @@ export default class Steeplejack extends Base {
 
     /* Routing paths */
     this.routing = {
-      routes: {},
-      sockets: {}
+      routes: [],
+      sockets: [],
     };
 
     /* Array of injected modules */
@@ -207,17 +207,48 @@ export default class Steeplejack extends Base {
     /* Get list of routes */
     this.server
       .on("routeAdded", (httpMethod, route) => {
-        console.log(httpMethod);
-        console.log(route);
-        process.exit();
-        this.routes.push(`${httpMethod}:${route}`);
+        this.routing.routes.push(`${httpMethod}:${route}`);
       })
       .on("socketAdded", (socketName, event) => {
-        this.sockets.push(`${socketName}:${event}`);
+        this.routing.sockets.push(`${socketName}:${event}`);
       });
 
-    console.log('run exit');
-    process.exit();
+    /* Add in the routes to the server */
+    this.server
+      .addRoutes(processedRoutes.routes.routes)
+      .addSockets(processedRoutes.sockets.routes);
+
+    /* Add in the post route middleware */
+    this.server
+      .afterUse
+      .forEach(fn => this.server.use(...fn()));
+
+    /* Listen for close events */
+    this.on("close", () => {
+      this.server.close();
+    });
+
+    /* Start the server */
+    this.server.start()
+      .then(() => {
+        const log = console.log;
+
+        /* Output current config */
+        log("--- Config  ---");
+        log(JSON.stringify(this.config, null, 4));
+
+        /* Output routes */
+        log("--- Routes  ---");
+        log(this.routing.routes.join("\n"));
+
+        /* Output sockets */
+        log("--- Sockets ---");
+        log(this.routing.sockets.join("\n"));
+        log("---------------");
+
+        /* Notify that we've started */
+        this.emit("start", this);
+      });
 
     return this;
   }
@@ -262,3 +293,5 @@ export default class Steeplejack extends Base {
 
 
 }
+
+module.exports = Steeplejack;

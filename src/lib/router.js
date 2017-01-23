@@ -50,7 +50,7 @@ function setRouteName (parent, route) {
   return cleanSlashes(str);
 }
 
-export default class Router extends Base {
+class Router extends Base {
 
   constructor (routes = null) {
     super();
@@ -234,3 +234,5 @@ export default class Router extends Base {
   }
 
 }
+
+module.exports = Router;

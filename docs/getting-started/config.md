@@ -15,7 +15,7 @@ Any overridden config is typecast into an appropriate data type.
 
 To use environment variables, you need to add an `env` to your initial factory.
 
-## /src/app.js
+## /src/app.es6
 
 ```javascript
 let app = Steeplejack.app({
