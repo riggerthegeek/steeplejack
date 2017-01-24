@@ -17,7 +17,7 @@ export default (injector, routes) => {
   ];
 
   const data = _.reduce(routes, (result, value, name) => {
-    _.each(types, type => {
+    _.each(types, (type) => {
       if (value[type]) {
         const {
           deps,
@@ -37,6 +37,6 @@ export default (injector, routes) => {
   /* Put into a Router object and return */
   return {
     routes: new Router(data.route),
-    sockets: new Router(data.socket)
+    sockets: new Router(data.socket),
   };
-}
+};

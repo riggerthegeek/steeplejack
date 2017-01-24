@@ -11,25 +11,21 @@ import { _ } from 'lodash';
 import coerce from './coerce';
 
 const decodeParams = (input) => {
-
   if (_.isString(input) === false) {
-    return;
+    return undefined;
   }
 
   let param;
   let value;
 
   /* Check for object notation */
-  if (input.match(/\.([\s\w]+)(\=)/) !== null) {
-
+  if (input.match(/\.([\s\w]+)(=)/) !== null) {
     let elements = input.split('.');
 
     _.each(elements, (element, key) => {
-
       if (key > 1) {
-        elements[1] += '.' + element;
+        elements[1] += `.${element}`;
       }
-
     });
 
     elements = elements.splice(0, 2);
@@ -43,27 +39,16 @@ const decodeParams = (input) => {
     value = {};
 
     value[parsedParams.param] = parsedParams.value;
-
-
+  } else if (input.match(/=/) === null) {
+    /* No equals sign - default value to true */
+    param = input;
+    value = true;
   } else {
+    /* Equals sign present - treat as key/value pair */
+    const tmp = input.split('=', 2);
 
-    /* Check for an equals sign */
-    if (input.match(/=/) === null) {
-
-      /* None - default value to true */
-      param = input;
-      value = true;
-
-    } else {
-
-      /* Present - treat as key/value pair */
-      const tmp = input.split('=', 2);
-
-      param = tmp[0];
-      value = coerce(tmp[1].trim());
-
-    }
-
+    param = tmp[0];
+    value = coerce(tmp[1].trim());
   }
 
   /* Clean up any whitespace in the param */
@@ -72,9 +57,8 @@ const decodeParams = (input) => {
   /* Return the pairs */
   return {
     param,
-    value
+    value,
   };
-
 };
 
 export default decodeParams;

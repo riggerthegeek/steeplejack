@@ -50,6 +50,8 @@ class Injector extends Base {
     if (_.has(this.components, name)) {
       return this.components[name];
     }
+
+    return undefined;
   }
 
   getDependencies (dependencies) {
@@ -76,7 +78,6 @@ class Injector extends Base {
   }
 
   register (filePath) {
-
     const isRequirable = _.isString(filePath);
 
     // eslint-disable-next-line import/no-dynamic-require, global-require
@@ -106,7 +107,7 @@ class Injector extends Base {
       deps: inject.deps || [],
       factory: inject.factory,
       instance: inject.instance,
-      path: inject.path
+      path: inject.path,
     };
 
     return this;

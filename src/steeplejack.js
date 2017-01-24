@@ -206,10 +206,10 @@ class Steeplejack extends Base {
 
     /* Get list of routes */
     this.server
-      .on("routeAdded", (httpMethod, route) => {
+      .on('routeAdded', (httpMethod, route) => {
         this.routing.routes.push(`${httpMethod}:${route}`);
       })
-      .on("socketAdded", (socketName, event) => {
+      .on('socketAdded', (socketName, event) => {
         this.routing.sockets.push(`${socketName}:${event}`);
       });
 
@@ -223,30 +223,31 @@ class Steeplejack extends Base {
       .forEach(fn => this.server.use(...fn()));
 
     /* Listen for close events */
-    this.on("close", () => {
+    this.on('close', () => {
       this.server.close();
     });
 
     /* Start the server */
     this.server.start()
       .then(() => {
+        // eslint-disable-next-line no-console
         const log = console.log;
 
         /* Output current config */
-        log("--- Config  ---");
+        log('--- Config  ---');
         log(JSON.stringify(this.config, null, 4));
 
         /* Output routes */
-        log("--- Routes  ---");
-        log(this.routing.routes.join("\n"));
+        log('--- Routes  ---');
+        log(this.routing.routes.join('\n'));
 
         /* Output sockets */
-        log("--- Sockets ---");
-        log(this.routing.sockets.join("\n"));
-        log("---------------");
+        log('--- Sockets ---');
+        log(this.routing.sockets.join('\n'));
+        log('---------------');
 
         /* Notify that we've started */
-        this.emit("start", this);
+        this.emit('start', this);
       });
 
     return this;

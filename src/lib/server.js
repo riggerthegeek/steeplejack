@@ -6,7 +6,7 @@
 
 /* Third-party modules */
 import { _ } from 'lodash';
-import { Base } from '@steeplejack/core'
+import { Base } from '@steeplejack/core';
 
 /* Files */
 import Socket from './socket';
@@ -28,23 +28,18 @@ import Socket from './socket';
  */
 function routeFactory (request, response, tasks) {
   /* Use the outputHandler method to output */
-  return this.outputHandler(request, response, () => {
+  return this.outputHandler(request, response, () =>
     /* Run the tasks in order */
-    return tasks.reduce((thenable, task) => {
-      return thenable.then(() => {
-        return new Promise(resolve => {
+     tasks.reduce((thenable, task) => thenable.then(() => new Promise((resolve) => {
           /* Invoke the function */
-          const result = task(request, response);
+       const result = task(request, response);
           /* Resolve the result */
-          resolve(result);
-        });
-      });
-    }, Promise.resolve());
-  });
+       resolve(result);
+     })), Promise.resolve()));
 }
 
 /**
- * Methods
+ * Allowable Methods
  *
  * The HTTP methods that can be called. There is
  * a special 'all' type which, if called, will
@@ -52,14 +47,14 @@ function routeFactory (request, response, tasks) {
  *
  * @type {string[]}
  */
-const methods = [
+const allowableMethods = [
   'GET',
   'POST',
   'PUT',
   'DELETE',
   'HEAD',
   'OPTIONS',
-  'PATCH'
+  'PATCH',
 ];
 
 class Server extends Base {
@@ -73,7 +68,7 @@ class Server extends Base {
 
     this.middleware = {
       afterUse: [],
-      preSend: undefined
+      preSend: undefined,
     };
     this.options = options;
     this.strategy = strategy;
@@ -100,7 +95,6 @@ class Server extends Base {
    * @returns {Server}
    */
   addRoute (httpMethod, route, fn) {
-
     /* This the function that is set to the route */
     let routeFn;
 
@@ -119,7 +113,7 @@ class Server extends Base {
     httpMethod = httpMethod.toUpperCase();
 
     if (httpMethod === 'ALL') {
-      _.each(methods, method => {
+      _.each(allowableMethods, (method) => {
         this.addRoute(method, route, fn);
       });
       return this;
@@ -136,7 +130,7 @@ class Server extends Base {
         break;
 
       default:
-        if (methods.indexOf(httpMethod) === -1) {
+        if (allowableMethods.indexOf(httpMethod) === -1) {
           /* An invalid method */
           throw new SyntaxError(`HTTP method is unknown: ${httpMethod}`);
         }
@@ -151,15 +145,13 @@ class Server extends Base {
     if (_.isArray(fn)) {
       routeFn = fn;
     } else {
-      routeFn = [ fn ];
+      routeFn = [fn];
     }
 
-    this.strategy.addRoute(httpMethod, route, (request, response) => {
-      return routeFactory.call(this, request, response, routeFn);
-    });
+    this.strategy.addRoute(httpMethod, route, (request, response) =>
+      routeFactory.call(this, request, response, routeFn));
 
     return this;
-
   }
 
   /**
@@ -275,15 +267,14 @@ class Server extends Base {
       .then(({ end, output, statusCode }) => {
         if (this.middleware.preSend && !end) {
           return this.middleware.preSend(statusCode, output, req, res);
-        } else {
-          return {
-            end,
-            output,
-            statusCode,
-          }
         }
+        return {
+          end,
+          output,
+          statusCode,
+        };
       })
-      .catch(err => {
+      .catch((err) => {
         const parsedError = Server.parseError(err);
 
         /* A thrown error is an uncaught error */
@@ -308,14 +299,19 @@ class Server extends Base {
         if (!end) {
           return this.strategy.outputHandler(statusCode, output, req, res);
         }
+
+        return undefined;
       })
-      .catch(err => {
+      .catch((err) => {
         if (this.listeners('uncaughtException').length === 0) {
-          console.error('--- UNCAUGHT EXCEPTION ---');
+          // eslint-disable-next-line no-console
+          const log = console.error;
+
+          log('--- UNCAUGHT EXCEPTION ---');
           if (err.stack) {
-            console.error(err.stack);
+            log(err.stack);
           } else {
-            console.error(err);
+            log(err);
           }
 
           /* Throw the error for the outputHandler to show */
@@ -428,7 +424,7 @@ class Server extends Base {
     return {
       end,
       statusCode,
-      output
+      output,
     };
   }
 
@@ -453,7 +449,7 @@ class Server extends Base {
       statusCode = 400;
       output = {
         code: err.type,
-        message: err.message
+        message: err.message,
       };
 
       if (err.hasErrors()) {
@@ -470,7 +466,7 @@ class Server extends Base {
 
     return {
       statusCode,
-      output
+      output,
     };
   }
 

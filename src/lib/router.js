@@ -23,10 +23,10 @@ import { sync as glob } from 'glob';
  */
 function cleanSlashes (str) {
   /* Remove forward slashes */
-  str = str.replace(/\\/g, "/");
+  str = str.replace(/\\/g, '/');
 
   /* Remove excess slashes */
-  str = str.replace(/\/+/g, "/");
+  str = str.replace(/\/+/g, '/');
 
   return str;
 }
@@ -44,8 +44,8 @@ function cleanSlashes (str) {
 function setRouteName (parent, route) {
   const str = [
     parent,
-    route
-  ].join("/");
+    route,
+  ].join('/');
 
   return cleanSlashes(str);
 }
@@ -72,15 +72,13 @@ class Router extends Base {
    */
   addRoute (routes, parent = undefined) {
     _.each(routes, (value, key) => {
-
       if (_.isPlainObject(value)) {
         /* It's an object - we're not yet at the lowest level */
         this.addRoute(value, setRouteName(parent, key));
       } else {
-
         /* Remove final slash */
-        if (parent !== undefined && parent !== "/") {
-          parent = parent.replace(/(\/+)$/, "");
+        if (parent !== undefined && parent !== '/') {
+          parent = parent.replace(/(\/+)$/, '');
         }
 
         /* Save to the instance */
@@ -90,16 +88,14 @@ class Router extends Base {
 
         if (_.has(this.routes, [parent, key])) {
           /* Can't overwrite a route */
-          let err = new SyntaxError("CANNOT_OVERWRITE_A_ROUTE");
+          const err = new SyntaxError('CANNOT_OVERWRITE_A_ROUTE');
           err.route = parent;
           err.key = key;
           throw err;
         }
 
         this.routes[parent][key] = value;
-
       }
-
     });
 
     return this;
@@ -140,11 +136,12 @@ class Router extends Base {
         const filePath = path.join(file.path, file.name);
 
         /* Load the route file */
+        // eslint-disable-next-line import/no-dynamic-require, global-require
         const objRoute = require(filePath);
 
         if (!objRoute.route && !objRoute.socket) {
           throw new TypeError(
-            `No route or socket exported from file: ${filePath}`
+            `No route or socket exported from file: ${filePath}`,
           );
         }
 
@@ -178,16 +175,15 @@ class Router extends Base {
       /* Don't waste effort sorting here */
       nosort: true,
     }).map(file => ({
-        name: file.replace(routeDir + path.sep, ''),
-        path: routeDir
+      name: file.replace(routeDir + path.sep, ''),
+      path: routeDir,
     })).sort((a, b) => {
       /* Put an index file at the end */
       if (a.name.match(/index\./)) {
         return 1;
-      } else {
-        /* Sort by filename */
-        return a.name > b.name ? 1 : -1;
       }
+        /* Sort by filename */
+      return a.name > b.name ? 1 : -1;
     });
   }
 
@@ -229,7 +225,7 @@ class Router extends Base {
 
     return {
       factory,
-      deps
+      deps,
     };
   }
 
