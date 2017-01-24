@@ -20,8 +20,7 @@ before_install:
 - date
 
 script:
-- npm run ci
-- echo $?
+- npm run coverage
 
 before_deploy:
 - npm run compile
