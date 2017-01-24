@@ -20,6 +20,7 @@ before_install:
 - date
 
 script:
+- exit 1
 - npm run coverage
 
 before_deploy:
