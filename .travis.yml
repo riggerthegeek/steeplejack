@@ -21,6 +21,7 @@ before_install:
 
 script:
 - npm run ci
+- echo $?
 
 before_deploy:
 - npm run compile
