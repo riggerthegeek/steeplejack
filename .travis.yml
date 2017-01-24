@@ -25,18 +25,18 @@ script:
 before_deploy:
 - npm run compile
 
-#deploy:
-#  provider: script
-#  script: ./deploy.sh
-#  skip_cleanup: true
-#  on:
-#    tags: true
-#    repo: steeplejack-js/core
-#
-#notifications:
-#  webhooks:
-#    urls:
-#    - https://webhooks.gitter.im/e/d048e712b735c6cb4cf2
-#    on_success: change
-#    on_failure: always
-#    on_start: false
+deploy:
+  provider: script
+  script: ./deploy.sh
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: steeplejack-js/core
+
+notifications:
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/d048e712b735c6cb4cf2
+    on_success: change
+    on_failure: always
+    on_start: false
