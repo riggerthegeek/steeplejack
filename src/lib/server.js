@@ -12,7 +12,7 @@ import { Base } from '@steeplejack/core'
 import Socket from './socket';
 
 /**
- * Add Route
+ * Route Factory
  *
  * Adds the route to the strategy and configures
  * the output ready for use by the output handler.
@@ -26,7 +26,7 @@ import Socket from './socket';
  * @param {Array} tasks
  * @returns {Promise}
  */
-function addRoute (request, response, tasks) {
+function routeFactory (request, response, tasks) {
   /* Use the outputHandler method to output */
   return this.outputHandler(request, response, () => {
     /* Run the tasks in order */
@@ -71,7 +71,10 @@ class Server extends Base {
       throw new SyntaxError('Server strategy object is required');
     }
 
-    this.afterUse = [];
+    this.middleware = {
+      afterUse: [],
+      preSend: undefined
+    };
     this.options = options;
     this.strategy = strategy;
     this.socket = undefined;
@@ -87,7 +90,9 @@ class Server extends Base {
   /**
    * Add Route
    *
-   * Adds a single route to the stack
+   * Adds a single route to the stack. Accepts either
+   * a function or an array of functions - it always
+   * converts this to an array of functions.
    *
    * @param {string} httpMethod
    * @param {string} route
@@ -150,7 +155,7 @@ class Server extends Base {
     }
 
     this.strategy.addRoute(httpMethod, route, (request, response) => {
-      return addRoute.call(this, request, response, routeFn);
+      return routeFactory.call(this, request, response, routeFn);
     });
 
     return this;
@@ -206,23 +211,78 @@ class Server extends Base {
     return this;
   }
 
+  /**
+   * After
+   *
+   * This function is run after the routes/sockets
+   * are added.
+   *
+   * @param {*[]} args
+   * @returns {Server}
+   */
+  after (...args) {
+    const closure = () => args;
+
+    this.middleware.afterUse.push(closure);
+
+    return this;
+  }
+
+  /**
+   * Close
+   *
+   * Closes the server
+   *
+   * @returns {Server}
+   */
+  close () {
+    this.strategy.close();
+
+    return this;
+  }
+
+  /**
+   * Get Server
+   *
+   * Gets the server instance from the strategy
+   *
+   * @returns {object}
+   */
   getServer () {
     return this.strategy.getServer();
   }
 
+  /**
+   * Output Handler
+   *
+   * Handles the output, dispatching to the strategy
+   * so it displays the output correctly. This invokes
+   * the given function as a Promise and then handles
+   * what it returns. This is how the router should
+   * start going to the application tier and beyond.
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} fn
+   * @param {boolean} logError
+   * @returns {Promise<T>|Promise<U>}
+   */
   outputHandler (req, res, fn, logError = true) {
     const task = resolve => resolve(fn());
 
     return new Promise(task)
       .then(data => Server.parseData(data))
-      // @todo - add preSend
-      // .then(({ statusCode, output }) => {
-      //   console.log({
-      //     statusCode,
-      //     output
-      //   });
-      //   process.exit();
-      // })
+      .then(({ end, output, statusCode }) => {
+        if (this.middleware.preSend && !end) {
+          return this.middleware.preSend(statusCode, output, req, res);
+        } else {
+          return {
+            end,
+            output,
+            statusCode,
+          }
+        }
+      })
       .catch(err => {
         const parsedError = Server.parseError(err);
 
@@ -233,7 +293,7 @@ class Server extends Base {
 
         return parsedError;
       })
-      .then(({ statusCode, output }) => {
+      .then(({ end, output, statusCode }) => {
         /* Is output empty? */
         if (
           statusCode === 200 &&
@@ -245,7 +305,9 @@ class Server extends Base {
           output = undefined;
         }
 
-        return this.strategy.outputHandler(statusCode, output, req, res);
+        if (!end) {
+          return this.strategy.outputHandler(statusCode, output, req, res);
+        }
       })
       .catch(err => {
         if (this.listeners('uncaughtException').length === 0) {
@@ -268,6 +330,24 @@ class Server extends Base {
   }
 
   /**
+   * Pre Send
+   *
+   * Similar to .use and .after, this is a hook that is
+   * called immediately before the data is sent. This is
+   * only run when there is a successful (2xx) response
+   * and is designed for inspecting the data object so
+   * HTTP caching can be configured.
+   *
+   * @param {function} fn
+   * @returns {Server}
+   */
+  preSend (fn) {
+    this.middleware.preSend = fn;
+
+    return this;
+  }
+
+  /**
    * Start
    *
    * Starts up the server, returning a Promise
@@ -278,9 +358,58 @@ class Server extends Base {
     return this.strategy.start(this.options.port, this.options.hostname, this.options.backlog);
   }
 
+  /**
+   * Uncaught Exception
+   *
+   * Listens for uncaught exceptions. The listener
+   * receives three parameters, request, response
+   * and the error itself.
+   *
+   * @param {Function} fn
+   * @returns {Server}
+   */
+  uncaughtException (fn) {
+    if (_.isFunction(fn) === false) {
+      throw new TypeError('Server.uncaughtException must receive a function');
+    }
+
+    /* Listen for uncaught exceptions in the application */
+    this.on('uncaughtException', fn);
+
+    /* Listen for uncaught exceptions in the strategy */
+    this.strategy.uncaughtException(fn);
+
+    return this;
+  }
+
+  /**
+   * Use
+   *
+   * Allows you to apply anything to the call. Although
+   * this will usually be a function or array of functions,
+   * it doesn't have to be.
+   *
+   * @param {*[]} args
+   * @returns {Server}
+   */
+  use (...args) {
+    this.strategy.use(...args);
+
+    return this;
+  }
+
+  /**
+   * Parse Data
+   *
+   * Parses the data output
+   *
+   * @param {*} data
+   * @returns {{end: boolean, statusCode: number, output: *}}
+   */
   static parseData (data) {
-    let statusCode = 200;
+    let end = false;
     let output;
+    let statusCode = 200;
 
     /* Some data to display */
     if (data >= 100 && data < 600) {
@@ -290,10 +419,53 @@ class Server extends Base {
       /* Get the data from a function */
       output = data.getData();
     } else if (data === 'end') {
-      statusCode = 999;
+      end = true;
     } else {
       /* Just output the data */
       output = data;
+    }
+
+    return {
+      end,
+      statusCode,
+      output
+    };
+  }
+
+  /**
+   * Parse Error
+   *
+   * Parses the error output
+   *
+   * @param {Error} err
+   * @returns {{statusCode: number, output: *}}
+   */
+  static parseError (err) {
+    let output;
+    let statusCode = 500;
+
+    /* Work out the appropriate error message */
+    if (err >= 100 && err < 600) {
+      /* HTTP status code */
+      statusCode = err;
+    } else if (_.isFunction(err.hasErrors)) {
+      /* A steeplejack validation error */
+      statusCode = 400;
+      output = {
+        code: err.type,
+        message: err.message
+      };
+
+      if (err.hasErrors()) {
+        output.error = err.getErrors();
+      }
+    } else if (_.isFunction(err.getHttpCode) && _.isFunction(err.getDetail)) {
+      /* It's a Steeplejack error - output as normal */
+      statusCode = err.getHttpCode();
+      output = err.getDetail();
+    } else {
+      /* Could be anything - treat as uncaught exception */
+      throw err;
     }
 
     return {

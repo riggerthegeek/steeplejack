@@ -216,10 +216,9 @@ class Steeplejack extends Base {
     /* Add in the routes to the server */
     this.server
       .addRoutes(processedRoutes.routes.routes)
-      .addSockets(processedRoutes.sockets.routes);
-
-    /* Add in the post route middleware */
-    this.server
+      .addSockets(processedRoutes.sockets.routes)
+      /* Add in the post route middleware */
+      .middleware
       .afterUse
       .forEach(fn => this.server.use(...fn()));
 
