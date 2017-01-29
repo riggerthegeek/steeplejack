@@ -64,7 +64,7 @@ class Injector extends Base {
 
       /* If instance hasn't already been processed, process it */
       if (!dependency.instance) {
-        dependency.instance = this.process(dependency.factory);
+        dependency.instance = this.process(dependency.factory, dependency.deps);
       }
 
       return dependency.instance;
@@ -85,6 +85,12 @@ class Injector extends Base {
     const path = isRequirable ? filePath : undefined;
 
     const inject = module.inject || {};
+    const name = inject.name;
+
+    if (!name) {
+      throw new SyntaxError(`No name specified in injected module: ${path}`);
+    }
+
     const exportable = inject.export || 'default';
     const type = inject.type || 'factory';
     const deps = inject.deps;
@@ -94,7 +100,7 @@ class Injector extends Base {
       deps,
       factory: type === 'factory' ? injectable : undefined,
       instance: type === 'instance' ? injectable : undefined,
-      name: inject.name,
+      name,
       path,
     });
   }

@@ -78,7 +78,4 @@ export default function soc () {
 
 export const inject = {
   name: 'SocketIO',
-  deps: [
-    'Res'
-  ]
 };

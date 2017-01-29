@@ -42,6 +42,8 @@
     "watch:coverage": "nodemon --exec 'npm run coverage -s' --legacy-watch",
     "watch:test": "nodemon --exec 'npm run test -s' --legacy-watch",
     "watch:test:e2e": "nodemon --exec 'npm run test:e2e -s' --legacy-watch",
+    "watch:test:e2e:babel": "nodemon --exec 'npm run test:e2e:babel -s' --legacy-watch",
+    "watch:test:e2e:native": "nodemon --exec 'npm run test:e2e:native -s' --legacy-watch",
     "watch:test:lint": "nodemon --exec 'npm run test:lint -s' --legacy-watch",
     "watch:test:unit": "nodemon --exec 'npm run test:unit -s' --legacy-watch"
   },
@@ -54,6 +56,7 @@
     "yargs": "^6.6.0"
   },
   "devDependencies": {
+    "@steeplejack/data": "^1.0.0",
     "babel-cli": "^6.18.0",
     "babel-plugin-istanbul": "^3.1.2",
     "babel-preset-env": "^1.1.8",
