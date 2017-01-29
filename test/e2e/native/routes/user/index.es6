@@ -17,6 +17,15 @@ exports.default = userController => ({
       }
 
       return userController.getUser('1');
+    },
+
+    post (req) {
+      /* Simulate a valid bearer token */
+      if (req.headers.authorization !== "bearer valid") {
+        return 401;
+      }
+
+      return userController.createUser(req.body);
     }
   }
 });

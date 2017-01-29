@@ -23,7 +23,7 @@ describe('e2e tests', function () {
 
   });
 
-  describe.only("/user", function () {
+  describe("/user", function () {
 
     describe("/empty", function () {
 
@@ -60,7 +60,7 @@ describe('e2e tests', function () {
 
       });
 
-      it.only("should get the user data", function () {
+      it("should get the user data", function () {
 
         return request
           .get("/user")

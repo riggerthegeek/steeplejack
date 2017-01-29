@@ -28,6 +28,9 @@ const deps = [
 app.run(deps, (config, Restify, SocketIO) => {
   const restify = new Restify();
 
+  restify.bodyParser();
+  restify.gzipResponse();
+
   const socket = new SocketIO();
 
   return new Server(config.server, restify, socket);
