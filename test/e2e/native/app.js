@@ -14,10 +14,9 @@ const Steeplejack = require('../../../build/steeplejack');
 const app = Steeplejack.app({
   config: require('./config'),
   modules: [
-    `${__dirname}/!(routes)/**/*.es6`
+    `${__dirname}/!(routes)/**/*.js`
   ],
-  routesDir: path.join(__dirname, 'routes'),
-  routesGlob: '**/*.es6'
+  routesDir: path.join(__dirname, 'routes')
 });
 
 const deps = [
