@@ -7,10 +7,10 @@
 /* Node modules */
 
 /* Third-party modules */
-import supertest from 'supertest-as-promised';
+const supertest = require('supertest-as-promised');
 
 /* Files */
-import { expect } from './configure';
+const expect = require('./configure').expect;
 
 const type = process.env.STEEPLEJACK_TYPE;
 
@@ -28,7 +28,7 @@ if (type === 'babel') {
 /* Create a request object with the application injected */
 const request = supertest(app.server.getServer());
 
-export {
+module.exports = {
   expect,
   request,
 };

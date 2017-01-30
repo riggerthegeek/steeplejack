@@ -36,7 +36,7 @@
     "test": "npm run test:lint -s && npm run test:unit -s && npm run test:e2e -s",
     "test:e2e": "npm run test:e2e:babel -s && npm run test:e2e:native -s",
     "test:e2e:babel": "STEEPLEJACK_TYPE=babel mocha --compilers js:babel-register --throw-deprecation --ui bdd --full-trace --recursive test/e2e/test",
-    "test:e2e:native": "STEEPLEJACK_TYPE=native mocha --compilers js:babel-register --throw-deprecation --ui bdd --full-trace --recursive test/e2e/test",
+    "test:e2e:native": "npm run compile -s && STEEPLEJACK_TYPE=native mocha --throw-deprecation --ui bdd --full-trace --recursive test/e2e/test",
     "test:lint": "eslint src",
     "test:unit": "mocha --compilers js:babel-register --throw-deprecation --ui bdd --full-trace --recursive test/unit",
     "watch:coverage": "nodemon --exec 'npm run coverage -s' --legacy-watch",

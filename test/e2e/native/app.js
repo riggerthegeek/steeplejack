@@ -6,8 +6,8 @@
 const path = require('path');
 
 /* Third-party modules */
-const Server = require('../../../src/lib/server');
-const Steeplejack = require('../../../src/steeplejack');
+const Server = require('../../../build/lib/server');
+const Steeplejack = require('../../../build/steeplejack');
 
 /* Files */
 

@@ -7,7 +7,7 @@
 /* Third-party modules */
 
 /* Files */
-import { request } from '../../helpers/e2e';
+const { request } = require('../../helpers/e2e');
 
 describe('e2e tests', function () {
 
