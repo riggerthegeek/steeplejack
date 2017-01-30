@@ -18,66 +18,66 @@ import Bluebird from "bluebird";
  * The SQLite library was problematic so I wrote
  * this to read a JSON file
  */
-export default class SQLite3 {
+export default (config) => {
 
-  constructor (config) {
-    this._filename = config.sqlite.filename;
-    this._data = require(this._filename);
-  }
+  const filename = config.sqlite.filename;
+  let dbData = require(filename);
 
-  close () {}
+  return {
 
-  get (table, match, limit) {
+    get (table, match, limit) {
 
-    return Bluebird.try(() => {
+      return Bluebird.try(() => {
 
-      if (_.has(this._data, table)) {
+        if (_.has(dbData, table)) {
 
-        let data = this._data[table];
+          let data = dbData[table];
 
-        data = _.filter(data, match);
+          data = _.filter(data, match);
 
-        if (_.isNumber(limit) && limit > 0) {
-          data = _.slice(data, 0, limit);
+          if (_.isNumber(limit) && limit > 0) {
+            data = _.slice(data, 0, limit);
+          }
+
+          return data;
+
         }
 
-        return data;
+        return [];
 
-      }
+      });
 
-      return [];
+    },
 
-    });
+    insert (table, input) {
 
-  }
+      return Bluebird.try(() => {
 
-  insert (table, input) {
+        if (_.has(dbData, table) === false) {
+          dbData[table] = [];
+        }
 
-    return Bluebird.try(() => {
+        let data = dbData[table];
 
-      if (_.has(this._data, table) === false) {
-        this._data[table] = [];
-      }
+        let last = _.last(data);
 
-      let data = this._data[table];
+        input.id = last ? String(Number(last.id) + 1) : 1;
 
-      let last = _.last(data);
+        dbData[table].push(input);
 
-      input.id = last ? String(Number(last.id) + 1) : 1;
+        fs.writeFileSync(filename, JSON.stringify(dbData), "utf8");
 
-      this._data[table].push(input);
+        dbData = require(filename);
 
-      fs.writeFileSync(this._filename, JSON.stringify(this._data), "utf8");
+        return input;
 
-      this._data = require(this._filename);
+      });
 
-      return input;
+    }
 
-    });
+  };
 
-  }
-
-}
+};
 
 /* Defines the public output */
 export const inject = {
@@ -86,24 +86,3 @@ export const inject = {
     '$config'
   ]
 };
-
-// export let __factory = {
-//   name: "$SQLiteResource",
-//   factory: ($config) => {
-//
-//     return new Pool({
-//       name: "sqlite",
-//       create: (cb) => {
-//
-//         let db = new SQLite3(path.join(__dirname, $config.sqlite.filename));
-//
-//         cb(null, db);
-//
-//       },
-//       destroy: (client) => {
-//         return client.close();
-//       }
-//     });
-//
-//   }
-// };

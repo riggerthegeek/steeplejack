@@ -78,7 +78,4 @@ exports.default = function soc () {
 
 exports.inject = {
   name: 'SocketIO',
-  deps: [
-    'Res'
-  ]
 };

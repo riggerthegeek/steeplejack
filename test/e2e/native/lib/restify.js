@@ -81,9 +81,4 @@ exports.default = () => {
 
 exports.inject = {
   name: 'Restify'
-//   export: 'default',
-//   type: 'factory',
-//   deps: [
-//
-//   ]
 };

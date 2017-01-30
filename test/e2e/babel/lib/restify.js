@@ -81,9 +81,4 @@ export default () => {
 
 export const inject = {
   name: 'Restify'
-//   export: 'default',
-//   type: 'factory',
-//   deps: [
-//
-//   ]
 };

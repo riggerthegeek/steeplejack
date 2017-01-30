@@ -33,11 +33,6 @@ exports.default = userController => ({
 exports.route = {
   export: 'default',
   deps: [
-    // '$userController',
+    '$userController',
   ],
 };
-
-// exports.socket = {
-//   export: 'socket',
-//   deps: [],
-// };
