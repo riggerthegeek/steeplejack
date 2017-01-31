@@ -7,7 +7,7 @@
 /* Node modules */
 
 /* Third-party modules */
-const supertest = require('supertest-as-promised');
+const supertest = require('supertest');
 
 /* Files */
 const expect = require('./configure').expect;
