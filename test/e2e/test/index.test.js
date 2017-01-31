@@ -5,9 +5,10 @@
 /* Node modules */
 
 /* Third-party modules */
+const io = require('socket.io-client');
 
 /* Files */
-const { request } = require('../../helpers/e2e');
+const { config, request, expect } = require('../../helpers/e2e');
 
 describe('e2e tests', function () {
 
@@ -165,28 +166,29 @@ describe('e2e tests', function () {
 
     });
 
-    describe.skip("SOCKET", function () {
+    describe("SOCKET", function () {
 
       beforeEach(function () {
 
-        var port = app.server._options.port;
-        var socketUrl = "http://localhost:" + port + "/user";
-
-        this.socket = io(socketUrl);
+        this.port = config.instance.server.port;
 
       });
 
-      it("should connect to a socket and receive something back", function () {
+      it("should connect to a socket and receive something back", function (done) {
 
-        var self = this;
+        const socketUrl = `http://localhost:${this.port}/user`;
 
-        self.socket.on("connect", function () {
-          self.socket.emit("send", "arg1", "arg2", 3);
+        const socket = io(socketUrl);
+
+        socket.on("connect", () => {
+          socket.emit("send", "arg1", "arg2", 3);
         });
 
-        self.socket.on("receive", function (v1, v2, v3) {
+        socket.on("receive", (...args) => {
 
-          expect(arguments).to.have.length(3);
+          const [ v1, v2, v3 ] = args;
+
+          expect(args).to.have.length(3);
 
           expect(v1).to.be.equal("arg1");
           expect(v2).to.be.equal("arg2");
@@ -198,25 +200,22 @@ describe('e2e tests', function () {
 
       });
 
-      it("should disconnect from the socket", function () {
+      it("should disconnect from the socket", function (done) {
 
-        var port = app.server._options.port;
-        var socketUrl = "http://localhost:" + port + "/disconnection";
+        const socketUrl = `http://localhost:${this.port}/disconnection`;
 
-        var socket = io(socketUrl);
+        const socket = io(socketUrl);
 
-        var hasConnected = false;
+        let hasConnected = false;
 
-        socket.on("connect", function () {
+        socket.on("connect", () => {
           hasConnected = true;
         });
 
-        socket.on("disconnect", function () {
-
+        socket.on("disconnect", () => {
           expect(hasConnected).to.be.true;
 
           done();
-
         });
 
       });

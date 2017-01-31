@@ -6,13 +6,14 @@
 import { EventEmitter } from 'events';
 
 /* Third-party modules */
+import { Base } from '@steeplejack/core';
 import { _ } from 'lodash';
 import io from 'socket.io';
 
 /* Files */
 
-export default function soc () {
-  class SocketIO {
+export default function socketIO () {
+  class SocketIO extends Base {
 
     broadcast (request, broadcast) {
 

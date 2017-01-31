@@ -29,6 +29,7 @@ if (type === 'babel') {
 const request = supertest(app.server.getServer());
 
 module.exports = {
+  config: app.injector.getComponent('$config'),
   expect,
   request,
 };
