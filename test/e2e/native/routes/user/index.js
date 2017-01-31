@@ -30,9 +30,22 @@ exports.default = userController => ({
   }
 });
 
+exports.socketRoute = () => ({
+  send: socket => {
+    socket.broadcast({
+      event: "receive",
+      data: socket.params
+    });
+  }
+});
+
 exports.route = {
   export: 'default',
   deps: [
     '$userController',
   ],
+};
+
+exports.socket = {
+  export: 'socketRoute'
 };

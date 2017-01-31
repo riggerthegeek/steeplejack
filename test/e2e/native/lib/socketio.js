@@ -3,16 +3,16 @@
  */
 
 /* Node modules */
-const EventEmitter = require('events').EventEmitter;
 
 /* Third-party modules */
+const Base = require('@steeplejack/core').Base;
 const _ = require('lodash');
 const io = require('socket.io');
 
 /* Files */
 
-exports.default = function soc () {
-  class SocketIO {
+exports.default = function socketIO () {
+  class SocketIO extends Base {
 
     broadcast (request, broadcast) {
 
