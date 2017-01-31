@@ -14,6 +14,8 @@ export default () => ({
   }
 });
 
-export const route = {
-  export: 'default',
+export const inject = {
+  route: {
+    export: 'default'
+  }
 };

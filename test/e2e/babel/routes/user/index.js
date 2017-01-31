@@ -39,13 +39,14 @@ export const socketRoute = () => ({
   }
 });
 
-export const route = {
-  export: 'default',
-  deps: [
-    '$userController',
-  ],
-};
-
-export const socket = {
-  export: 'socketRoute'
+export const inject = {
+  route: {
+    export: 'default',
+    deps: [
+      '$userController',
+    ]
+  },
+  socket: {
+    export: 'socketRoute'
+  }
 };

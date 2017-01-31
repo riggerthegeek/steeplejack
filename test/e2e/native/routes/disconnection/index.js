@@ -16,6 +16,8 @@ exports.default = () => ({
   }
 });
 
-exports.socket = {
-  export: 'default'
+exports.inject = {
+  socket: {
+    export: 'default'
+  }
 };

@@ -14,6 +14,8 @@ exports.default = () => ({
   }
 });
 
-exports.route = {
-  export: 'default',
+exports.inject = {
+  route: {
+    export: 'default',
+  }
 };

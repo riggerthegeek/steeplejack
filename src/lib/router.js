@@ -139,7 +139,9 @@ class Router extends Base {
         // eslint-disable-next-line import/no-dynamic-require, global-require
         const objRoute = require(filePath);
 
-        if (!objRoute.route && !objRoute.socket) {
+        if (!objRoute.inject) {
+          throw new SyntaxError(`No inject exported from file: ${filePath}`);
+        } if (!objRoute.inject.route && !objRoute.inject.socket) {
           throw new TypeError(
             `No route or socket exported from file: ${filePath}`,
           );
@@ -200,7 +202,7 @@ class Router extends Base {
    * @return {{factory: Function, deps: Array}|null}
    */
   static parseModule (type, route) {
-    const container = route[type];
+    const container = route.inject[type];
 
     let factory = null;
     let deps = [];

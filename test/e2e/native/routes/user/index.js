@@ -39,13 +39,14 @@ exports.socketRoute = () => ({
   }
 });
 
-exports.route = {
-  export: 'default',
-  deps: [
-    '$userController',
-  ],
-};
-
-exports.socket = {
-  export: 'socketRoute'
+exports.inject = {
+  route: {
+    export: 'default',
+    deps: [
+      '$userController',
+    ]
+  },
+  socket: {
+    export: 'socketRoute'
+  }
 };

@@ -16,6 +16,8 @@ export default () => ({
   }
 });
 
-export const socket = {
-  export: 'default'
+export const inject = {
+  socket: {
+    export: 'default'
+  }
 };
