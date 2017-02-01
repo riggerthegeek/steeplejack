@@ -47,7 +47,9 @@ class Steeplejack extends Base {
    * single source of truth for all your config needs.  Stick
    * in here database connection parameters, logging config
    * and anything else you may need.  This will be assigned
-   * to $config in the IOC container
+   * to $config in the IOC container.
+   *
+   * logger - name of the logger in the IoC container.
    *
    * modules - this is the location of the modules that will
    * be loaded as part of the system.  It is strongly recommended
@@ -55,17 +57,27 @@ class Steeplejack extends Base {
    * and removal of plugins becomes as simple as adding in
    * the files.
    *
-   * routes - this is the location of the routes file.  In
+   * routesDir - this is the location of the routes files.  In
    * here, you can configure your routes and this will all
    * be loaded automatically. Like the modules, this should
    * be a glob pattern.
    *
+   * routesGlob - this is the glob to match route files. This
+   * should only be used if your files do not match '.js'.
+   *
    * @param {object} config
+   * @param {string|null} logger
    * @param {*[]} modules
-   * @param {string} routesDir
+   * @param {string|null} routesDir
    * @param {string} routesGlob
    */
-  constructor (config = {}, modules = [], routesDir = null, routesGlob = '**/*.js') {
+  constructor ({
+    config = {},
+    logger = null,
+    modules = [],
+    routesDir = null,
+    routesGlob = '**/*.js'
+  }) {
     super();
 
     /* Routing paths */
@@ -91,6 +103,9 @@ class Steeplejack extends Base {
     }).registerComponent({
       name: '$config',
       instance: this.config,
+    }).registerComponent({
+      name: '$loggerComponentName',
+      instance: logger,
     });
 
     modules.forEach(module => this.addModule(module));
@@ -267,6 +282,7 @@ class Steeplejack extends Base {
    *
    * @param {object} config
    * @param {object} env
+   * @param {string} logger
    * @param {Array} modules
    * @param {string} routesDir
    * @param {string} routesGlob
@@ -275,6 +291,7 @@ class Steeplejack extends Base {
   static app ({
     config = {},
     env = {},
+    logger = undefined,
     modules = undefined,
     routesDir = undefined,
     routesGlob = undefined,
@@ -288,7 +305,13 @@ class Steeplejack extends Base {
     /* Merge config and command line arguments */
     config = _.merge(config, cliArgs);
 
-    return new Steeplejack(config, modules, routesDir, routesGlob);
+    return new Steeplejack({
+      config,
+      logger,
+      modules,
+      routesDir,
+      routesGlob,
+    });
   }
 
 
