@@ -11,22 +11,20 @@ import { Base } from '@steeplejack/core';
 /* Files */
 import SocketRequest from './socketRequest';
 
-export const CONNECT_FLAG = "connect";
+export const CONNECT_FLAG = 'connect';
 
-export const MIDDLEWARE_FLAG = "__middleware";
+export const MIDDLEWARE_FLAG = '__middleware';
 
 export default class Socket extends Base {
 
   constructor (strategy) {
-
     super();
 
     this.strategy = strategy;
 
     if (_.isObject(this.strategy) === false) {
-      throw new SyntaxError("Socket strategy object is required");
+      throw new SyntaxError('Socket strategy object is required');
     }
-
   }
 
   /**
@@ -44,7 +42,7 @@ export default class Socket extends Base {
       /* Set the parameters received */
       request.params = params;
 
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         /* Invoke the function */
         const result = socketFn(request);
 
@@ -66,7 +64,6 @@ export default class Socket extends Base {
    * @returns {Socket}
    */
   namespace (namespace, events) {
-
     /* Get connection listener */
     const onConnect = events[CONNECT_FLAG];
 
@@ -79,16 +76,15 @@ export default class Socket extends Base {
     /* Omit the connect and middleware functions now */
     events = _.omit(events, [
       CONNECT_FLAG,
-      MIDDLEWARE_FLAG
+      MIDDLEWARE_FLAG,
     ]);
 
     this.strategy.connect(namespace, middleware)
-      .on(`${namespace}_connected`, connection => {
-
+      .on(`${namespace}_connected`, (connection) => {
         const request = new SocketRequest(connection, this.strategy);
 
         /* Listen for a broadcast event */
-        request.on("broadcast", broadcast => {
+        request.on('broadcast', (broadcast) => {
           this.strategy.broadcast(request, broadcast);
         });
 
@@ -98,19 +94,15 @@ export default class Socket extends Base {
         }
 
         _.each(events, (fn, event) => {
-
           /* Listen for the event */
           this.listen(request, event, fn);
 
           /* Emit the socket for logging */
-          this.emit("socketAdded", namespace, event);
-
+          this.emit('socketAdded', namespace, event);
         });
-
       });
 
     return this;
-
   }
 
 }

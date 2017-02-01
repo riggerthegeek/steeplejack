@@ -46,14 +46,12 @@ export default class SocketRequest extends Base {
    * @param {*} strategy
    */
   constructor (socket, strategy) {
-
     super();
 
     this.data = {};
     this.myParams = [];
     this.socket = socket;
     this.strategy = strategy;
-
   }
 
   /**
@@ -66,7 +64,7 @@ export default class SocketRequest extends Base {
    * @returns {SocketRequest}
    */
   broadcast (broadcast) {
-    this.emit("broadcast", broadcast);
+    this.emit('broadcast', broadcast);
 
     return this;
   }
