@@ -21,22 +21,22 @@ export default userController => ({
 
     post (req) {
       /* Simulate a valid bearer token */
-      if (req.headers.authorization !== "bearer valid") {
+      if (req.headers.authorization !== 'bearer valid') {
         return 401;
       }
 
       return userController.createUser(req.body);
-    }
-  }
+    },
+  },
 });
 
 export const socketRoute = () => ({
-  send: socket => {
+  send: (socket) => {
     socket.broadcast({
-      event: "receive",
-      data: socket.params
+      event: 'receive',
+      data: socket.params,
     });
-  }
+  },
 });
 
 export const inject = {
@@ -44,9 +44,9 @@ export const inject = {
     export: 'default',
     deps: [
       '$userController',
-    ]
+    ],
   },
   socket: {
-    export: 'socketRoute'
-  }
+    export: 'socketRoute',
+  },
 };

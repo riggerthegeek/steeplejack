@@ -10,9 +10,9 @@
 const { expect } = require('../helpers/configure');
 
 describe('Index tests', () => {
-  
+
   it('should', () => {
-    
+
   });
-  
+
 });

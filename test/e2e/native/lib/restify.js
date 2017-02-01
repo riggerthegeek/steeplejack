@@ -56,7 +56,7 @@ exports.default = () => {
 
     queryParser (mapParams) {
       this.use(restify.queryParser({
-        mapParams: mapParams
+        mapParams,
       }));
     }
 
@@ -67,7 +67,7 @@ exports.default = () => {
     }
 
     uncaughtException (fn) {
-      this._inst.on("uncaughtException", fn);
+      this._inst.on('uncaughtException', fn);
     }
 
     use (fn) {
@@ -80,5 +80,5 @@ exports.default = () => {
 };
 
 exports.inject = {
-  name: 'Restify'
+  name: 'Restify',
 };

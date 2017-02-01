@@ -2,11 +2,9 @@
  * sqlite
  */
 
-"use strict";
 
 /* Node modules */
 const fs = require('fs');
-const path = require('path');
 
 /* Third-party modules */
 const _ = require('lodash');
@@ -18,7 +16,7 @@ const Bluebird = require('bluebird');
  * The SQLite library was problematic so I wrote
  * this to read a JSON file
  */
-exports.default = config => {
+exports.default = (config) => {
 
   const filename = config.sqlite.filename;
   let dbData = require(filename);
@@ -57,15 +55,15 @@ exports.default = config => {
           dbData[table] = [];
         }
 
-        let data = dbData[table];
+        const data = dbData[table];
 
-        let last = _.last(data);
+        const last = _.last(data);
 
         input.id = last ? String(Number(last.id) + 1) : 1;
 
         dbData[table].push(input);
 
-        fs.writeFileSync(filename, JSON.stringify(dbData), "utf8");
+        fs.writeFileSync(filename, JSON.stringify(dbData), 'utf8');
 
         dbData = require(filename);
 
@@ -73,7 +71,7 @@ exports.default = config => {
 
       });
 
-    }
+    },
 
   };
 
@@ -81,8 +79,8 @@ exports.default = config => {
 
 /* Defines the public output */
 exports.inject = {
-  name: "$SQLiteResource",
+  name: '$SQLiteResource',
   deps: [
-    '$config'
-  ]
+    '$config',
+  ],
 };

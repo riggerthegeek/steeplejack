@@ -13,11 +13,11 @@ export default () => ({
     setTimeout(() => {
       conn.disconnect();
     }, 500);
-  }
+  },
 });
 
 export const inject = {
   socket: {
-    export: 'default'
-  }
+    export: 'default',
+  },
 };

@@ -3,7 +3,6 @@
  */
 
 /* Node modules */
-import { EventEmitter } from 'events';
 
 /* Third-party modules */
 import { Base } from '@steeplejack/core';
@@ -30,16 +29,16 @@ export default function socketIO () {
       const nsp = this._inst
         .of(namespace);
 
-      _.each(middleware, fn => {
+      _.each(middleware, (fn) => {
         nsp.use(fn);
       });
 
-      nsp.on("connection", socket => {
+      nsp.on('connection', (socket) => {
 
         /* Send both the socket and the namespace */
         this.emit(`${namespace}_connected`, {
           socket,
-          nsp
+          nsp,
         });
 
       });
@@ -52,30 +51,30 @@ export default function socketIO () {
       this._inst = io(server.getRawServer());
     }
 
-    disconnect ({socket}) {
+    disconnect ({ socket }) {
       socket.disconnect();
     }
 
-    getSocketId ({socket}) {
+    getSocketId ({ socket }) {
       return socket.id;
     }
 
-    joinChannel ({socket}, channel) {
+    joinChannel ({ socket }, channel) {
       socket.join(channel);
     }
 
-    leaveChannel ({socket}, channel) {
+    leaveChannel ({ socket }, channel) {
       socket.leave(channel);
     }
 
-    listen ({socket}, event, fn) {
+    listen ({ socket }, event, fn) {
       socket.on(event, fn);
     }
 
   }
 
   return SocketIO;
-};
+}
 
 export const inject = {
   name: 'SocketIO',

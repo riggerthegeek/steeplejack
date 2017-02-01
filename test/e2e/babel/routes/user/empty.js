@@ -10,12 +10,12 @@
 
 export default () => ({
   '/': {
-    get: () => null
-  }
+    get: () => null,
+  },
 });
 
 export const inject = {
   route: {
-    export: 'default'
-  }
+    export: 'default',
+  },
 };

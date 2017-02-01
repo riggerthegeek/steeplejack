@@ -13,11 +13,11 @@ exports.default = () => ({
     setTimeout(() => {
       conn.disconnect();
     }, 500);
-  }
+  },
 });
 
 exports.inject = {
   socket: {
-    export: 'default'
-  }
+    export: 'default',
+  },
 };

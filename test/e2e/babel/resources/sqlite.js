@@ -2,15 +2,13 @@
  * sqlite
  */
 
-"use strict";
 
 /* Node modules */
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
 
 /* Third-party modules */
-import {_} from "lodash";
-import Bluebird from "bluebird";
+import { _ } from 'lodash';
+import Bluebird from 'bluebird';
 
 /* Files */
 
@@ -57,15 +55,15 @@ export default (config) => {
           dbData[table] = [];
         }
 
-        let data = dbData[table];
+        const data = dbData[table];
 
-        let last = _.last(data);
+        const last = _.last(data);
 
         input.id = last ? String(Number(last.id) + 1) : 1;
 
         dbData[table].push(input);
 
-        fs.writeFileSync(filename, JSON.stringify(dbData), "utf8");
+        fs.writeFileSync(filename, JSON.stringify(dbData), 'utf8');
 
         dbData = require(filename);
 
@@ -73,7 +71,7 @@ export default (config) => {
 
       });
 
-    }
+    },
 
   };
 
@@ -81,8 +79,8 @@ export default (config) => {
 
 /* Defines the public output */
 export const inject = {
-  name: "$SQLiteResource",
+  name: '$SQLiteResource',
   deps: [
-    '$config'
-  ]
+    '$config',
+  ],
 };

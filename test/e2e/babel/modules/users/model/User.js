@@ -5,40 +5,40 @@
 /* Node modules */
 
 /* Third-party modules */
-import {Model} from '@steeplejack/data';
+import { Model } from '@steeplejack/data';
 
 /* Files */
 
 export default () => {
   class User extends Model {
-    _schema() {
+    _schema () {
       return {
         id: {
-          type: "integer"
+          type: 'integer',
         },
         firstName: {
-          type: "string",
-          column: "first_name",
+          type: 'string',
+          column: 'first_name',
           validation: [{
-            rule: "required"
-          }]
+            rule: 'required',
+          }],
         },
         lastName: {
-          type: "string",
-          column: "last_name",
+          type: 'string',
+          column: 'last_name',
           validation: [{
-            rule: "required"
-          }]
+            rule: 'required',
+          }],
         },
         emailAddress: {
-          type: "string",
-          column: "email_address",
+          type: 'string',
+          column: 'email_address',
           validation: [{
-            rule: "required"
+            rule: 'required',
           }, {
-            rule: "email"
-          }]
-        }
+            rule: 'email',
+          }],
+        },
       };
     }
   }
@@ -48,5 +48,5 @@ export default () => {
 
 /* Defines the public output */
 export const inject = {
-  name: 'UserModel'
+  name: 'UserModel',
 };

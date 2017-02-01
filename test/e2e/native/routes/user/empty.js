@@ -10,12 +10,12 @@
 
 exports.default = () => ({
   '/': {
-    get: () => null
-  }
+    get: () => null,
+  },
 });
 
 exports.inject = {
   route: {
     export: 'default',
-  }
+  },
 };

@@ -21,7 +21,7 @@ export default (store, Model) => ({
   getUser (userId) {
     return store.getUserById(userId)
       .then(result => Model.toModel(result));
-  }
+  },
 });
 
 /* Defines the public output */
@@ -29,6 +29,6 @@ export const inject = {
   name: '$userController',
   deps: [
     'userStore',
-    'UserModel'
-  ]
+    'UserModel',
+  ],
 };

@@ -5,7 +5,6 @@
 /* Node modules */
 
 /* Third-party modules */
-import {_} from "lodash";
 
 /* Files */
 
@@ -14,14 +13,14 @@ export default sqlite => ({
     .insert('users', data),
 
   getUserById: userId => sqlite
-    .get("users", {id: userId}, 1)
-    .then(result => result[0])
+    .get('users', { id: userId }, 1)
+    .then(result => result[0]),
 
 });
 
 export const inject = {
   name: 'userStore',
   deps: [
-    '$SQLiteResource'
-  ]
+    '$SQLiteResource',
+  ],
 };
