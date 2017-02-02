@@ -141,16 +141,20 @@ class Router extends Base {
 
         if (!objRoute.inject) {
           throw new SyntaxError(`No inject exported from file: ${filePath}`);
-        } if (!objRoute.inject.route && !objRoute.inject.socket) {
-          throw new TypeError(
-            `No route or socket exported from file: ${filePath}`,
-          );
+        }
+
+        /* Parse the routes and sockets */
+        const route = Router.parseModule('route', objRoute);
+        const socket = Router.parseModule('socket', objRoute);
+
+        if (!route && !socket) {
+          throw new SyntaxError(`No route or socket exported from file: ${filePath}`,);
         }
 
         /* Put in stack */
         result[tmp] = {
-          route: Router.parseModule('route', objRoute),
-          socket: Router.parseModule('socket', objRoute),
+          route,
+          socket,
         };
       }
 
