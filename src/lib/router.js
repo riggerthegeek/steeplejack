@@ -148,7 +148,7 @@ class Router extends Base {
         const socket = Router.parseModule('socket', objRoute);
 
         if (!route && !socket) {
-          throw new SyntaxError(`No route or socket exported from file: ${filePath}`,);
+          throw new SyntaxError(`No route or socket exported from file: ${filePath}`);
         }
 
         /* Put in stack */

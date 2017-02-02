@@ -76,7 +76,7 @@ class Steeplejack extends Base {
     logger = null,
     modules = [],
     routesDir = null,
-    routesGlob = '**/*.js'
+    routesGlob = '**/*.js',
   }) {
     super();
 
