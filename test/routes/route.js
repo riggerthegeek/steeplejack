@@ -2,8 +2,6 @@
  * route
  */
 
-"use strict";
-
 
 /* Node modules */
 
@@ -16,6 +14,6 @@
 
 export const inject = {
   route: {
-    export: () => 'route.js'
-  }
+    export: () => 'route.js',
+  },
 };

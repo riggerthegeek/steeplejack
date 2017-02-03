@@ -2,8 +2,6 @@
  * route
  */
 
-"use strict";
-
 
 /* Node modules */
 
@@ -18,14 +16,14 @@ export const inject = {
   route: {
     export: () => 'route.js',
     deps: [
-      'dep1'
-    ]
+      'dep1',
+    ],
   },
   socket: {
     export: () => 'socket.js',
     deps: [
       'dep1',
-      'dep2'
-    ]
-  }
+      'dep2',
+    ],
+  },
 };

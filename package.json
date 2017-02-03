@@ -39,7 +39,7 @@
     "test:e2e:native": "npm run compile -s && STEEPLEJACK_TYPE=native mocha --throw-deprecation --ui bdd --full-trace --recursive test/e2e/test",
     "test:lint": "npm run test:lint:src -s && npm run test:lint:test",
     "test:lint:src": "eslint src",
-    "test:lint:test": "eslint --env mocha --rule '{ global-require: 0, import/no-dynamic-require: 0, padded-blocks: 0, prefer-arrow-callback: 0, no-underscore-dangle: 0, func-names: 0, no-unused-expressions: 0 }' test",
+    "test:lint:test": "eslint --env mocha --rule '{ global-require: 0, import/no-dynamic-require: 0, padded-blocks: 0, prefer-arrow-callback: 0, no-underscore-dangle: 0, func-names: 0, no-unused-expressions: 0, import/prefer-default-export: 0 }' test",
     "test:unit": "mocha --compilers js:babel-register --throw-deprecation --ui bdd --full-trace --recursive test/unit",
     "watch:coverage": "mkdir -p build; nodemon --ignore './build' --exec 'npm run coverage -s' --legacy-watch",
     "watch:test": "mkdir -p build; nodemon --ignore './build' --exec 'npm run test -s' --legacy-watch",

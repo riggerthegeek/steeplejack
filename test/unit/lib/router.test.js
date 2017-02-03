@@ -3,25 +3,25 @@
  */
 
 /* Node modules */
-import path from "path";
+import path from 'path';
 
 /* Third-party modules */
-import {_} from "lodash";
-import {Base} from '@steeplejack/core';
+import { _ } from 'lodash';
+import { Base } from '@steeplejack/core';
 
 /* Files */
-import {expect, proxyquire} from "../../helpers/configure";
-import Router from "../../../src/lib/router";
+import { expect, proxyquire } from '../../helpers/configure';
+import Router from '../../../src/lib/router';
 
-describe("Router test", function () {
+describe('Router test', function () {
 
-  describe("Methods", function () {
+  describe('Methods', function () {
 
-    describe("#constructor", function () {
+    describe('#constructor', function () {
 
-      it("should create an instance with no routes", function () {
+      it('should create an instance with no routes', function () {
 
-        let obj = new Router();
+        const obj = new Router();
 
         expect(obj).to.be.instanceof(Router)
           .instanceof(Base);
@@ -30,113 +30,113 @@ describe("Router test", function () {
 
       });
 
-      it("should create an instance with some routes", function () {
+      it('should create an instance with some routes', function () {
 
-        let fn = () => {
+        const fn = () => {
         };
 
-        let obj = new Router({
-          "/": {
-            get: [fn]
+        const obj = new Router({
+          '/': {
+            get: [fn],
           },
           test: {
             get: fn,
-            post: fn
-          }
+            post: fn,
+          },
         });
 
         expect(obj.routes).to.be.eql({
-          "/": {
-            get: [fn]
+          '/': {
+            get: [fn],
           },
-          "/test": {
+          '/test': {
             get: fn,
-            post: fn
-          }
+            post: fn,
+          },
         });
 
       });
 
     });
 
-    describe("#addRoute", function () {
+    describe('#addRoute', function () {
 
-      let obj,
-        fn;
+      let obj;
+      let fn;
       beforeEach(function () {
-        obj = new Router;
+        obj = new Router();
         fn = () => {};
       });
 
-      it("should add in a single route", function () {
+      it('should add in a single route', function () {
 
         obj.addRoute({
-          "/path": {
-            get: fn
-          }
-        });
-
-        expect(obj.routes).to.be.eql({
-          "/path": {
-            get: fn
-          }
-        });
-
-      });
-
-      it("should add in a series of single routes", function () {
-
-        obj.addRoute({
-          "/path": {
-            get: fn
-          }
-        });
-
-        expect(obj.routes).to.be.eql({
-          "/path": {
-            get: fn
-          }
-        });
-
-        obj.addRoute({
-          "/path": {
-            post: fn
-          }
-        });
-
-        expect(obj.routes).to.be.eql({
-          "/path": {
+          '/path': {
             get: fn,
-            post: fn
-          }
+          },
+        });
+
+        expect(obj.routes).to.be.eql({
+          '/path': {
+            get: fn,
+          },
         });
 
       });
 
-      it("should add paths with inconsistent slashes", function () {
+      it('should add in a series of single routes', function () {
+
+        obj.addRoute({
+          '/path': {
+            get: fn,
+          },
+        });
+
+        expect(obj.routes).to.be.eql({
+          '/path': {
+            get: fn,
+          },
+        });
+
+        obj.addRoute({
+          '/path': {
+            post: fn,
+          },
+        });
+
+        expect(obj.routes).to.be.eql({
+          '/path': {
+            get: fn,
+            post: fn,
+          },
+        });
+
+      });
+
+      it('should add paths with inconsistent slashes', function () {
 
         obj.addRoute({
           path: {
-            "//innerPath": {
-              "\\finalPath": {
-                get: fn
-              }
-            }
+            '//innerPath': {
+              '\\finalPath': {
+                get: fn,
+              },
+            },
           },
           otherPath: {
             innerPath: {
-              post: fn
-            }
-          }
+              post: fn,
+            },
+          },
         });
 
         expect(obj.routes).to.be.eql({
-          "/path/innerPath/finalPath": {
-            get: fn
+          '/path/innerPath/finalPath': {
+            get: fn,
           },
-          "/otherPath/innerPath": {
-            post: fn
-          }
+          '/otherPath/innerPath': {
+            post: fn,
+          },
         });
 
       });
@@ -144,69 +144,69 @@ describe("Router test", function () {
       it("should add paths that doesn't have nested paths", function () {
 
         obj.addRoute({
-          "path/innerPath": {
-            get: fn
+          'path/innerPath': {
+            get: fn,
           },
-          "path/otherPath": {
-            get: fn
-          }
+          'path/otherPath': {
+            get: fn,
+          },
         });
 
         expect(obj.routes).to.be.eql({
-          "/path/innerPath": {
-            get: fn
+          '/path/innerPath': {
+            get: fn,
           },
-          "/path/otherPath": {
-            get: fn
-          }
+          '/path/otherPath': {
+            get: fn,
+          },
         });
 
       });
 
-      it("should receive a non-alphanumeric - Express variable handling", function () {
+      it('should receive a non-alphanumeric - Express variable handling', function () {
 
         obj.addRoute({
-          "path/innerPath/:id": {
-            get: fn
+          'path/innerPath/:id': {
+            get: fn,
           },
-          "path/otherPath": {
-            get: fn
-          }
+          'path/otherPath': {
+            get: fn,
+          },
         });
 
         expect(obj.routes).to.be.eql({
-          "/path/innerPath/:id": {
-            get: fn
+          '/path/innerPath/:id': {
+            get: fn,
           },
-          "/path/otherPath": {
-            get: fn
-          }
+          '/path/otherPath': {
+            get: fn,
+          },
         });
 
       });
 
-      it("should throw an error when trying to overwrite a route", function () {
+      it('should throw an error when trying to overwrite a route', function () {
 
         obj.addRoute({
           path: {
-            get: fn
-          }
+            get: fn,
+          },
         });
 
-        var fail = false;
+        let fail = false;
 
         try {
           obj.addRoute({
             path: {
-              get: fn
-            }
+              get: fn,
+            },
           });
         } catch (err) {
           fail = true;
 
           expect(err).to.be.instanceof(SyntaxError);
-          expect(err.route).to.be.equal("/path");
-          expect(err.key).to.be.equal("get");
+          expect(err.route).to.be.equal('/path');
+          expect(err.key).to.be.equal('get');
         } finally {
           expect(fail).to.be.true;
         }
@@ -217,74 +217,74 @@ describe("Router test", function () {
 
   });
 
-  describe("Static methods", function () {
+  describe('Static methods', function () {
 
-    describe("#discoverRoutes", function () {
+    describe('#discoverRoutes', function () {
 
       beforeEach(function () {
 
-        let stubs = _.reduce({
-          "/path/to/dir/v1-0/path/var/:id/endpoint": "/path/to/dir/v1-0/path/var/:id/endpoint",
-          "/path/to/dir/v1-0/path/dir/endpoint": "/path/to/dir/v1-0/path/dir/endpoint",
-          "/path/to/dir/v1_0/path/dir/endpoint": "/path/to/dir/v1_0/path/dir/endpoint",
-          "/path/to/dir/v1.0/path/dir/endpoint": "/path/to/dir/v1.0/path/dir/endpoint",
-          "/path/to/dir/dir/endpoint": "/path/to/dir/dir/endpoint",
-          "/path/to/dir/dir/endpoint2/index": "/path/to/dir/dir/index",
-          "/path/to/dir/dir/endpoint2/twitter": "/path/to/dir/dir/hello",
-          "/path/to/dir/endpoint/index": "/path/to/dir/endpoint",
-          "/path/to/dir/dir": "/path/to/dir/endpoint",
-          "/path/to/dir/index": "/path/to/dir",
-          "/path/to/dir/route/only": "/path/to/dir/route/only",
-          "/path/to/dir/socket/only": "/path/to/dir/socket/only",
-          "/no/route": "/path/to/dir",
-          "/no/route/fn": "/path/to/dir",
-          "/no/inject": "/path/to/dir"
+        const stubs = _.reduce({
+          '/path/to/dir/v1-0/path/var/:id/endpoint': '/path/to/dir/v1-0/path/var/:id/endpoint',
+          '/path/to/dir/v1-0/path/dir/endpoint': '/path/to/dir/v1-0/path/dir/endpoint',
+          '/path/to/dir/v1_0/path/dir/endpoint': '/path/to/dir/v1_0/path/dir/endpoint',
+          '/path/to/dir/v1.0/path/dir/endpoint': '/path/to/dir/v1.0/path/dir/endpoint',
+          '/path/to/dir/dir/endpoint': '/path/to/dir/dir/endpoint',
+          '/path/to/dir/dir/endpoint2/index': '/path/to/dir/dir/index',
+          '/path/to/dir/dir/endpoint2/twitter': '/path/to/dir/dir/hello',
+          '/path/to/dir/endpoint/index': '/path/to/dir/endpoint',
+          '/path/to/dir/dir': '/path/to/dir/endpoint',
+          '/path/to/dir/index': '/path/to/dir',
+          '/path/to/dir/route/only': '/path/to/dir/route/only',
+          '/path/to/dir/socket/only': '/path/to/dir/socket/only',
+          '/no/route': '/path/to/dir',
+          '/no/route/fn': '/path/to/dir',
+          '/no/inject': '/path/to/dir',
         }, (result, value, key) => {
 
           if (key === '/no/inject') {
             result[key] = {
               route: () => {},
-              socket: () => {}
-            }
-          } else if (key === "/no/route") {
-            result[key] = {
-              inject: value
+              socket: () => {},
             };
-          } else if (key === "/no/route/fn") {
+          } else if (key === '/no/route') {
+            result[key] = {
+              inject: value,
+            };
+          } else if (key === '/no/route/fn') {
             result[key] = {
               inject: {
                 route: value,
-                socket: value
-              }
+                socket: value,
+              },
             };
-          } else if (key === "/path/to/dir/route/only") {
+          } else if (key === '/path/to/dir/route/only') {
             result[key] = {
               default: () => value,
               inject: {
                 route: {
-                  export: 'default'
-                }
-              }
+                  export: 'default',
+                },
+              },
             };
-          } else if (key === "/path/to/dir/socket/only") {
+          } else if (key === '/path/to/dir/socket/only') {
             result[key] = {
               socket: () => value,
               inject: {
                 socket: {
-                  export: 'socket'
-                }
-              }
+                  export: 'socket',
+                },
+              },
             };
           } else {
             result[key] = {
               inject: {
                 route: {
-                  export: () => value
+                  export: () => value,
                 },
                 socket: {
-                  export: () => value
-                }
-              }
+                  export: () => value,
+                },
+              },
             };
           }
 
@@ -292,7 +292,7 @@ describe("Router test", function () {
 
         }, {});
 
-        this.router = proxyquire("../../src/lib/router", stubs);
+        this.router = proxyquire('../../src/lib/router', stubs);
 
       });
 
@@ -302,15 +302,15 @@ describe("Router test", function () {
 
         try {
           this.router.discoverRoutes([{
-            name: "inject",
-            path: "/no"
+            name: 'inject',
+            path: '/no',
           }]);
         } catch (err) {
 
           fail = true;
 
           expect(err).to.be.instanceof(SyntaxError);
-          expect(err.message).to.be.equal("No inject exported from file: /no/inject");
+          expect(err.message).to.be.equal('No inject exported from file: /no/inject');
 
         } finally {
           expect(fail).to.be.true;
@@ -318,21 +318,21 @@ describe("Router test", function () {
 
       });
 
-      it("should throw an error if no route or socket element", function () {
+      it('should throw an error if no route or socket element', function () {
 
         let fail = false;
 
         try {
           this.router.discoverRoutes([{
-            name: "route",
-            path: "/no"
+            name: 'route',
+            path: '/no',
           }]);
         } catch (err) {
 
           fail = true;
 
           expect(err).to.be.instanceof(SyntaxError);
-          expect(err.message).to.be.equal("No route or socket exported from file: /no/route");
+          expect(err.message).to.be.equal('No route or socket exported from file: /no/route');
 
         } finally {
           expect(fail).to.be.true;
@@ -340,21 +340,21 @@ describe("Router test", function () {
 
       });
 
-      it("should throw an error if no route or socket function", function () {
+      it('should throw an error if no route or socket function', function () {
 
         let fail = false;
 
         try {
           this.router.discoverRoutes([{
-            name: "route/fn",
-            path: "/no"
+            name: 'route/fn',
+            path: '/no',
           }]);
         } catch (err) {
 
           fail = true;
 
           expect(err).to.be.instanceof(SyntaxError);
-          expect(err.message).to.be.equal("No route or socket exported from file: /no/route/fn");
+          expect(err.message).to.be.equal('No route or socket exported from file: /no/route/fn');
 
         } finally {
           expect(fail).to.be.true;
@@ -362,158 +362,158 @@ describe("Router test", function () {
 
       });
 
-      it("should discover an array of routes and return back the object", function () {
+      it('should discover an array of routes and return back the object', function () {
 
-        let files = [{
-          name: "route/only",
-          path: "/path/to/dir"
+        const files = [{
+          name: 'route/only',
+          path: '/path/to/dir',
         }, {
-          name: "socket/only",
-          path: "/path/to/dir"
+          name: 'socket/only',
+          path: '/path/to/dir',
         }, {
-          name: "v1-0/path/var/:id/endpoint",
-          path: "/path/to/dir"
+          name: 'v1-0/path/var/:id/endpoint',
+          path: '/path/to/dir',
         }, {
-          name: "v1_0/path/dir/endpoint",
-          path: "/path/to/dir"
+          name: 'v1_0/path/dir/endpoint',
+          path: '/path/to/dir',
         }, {
-          name: "v1-0/path/dir/endpoint",
-          path: "/path/to/dir"
+          name: 'v1-0/path/dir/endpoint',
+          path: '/path/to/dir',
         }, {
-          name: "v1.0/path/dir/endpoint",
-          path: "/path/to/dir"
+          name: 'v1.0/path/dir/endpoint',
+          path: '/path/to/dir',
         }, {
-          name: "dir/endpoint",
-          path: "/path/to/dir"
+          name: 'dir/endpoint',
+          path: '/path/to/dir',
         }, {
-          name: "dir/endpoint2/twitter",
-          path: "/path/to/dir"
+          name: 'dir/endpoint2/twitter',
+          path: '/path/to/dir',
         }, {
-          name: "dir/endpoint2/index",
-          path: "/path/to/dir"
+          name: 'dir/endpoint2/index',
+          path: '/path/to/dir',
         }, {
-          name: "endpoint/index",
-          path: "/path/to/dir"
+          name: 'endpoint/index',
+          path: '/path/to/dir',
         }, {
-          name: "dir",
-          path: "/path/to/dir"
+          name: 'dir',
+          path: '/path/to/dir',
         }, {
-          name: "index",
-          path: "/path/to/dir"
+          name: 'index',
+          path: '/path/to/dir',
         }];
 
         const obj = this.router.discoverRoutes(files);
 
         expect(obj).to.have.keys([
-          "route/only",
-          "socket/only",
-          "v1_0/path/dir/endpoint",
-          "v1-0/path/var/:id/endpoint",
-          "v1-0/path/dir/endpoint",
-          "v1.0/path/dir/endpoint",
-          "dir/endpoint",
-          "dir/endpoint2/twitter",
-          "dir/endpoint2",
-          "endpoint",
-          "dir",
-          ""
+          'route/only',
+          'socket/only',
+          'v1_0/path/dir/endpoint',
+          'v1-0/path/var/:id/endpoint',
+          'v1-0/path/dir/endpoint',
+          'v1.0/path/dir/endpoint',
+          'dir/endpoint',
+          'dir/endpoint2/twitter',
+          'dir/endpoint2',
+          'endpoint',
+          'dir',
+          '',
         ]);
 
-        expect(obj["route/only"].route.factory()).to.be.equal("/path/to/dir/route/only");
-        expect(obj["route/only"].socket).to.be.null;
+        expect(obj['route/only'].route.factory()).to.be.equal('/path/to/dir/route/only');
+        expect(obj['route/only'].socket).to.be.null;
 
-        expect(obj["socket/only"].route).to.be.null;
-        expect(obj["socket/only"].socket.factory()).to.be.equal("/path/to/dir/socket/only");
+        expect(obj['socket/only'].route).to.be.null;
+        expect(obj['socket/only'].socket.factory()).to.be.equal('/path/to/dir/socket/only');
 
-        expect(obj["v1_0/path/dir/endpoint"].route.factory()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
-        expect(obj["v1_0/path/dir/endpoint"].socket.factory()).to.be.equal("/path/to/dir/v1_0/path/dir/endpoint");
+        expect(obj['v1_0/path/dir/endpoint'].route.factory()).to.be.equal('/path/to/dir/v1_0/path/dir/endpoint');
+        expect(obj['v1_0/path/dir/endpoint'].socket.factory()).to.be.equal('/path/to/dir/v1_0/path/dir/endpoint');
 
-        expect(obj["v1-0/path/var/:id/endpoint"].route.factory()).to.be.equal("/path/to/dir/v1-0/path/var/:id/endpoint");
-        expect(obj["v1-0/path/var/:id/endpoint"].socket.factory()).to.be.equal("/path/to/dir/v1-0/path/var/:id/endpoint");
+        expect(obj['v1-0/path/var/:id/endpoint'].route.factory()).to.be.equal('/path/to/dir/v1-0/path/var/:id/endpoint');
+        expect(obj['v1-0/path/var/:id/endpoint'].socket.factory()).to.be.equal('/path/to/dir/v1-0/path/var/:id/endpoint');
 
-        expect(obj["v1-0/path/dir/endpoint"].route.factory()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
-        expect(obj["v1-0/path/dir/endpoint"].socket.factory()).to.be.equal("/path/to/dir/v1-0/path/dir/endpoint");
+        expect(obj['v1-0/path/dir/endpoint'].route.factory()).to.be.equal('/path/to/dir/v1-0/path/dir/endpoint');
+        expect(obj['v1-0/path/dir/endpoint'].socket.factory()).to.be.equal('/path/to/dir/v1-0/path/dir/endpoint');
 
-        expect(obj["v1.0/path/dir/endpoint"].route.factory()).to.be.equal("/path/to/dir/v1.0/path/dir/endpoint");
-        expect(obj["v1.0/path/dir/endpoint"].socket.factory()).to.be.equal("/path/to/dir/v1.0/path/dir/endpoint");
+        expect(obj['v1.0/path/dir/endpoint'].route.factory()).to.be.equal('/path/to/dir/v1.0/path/dir/endpoint');
+        expect(obj['v1.0/path/dir/endpoint'].socket.factory()).to.be.equal('/path/to/dir/v1.0/path/dir/endpoint');
 
-        expect(obj["dir/endpoint"].route.factory()).to.be.equal("/path/to/dir/dir/endpoint");
-        expect(obj["dir/endpoint"].socket.factory()).to.be.equal("/path/to/dir/dir/endpoint");
+        expect(obj['dir/endpoint'].route.factory()).to.be.equal('/path/to/dir/dir/endpoint');
+        expect(obj['dir/endpoint'].socket.factory()).to.be.equal('/path/to/dir/dir/endpoint');
 
-        expect(obj["dir/endpoint2/twitter"].route.factory()).to.be.equal("/path/to/dir/dir/hello");
-        expect(obj["dir/endpoint2/twitter"].socket.factory()).to.be.equal("/path/to/dir/dir/hello");
+        expect(obj['dir/endpoint2/twitter'].route.factory()).to.be.equal('/path/to/dir/dir/hello');
+        expect(obj['dir/endpoint2/twitter'].socket.factory()).to.be.equal('/path/to/dir/dir/hello');
 
-        expect(obj["dir/endpoint2"].route.factory()).to.be.equal("/path/to/dir/dir/index");
-        expect(obj["dir/endpoint2"].socket.factory()).to.be.equal("/path/to/dir/dir/index");
+        expect(obj['dir/endpoint2'].route.factory()).to.be.equal('/path/to/dir/dir/index');
+        expect(obj['dir/endpoint2'].socket.factory()).to.be.equal('/path/to/dir/dir/index');
 
-        expect(obj["endpoint"].route.factory()).to.be.equal("/path/to/dir/endpoint");
-        expect(obj["endpoint"].socket.factory()).to.be.equal("/path/to/dir/endpoint");
+        expect(obj.endpoint.route.factory()).to.be.equal('/path/to/dir/endpoint');
+        expect(obj.endpoint.socket.factory()).to.be.equal('/path/to/dir/endpoint');
 
-        expect(obj["dir"].route.factory()).to.be.equal("/path/to/dir/endpoint");
-        expect(obj["dir"].socket.factory()).to.be.equal("/path/to/dir/endpoint");
+        expect(obj.dir.route.factory()).to.be.equal('/path/to/dir/endpoint');
+        expect(obj.dir.socket.factory()).to.be.equal('/path/to/dir/endpoint');
 
-        expect(obj[""].route.factory()).to.be.equal("/path/to/dir");
-        expect(obj[""].socket.factory()).to.be.equal("/path/to/dir");
+        expect(obj[''].route.factory()).to.be.equal('/path/to/dir');
+        expect(obj[''].socket.factory()).to.be.equal('/path/to/dir');
 
       });
 
-      it("should ignore an invalid route file", function () {
+      it('should ignore an invalid route file', function () {
 
-          var obj = this.router.discoverRoutes([{
-            name: "",
-            parent: "/path/to/dir"
-          }]);
+        const obj = this.router.discoverRoutes([{
+          name: '',
+          parent: '/path/to/dir',
+        }]);
 
-          expect(obj).to.be.eql({});
+        expect(obj).to.be.eql({});
 
-        });
+      });
 
     });
 
-    describe("#getFileList", function () {
+    describe('#getFileList', function () {
 
-      it("should get the routes with the defined glob - **/*.js", function () {
+      it('should get the routes with the defined glob - **/*.js', function () {
 
-        let arr = Router.getFileList(process.cwd() + "/test/routes", "**/*.js");
+        const arr = Router.getFileList(`${process.cwd()}/test/routes`, '**/*.js');
 
         expect(arr).to.be.eql([{
-          name: "child/route.js",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'child/route.js',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "child/index.js",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'child/index.js',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "endpoint.js",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'endpoint.js',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "route.js",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'route.js',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "index.js",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'index.js',
+          path: path.join(process.cwd(), '/test/routes'),
         }]);
 
       });
 
-      it("should get the routes with a defined glob - **/*.es6", function () {
+      it('should get the routes with a defined glob - **/*.es6', function () {
 
-        let arr = Router.getFileList(process.cwd() + "/test/routes", "**/*.es6");
+        const arr = Router.getFileList(`${process.cwd()}/test/routes`, '**/*.es6');
 
         expect(arr).to.be.eql([{
-          name: "child/route.es6",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'child/route.es6',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "child/index.es6",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'child/index.es6',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "endpoint.es6",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'endpoint.es6',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "route.es6",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'route.es6',
+          path: path.join(process.cwd(), '/test/routes'),
         }, {
-          name: "index.es6",
-          path: path.join(process.cwd(), "/test/routes")
+          name: 'index.es6',
+          path: path.join(process.cwd(), '/test/routes'),
         }]);
 
       });
@@ -530,12 +530,12 @@ describe("Router test", function () {
           inject: {
             route: {
               export: route,
-            }
-          }
+            },
+          },
         })).to.be.eql({
           factory: route,
           deps: [
-          ]
+          ],
         });
 
       });
@@ -550,16 +550,16 @@ describe("Router test", function () {
               export: route,
               deps: [
                 'dep1',
-                'dep2'
-              ]
-            }
-          }
+                'dep2',
+              ],
+            },
+          },
         })).to.be.eql({
           factory: route,
           deps: [
             'dep1',
-            'dep2'
-          ]
+            'dep2',
+          ],
         });
 
       });
@@ -573,12 +573,12 @@ describe("Router test", function () {
           inject: {
             route: {
               export: 'route',
-            }
-          }
+            },
+          },
         })).to.be.eql({
           factory: route,
           deps: [
-          ]
+          ],
         });
 
       });
@@ -594,16 +594,16 @@ describe("Router test", function () {
               export: 'route',
               deps: [
                 'dep1',
-                'dep2'
-              ]
-            }
-          }
+                'dep2',
+              ],
+            },
+          },
         })).to.be.eql({
           factory: route,
           deps: [
             'dep1',
-            'dep2'
-          ]
+            'dep2',
+          ],
         });
 
       });
@@ -612,8 +612,8 @@ describe("Router test", function () {
 
         expect(Router.parseModule('route', {
           inject: {
-            route: {}
-          }
+            route: {},
+          },
         })).to.be.null;
 
       });
@@ -623,9 +623,9 @@ describe("Router test", function () {
         expect(Router.parseModule('route', {
           inject: {
             route: {
-              export: true
-            }
-          }
+              export: true,
+            },
+          },
         })).to.be.null;
 
       });

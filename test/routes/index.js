@@ -2,8 +2,6 @@
  * index
  */
 
-"use strict";
-
 
 /* Node modules */
 
@@ -19,7 +17,7 @@ exports.inject = {
     export: () => 'index.js',
     deps: [
       'dep1',
-      'dep2'
-    ]
-  }
+      'dep2',
+    ],
+  },
 };

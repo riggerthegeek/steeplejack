@@ -2,8 +2,6 @@
  * endpoint
  */
 
-"use strict";
-
 
 /* Node modules */
 
