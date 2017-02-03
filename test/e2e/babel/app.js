@@ -13,6 +13,7 @@ import Steeplejack from '../../../src/steeplejack';
 
 const app = Steeplejack.app({
   config: require('./config'),
+  logger: '$logger',
   modules: [
     `${__dirname}/!(routes)/**/*.js`,
   ],

@@ -86,6 +86,8 @@ class Steeplejack extends Base {
       sockets: [],
     };
 
+    this.loggerName = logger;
+
     /* Array of injected modules */
     this.modules = [];
 
@@ -245,21 +247,21 @@ class Steeplejack extends Base {
     /* Start the server */
     this.server.start()
       .then(() => {
-        // eslint-disable-next-line no-console
-        const log = console.log;
+        /* This will be sent to the log */
+        const welcomeMessage = (log) => {
+          /* Output current config */
+          log.info(JSON.stringify(this.config, null, 2), 'Config');
+          log.info(JSON.stringify(this.routing.routes, null, 2), 'Routes');
+          log.info(JSON.stringify(this.routing.sockets, null, 2), 'Sockets');
+        };
 
-        /* Output current config */
-        log('--- Config  ---');
-        log(JSON.stringify(this.config, null, 4));
-
-        /* Output routes */
-        log('--- Routes  ---');
-        log(this.routing.routes.join('\n'));
-
-        /* Output sockets */
-        log('--- Sockets ---');
-        log(this.routing.sockets.join('\n'));
-        log('---------------');
+        if (this.loggerName) {
+          this.injector.process(welcomeMessage, [
+            this.loggerName,
+          ]);
+        } else {
+          welcomeMessage(console);
+        }
 
         /* Notify that we've started */
         this.emit('start', this);
@@ -268,6 +270,14 @@ class Steeplejack extends Base {
     return this;
   }
 
+  /**
+   * Output Handler Name
+   *
+   * This is the name of the output in the
+   * IoC container
+   *
+   * @returns {string}
+   */
   static get outputHandlerName () {
     return '$output';
   }
@@ -313,7 +323,6 @@ class Steeplejack extends Base {
       routesGlob,
     });
   }
-
 
 }
 
