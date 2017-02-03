@@ -7,7 +7,7 @@
 /* Third-party modules */
 
 /* Files */
-import {expect, proxyquire, sinon} from '../../helpers/configure';
+import { expect, proxyquire, sinon } from '../../helpers/configure';
 
 describe('processRoutes tests', function () {
 
@@ -17,7 +17,7 @@ describe('processRoutes tests', function () {
       .returns('hello');
 
     this.processRoutes = proxyquire('../../src/helpers/processRoutes', {
-      '../lib/router': this.Router
+      '../lib/router': this.Router,
     }).default;
 
   });
@@ -25,7 +25,7 @@ describe('processRoutes tests', function () {
   it('should run tests on routes', function () {
 
     const injector = {
-      process: sinon.stub()
+      process: sinon.stub(),
     };
 
     injector.process.withArgs('routeFactory').returns('r');
@@ -36,41 +36,41 @@ describe('processRoutes tests', function () {
       hello: {
         route: {
           deps: [
-            'dep1'
+            'dep1',
           ],
-          factory: 'routeFactory'
+          factory: 'routeFactory',
         },
         socket: {
           deps: [
             'dep2',
             'dep3',
           ],
-          factory: 'socketFactory'
-        }
-      }
+          factory: 'socketFactory',
+        },
+      },
     });
 
     expect(result).to.have.keys([
       'routes',
-      'sockets'
+      'sockets',
     ]);
 
     expect(injector.process).to.be.calledTwice
       .calledWithExactly('routeFactory', [
-        'dep1'
+        'dep1',
       ])
       .calledWithExactly('socketFactory', [
         'dep2',
-        'dep3'
+        'dep3',
       ]);
 
     expect(this.Router).to.be.calledTwice
       .calledWithNew
       .calledWithExactly({
-        hello: 'r'
+        hello: 'r',
       })
       .calledWithExactly({
-        hello: 's'
+        hello: 's',
       });
 
   });
