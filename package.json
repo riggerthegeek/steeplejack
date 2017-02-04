@@ -47,6 +47,8 @@
     "watch:test:e2e:babel": "mkdir -p build; nodemon --ignore './build' --exec 'npm run test:e2e:babel -s' --legacy-watch",
     "watch:test:e2e:native": "mkdir -p build; nodemon --ignore './build' --exec 'npm run test:e2e:native -s' --legacy-watch",
     "watch:test:lint": "mkdir -p build; nodemon --ignore './build' --exec 'npm run test:lint -s' --legacy-watch",
+    "watch:test:lint:src": "mkdir -p build; nodemon --ignore './build' --exec 'npm run test:lint:src -s' --legacy-watch",
+    "watch:test:lint:test": "mkdir -p build; nodemon --ignore './build' --exec 'npm run test:lint:test -s' --legacy-watch",
     "watch:test:unit": "mkdir -p build; nodemon --ignore './build' --exec 'npm run test:unit -s' --legacy-watch"
   },
   "author": "Simon Emms <simon@simonemms.com>",
