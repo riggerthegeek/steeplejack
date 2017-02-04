@@ -86,6 +86,9 @@ class Steeplejack extends Base {
       sockets: [],
     };
 
+    /* Set the default logger as the console */
+    this.logger = console;
+
     this.loggerName = logger;
 
     /* Array of injected modules */
@@ -110,7 +113,21 @@ class Steeplejack extends Base {
       instance: logger,
     });
 
+    /* Add the plugins and modules */
     modules.forEach(module => this.addModule(module));
+
+    /* Register all the modules to the injector */
+    this.modules.forEach(module => this.injector.register(module));
+
+    /* Is there a logger set? */
+    if (this.loggerName) {
+      /* Yes - get the logger and set to this class */
+      this.injector.process((log) => {
+        this.logger = log;
+      }, [
+        this.loggerName,
+      ]);
+    }
 
     /* Configure the routes - pass in the absolute path */
     if (routesDir) {
@@ -208,8 +225,6 @@ class Steeplejack extends Base {
       throw new TypeError('Steeplejack.run must receive a factory to create the server');
     }
 
-    this.modules.forEach(module => this.injector.register(module));
-
     /* Run the server factory through the injector */
     this.server = this.injector.process(factory, deps);
 
@@ -247,21 +262,10 @@ class Steeplejack extends Base {
     /* Start the server */
     this.server.start()
       .then(() => {
-        /* This will be sent to the log */
-        const welcomeMessage = (log) => {
-          /* Output current config */
-          log.info(JSON.stringify(this.config, null, 2), 'Config');
-          log.info(JSON.stringify(this.routing.routes, null, 2), 'Routes');
-          log.info(JSON.stringify(this.routing.sockets, null, 2), 'Sockets');
-        };
-
-        if (this.loggerName) {
-          this.injector.process(welcomeMessage, [
-            this.loggerName,
-          ]);
-        } else {
-          welcomeMessage(console);
-        }
+        /* Output current config */
+        this.logger.info(JSON.stringify(this.config, null, 2), 'Config');
+        this.logger.info(JSON.stringify(this.routing.routes, null, 2), 'Routes');
+        this.logger.info(JSON.stringify(this.routing.sockets, null, 2), 'Sockets');
 
         /* Notify that we've started */
         this.emit('start', this);
