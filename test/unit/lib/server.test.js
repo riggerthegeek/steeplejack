@@ -17,19 +17,19 @@ describe('Server tests', function () {
 
   beforeEach(function () {
     class Strategy extends EventEmitter {
-      acceptParser (options, strict) { }
+      acceptParser () { }
 
-      addRoute (httpMethod, route, iterator) { }
+      addRoute () { }
 
-      after (fn) { }
+      after () { }
 
-      before (fn) { }
+      before () { }
 
       bodyParser () { }
 
       close () { }
 
-      enableCORS (origins = ['*'], addHeaders = []) { }
+      enableCORS () { }
 
       getServer () {
         return {
@@ -39,7 +39,7 @@ describe('Server tests', function () {
 
       gzipResponse () { }
 
-      outputHandler (err, data, req, res) { }
+      outputHandler () { }
 
       queryParser () { }
 
@@ -51,20 +51,20 @@ describe('Server tests', function () {
 
       staticDir () { }
 
-      uncaughtException (fn) { }
+      uncaughtException () { }
 
-      use (fn) { }
-        }
+      use () { }
+    }
 
     class SocketStrategy extends EventEmitter {
-      connect (namespace, middleware) {
+      connect () {
         return this;
       }
 
-      createSocket (server) {
+      createSocket () {
 
       }
-        }
+    }
 
     this.DefaultStrategy = Strategy;
     this.serverStrategy = new Strategy();
@@ -108,7 +108,7 @@ describe('Server tests', function () {
         let fail = false;
 
         try {
-          new Server(null, null);
+          new Server(null, null); // eslint-disable-line no-new
         } catch (err) {
           fail = true;
 
@@ -278,12 +278,12 @@ describe('Server tests', function () {
             expect(req).to.be.equal('req');
             expect(res).to.be.equal('res');
 
-            throw 'some error';
+            throw 'some error'; // eslint-disable-line no-throw-literal
 
           },
           () => {
 
-                        /* Test that this isn't called */
+            /* Test that this isn't called */
             fail = true;
 
             return 'result2';
@@ -443,7 +443,9 @@ describe('Server tests', function () {
 
           expect(emitted).to.be.true;
 
-          expect(this.spy).to.be.callCount(++i)
+          i += 1;
+
+          expect(this.spy).to.be.callCount(i)
                         .calledWith(httpMethod, '/route');
 
         });
@@ -497,7 +499,7 @@ describe('Server tests', function () {
 
           expect(emitted).to.be.true;
 
-          expect(this.spy).to.be.callCount(++i)
+          expect(this.spy).to.be.callCount(i += 1)
                         .calledWith(httpMethod, '/route');
 
         });
@@ -524,7 +526,7 @@ describe('Server tests', function () {
 
           emitted.push(emittedMethod);
           expect(emittedRoute).to.be.equal('/route');
-          count++;
+          count += 1;
 
         });
 
@@ -532,7 +534,8 @@ describe('Server tests', function () {
 
         expect(count).to.be.equal(methods.length);
 
-        expect(emitted.sort()).to.be.eql(methods.sort()); /* We don't care about order, just values */
+        /* We don't care about order, just values */
+        expect(emitted.sort()).to.be.eql(methods.sort());
 
         expect(this.spy).to.be.callCount(methods.length);
 
@@ -615,7 +618,7 @@ describe('Server tests', function () {
           } else {
             expect(emittedRoute).to.be.equal('/test');
           }
-          count++;
+          count += 1;
 
         });
 
@@ -666,7 +669,7 @@ describe('Server tests', function () {
 
         let count = 0;
         obj.on('routeAdded', () => {
-          count++;
+          count += 1;
         });
 
         expect(obj.addRoutes(routes)).to.be.equal(obj);
@@ -921,14 +924,14 @@ describe('Server tests', function () {
           this.stub.returns('output');
 
           return obj.outputHandler(this.req, this.res, () => 201)
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(201, void 0, this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                    .calledWithExactly(201, undefined, this.req, this.res);
 
-                        });
+            });
 
         });
 
@@ -960,7 +963,7 @@ describe('Server tests', function () {
                           expect(data).to.be.equal('output');
 
                           expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(204, void 0, this.req, this.res);
+                                .calledWithExactly(204, undefined, this.req, this.res);
 
                         });
 
@@ -994,7 +997,7 @@ describe('Server tests', function () {
                           expect(data).to.be.equal('output');
 
                           expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(204, void 0, this.req, this.res);
+                                .calledWithExactly(204, undefined, this.req, this.res);
 
                         });
 
@@ -1010,7 +1013,7 @@ describe('Server tests', function () {
                           expect(data).to.be.equal('output');
 
                           expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(204, void 0, this.req, this.res);
+                                .calledWithExactly(204, undefined, this.req, this.res);
 
                         });
 
@@ -1096,7 +1099,7 @@ describe('Server tests', function () {
 
             let callPreSend = false;
 
-            obj.preSend((statusCode, output, req, res) => {
+            obj.preSend(() => {
               callPreSend = true;
             });
 
@@ -1204,7 +1207,7 @@ describe('Server tests', function () {
                               expect(data).to.be.equal('output');
 
                               expect(this.stub).to.be.calledOnce
-                                    .calledWithExactly(506, void 0, this.req, this.res);
+                                    .calledWithExactly(506, undefined, this.req, this.res);
 
                               expect(this.emit).to.be.calledOnce
                                     .calledWithExactly('error_log', 506);
@@ -1339,8 +1342,8 @@ describe('Server tests', function () {
 
                 done();
 
-              } catch (err) {
-                done(err);
+              } catch (error) {
+                done(error);
               }
 
             });
@@ -1412,20 +1415,20 @@ describe('Server tests', function () {
       it('should start a server with just the port', function () {
 
         class Strategy extends EventEmitter {
-          acceptParser (options, strict) { }
-          after (fn) { }
-          before (fn) { }
+          acceptParser () { }
+          after () { }
+          before () { }
           bodyParser () { }
           close () { }
-          enableCORS (origins = ['*'], addHeaders = []) { }
+          enableCORS () { }
           getRawServer () {}
           gzipResponse () { }
           queryParser () { }
-          uncaughtException (fn) { }
-          use (fn) { }
-          addRoute (httpMethod, route, iterator) { }
+          uncaughtException () { }
+          use () { }
+          addRoute () { }
           getServer () { return {}; }
-          outputHandler (err, data, req, res) { }
+          outputHandler () { }
           start (port, hostname, backlog) {
             return new Promise(function (resolve) {
               return resolve({
@@ -1443,37 +1446,37 @@ describe('Server tests', function () {
         }, new Strategy());
 
         return obj.start()
-                    .then((result) => {
+          .then((result) => {
 
-                      expect(result).to.be.eql({
-                        port: 3200,
-                        backlog: void 0,
-                        hostname: void 0,
-                      });
+            expect(result).to.be.eql({
+              port: 3200,
+              backlog: undefined,
+              hostname: undefined,
+            });
 
-                      return result;
+            return result;
 
-                    });
+          });
 
       });
 
       it('should start a server, returning an ES6 promise', function () {
 
         class Strategy extends EventEmitter {
-          acceptParser (options, strict) { }
-          after (fn) { }
-          before (fn) { }
+          acceptParser () { }
+          after () { }
+          before () { }
           bodyParser () { }
           close () { }
-          enableCORS (origins = ['*'], addHeaders = []) { }
+          enableCORS () { }
           getRawServer () { }
           gzipResponse () { }
           queryParser () { }
-          uncaughtException (fn) { }
-          use (fn) { }
-          addRoute (httpMethod, route, iterator) { }
+          uncaughtException () { }
+          use () { }
+          addRoute () { }
           getServer () { return {}; }
-          outputHandler (err, data, req, res) { }
+          outputHandler () { }
           start (port, hostname, backlog) {
             return new Promise(function (resolve) {
               return resolve({
@@ -1484,7 +1487,7 @@ describe('Server tests', function () {
             });
           }
 
-                }
+        }
 
         const obj = new Server({
           port: 8080,
@@ -1510,20 +1513,20 @@ describe('Server tests', function () {
       it('should start a server, returning a Bluebird promise', function (done) {
 
         class Strategy extends EventEmitter {
-          acceptParser (options, strict) { }
-          after (fn) { }
-          before (fn) { }
+          acceptParser () { }
+          after () { }
+          before () { }
           bodyParser () { }
           close () { }
-          enableCORS (origins = ['*'], addHeaders = []) { }
+          enableCORS () { }
           getRawServer () {}
           gzipResponse () { }
           queryParser () { }
-          uncaughtException (fn) { }
-          use (fn) { }
-          addRoute (httpMethod, route, iterator) { }
+          uncaughtException () { }
+          use () { }
+          addRoute () { }
           getServer () { return {}; }
-          outputHandler (err, data, req, res) { }
+          outputHandler () { }
           start (port, hostname, backlog) {
             return Bluebird.try(() => ({
               bPort: port,
@@ -1532,7 +1535,7 @@ describe('Server tests', function () {
             }));
           }
 
-                }
+        }
 
         const obj = new Server({
           port: 9999,
@@ -1541,19 +1544,19 @@ describe('Server tests', function () {
         }, new Strategy());
 
         obj.start()
-                    .then((result) => {
+          .then((result) => {
 
-                      expect(result).to.be.eql({
-                        bPort: 9999,
-                        bBacklog: 4200,
-                        bHostname: '193.168.0.100',
-                      });
+            expect(result).to.be.eql({
+              bPort: 9999,
+              bBacklog: 4200,
+              bHostname: '193.168.0.100',
+            });
 
 
-                      return result;
+            return result;
 
-                    })
-                    .finally(done);
+          })
+          .finally(done);
 
       });
 
