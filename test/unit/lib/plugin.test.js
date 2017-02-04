@@ -8,68 +8,68 @@
 import { Base } from '@steeplejack/core';
 
 /* Files */
-import {expect} from "../../helpers/configure";
-import Plugin from "../../../src/lib/plugin";
+import { expect } from '../../helpers/configure';
+import Plugin from '../../../src/lib/plugin';
 
-describe("Plugin test", function () {
+describe('Plugin test', function () {
 
-    describe("Methods", function () {
+  describe('Methods', function () {
 
-        describe("#constructor", function () {
+    describe('#constructor', function () {
 
-            it("should extend the Base method and set no plugins by default", function () {
+      it('should extend the Base method and set no plugins by default', function () {
 
-                let obj = new Plugin();
+        const obj = new Plugin();
 
-                expect(obj).to.be.instanceof(Plugin)
+        expect(obj).to.be.instanceof(Plugin)
                     .to.be.instanceof(Base);
 
-                expect(obj.modules).to.be.eql([]);
+        expect(obj.modules).to.be.eql([]);
 
-            });
+      });
 
-            it("should set a single file string on instantiation", function () {
+      it('should set a single file string on instantiation', function () {
 
-                let obj = new Plugin("singlefile");
+        const obj = new Plugin('singlefile');
 
-                expect(obj.modules).to.be.eql([
-                    "singlefile"
-                ]);
+        expect(obj.modules).to.be.eql([
+          'singlefile',
+        ]);
 
-            });
+      });
 
-            it("should set a single function on instantiation", () => {
+      it('should set a single function on instantiation', () => {
 
-                let func = () => { };
+        const func = () => { };
 
-                let obj = new Plugin(func);
+        const obj = new Plugin(func);
 
-                expect(obj.modules).to.be.eql([
-                    func
-                ]);
+        expect(obj.modules).to.be.eql([
+          func,
+        ]);
 
-            });
+      });
 
-            it("should set an array of files on instantiation", () => {
+      it('should set an array of files on instantiation', () => {
 
-                let func = () => { };
+        const func = () => { };
 
-                let obj = new Plugin([
-                    "singlefile2",
-                    func,
-                    null,
-                    undefined
-                ]);
+        const obj = new Plugin([
+          'singlefile2',
+          func,
+          null,
+          undefined,
+        ]);
 
-                expect(obj.modules).to.be.eql([
-                    "singlefile2",
-                    func
-                ]);
+        expect(obj.modules).to.be.eql([
+          'singlefile2',
+          func,
+        ]);
 
-            });
-
-        });
+      });
 
     });
+
+  });
 
 });
