@@ -6,8 +6,8 @@
 const path = require('path');
 
 /* Third-party modules */
-const Server = require('../../../build/lib/server');
-const Steeplejack = require('../../../build/steeplejack');
+const Server = require('../../../build/lib/server'); // eslint-disable-line import/no-unresolved
+const Steeplejack = require('../../../build/steeplejack'); // eslint-disable-line import/no-unresolved
 
 /* Files */
 
