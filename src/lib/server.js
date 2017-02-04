@@ -12,33 +12,6 @@ import { Base } from '@steeplejack/core';
 import Socket from './socket';
 
 /**
- * Route Factory
- *
- * Adds the route to the strategy and configures
- * the output ready for use by the output handler.
- * The tasks are run in order, not resolving any
- * future ones if a previous one has failed.
- *
- * This must be set to the scope of the class.
- *
- * @param {object} request
- * @param {object} response
- * @param {Array} tasks
- * @returns {Promise}
- */
-function routeFactory (request, response, tasks) {
-  /* Use the outputHandler method to output */
-  return this.outputHandler(request, response, () =>
-    /* Run the tasks in order */
-     tasks.reduce((thenable, task) => thenable.then(() => new Promise((resolve) => {
-          /* Invoke the function */
-       const result = task(request, response);
-          /* Resolve the result */
-       resolve(result);
-     })), Promise.resolve()));
-}
-
-/**
  * Allowable Methods
  *
  * The HTTP methods that can be called. There is
@@ -149,7 +122,7 @@ class Server extends Base {
     }
 
     this.strategy.addRoute(httpMethod, route, (request, response) =>
-      routeFactory.call(this, request, response, routeFn));
+      this.routeFactory(request, response, routeFn));
 
     return this;
   }
@@ -191,7 +164,7 @@ class Server extends Base {
    */
   addSockets (sockets) {
     /* Only add if a socket connection */
-    if (this.socket !== null) {
+    if (this.socket) {
       _.each(sockets, (events, namespace) => {
         this.socket.namespace(namespace, events);
         _.each(events, (event, eventName) => {
@@ -341,6 +314,31 @@ class Server extends Base {
     this.middleware.preSend = fn;
 
     return this;
+  }
+
+  /**
+   * Route Factory
+   *
+   * Adds the route to the strategy and configures
+   * the output ready for use by the output handler.
+   * The tasks are run in order, not resolving any
+   * future ones if a previous one has failed.
+   *
+   * @param {object} request
+   * @param {object} response
+   * @param {Array} tasks
+   * @returns {Promise}
+   */
+  routeFactory (request, response, tasks) {
+    /* Use the outputHandler method to output */
+    return this.outputHandler(request, response, () =>
+      /* Run the tasks in order */
+      tasks.reduce((thenable, task) => thenable.then(() => new Promise((resolve) => {
+        /* Invoke the function */
+        const result = task(request, response);
+        /* Resolve the result */
+        resolve(result);
+      })), Promise.resolve()));
   }
 
   /**
