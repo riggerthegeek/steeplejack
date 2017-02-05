@@ -11,14 +11,14 @@ import { Base } from '@steeplejack/core';
 
 export default class View extends Base {
 
-    constructor ({data, headers, statusCode, template} = {}) {
-        super();
+  constructor ({ data, headers, statusCode, template } = {}) {
+    super();
 
-        this.data = data || {};
-        this.headers = headers || {};
-        this.statusCode = statusCode || null;
-        this.template = template || null;
-    }
+    this.data = data || {};
+    this.headers = headers || {};
+    this.statusCode = statusCode || null;
+    this.template = template || null;
+  }
 
     /**
      * Get Headers
@@ -27,9 +27,9 @@ export default class View extends Base {
      *
      * @returns {object}
      */
-    getHeaders () {
-        return this.headers;
-    }
+  getHeaders () {
+    return this.headers;
+  }
 
     /**
      * Get Render Data
@@ -38,9 +38,9 @@ export default class View extends Base {
      *
      * @returns {object}
      */
-    getRenderData () {
-        return this.data;
-    }
+  getRenderData () {
+    return this.data;
+  }
 
     /**
      * Get Status Code
@@ -49,9 +49,9 @@ export default class View extends Base {
      *
      * @returns {number}
      */
-    getStatusCode () {
-        return this.statusCode;
-    }
+  getStatusCode () {
+    return this.statusCode;
+  }
 
     /**
      * Get Render Template
@@ -60,9 +60,9 @@ export default class View extends Base {
      *
      * @returns {string}
      */
-    getRenderTemplate () {
-        return this.template;
-    }
+  getRenderTemplate () {
+    return this.template;
+  }
 
     /**
      * Render
@@ -75,13 +75,13 @@ export default class View extends Base {
      * @param {*} headers
      * @returns {View}
      */
-    static render (template, data, statusCode = null, headers = {}) {
-        return new View({
-            data,
-            headers,
-            statusCode,
-            template
-        });
-    }
+  static render (template, data, statusCode = null, headers = {}) {
+    return new View({
+      data,
+      headers,
+      statusCode,
+      template,
+    });
+  }
 
 }
