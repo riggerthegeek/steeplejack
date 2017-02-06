@@ -27,6 +27,7 @@
   },
   "scripts": {
     "clean": "rm -Rf ./build ./coverage",
+    "clean:all": "npm run clean && rm -Rf .nyc_output",
     "ci": "npm test -s && npm run coverage -s && npm run compile -s",
     "compile": "npm run clean && npm run compile:js -s && npm run copy",
     "compile:js": "babel --source-maps=inline --out-dir ./build ./src",
