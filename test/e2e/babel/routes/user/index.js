@@ -10,23 +10,9 @@
 
 export default userController => ({
   '/': {
-    get (req) {
-      /* Simulate a valid bearer token */
-      if (req.headers.authorization !== 'bearer valid') {
-        return 401;
-      }
+    get: () => userController.getUser('1'),
 
-      return userController.getUser('1');
-    },
-
-    post (req) {
-      /* Simulate a valid bearer token */
-      if (req.headers.authorization !== 'bearer valid') {
-        return 401;
-      }
-
-      return userController.createUser(req.body);
-    },
+    post: ({ body }) => userController.createUser(body),
   },
 });
 
@@ -39,12 +25,24 @@ export const socketRoute = () => ({
   },
 });
 
+const middleware = [
+  ({ headers }, res, cb) => {
+    /* Simulate a valid bearer token */
+    if (headers.authorization !== 'bearer valid') {
+      cb(401);
+    } else {
+      cb();
+    }
+  },
+];
+
 export const inject = {
   route: {
-    export: 'default',
     deps: [
       '$userController',
     ],
+    export: 'default',
+    middleware,
   },
   socket: {
     export: 'socketRoute',
