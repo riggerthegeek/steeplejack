@@ -12,10 +12,10 @@ import path from 'path';
 
 /* Third-party modules */
 import { Base } from '@steeplejack/core';
+import Injector from '@steeplejack/injector';
 import { _ } from 'lodash';
 import { sync as glob } from 'glob';
 import yargs from 'yargs';
-import Injector from './lib/injector';
 
 /* Files */
 import cliParameters from './helpers/cliParameters';
@@ -108,9 +108,6 @@ class Steeplejack extends Base {
     }).registerComponent({
       name: '$config',
       instance: this.config,
-    }).registerComponent({
-      name: '$loggerComponentName',
-      instance: logger,
     });
 
     /* Add the plugins and modules */

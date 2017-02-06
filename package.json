@@ -55,6 +55,7 @@
   "license": "MIT",
   "dependencies": {
     "@steeplejack/core": "^1.0.0",
+    "@steeplejack/injector": "^1.0.0",
     "glob": "^7.1.1",
     "lodash": "^4.17.4",
     "yargs": "^6.6.0"
