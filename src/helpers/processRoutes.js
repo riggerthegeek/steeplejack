@@ -22,21 +22,32 @@ export default (injector, routes) => {
         const {
           deps,
           factory,
+          middleware,
         } = value[type];
 
-        result[type][name] = injector.process(factory, deps);
+        /* Set the route */
+        result.routes[type][name] = injector.process(factory, deps);
+
+        /* Set the middleware */
+        result.middleware[type][name] = middleware;
       }
     });
 
     return result;
   }, {
-    route: {},
-    socket: {},
+    middleware: {
+      route: {},
+      socket: {},
+    },
+    routes: {
+      route: {},
+      socket: {},
+    },
   });
 
   /* Put into a Router object and return */
   return {
-    routes: new Router(data.route),
-    sockets: new Router(data.socket),
+    routes: new Router(data.routes.route, data.middleware.route),
+    sockets: new Router(data.routes.socket, data.middleware.socket),
   };
 };

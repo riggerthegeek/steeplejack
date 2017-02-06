@@ -22,7 +22,7 @@ describe('processRoutes tests', function () {
 
   });
 
-  it('should run tests on routes', function () {
+  it('should run tests on routes - no middleware', function () {
 
     const injector = {
       process: sinon.stub(),
@@ -46,6 +46,7 @@ describe('processRoutes tests', function () {
             'dep3',
           ],
           factory: 'socketFactory',
+          middleware: 'helloMiddleware'
         },
       },
     });
@@ -67,10 +68,14 @@ describe('processRoutes tests', function () {
     expect(this.Router).to.be.calledTwice
       .calledWithNew
       .calledWithExactly({
-        hello: 'r',
+        hello: 'r'
+      }, {
+        hello: undefined,
       })
       .calledWithExactly({
-        hello: 's',
+        hello: 's'
+      }, {
+        hello: 'helloMiddleware',
       });
 
   });
