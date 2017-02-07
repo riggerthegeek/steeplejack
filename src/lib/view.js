@@ -1,5 +1,9 @@
 /**
- * view
+ * View
+ *
+ * If we need to render the output to a
+ * different data type, this is how we
+ * tell the server strategy what to user.
  */
 
 /* Node modules */

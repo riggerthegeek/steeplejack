@@ -1,5 +1,8 @@
 /**
- * router
+ * Router
+ *
+ * This manages the loading and using of
+ * routes and sockets
  */
 
 /* Node modules */

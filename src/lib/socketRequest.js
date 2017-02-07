@@ -1,5 +1,9 @@
 /**
- * socketRequest
+ * Socket Request
+ *
+ * This request object is how we work with
+ * a socket, so we can have a consistent
+ * interface to work with.
  */
 
 /* Node modules */

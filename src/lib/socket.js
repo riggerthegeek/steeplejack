@@ -1,5 +1,8 @@
 /**
- * socket
+ * Socket
+ *
+ * Socket strategy. This adds socket capability
+ * to a server.
  */
 
 /* Node modules */

@@ -1,9 +1,9 @@
 /**
  * Plugin
  *
- * Manages the registration and use of a steeplejack
- * plugin.  This is so that whole sections of code,
- * written in steeplejack-friendly syntax, can be
+ * Manages the registration and use of a Steeplejack
+ * plugin. This is so that whole sections of code,
+ * written in Steeplejack-friendly syntax, can be
  * exported as a separate package and reused.
  *
  * Isn't DRY code marvellous?
