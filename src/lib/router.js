@@ -52,12 +52,41 @@ function setRouteName (parent, route) {
 
 class Router extends Base {
 
-  constructor (routes = null) {
+  constructor (routes, middleware) {
     super();
 
     this.routes = {};
 
-    this.addRoute(routes);
+    this.addRoute(routes)
+      .addMiddleware(middleware);
+  }
+
+  /**
+   * Add Middleware
+   *
+   * Adds any middleware to the existing
+   *
+   * @param {object} middlewares
+   * @returns {Router}
+   */
+  addMiddleware (middlewares) {
+    _.each(middlewares, (middleware, key) => {
+      const routeName = setRouteName('', key);
+
+      if (_.isArray(middleware) && middleware.length > 0) {
+        _.each(this.routes[routeName], (fn, method) => {
+          /* Ensure everything is an array of functions */
+          if (_.isArray(fn) === false) {
+            fn = [fn];
+          }
+
+          /* Now, apply each of the middleware functions before the functions */
+          this.routes[routeName][method] = middleware.concat(fn);
+        });
+      }
+    });
+
+    return this;
   }
 
   /**
@@ -230,8 +259,9 @@ class Router extends Base {
     }
 
     return {
-      factory,
       deps,
+      factory,
+      middleware: container.middleware || [],
     };
   }
 

@@ -57,6 +57,135 @@ describe('Router test', function () {
 
       });
 
+      it('should create an instance with some route and middleware', function () {
+
+        const fn = () => {};
+        const m1 = () => {};
+        const m2 = () => {};
+
+        const obj = new Router({
+          '/': {
+            get: [fn],
+          },
+          test: {
+            get: fn,
+            post: fn,
+          },
+        }, {
+          test: [
+            m1,
+            m2,
+          ],
+        });
+
+        expect(obj.routes).to.be.eql({
+          '/': {
+            get: [fn],
+          },
+          '/test': {
+            get: [
+              m1,
+              m2,
+              fn,
+            ],
+            post: [
+              m1,
+              m2,
+              fn,
+            ],
+          },
+        });
+
+      });
+
+    });
+
+    describe('#addMiddleware', function () {
+
+      beforeEach(function () {
+        this.fn = () => {};
+        this.obj = new Router({
+          '/': {
+            get: [this.fn],
+          },
+          test: {
+            get: this.fn,
+            post: this.fn,
+          },
+        });
+      });
+
+      it('should not add a non-array middleware', function () {
+
+        const middleware = {
+          test: '',
+        };
+
+        expect(this.obj.addMiddleware(middleware)).to.be.equal(this.obj);
+
+        expect(this.obj.routes).to.be.eql({
+          '/': {
+            get: [this.fn],
+          },
+          '/test': {
+            get: this.fn,
+            post: this.fn,
+          },
+        });
+
+      });
+
+      it('should not add an empty array middleware', function () {
+
+        const middleware = {
+          test: [],
+        };
+
+        expect(this.obj.addMiddleware(middleware)).to.be.equal(this.obj);
+
+        expect(this.obj.routes).to.be.eql({
+          '/': {
+            get: [this.fn],
+          },
+          '/test': {
+            get: this.fn,
+            post: this.fn,
+          },
+        });
+
+      });
+
+      it('should add to an array of routes', function () {
+
+        const fn = () => {};
+
+        const middleware = {
+          '/': [
+            fn,
+          ],
+          missing: [
+            fn,
+          ],
+        };
+
+        expect(this.obj.addMiddleware(middleware)).to.be.equal(this.obj);
+
+        expect(this.obj.routes).to.be.eql({
+          '/': {
+            get: [
+              fn,
+              this.fn,
+            ],
+          },
+          '/test': {
+            get: this.fn,
+            post: this.fn,
+          },
+        });
+
+
+      });
+
     });
 
     describe('#addRoute', function () {
@@ -536,6 +665,7 @@ describe('Router test', function () {
           factory: route,
           deps: [
           ],
+          middleware: [],
         });
 
       });
@@ -560,6 +690,7 @@ describe('Router test', function () {
             'dep1',
             'dep2',
           ],
+          middleware: [],
         });
 
       });
@@ -579,6 +710,7 @@ describe('Router test', function () {
           factory: route,
           deps: [
           ],
+          middleware: [],
         });
 
       });
@@ -604,6 +736,7 @@ describe('Router test', function () {
             'dep1',
             'dep2',
           ],
+          middleware: [],
         });
 
       });
