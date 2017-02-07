@@ -313,6 +313,63 @@ describe('Server tests', function () {
 
       });
 
+      it('should treat three arguments as requiring a callback', function () {
+
+        this.outputHandler.resolves('outputResult');
+
+        const fns = [
+          (req, res, cb) => {
+
+            expect(req).to.be.equal('req');
+            expect(res).to.be.equal('res');
+
+            cb(null, 'result1');
+
+          },
+        ];
+
+        return this.obj.routeFactory('req', 'res', fns)
+          .then((result) => {
+
+            expect(result).to.be.equal('outputResult');
+
+            expect(this.outputHandler).to.be.calledOnce
+              .calledWithExactly(200, 'result1', 'req', 'res');
+
+          });
+
+      });
+
+      it('should treat three arguments as requiring a callback - error', function () {
+
+        this.outputHandler.resolves('outputResult');
+
+        const fns = [
+          (req, res, cb) => {
+
+            expect(req).to.be.equal('req');
+            expect(res).to.be.equal('res');
+
+            cb(new Error('some error'));
+
+          },
+        ];
+
+        return this.obj.routeFactory('req', 'res', fns)
+          .then(() => {
+            throw new Error('invalid');
+          })
+          .catch(err => {
+
+            expect(err).to.be.instanceof(Error);
+            expect(err.message).to.be.equal('some error');
+
+            expect(this.outputHandler).to.not.be.called;
+
+          });
+
+      });
+
     });
 
     describe('#addRoute', function () {

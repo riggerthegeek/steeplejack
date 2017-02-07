@@ -331,14 +331,24 @@ class Server extends Base {
    */
   routeFactory (request, response, tasks) {
     /* Use the outputHandler method to output */
-    return this.outputHandler(request, response, () =>
-      /* Run the tasks in order */
-      tasks.reduce((thenable, task) => thenable.then(() => new Promise((resolve) => {
-        /* Invoke the function */
-        const result = task(request, response);
-        /* Resolve the result */
-        resolve(result);
-      })), Promise.resolve()));
+    return this.outputHandler(request, response, () => tasks
+      .reduce((thenable, task) => thenable
+        .then(() => new Promise((resolve, reject) => {
+          /* Callback or promise? */
+          const promise = task(request, response, (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+
+          /* Resolve the promise if no callback */
+          if (task.length !== 3) {
+            resolve(promise);
+          }
+        })), Promise.resolve()),
+    );
   }
 
   /**
