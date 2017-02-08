@@ -10,7 +10,7 @@
 import { expect, sinon } from '../../helpers/configure';
 import Logger from '../../../src/lib/logger';
 
-describe.only('Logger test', function () {
+describe('Logger test', function () {
 
   describe('Methods', function () {
 
