@@ -11,11 +11,18 @@ import Bluebird from 'bluebird';
 
 /* Files */
 import { expect, proxyquire, sinon } from '../../helpers/configure';
-import Server from '../../../src/lib/server';
 
 describe('Server tests', function () {
 
+  let Server;
   beforeEach(function () {
+    this.uuid = sinon.stub()
+      .returns('some v4 uuid');
+
+    Server = proxyquire('../../src/lib/server', {
+      'uuid/v4': this.uuid,
+    });
+
     class Strategy extends EventEmitter {
       acceptParser () { }
 
@@ -126,13 +133,32 @@ describe('Server tests', function () {
 
       beforeEach(function () {
 
+        this.clock = sinon.useFakeTimers(new Date(2015, 1, 1).getTime());
+
         this.spy = sinon.stub(this.serverStrategy, 'addRoute');
         this.outputHandler = sinon.stub(this.serverStrategy, 'outputHandler');
+
+        this.req = {
+          body: 'reqBody',
+          connection: {
+            remoteAddress: 'remoteIP',
+          },
+          headers: 'some headers',
+          method: 'HTTP Method',
+          url: 'currentURL',
+        };
 
         this.obj = (new Server({
           port: 8080,
         }, this.serverStrategy));
 
+        /* Use stub to keep the console quiet */
+        this.log = sinon.stub(this.obj, 'log');
+
+      });
+
+      afterEach(function () {
+        this.clock.restore();
       });
 
       it('should execute a single function', function () {
@@ -142,23 +168,34 @@ describe('Server tests', function () {
         const fns = [
           (req, res) => {
 
-            expect(req).to.be.equal('req');
+            expect(req).to.be.equal(this.req);
             expect(res).to.be.equal('res');
+
+            expect(this.log).to.be.calledOnce
+              .calledWithExactly('info', 'New HTTP call', {
+                body: 'reqBody',
+                headers: 'some headers',
+                id: 'some v4 uuid',
+                ip: 'remoteIP',
+                method: 'HTTP Method',
+                time: new Date(),
+                url: 'currentURL',
+              });
 
             return 'result1';
 
           },
         ];
 
-        return this.obj.routeFactory('req', 'res', fns)
-                    .then((result) => {
+        return this.obj.routeFactory(this.req, 'res', fns)
+          .then((result) => {
 
-                      expect(result).to.be.equal('outputResult');
+            expect(result).to.be.equal('outputResult');
 
-                      expect(this.outputHandler).to.be.calledOnce
-                            .calledWithExactly(200, 'result1', 'req', 'res');
+            expect(this.outputHandler).to.be.calledOnce
+                  .calledWithExactly(200, 'result1', this.req, 'res');
 
-                    });
+          });
 
       });
 
@@ -171,53 +208,64 @@ describe('Server tests', function () {
         const fns = [
           (req, res) => {
 
-            expect(req).to.be.equal('req');
+            expect(req).to.be.equal(this.req);
             expect(res).to.be.equal('res');
 
             return new Promise((resolve) => {
-              setTimeout(() => {
-                order.push(0);
-                resolve('result1');
-              }, 200);
+              order.push(0);
+              resolve('result1');
             });
 
           },
           (req, res) => {
 
-            expect(req).to.be.equal('req');
+            expect(req).to.be.equal(this.req);
             expect(res).to.be.equal('res');
 
             return new Promise((resolve) => {
-              setTimeout(() => {
-                order.push(1);
-                resolve('result2');
-              }, 100);
+              order.push(1);
+              resolve('result2');
             });
 
           },
         ];
 
-        return this.obj.routeFactory('req', 'res', fns)
-                    .then((result) => {
+        return this.obj.routeFactory(this.req, 'res', fns)
+          .then((result) => {
 
-                      expect(result).to.be.equal('outputResult');
+            expect(result).to.be.equal('outputResult');
 
-                      expect(order).to.be.eql([
-                        0,
-                        1,
-                      ]);
+            expect(order).to.be.eql([
+              0,
+              1,
+            ]);
 
-                      expect(this.outputHandler).to.be.calledOnce
-                            .calledWithExactly(200, 'result2', 'req', 'res');
+            expect(this.outputHandler).to.be.calledOnce
+              .calledWithExactly(200, 'result2', this.req, 'res');
 
-                    });
+            expect(this.log).to.be.calledTwice
+              .calledWithExactly('info', 'New HTTP call', {
+                body: 'reqBody',
+                headers: 'some headers',
+                id: 'some v4 uuid',
+                ip: 'remoteIP',
+                method: 'HTTP Method',
+                time: new Date(),
+                url: 'currentURL',
+              })
+              .calledWithExactly('debug', 'Returning response to client', {
+                body: 'result2',
+                id: 'some v4 uuid',
+                requestTime: 0,
+                statusCode: 200,
+              });
+
+          });
 
       });
 
       it('should stop when executing multiple functions if a previous one fails - Error', function () {
 
-        const spy = sinon.spy(console, 'error');
-
         this.outputHandler.resolves('outputResult');
 
         let fail = false;
@@ -225,60 +273,10 @@ describe('Server tests', function () {
         const fns = [
           (req, res) => {
 
-            expect(req).to.be.equal('req');
+            expect(req).to.be.equal(this.req);
             expect(res).to.be.equal('res');
 
             throw new Error('some error');
-
-          },
-          () => {
-
-                        /* Test that this isn't called */
-            fail = true;
-
-            return 'result2';
-
-          },
-        ];
-
-        return this.obj.routeFactory('req', 'res', fns)
-                    .then(() => {
-                      throw new Error('invalid error');
-                    })
-                    .catch((err) => {
-
-                      expect(err).to.be.instanceof(Error);
-                      expect(err.message).to.be.equal('some error');
-
-                      expect(spy).to.be.calledTwice
-                            .calledWithExactly('--- UNCAUGHT EXCEPTION ---')
-                            .calledWithExactly(err.stack);
-
-                      expect(this.outputHandler).to.not.be.called;
-
-                      expect(fail).to.be.false;
-
-                      spy.restore();
-
-                    });
-
-      });
-
-      it('should stop when executing multiple functions if a previous one fails - non-Error', function () {
-
-        const spy = sinon.spy(console, 'error');
-
-        this.outputHandler.resolves('outputResult');
-
-        let fail = false;
-
-        const fns = [
-          (req, res) => {
-
-            expect(req).to.be.equal('req');
-            expect(res).to.be.equal('res');
-
-            throw 'some error'; // eslint-disable-line no-throw-literal
 
           },
           () => {
@@ -291,25 +289,92 @@ describe('Server tests', function () {
           },
         ];
 
-        return this.obj.routeFactory('req', 'res', fns)
-                    .then(() => {
-                      throw new Error('invalid error');
-                    })
-                    .catch((err) => {
+        return this.obj.routeFactory(this.req, 'res', fns)
+          .then(() => {
+            throw new Error('invalid error');
+          })
+          .catch((err) => {
 
-                      expect(err).to.be.equal('some error');
+            expect(err).to.be.instanceof(Error);
+            expect(err.message).to.be.equal('some error');
 
-                      expect(spy).to.be.calledTwice
-                            .calledWithExactly('--- UNCAUGHT EXCEPTION ---')
-                            .calledWithExactly(err);
 
-                      expect(this.outputHandler).to.not.be.called;
+            expect(this.log).to.be.calledTwice
+              .calledWithExactly('info', 'New HTTP call', {
+                body: 'reqBody',
+                headers: 'some headers',
+                id: 'some v4 uuid',
+                ip: 'remoteIP',
+                method: 'HTTP Method',
+                time: new Date(),
+                url: 'currentURL',
+              })
+              .calledWithExactly('fatal', 'Uncaught exception', {
+                err,
+                id: 'some v4 uuid',
+              });
 
-                      expect(fail).to.be.false;
+            expect(this.outputHandler).to.not.be.called;
 
-                      spy.restore();
+            expect(fail).to.be.false;
 
-                    });
+          });
+
+      });
+
+      it('should stop when executing multiple functions if a previous one fails - non-Error', function () {
+
+        this.outputHandler.resolves('outputResult');
+
+        let fail = false;
+
+        const fns = [
+          (req, res) => {
+
+            expect(req).to.be.equal(this.req);
+            expect(res).to.be.equal('res');
+
+            return Promise.reject('some error');
+
+          },
+          () => {
+
+            /* Test that this isn't called */
+            fail = true;
+
+            return 'result2';
+
+          },
+        ];
+
+        return this.obj.routeFactory(this.req, 'res', fns)
+          .then(() => {
+            throw new Error('invalid error');
+          })
+          .catch((err) => {
+
+            expect(err).to.be.equal('some error');
+
+            expect(this.log).to.be.calledTwice
+              .calledWithExactly('info', 'New HTTP call', {
+                body: 'reqBody',
+                headers: 'some headers',
+                id: 'some v4 uuid',
+                ip: 'remoteIP',
+                method: 'HTTP Method',
+                time: new Date(),
+                url: 'currentURL',
+              })
+              .calledWithExactly('fatal', 'Uncaught exception', {
+                err,
+                id: 'some v4 uuid',
+              });
+
+            expect(this.outputHandler).to.not.be.called;
+
+            expect(fail).to.be.false;
+
+          });
 
       });
 
@@ -320,7 +385,7 @@ describe('Server tests', function () {
         const fns = [
           (req, res, cb) => {
 
-            expect(req).to.be.equal('req');
+            expect(req).to.be.equal(this.req);
             expect(res).to.be.equal('res');
 
             cb(null, 'result1');
@@ -328,13 +393,30 @@ describe('Server tests', function () {
           },
         ];
 
-        return this.obj.routeFactory('req', 'res', fns)
+        return this.obj.routeFactory(this.req, 'res', fns)
           .then((result) => {
 
             expect(result).to.be.equal('outputResult');
 
             expect(this.outputHandler).to.be.calledOnce
-              .calledWithExactly(200, 'result1', 'req', 'res');
+              .calledWithExactly(200, 'result1', this.req, 'res');
+
+            expect(this.log).to.be.calledTwice
+              .calledWithExactly('info', 'New HTTP call', {
+                body: 'reqBody',
+                headers: 'some headers',
+                id: 'some v4 uuid',
+                ip: 'remoteIP',
+                method: 'HTTP Method',
+                time: new Date(),
+                url: 'currentURL',
+              })
+              .calledWithExactly('debug', 'Returning response to client', {
+                body: 'result1',
+                id: 'some v4 uuid',
+                statusCode: 200,
+                requestTime: 0,
+              });
 
           });
 
@@ -347,7 +429,7 @@ describe('Server tests', function () {
         const fns = [
           (req, res, cb) => {
 
-            expect(req).to.be.equal('req');
+            expect(req).to.be.equal(this.req);
             expect(res).to.be.equal('res');
 
             cb(new Error('some error'));
@@ -355,7 +437,7 @@ describe('Server tests', function () {
           },
         ];
 
-        return this.obj.routeFactory('req', 'res', fns)
+        return this.obj.routeFactory(this.req, 'res', fns)
           .then(() => {
             throw new Error('invalid');
           })
@@ -365,6 +447,21 @@ describe('Server tests', function () {
             expect(err.message).to.be.equal('some error');
 
             expect(this.outputHandler).to.not.be.called;
+
+            expect(this.log).to.be.calledTwice
+              .calledWithExactly('info', 'New HTTP call', {
+                body: 'reqBody',
+                headers: 'some headers',
+                id: 'some v4 uuid',
+                ip: 'remoteIP',
+                method: 'HTTP Method',
+                time: new Date(),
+                url: 'currentURL',
+              })
+              .calledWithExactly('fatal', 'Uncaught exception', {
+                err,
+                id: 'some v4 uuid',
+              });
 
           });
 
@@ -612,7 +709,7 @@ describe('Server tests', function () {
           fail = true;
 
           expect(err).to.be.instanceof(SyntaxError);
-          expect(err.message).to.be.equal('HTTP method is unknown: METHOD');
+          expect(err.message).to.be.equal('HTTP method is unknown: METHOD:/route');
         } finally {
           expect(fail).to.be.true;
         }
@@ -681,6 +778,7 @@ describe('Server tests', function () {
 
         const req = {
           req: true,
+          headers: {},
         };
         const res = {
           res: true,
@@ -693,19 +791,19 @@ describe('Server tests', function () {
         expect(count).to.be.equal(3);
 
         expect(this.outputHandler).to.be.calledThrice
-                    .calledWith(req, res);
+          .calledWith(req, res);
 
         expect(this.addRoute).to.be.calledThrice
-                    .calledWith('GET', '/test')
-                    .calledWith('POST', '/test')
-                    .calledWith('DELETE', '/test/example');
+          .calledWith('GET', '/test')
+          .calledWith('POST', '/test')
+          .calledWith('DELETE', '/test/example');
 
         setTimeout(() => {
 
           expect(this.strategyOutput).to.be.calledThrice
-                        .calledWithExactly(200, 'fn1', req, res)
-                        .calledWithExactly(200, 'fn2', req, res)
-                        .calledWithExactly(200, 'fn4', req, res);
+            .calledWithExactly(200, 'fn1', req, res)
+            .calledWithExactly(200, 'fn2', req, res)
+            .calledWithExactly(200, 'fn4', req, res);
 
           done();
 
@@ -941,7 +1039,7 @@ describe('Server tests', function () {
 
       beforeEach(function () {
 
-        this.req = { req: true, hello: () => {} };
+        this.req = { req: true, hello: () => {}, startTime: new Date() };
         this.res = { res: true, hello: () => {} };
 
         this.stub = sinon.stub(this.serverStrategy, 'outputHandler');
@@ -951,6 +1049,8 @@ describe('Server tests', function () {
         }, this.serverStrategy);
 
         this.emit = sinon.spy(obj, 'emit');
+
+        this.log = sinon.spy(obj, 'log');
 
       });
 
@@ -962,17 +1062,32 @@ describe('Server tests', function () {
 
         it('should dispatch to the strategy, resolving a promise', function () {
 
+          this.req.id = 'request id';
+          this.req.startTime = new Date(2015, 1, 1, 12, 12, 34, 1);
+
+          const clock = sinon.useFakeTimers(new Date(2015, 1, 1, 12, 12, 35).getTime());
+
           this.stub.returns('output');
 
           return obj.outputHandler(this.req, this.res, () => 'result')
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(200, 'result', this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                    .calledWithExactly(200, 'result', this.req, this.res);
 
-                        });
+              expect(this.log).to.be.calledOnce
+                .calledWithExactly('debug', 'Returning response to client', {
+                  body: 'result',
+                  id: 'request id',
+                  requestTime: 999,
+                  statusCode: 200,
+                });
+
+              clock.restore();
+
+            });
 
         });
 
@@ -1197,60 +1312,59 @@ describe('Server tests', function () {
 
           it('should handle an error in the function, emitting to uncaughtException listener', function () {
 
-            const spy = sinon.spy(console, 'error');
+            this.req.id = 'myId';
 
             return obj.outputHandler(this.req, this.res, () => {
               throw new Error('output');
             })
-                            .then(() => {
-                              throw new Error('invalid');
-                            })
-                            .catch((err) => {
+              .then(() => {
+                throw new Error('invalid');
+              })
+              .catch((err) => {
 
-                              expect(err).to.be.instanceof(Error);
-                              expect(err.message).to.be.equal('output');
+                expect(err).to.be.instanceof(Error);
+                expect(err.message).to.be.equal('output');
 
-                              expect(this.stub).to.not.be.called;
+                expect(this.stub).to.not.be.called;
 
-                              expect(this.emit).to.not.be.called;
+                expect(this.emit).to.not.be.called;
 
-                              expect(spy).to.be.calledTwice
-                                    .calledWithExactly('--- UNCAUGHT EXCEPTION ---')
-                                    .calledWithExactly(err.stack);
+                expect(this.log).to.be.calledOnce
+                  .calledWithExactly('fatal', 'Uncaught exception', {
+                    err,
+                    id: 'myId',
+                  });
 
-                              spy.restore();
-
-                            });
+              });
 
           });
 
           it('should handle a rejected promise in the function, emitting to uncaughtException listener', function () {
 
-            const spy = sinon.spy(console, 'error');
-
+            this.req.id = 'new id';
             return obj.outputHandler(this.req, this.res, () => Promise.reject({
               hello: 'world',
             }))
-                            .then(() => {
-                              throw new Error('invalid');
-                            })
-                            .catch((err) => {
+              .then(() => {
+                throw new Error('invalid');
+              })
+              .catch((err) => {
 
-                              expect(err).to.be.eql({
-                                hello: 'world',
-                              });
+                expect(err).to.be.eql({
+                  hello: 'world',
+                });
 
-                              expect(this.stub).to.not.be.called;
+                expect(this.stub).to.not.be.called;
 
-                              expect(this.emit).to.not.be.called;
+                expect(this.emit).to.not.be.called;
 
-                              expect(spy).to.be.calledTwice
-                                    .calledWithExactly('--- UNCAUGHT EXCEPTION ---')
-                                    .calledWithExactly(err);
+                expect(this.log).to.be.calledOnce
+                  .calledWithExactly('fatal', 'Uncaught exception', {
+                    err,
+                    id: 'new id',
+                  });
 
-                              spy.restore();
-
-                            });
+              });
 
           });
 

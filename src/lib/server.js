@@ -324,7 +324,10 @@ class Server extends Base {
       .catch((err) => {
         /* Check if there are any configured listeners */
         if (this.listeners('uncaughtException').length === 0) {
-          this.log('fatal', 'Uncaught exception', err);
+          this.log('fatal', 'Uncaught exception', {
+            err,
+            id: req.id,
+          });
 
           /* Throw the error for the outputHandler to show */
           throw err;
@@ -378,10 +381,11 @@ class Server extends Base {
       /* Log the input */
       this.log('info', 'New HTTP call', {
         body: request.body,
+        headers: request.headers,
         id: request.id,
         ip: requestIp.getClientIp(request),
         method: request.method,
-        requestTime: request.startTime,
+        time: request.startTime,
         url: request.url,
       });
 
@@ -402,8 +406,7 @@ class Server extends Base {
                 resolve(promise);
               }
             })), Promise.resolve());
-    },
-    );
+    });
   }
 
   /**
