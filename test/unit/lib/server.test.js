@@ -359,7 +359,7 @@ describe('Server tests', function () {
           .then(() => {
             throw new Error('invalid');
           })
-          .catch(err => {
+          .catch((err) => {
 
             expect(err).to.be.instanceof(Error);
             expect(err.message).to.be.equal('some error');
