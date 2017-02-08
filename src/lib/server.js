@@ -389,22 +389,22 @@ class Server extends Base {
       });
 
       return tasks
-          .reduce((thenable, task) => thenable
-            .then(() => new Promise((resolve, reject) => {
-              /* Callback or promise? */
-              const promise = task(request, response, (err, result) => {
-                if (err) {
-                  reject(err);
-                } else {
-                  resolve(result);
-                }
-              });
-
-              /* Resolve the promise if no callback */
-              if (task.length !== 3) {
-                resolve(promise);
+        .reduce((thenable, task) => thenable
+          .then(() => new Promise((resolve, reject) => {
+            /* Callback or promise? */
+            const promise = task(request, response, (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
               }
-            })), Promise.resolve());
+            });
+
+            /* Resolve the promise if no callback */
+            if (task.length !== 3) {
+              resolve(promise);
+            }
+          })), Promise.resolve());
     });
   }
 
