@@ -28,7 +28,7 @@ class Steeplejack extends Base {
   /**
    * Constructor
    *
-   * Instantiates a new instance of steeplejack.  All the
+   * Instantiates a new instance of Steeplejack.  All the
    * parameters are optional, but you'll struggle to make
    * an application without them.  However, it's not Steeplejack's
    * job to tell you how to build your application, merely
@@ -47,7 +47,7 @@ class Steeplejack extends Base {
    * single source of truth for all your config needs.  Stick
    * in here database connection parameters, logging config
    * and anything else you may need.  This will be assigned
-   * to $config in the IOC container.
+   * to $config in the IoC container.
    *
    * logger - name of the logger in the IoC container.
    *
@@ -184,7 +184,7 @@ class Steeplejack extends Base {
    * Create Output Handler
    *
    * Creates the output handler.  This is registered
-   * in the IOC as value of Steeplejack.outputHandlerName.
+   * in the IoC as value of Steeplejack.outputHandlerName.
    * It returns the handler so it can be used during
    * the run phase.
    *
@@ -225,6 +225,9 @@ class Steeplejack extends Base {
     /* Run the server factory through the injector */
     this.server = this.injector.process(factory, deps);
 
+    /* Add in the logger to the server class */
+    this.server.logger = this.logger;
+
     /* Create the outputHandler and register to injector if not already done */
     if (this.injector.getComponent(Steeplejack.outputHandlerName) === null) {
       this.createOutputHandler(this.server);
@@ -260,9 +263,9 @@ class Steeplejack extends Base {
     this.server.start()
       .then(() => {
         /* Output current config */
-        this.logger.info(JSON.stringify(this.config, null, 2), 'Config');
-        this.logger.info(JSON.stringify(this.routing.routes, null, 2), 'Routes');
-        this.logger.info(JSON.stringify(this.routing.sockets, null, 2), 'Sockets');
+        this.logger.info('Config', JSON.stringify(this.config, null, 2));
+        this.logger.info('Routes', JSON.stringify(this.routing.routes, null, 2));
+        this.logger.info('Sockets', JSON.stringify(this.routing.sockets, null, 2));
 
         /* Notify that we've started */
         this.emit('start', this);
