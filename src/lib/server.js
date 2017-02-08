@@ -1,5 +1,8 @@
 /**
- * server
+ * Server
+ *
+ * This is a strategy pattern for managing
+ * a server, it's routes and sockets
  */
 
 /* Node modules */
@@ -7,6 +10,8 @@
 /* Third-party modules */
 import { _ } from 'lodash';
 import { Base } from '@steeplejack/core';
+import requestIp from 'request-ip';
+import uuid from 'uuid/v4';
 
 /* Files */
 import Socket from './socket';
@@ -39,6 +44,7 @@ class Server extends Base {
       throw new SyntaxError('Server strategy object is required');
     }
 
+    this.logger = undefined;
     this.middleware = {
       afterUse: [],
       preSend: undefined,
@@ -105,13 +111,19 @@ class Server extends Base {
       default:
         if (allowableMethods.indexOf(httpMethod) === -1) {
           /* An invalid method */
-          throw new SyntaxError(`HTTP method is unknown: ${httpMethod}`);
+          throw new SyntaxError(`HTTP method is unknown: ${httpMethod}:${route}`);
         }
         break;
 
     }
 
-    /* Emit the route for logging */
+    /* Log the route */
+    this.log('trace', 'New route added', {
+      httpMethod,
+      route,
+    });
+
+    /* Emit the route */
     this.emit('routeAdded', httpMethod, route);
 
     /* Ensure routeFn is always an array */
@@ -218,6 +230,30 @@ class Server extends Base {
   }
 
   /**
+   * Log
+   *
+   * Dispatches to the logger. If it's an error
+   * or fatal and no logger is configured, it
+   * will send it to the console.
+   *
+   * @param {string} level
+   * @param {string} message
+   * @param {*} data
+   * @param {*[]} args
+   */
+  log (level, message, data, ...args) {
+    try {
+      this.logger[level](message, data, ...args);
+    } catch (err) {
+      /* No logger set */
+      if (level === 'fatal' || level === 'error') {
+        // eslint-disable-next-line no-console
+        console.error(message, data, ...args);
+      }
+    }
+  }
+
+  /**
    * Output Handler
    *
    * Handles the output, dispatching to the strategy
@@ -270,28 +306,31 @@ class Server extends Base {
         }
 
         if (!end) {
+          /* Log the output */
+          const requestTime = Date.now() - req.startTime.getTime();
+
+          this.log('debug', 'Returning response to client', {
+            body: output,
+            id: req.id,
+            requestTime,
+            statusCode,
+          });
+
           return this.strategy.outputHandler(statusCode, output, req, res);
         }
 
         return undefined;
       })
       .catch((err) => {
+        /* Check if there are any configured listeners */
         if (this.listeners('uncaughtException').length === 0) {
-          // eslint-disable-next-line no-console
-          const log = console.error;
-
-          log('--- UNCAUGHT EXCEPTION ---');
-          if (err.stack) {
-            log(err.stack);
-          } else {
-            log(err);
-          }
+          this.log('fatal', 'Uncaught exception', err);
 
           /* Throw the error for the outputHandler to show */
           throw err;
         }
 
-        /* Emit an uncaught exception */
+        /* Listeners - emit an uncaught exception */
         this.emit('uncaughtException', req, res, err);
 
         /* No throwing as uncaught exception handler will deal with the outputting */
@@ -331,23 +370,39 @@ class Server extends Base {
    */
   routeFactory (request, response, tasks) {
     /* Use the outputHandler method to output */
-    return this.outputHandler(request, response, () => tasks
-      .reduce((thenable, task) => thenable
-        .then(() => new Promise((resolve, reject) => {
-          /* Callback or promise? */
-          const promise = task(request, response, (err, result) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          });
+    return this.outputHandler(request, response, () => {
+      /* Set a request ID and time */
+      request.id = uuid();
+      request.startTime = new Date();
 
-          /* Resolve the promise if no callback */
-          if (task.length !== 3) {
-            resolve(promise);
-          }
-        })), Promise.resolve()),
+      /* Log the input */
+      this.log('info', 'New HTTP call', {
+        body: request.body,
+        id: request.id,
+        ip: requestIp.getClientIp(request),
+        method: request.method,
+        requestTime: request.startTime,
+        url: request.url,
+      });
+
+      return tasks
+          .reduce((thenable, task) => thenable
+            .then(() => new Promise((resolve, reject) => {
+              /* Callback or promise? */
+              const promise = task(request, response, (err, result) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(result);
+                }
+              });
+
+              /* Resolve the promise if no callback */
+              if (task.length !== 3) {
+                resolve(promise);
+              }
+            })), Promise.resolve());
+    },
     );
   }
 
