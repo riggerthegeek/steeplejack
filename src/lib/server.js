@@ -323,12 +323,11 @@ class Server extends Base {
       })
       .catch((err) => {
         /* Check if there are any configured listeners */
+        this.log('fatal', 'Uncaught exception', {
+          err,
+          id: req.id,
+        });
         if (this.listeners('uncaughtException').length === 0) {
-          this.log('fatal', 'Uncaught exception', {
-            err,
-            id: req.id,
-          });
-
           /* Throw the error for the outputHandler to show */
           throw err;
         }

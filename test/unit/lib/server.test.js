@@ -1521,24 +1521,34 @@ describe('Server tests', function () {
 
             this.stub.rejects('output');
 
+            this.req.id = 'hello';
+
             obj.outputHandler(this.req, this.res, () => 'result')
-                            .then((result) => {
+              .then((result) => {
 
-                              try {
+                try {
 
-                                expect(result).to.be.undefined;
+                  expect(result).to.be.undefined;
 
-                                expect(this.stub).to.be.calledOnce
-                                        .calledWithExactly(200, 'result', this.req, this.res);
+                  const err = new Error('output');
 
-                                expect(this.emit).to.be.calledOnce
-                                        .calledWithExactly('uncaughtException', this.req, this.res, new Error('output'));
+                  expect(this.log).to.be.calledTwice
+                    .calledWithExactly('fatal', 'Uncaught exception', {
+                      err,
+                      id: 'hello',
+                    });
 
-                              } catch (err) {
-                                done(err);
-                              }
+                  expect(this.stub).to.be.calledOnce
+                          .calledWithExactly(200, 'result', this.req, this.res);
 
-                            });
+                  expect(this.emit).to.be.calledOnce
+                          .calledWithExactly('uncaughtException', this.req, this.res, err);
+
+                } catch (err) {
+                  done(err);
+                }
+
+              });
 
           });
 
