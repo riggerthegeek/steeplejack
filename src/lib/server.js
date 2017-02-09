@@ -37,14 +37,13 @@ const allowableMethods = [
 
 class Server extends Base {
 
-  constructor (options, strategy, socket) {
+  constructor (options, strategy, socket = undefined) {
     super();
 
     if (_.isObject(strategy) === false) {
       throw new SyntaxError('Server strategy object is required');
     }
 
-    this.logger = undefined;
     this.middleware = {
       afterUse: [],
       preSend: undefined,
@@ -58,6 +57,34 @@ class Server extends Base {
       socket.createSocket(this.strategy);
 
       this.socket = new Socket(socket);
+    }
+  }
+
+  /**
+   * Logger
+   *
+   * Gets the logger instance
+   *
+   * @returns {*}
+   */
+  get logger () {
+    return this.definedLogger;
+  }
+
+  /**
+   * Logger
+   *
+   * Sets the logger instance. If there is a socket
+   * set, it also sets the logger to that too.
+   *
+   * @param {*} logger
+   */
+  set logger (logger) {
+    this.definedLogger = logger;
+    this.strategy.logger = logger;
+
+    if (this.socket) {
+      this.socket.logger = logger;
     }
   }
 
