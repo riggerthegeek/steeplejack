@@ -266,7 +266,7 @@ class Server extends Base {
    * @param {object} res
    * @param {function} fn
    * @param {boolean} logError
-   * @returns {Promise<T>|Promise<U>}
+   * @returns {Promise.<*>}
    */
   outputHandler (req, res, fn, logError = true) {
     const task = resolve => resolve(fn());
@@ -322,11 +322,13 @@ class Server extends Base {
         return undefined;
       })
       .catch((err) => {
-        /* Check if there are any configured listeners */
+        /* Log the error */
         this.log('fatal', 'Uncaught exception', {
           err,
           id: req.id,
         });
+
+        /* Check if there are any configured listeners */
         if (this.listeners('uncaughtException').length === 0) {
           /* Throw the error for the outputHandler to show */
           throw err;
