@@ -308,7 +308,7 @@ class Steeplejack extends Base {
     modules = undefined,
     routesDir = undefined,
     routesGlob = undefined,
-  }) {
+  } = {}) {
     /* Pull in the parameters from the command line */
     const cliArgs = cliParameters(...yargs.argv._);
 
