@@ -76,6 +76,27 @@ describe('socket test', function () {
 
     });
 
+    describe('#logger', function () {
+
+      it('should set the logger to the socket and strategy', function () {
+
+        const strategy = {};
+        const logger = {};
+
+        const obj = new Socket(strategy);
+
+        expect(obj.logger).to.be.undefined;
+
+        obj.logger = logger;
+
+        expect(obj.logger).to.be.equal(logger);
+        expect(obj.socket).to.be.undefined;
+        expect(strategy.logger).to.be.equal(logger);
+
+      });
+
+    });
+
     describe('#listen', function () {
 
       it('should listen, set the params and dispatch to the socketFn, resolving the promise', function (done) {

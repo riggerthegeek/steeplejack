@@ -31,6 +31,29 @@ export default class Socket extends Base {
   }
 
   /**
+   * Logger
+   *
+   * Gets the logger instance
+   *
+   * @returns {*}
+   */
+  get logger () {
+    return this.definedLogger;
+  }
+
+  /**
+   * Logger
+   *
+   * Sets the logger instance.
+   *
+   * @param {*} logger
+   */
+  set logger (logger) {
+    this.definedLogger = logger;
+    this.strategy.logger = logger;
+  }
+
+  /**
    * Listen
    *
    * Makes the socket server listen for socket
