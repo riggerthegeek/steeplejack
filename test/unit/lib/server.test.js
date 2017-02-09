@@ -138,13 +138,13 @@ describe('Server tests', function () {
 
         const obj = new Server('opts', strategy);
 
-        expect(obj.logger).to.be.undefined;
+        expect(obj.log).to.be.undefined;
 
-        obj.logger = logger;
+        obj.log = logger;
 
-        expect(obj.logger).to.be.equal(logger);
+        expect(obj.log).to.be.equal(logger);
         expect(obj.socket).to.be.undefined;
-        expect(strategy.logger).to.be.equal(logger);
+        expect(strategy.log).to.be.equal(logger);
 
       });
 
@@ -158,13 +158,13 @@ describe('Server tests', function () {
 
         const obj = new Server('opts', strategy, socket);
 
-        expect(obj.logger).to.be.undefined;
+        expect(obj.log).to.be.undefined;
 
-        obj.logger = logger;
+        obj.log = logger;
 
-        expect(obj.logger).to.be.equal(logger);
-        expect(obj.socket.logger).to.be.equal(logger);
-        expect(strategy.logger).to.be.equal(logger);
+        expect(obj.log).to.be.equal(logger);
+        expect(obj.socket.log).to.be.equal(logger);
+        expect(strategy.log).to.be.equal(logger);
 
       });
 
@@ -193,8 +193,9 @@ describe('Server tests', function () {
           port: 8080,
         }, this.serverStrategy));
 
-        /* Use stub to keep the console quiet */
-        this.log = sinon.stub(this.obj, 'log');
+        this.obj.log = sinon.spy();
+
+        this.log = this.obj.log;
 
       });
 
@@ -522,6 +523,8 @@ describe('Server tests', function () {
           port: 8080,
         }, this.serverStrategy);
 
+        obj.log = sinon.spy();
+
       });
 
       it('should throw an error if httpMethod not a string', function () {
@@ -771,6 +774,8 @@ describe('Server tests', function () {
         obj = new Server({
           port: 8080,
         }, this.serverStrategy);
+
+        obj.log = sinon.spy();
 
         this.outputHandler = sinon.spy(obj, 'outputHandler');
 
@@ -1099,7 +1104,9 @@ describe('Server tests', function () {
 
         this.emit = sinon.spy(obj, 'emit');
 
-        this.log = sinon.spy(obj, 'log');
+        obj.log = sinon.spy();
+
+        this.log = obj.log;
 
       });
 
@@ -1318,8 +1325,6 @@ describe('Server tests', function () {
 
           it("should not call the preSend if it's an error response", function () {
 
-            const spy = sinon.stub(console, 'error');
-
             let callPreSend = false;
 
             obj.preSend(() => {
@@ -1335,21 +1340,11 @@ describe('Server tests', function () {
 
                 expect(err).to.be.equal('rejected promise');
 
-                expect(spy).to.be.calledOnce
-                  .calledWithExactly('Uncaught exception', {
-                    err,
-                    id: 'requestId',
-                  });
-
-                spy.restore();
-
               });
 
           });
 
           it('should handle an error in the strategy, emitting to uncaughtException listener after resolved promise', function () {
-
-            const spy = sinon.stub(console, 'error');
 
             this.stub.rejects('output');
 
@@ -1367,21 +1362,11 @@ describe('Server tests', function () {
 
                 expect(this.emit).to.not.be.called;
 
-                expect(spy).to.be.calledOnce
-                  .calledWithExactly('Uncaught exception', {
-                    err,
-                    id: 'requestId',
-                  });
-
-                spy.restore();
-
               });
 
           });
 
           it('should handle an error in the function, emitting to uncaughtException listener', function () {
-
-            const spy = sinon.stub(console, 'error');
 
             this.req.id = 'myId';
 
@@ -1406,21 +1391,11 @@ describe('Server tests', function () {
                     id: 'myId',
                   });
 
-                expect(spy).to.be.calledOnce
-                  .calledWithExactly('Uncaught exception', {
-                    err,
-                    id: 'myId',
-                  });
-
-                spy.restore();
-
               });
 
           });
 
           it('should handle a rejected promise in the function, emitting to uncaughtException listener', function () {
-
-            const spy = sinon.stub(console, 'error');
 
             this.req.id = 'new id';
             return obj.outputHandler(this.req, this.res, () => Promise.reject({
@@ -1444,14 +1419,6 @@ describe('Server tests', function () {
                     err,
                     id: 'new id',
                   });
-
-                expect(spy).to.be.calledOnce
-                  .calledWithExactly('Uncaught exception', {
-                    err,
-                    id: 'new id',
-                  });
-
-                spy.restore();
 
               });
 
@@ -1592,8 +1559,6 @@ describe('Server tests', function () {
 
           it('should handle an error in the strategy, emitting to uncaughtException listener after resolved promise', function (done) {
 
-            const spy = sinon.stub(console, 'error');
-
             obj.on('uncaughtException', (req, res, err) => {
 
               try {
@@ -1635,16 +1600,8 @@ describe('Server tests', function () {
                   expect(this.emit).to.be.calledOnce
                           .calledWithExactly('uncaughtException', this.req, this.res, err);
 
-                  expect(spy).to.be.calledOnce
-                    .calledWithExactly('Uncaught exception', {
-                      err,
-                      id: 'hello',
-                    });
-
                 } catch (err) {
                   done(err);
-                } finally {
-                  spy.restore();
                 }
 
               });
@@ -1662,8 +1619,6 @@ describe('Server tests', function () {
               done();
             });
 
-            const spy = sinon.stub(console, 'error');
-
             obj.outputHandler(this.req, this.res, () => {
               throw new Error('output');
             })
@@ -1675,14 +1630,6 @@ describe('Server tests', function () {
 
                 expect(this.emit).to.be.calledOnce
                       .calledWithExactly('uncaughtException', this.req, this.res, new Error('output'));
-
-                expect(spy).to.be.calledOnce
-                  .calledWithExactly('Uncaught exception', {
-                    err: new Error('output'),
-                    id: 'requestId',
-                  });
-
-                spy.restore();
 
               });
 

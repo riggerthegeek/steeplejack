@@ -5,20 +5,14 @@
 /* Node modules */
 
 /* Third-party modules */
+import Logger from '../../../../src/lib/logger';
 
 /* Files */
 
 export default () => {
-  const types = [
-    'fatal',
-    'error',
-    'warn',
-    'info',
-    'debug',
-    'trace',
-  ];
+  const types = Logger.getLogLevels();
 
-  return types.reduce((result, type) => {
+  const strategy = types.reduce((result, type) => {
     result[type] = (message, data, ...args) => {
       // eslint-disable-next-line no-console
       console.log(`[${new Date().toISOString()}] ${type.toUpperCase()}:`, data, message, ...args);
@@ -26,6 +20,8 @@ export default () => {
 
     return result;
   }, {});
+
+  return new Logger(strategy);
 };
 
 export const inject = {

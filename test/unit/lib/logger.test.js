@@ -38,91 +38,91 @@ describe('Logger test', function () {
 
     });
 
-    describe('#fatal', function () {
+    describe('#trigger', function () {
 
       it('should send a fatal message', function () {
 
         const err = new Error('This is an error');
 
-        expect(obj.fatal('message', err, 2)).to.be.equal(obj);
+        expect(obj.trigger('fatal', 'message', err, 2)).to.be.equal(obj);
 
         expect(strategy.fatal).to.be.calledOnce
                     .calledWithExactly('message', err, 2);
 
       });
 
-    });
-
-    describe('#error', function () {
-
       it('should send a error message', function () {
 
         const err = new Error('This is an error');
 
-        expect(obj.error('message', err, 3)).to.be.equal(obj);
+        expect(obj.trigger('error', 'message', err, 3)).to.be.equal(obj);
 
         expect(strategy.error).to.be.calledOnce
                     .calledWithExactly('message', err, 3);
 
       });
 
-    });
-
-    describe('#warn', function () {
-
       it('should send a warn message', function () {
 
         const err = new Error('This is an error');
 
-        expect(obj.warn('message', err, 4)).to.be.equal(obj);
+        expect(obj.trigger('warn', 'message', err, 4)).to.be.equal(obj);
 
         expect(strategy.warn).to.be.calledOnce
                     .calledWithExactly('message', err, 4);
 
       });
 
-    });
-
-    describe('#info', function () {
-
       it('should send an info message', function () {
 
         const err = new Error('This is an error');
 
-        expect(obj.info('message', err, 5)).to.be.equal(obj);
+        expect(obj.trigger('info', 'message', err, 5)).to.be.equal(obj);
 
         expect(strategy.info).to.be.calledOnce
                     .calledWithExactly('message', err, 5);
 
       });
 
-    });
-
-    describe('#debug', function () {
-
       it('should send a debug message', function () {
 
         const err = new Error('This is an error');
 
-        expect(obj.debug('message', err, 6)).to.be.equal(obj);
+        expect(obj.trigger('debug', 'message', err, 6)).to.be.equal(obj);
 
         expect(strategy.debug).to.be.calledOnce
                     .calledWithExactly('message', err, 6);
 
       });
 
-    });
-
-    describe('#trace', function () {
-
       it('should send a trace message', function () {
 
         const err = new Error('This is an error');
 
-        expect(obj.trace('message', err, 7)).to.be.equal(obj);
+        expect(obj.trigger('trace', 'message', err, 7)).to.be.equal(obj);
 
         expect(strategy.trace).to.be.calledOnce
                     .calledWithExactly('message', err, 7);
+
+      });
+
+      it('should throw an error if level not recognised', function () {
+
+        let fail = false;
+        try {
+          obj.trigger('unknown', 'message', new Error('hello'), 7);
+        } catch (err) {
+          fail = true;
+
+          expect(err).to.be.instanceof(SyntaxError);
+          expect(err.message).to.be.equal('Unknown log level: unknown');
+
+          Logger.getLogLevels().forEach((level) => {
+            expect(strategy[level]).to.not.be.called;
+          });
+        } finally {
+          expect(fail).to.be.true;
+        }
 
       });
 

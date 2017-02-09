@@ -67,8 +67,8 @@ class Server extends Base {
    *
    * @returns {*}
    */
-  get logger () {
-    return this.definedLogger;
+  get log () {
+    return this.logger;
   }
 
   /**
@@ -77,14 +77,18 @@ class Server extends Base {
    * Sets the logger instance. If there is a socket
    * set, it also sets the logger to that too.
    *
+   * This is automatically set with either the logger
+   * or a noop function during the bootstrapping of
+   * the application.
+   *
    * @param {*} logger
    */
-  set logger (logger) {
-    this.definedLogger = logger;
-    this.strategy.logger = logger;
+  set log (logger) {
+    this.logger = logger;
+    this.strategy.log = logger;
 
     if (this.socket) {
-      this.socket.logger = logger;
+      this.socket.log = logger;
     }
   }
 
@@ -254,30 +258,6 @@ class Server extends Base {
    */
   getServer () {
     return this.strategy.getServer();
-  }
-
-  /**
-   * Log
-   *
-   * Dispatches to the logger. If it's an error
-   * or fatal and no logger is configured, it
-   * will send it to the console.
-   *
-   * @param {string} level
-   * @param {string} message
-   * @param {*} data
-   * @param {*[]} args
-   */
-  log (level, message, data, ...args) {
-    try {
-      this.logger[level](message, data, ...args);
-    } catch (err) {
-      /* No logger set */
-      if (level === 'fatal' || level === 'error') {
-        // eslint-disable-next-line no-console
-        console.error(message, data, ...args);
-      }
-    }
   }
 
   /**

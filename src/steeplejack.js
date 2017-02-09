@@ -86,11 +86,6 @@ class Steeplejack extends Base {
       sockets: [],
     };
 
-    /* Set the default logger as the console */
-    this.logger = console;
-
-    this.loggerName = logger;
-
     /* Array of injected modules */
     this.modules = [];
 
@@ -117,13 +112,17 @@ class Steeplejack extends Base {
     this.modules.forEach(module => this.injector.register(module));
 
     /* Is there a logger set? */
-    if (this.loggerName) {
-      /* Yes - get the logger and set to this class */
+    if (logger) {
+      /* Yes - get the logger and set to here */
       this.injector.process((log) => {
-        this.logger = log;
+        /* Create as a closure */
+        this.logger = (...args) => log.trigger(...args);
       }, [
-        this.loggerName,
+        logger,
       ]);
+    } else {
+      /* No logger - use a noop */
+      this.logger = _.noop;
     }
 
     /* Configure the routes - pass in the absolute path */
@@ -226,7 +225,7 @@ class Steeplejack extends Base {
     this.server = this.injector.process(factory, deps);
 
     /* Add in the logger to the server class */
-    this.server.logger = this.logger;
+    this.server.log = this.logger;
 
     /* Create the outputHandler and register to injector if not already done */
     if (this.injector.getComponent(Steeplejack.outputHandlerName) === null) {
@@ -263,9 +262,9 @@ class Steeplejack extends Base {
     this.server.start()
       .then(() => {
         /* Output current config */
-        this.logger.info('Config', JSON.stringify(this.config, null, 2));
-        this.logger.info('Routes', JSON.stringify(this.routing.routes, null, 2));
-        this.logger.info('Sockets', JSON.stringify(this.routing.sockets, null, 2));
+        this.logger('info', 'Config', JSON.stringify(this.config, null, 2));
+        this.logger('info', 'Routes', JSON.stringify(this.routing.routes, null, 2));
+        this.logger('info', 'Sockets', JSON.stringify(this.routing.sockets, null, 2));
 
         /* Notify that we've started */
         this.emit('start', this);
