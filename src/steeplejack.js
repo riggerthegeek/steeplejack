@@ -90,9 +90,7 @@ class Steeplejack extends Base {
     this.modules = [];
 
     /* Store the config object */
-    if (_.isObject) {
-      this.config = config;
-    }
+    this.config = config;
 
     this.injector = new Injector();
 
