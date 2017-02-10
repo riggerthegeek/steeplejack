@@ -1,3 +1,20 @@
+# v3.0.0
+ - Support for NodeJS versions below v4 discontinued. At the time of writing (Feb 2017), v4 is the oldest version of
+ NodeJS to be supported. This means no `.extend` static method on each class and should now use the class-based
+ extension.
+ - Project moved from [TypeScript](http://typescriptlang.org) to ES6, compiled using [Babel](http://babeljs.io). Was
+ finding the move to TSv2 problematic and rerunning a build on same commit a few weeks later would fail - compare two
+ builds of [c0157e3](https://github.com/riggerthegeek/steeplejack/commit/c0157e32810783007094461e6251b1a27089cd50)
+ on [Oct 2016](https://travis-ci.org/riggerthegeek/steeplejack/builds/170377371) and
+ [Feb 2017](https://travis-ci.org/riggerthegeek/steeplejack/builds/200259810). Whilst this is likely to be a configuration
+ issue rather than a TypeScript issue _per se_, ES6 is the future of the language.
+ - Moved the [Base](https://github.com/steeplejack-js/core), [Collection/Model](https://github.com/steeplejack-js/data)
+ and [Injector](https://github.com/steeplejack-js/injector) into their own repos so can be used independently of this
+ project.
+ - Injector has moved away from parsing the factory's argument to having the dependencies explicitly defined. This is
+ less brittle and will support minification/obfuscation.
+ - Middleware can now to applied to all endpoints in a route file.
+
 # v2.0.0
 
 ## General
