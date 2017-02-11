@@ -21,8 +21,10 @@ export default () => {
 
       const method = httpMethod.toLowerCase();
 
-      this._inst[method](route, (req, res) => {
-        iterator(req, res);
+      this._inst[method](route, (req, res, next) => {
+        return iterator(req, res)
+          .then(() => next())
+          .catch(err => next(err));
       });
 
     }
