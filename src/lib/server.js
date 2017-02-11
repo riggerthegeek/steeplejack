@@ -314,7 +314,7 @@ class Server extends Base {
 
         if (!end) {
           /* Log the output */
-          const requestTime = Date.now() - req.startTime.getTime();
+          const requestTime = Date.now() - req.startTime;
 
           this.log('debug', 'Returning response to client', {
             body: output,
@@ -384,7 +384,7 @@ class Server extends Base {
     return this.outputHandler(request, response, () => {
       /* Set a request ID and time */
       request.id = uuid();
-      request.startTime = new Date();
+      request.startTime = Date.now();
 
       /* Log the input */
       this.log('info', 'New HTTP call', {
