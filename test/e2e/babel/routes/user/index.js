@@ -10,6 +10,12 @@
 
 export default userController => ({
   '/': {
+    error: {
+      get () {
+        throw new Error('some error');
+      }
+    },
+
     get: () => userController.getUser('1'),
 
     post: ({ body }) => userController.createUser(body),

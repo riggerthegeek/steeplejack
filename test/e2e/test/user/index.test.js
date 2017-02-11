@@ -3,6 +3,7 @@
  */
 
 /* Node modules */
+const http = require('http');
 
 /* Third-party modules */
 const io = require('socket.io-client');
@@ -35,6 +36,23 @@ describe('e2e tests', function () {
           return request
             .get('/user/empty')
             .expect(204);
+
+        });
+
+      });
+
+      describe('/error', function () {
+
+        describe('GET', function () {
+
+          it('should return 500 on an uncaught exception', function () {
+
+            return request
+              .get('/user/error')
+              .accept('text/plain')
+              .expect(500, http.STATUS_CODES[500]);
+
+          });
 
         });
 
