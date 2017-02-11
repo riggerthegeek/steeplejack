@@ -220,7 +220,7 @@ describe('Server tests', function () {
                 id: 'some v4 uuid',
                 ip: 'remoteIP',
                 method: 'HTTP Method',
-                time: new Date(),
+                time: Date.now(),
                 url: 'currentURL',
               });
 
@@ -292,7 +292,7 @@ describe('Server tests', function () {
                 id: 'some v4 uuid',
                 ip: 'remoteIP',
                 method: 'HTTP Method',
-                time: new Date(),
+                time: Date.now(),
                 url: 'currentURL',
               })
               .calledWithExactly('debug', 'Returning response to client', {
@@ -348,7 +348,7 @@ describe('Server tests', function () {
                 id: 'some v4 uuid',
                 ip: 'remoteIP',
                 method: 'HTTP Method',
-                time: new Date(),
+                time: Date.now(),
                 url: 'currentURL',
               })
               .calledWithExactly('fatal', 'Uncaught exception', {
@@ -404,7 +404,7 @@ describe('Server tests', function () {
                 id: 'some v4 uuid',
                 ip: 'remoteIP',
                 method: 'HTTP Method',
-                time: new Date(),
+                time: Date.now(),
                 url: 'currentURL',
               })
               .calledWithExactly('fatal', 'Uncaught exception', {
@@ -450,7 +450,7 @@ describe('Server tests', function () {
                 id: 'some v4 uuid',
                 ip: 'remoteIP',
                 method: 'HTTP Method',
-                time: new Date(),
+                time: Date.now(),
                 url: 'currentURL',
               })
               .calledWithExactly('debug', 'Returning response to client', {
@@ -497,7 +497,7 @@ describe('Server tests', function () {
                 id: 'some v4 uuid',
                 ip: 'remoteIP',
                 method: 'HTTP Method',
-                time: new Date(),
+                time: Date.now(),
                 url: 'currentURL',
               })
               .calledWithExactly('fatal', 'Uncaught exception', {
