@@ -43,7 +43,7 @@ export default class Logger extends Base {
   trigger (level, message, data, ...additional) {
     const trigger = level.toLowerCase();
 
-    if (Logger.getLogLevels().includes(trigger)) {
+    if (Logger.getLogLevels().indexOf(trigger) !== -1) {
       this.strategy[trigger](message, data, ...additional);
     } else {
       throw new SyntaxError(`Unknown log level: ${trigger}`);
