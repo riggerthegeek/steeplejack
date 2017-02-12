@@ -5,6 +5,13 @@
   },
   "extends": "airbnb",
   "rules": {
+    "max-lines": [
+      "error",
+      {
+        "max": 1000,
+        "skipComments": true
+      }
+    ],
     "class-methods-use-this": [
       0
     ],
