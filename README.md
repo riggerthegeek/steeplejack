@@ -90,7 +90,7 @@ MIT License
 
 [npm-image]: https://img.shields.io/npm/v/steeplejack.svg?style=flat
 [downloads-image]: https://img.shields.io/npm/dm/steeplejack.svg?style=flat
-[node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.10-brightgreen.svg?style=flat
+[node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_4.0-brightgreen.svg?style=flat
 [travis-image]: https://img.shields.io/travis/steeplejack-js/steeplejack.svg?style=flat
 [dependencies-image]: https://img.shields.io/david/steeplejack-js/steeplejack.svg?style=flat
 [dev-dependencies-image]: https://img.shields.io/david/dev/steeplejack-js/steeplejack.svg?style=flat
