@@ -2,12 +2,17 @@
  * User
  */
 
+// eslint-disable-next-line strict, lines-around-directive
+'use strict';
+
 /* Node modules */
 
 /* Third-party modules */
-const { Model } = require('@steeplejack/data');
+const data = require('@steeplejack/data');
 
 /* Files */
+
+const Model = data.Model;
 
 exports.default = () => {
   class User extends Model {

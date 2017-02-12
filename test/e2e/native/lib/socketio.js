@@ -2,6 +2,9 @@
  * socketio
  */
 
+// eslint-disable-next-line strict, lines-around-directive
+'use strict';
+
 /* Node modules */
 
 /* Third-party modules */
@@ -51,24 +54,24 @@ exports.default = function socketIO () {
       this._inst = io(server.getRawServer());
     }
 
-    disconnect ({ socket }) {
-      socket.disconnect();
+    disconnect (obj) {
+      obj.socket.disconnect();
     }
 
-    getSocketId ({ socket }) {
-      return socket.id;
+    getSocketId (obj) {
+      return obj.socket.id;
     }
 
-    joinChannel ({ socket }, channel) {
-      socket.join(channel);
+    joinChannel (obj, channel) {
+      obj.socket.join(channel);
     }
 
-    leaveChannel ({ socket }, channel) {
-      socket.leave(channel);
+    leaveChannel (obj, channel) {
+      obj.socket.leave(channel);
     }
 
-    listen ({ socket }, event, fn) {
-      socket.on(event, fn);
+    listen (obj, event, fn) {
+      obj.socket.on(event, fn);
     }
 
   }

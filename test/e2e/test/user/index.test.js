@@ -2,6 +2,9 @@
  * index.test
  */
 
+// eslint-disable-next-line strict, lines-around-directive
+'use strict';
+
 /* Node modules */
 
 /* Third-party modules */
@@ -205,15 +208,16 @@ describe('e2e tests', function () {
           socket.emit('send', 'arg1', 'arg2', 3);
         });
 
-        socket.on('receive', (...args) => {
+        socket.on('receive', function () {
 
-          const [v1, v2, v3] = args;
+          // eslint-disable-next-line prefer-rest-params
+          const args = arguments;
 
           expect(args).to.have.length(3);
 
-          expect(v1).to.be.equal('arg1');
-          expect(v2).to.be.equal('arg2');
-          expect(v3).to.be.equal(3);
+          expect(args[0]).to.be.equal('arg1');
+          expect(args[1]).to.be.equal('arg2');
+          expect(args[2]).to.be.equal(3);
 
           done();
 

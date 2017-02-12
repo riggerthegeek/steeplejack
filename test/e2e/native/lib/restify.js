@@ -2,6 +2,9 @@
  * restify
  */
 
+// eslint-disable-next-line strict, lines-around-directive
+'use strict';
+
 /* Node modules */
 
 /* Third-party modules */

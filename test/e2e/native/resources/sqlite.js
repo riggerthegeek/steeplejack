@@ -2,6 +2,8 @@
  * sqlite
  */
 
+// eslint-disable-next-line strict, lines-around-directive
+'use strict';
 
 /* Node modules */
 const fs = require('fs');

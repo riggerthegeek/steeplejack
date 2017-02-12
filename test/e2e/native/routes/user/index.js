@@ -18,7 +18,7 @@ exports.default = userController => ({
 
     get: () => userController.getUser('1'),
 
-    post: ({ body }) => userController.createUser(body),
+    post: req => userController.createUser(req.body),
   },
 });
 
@@ -32,9 +32,9 @@ exports.socketRoute = () => ({
 });
 
 const middleware = [
-  ({ headers }, res, cb) => {
+  (req, res, cb) => {
     /* Simulate a valid bearer token */
-    if (headers.authorization !== 'bearer valid') {
+    if (req.headers.authorization !== 'bearer valid') {
       cb(401);
     } else {
       cb();
