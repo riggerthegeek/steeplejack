@@ -226,7 +226,7 @@ class Steeplejack extends Base {
     this.server.log = this.logger;
 
     /* Create the outputHandler and register to injector if not already done */
-    if (this.injector.getComponent(Steeplejack.outputHandlerName) === null) {
+    if (!this.injector.getComponent(Steeplejack.outputHandlerName)) {
       this.createOutputHandler(this.server);
     }
 
