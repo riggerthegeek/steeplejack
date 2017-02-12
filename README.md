@@ -91,18 +91,18 @@ MIT License
 [npm-image]: https://img.shields.io/npm/v/steeplejack.svg?style=flat
 [downloads-image]: https://img.shields.io/npm/dm/steeplejack.svg?style=flat
 [node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.10-brightgreen.svg?style=flat
-[travis-image]: https://img.shields.io/travis/riggerthegeek/steeplejack.svg?style=flat
-[dependencies-image]: https://img.shields.io/david/riggerthegeek/steeplejack.svg?style=flat
-[dev-dependencies-image]: https://img.shields.io/david/dev/riggerthegeek/steeplejack.svg?style=flat
+[travis-image]: https://img.shields.io/travis/steeplejack-js/steeplejack.svg?style=flat
+[dependencies-image]: https://img.shields.io/david/steeplejack-js/steeplejack.svg?style=flat
+[dev-dependencies-image]: https://img.shields.io/david/dev/steeplejack-js/steeplejack.svg?style=flat
 [gitter-image]: https://img.shields.io/badge/GITTER-JOIN%20CHAT%20%E2%86%92-1DCE73.svg?style=flat
-[quality-image]: https://www.bithound.io/github/riggerthegeek/steeplejack/badges/score.svg
+[quality-image]: https://www.bithound.io/github/steeplejack-js/steeplejack/badges/score.svg
 
 
 [npm-url]: https://npmjs.org/package/steeplejack
 [node-version-url]: http://nodejs.org/download/
-[travis-url]: https://travis-ci.org/riggerthegeek/steeplejack
+[travis-url]: https://travis-ci.org/steeplejack-js/steeplejack
 [downloads-url]: https://npmjs.org/package/steeplejack
-[dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack
-[dev-dependencies-url]: https://david-dm.org/riggerthegeek/steeplejack#info=devDependencies&view=table
-[gitter-url]: https://gitter.im/riggerthegeek/steeplejack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge
-[quality-url]: https://www.bithound.io/github/riggerthegeek/steeplejack
+[dependencies-url]: https://david-dm.org/steeplejack-js/steeplejack
+[dev-dependencies-url]: https://david-dm.org/steeplejack-js/steeplejack#info=devDependencies&view=table
+[gitter-url]: https://gitter.im/steeplejack-js/steeplejack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge
+[quality-url]: https://www.bithound.io/github/steeplejack-js/steeplejack
