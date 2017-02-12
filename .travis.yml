@@ -1,38 +1,30 @@
 language: node_js
-
 node_js:
 - '7'
 - '6'
 - '5'
 - '4'
-
 matrix:
   fast_finish: true
-
 sudo: false
-
 env:
   matrix:
   - TZ=Etc/UTC
   - TZ=America/Los_Angeles
-
 before_install:
 - date
-
 script:
 - npm run ci
-
 before_deploy:
 - npm run compile
-
 deploy:
-  provider: script
-  script: ./deploy.sh
+  provider: npm
+  api_key:
+    secure: Ph0iBHcJXS6+LSdDOtt/wevY/qK0E1gwoj/82nsK71jRbZX79GwILTO+xXuxkRZVsBpkVZ0cYbbsi8FpkJygXYKGKLlVgpFvqmBAn45MtT6Pu3fdbUuBM9hdFA1vWbHDzmYDqrLk8aIIyfwELOiSfrw6AGvSk8imX4GkSPaiNOA=
   skip_cleanup: true
   on:
     tags: true
     repo: steeplejack-js/core
-
 notifications:
   webhooks:
     urls:
