@@ -2,8 +2,6 @@
  * endpoint
  */
 
-"use strict";
-
 
 /* Node modules */
 
@@ -14,8 +12,11 @@
 /* Files */
 
 
-exports.route = function () {
-
-    return "endpoint.js";
-
-};
+// module.exports = {
+  // inject: {
+  //   route: {
+  //     export: () => 'endpoint.js'
+  //   }
+  // }
+// };
+export class Hello {}

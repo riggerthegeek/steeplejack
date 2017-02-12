@@ -2,8 +2,6 @@
  * route
  */
 
-"use strict";
-
 
 /* Node modules */
 
@@ -14,14 +12,18 @@
 /* Files */
 
 
-exports.route = function () {
-
-    return "route.js";
-
-};
-
-exports.socket = function () {
-
-    return "socket.js";
-
+export const inject = {
+  route: {
+    export: () => 'route.js',
+    deps: [
+      'dep1',
+    ],
+  },
+  socket: {
+    export: () => 'socket.js',
+    deps: [
+      'dep1',
+      'dep2',
+    ],
+  },
 };

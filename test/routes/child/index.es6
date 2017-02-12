@@ -14,8 +14,6 @@
 /* Files */
 
 
-exports.route = function () {
-
-    return "index.es6";
-
+exports.inject = {
+  export: () => 'index.es6;'
 };

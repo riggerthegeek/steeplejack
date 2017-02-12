@@ -2,8 +2,6 @@
  * index
  */
 
-"use strict";
-
 
 /* Node modules */
 
@@ -14,8 +12,8 @@
 /* Files */
 
 
-exports.route = function () {
-
-    return "index.js";
-
+exports.inject = {
+  route: {
+    export: () => 'index.js',
+  },
 };

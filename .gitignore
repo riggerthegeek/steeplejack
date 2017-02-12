@@ -1,10 +1,7 @@
-# Created by .gitignore support plugin (hsz.mobi)
-
-
-### Node template
 # Logs
 logs
 *.log
+npm-debug.log*
 
 # Runtime data
 pids
@@ -17,35 +14,29 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+# nyc test coverage
+.nyc_output
+
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
+
+# node-waf configuration
+.lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
-# Dependency directory
-# Commenting this out is preferred by some people, see
-# https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
+# Dependency directories
 node_modules
+jspm_packages
 
-# Users Environment Variables
-.lock-wscript
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+.idea
 .DS_Store
-.project
-/.idea/
-/nbsettings/
-/.settings/
-/tmp/
-/build/
-/.sass-cache/
-/_site/
-*.lock
-/.tscache/
-.baseDir.ts
-*.tmp.txt
-*.d.ts
-*.js.map
-**/*.js
-/typings/
-!Gruntfile.js
-!test/**/*.js
+tmp
+build

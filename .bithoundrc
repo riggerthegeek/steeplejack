@@ -1,18 +1,15 @@
 {
   "critics": {
     "lint": {
-      "engine": "tslint"
+      "engine": "eslint"
+    },
+    "wc": {
+      "limit": 5000
     }
   },
-  "dependencies": {
-    "mute": [
-      "grunt",
-      "sqlite3"
-    ]
-  },
   "ignore": [
-    "node_modules",
-    "test"
+    "**/node_modules/**",
+    "**/test/**"
   ],
   "test": [
     "**/test/unit/**"
