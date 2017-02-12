@@ -8,7 +8,11 @@
 const io = require('socket.io-client');
 
 /* Files */
-const { config, request, expect } = require('../../../helpers/e2e');
+const e2e = require('../../../helpers/e2e');
+
+const config = e2e.config;
+const expect = e2e.expect;
+const request = e2e.request;
 
 describe('e2e tests', function () {
 
