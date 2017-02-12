@@ -19,11 +19,30 @@ exports.default = function socketIO () {
 
     broadcast (request, broadcast) {
 
+      function _toConsumableArray (arr) {
+        if (Array.isArray(arr)) {
+          const arr2 = new Array(arr.length);
+          for (let i = 0; i < arr.length; i += 1) {
+            arr2[i] = arr[i];
+          }
+          return arr2;
+        }
+
+        return Array.from(arr);
+      }
+
       if (broadcast.target) {
-        request.socket.nsp.to(broadcast.target)
-          .emit(broadcast.event, ...broadcast.data);
+        let _request$socket$nsp$t;
+
+        (_request$socket$nsp$t = request.socket.nsp.to(broadcast.target)).emit
+          .apply(_request$socket$nsp$t, [broadcast.event]
+            .concat(_toConsumableArray(broadcast.data)));
       } else {
-        request.socket.nsp.emit(broadcast.event, ...broadcast.data);
+        let _request$socket$nsp;
+
+        (_request$socket$nsp = request.socket.nsp).emit
+          .apply(_request$socket$nsp, [broadcast.event]
+            .concat(_toConsumableArray(broadcast.data)));
       }
 
     }
