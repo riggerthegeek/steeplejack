@@ -13,7 +13,7 @@ import { Base } from '@steeplejack/core';
 
 /* Files */
 
-export default class View extends Base {
+class View extends Base {
 
   constructor ({ data, headers, statusCode, template } = {}) {
     super();
@@ -89,3 +89,5 @@ export default class View extends Base {
   }
 
 }
+
+module.exports = View;

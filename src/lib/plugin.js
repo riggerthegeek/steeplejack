@@ -17,7 +17,7 @@ import { Base } from '@steeplejack/core';
 
 /* Files */
 
-export default class Plugin extends Base {
+class Plugin extends Base {
 
   constructor (files = null) {
     super();
@@ -59,3 +59,5 @@ export default class Plugin extends Base {
   }
 
 }
+
+module.exports = Plugin;

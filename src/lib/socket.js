@@ -14,11 +14,15 @@ import { Base } from '@steeplejack/core';
 /* Files */
 import SocketRequest from './socketRequest';
 
-export const CONNECT_FLAG = 'connect';
+class Socket extends Base {
 
-export const MIDDLEWARE_FLAG = '__middleware';
+  static get connectFlag () {
+    return 'connect';
+  }
 
-export default class Socket extends Base {
+  static get middlewareFlag () {
+    return '__middleware';
+  }
 
   constructor (strategy) {
     super();
@@ -91,18 +95,18 @@ export default class Socket extends Base {
    */
   namespace (namespace, events) {
     /* Get connection listener */
-    const onConnect = events[CONNECT_FLAG];
+    const onConnect = events[Socket.connectFlag];
 
     /* Search for any middleware functions */
     let middleware = [];
-    if (_.has(events, MIDDLEWARE_FLAG)) {
-      middleware = events[MIDDLEWARE_FLAG];
+    if (_.has(events, Socket.middlewareFlag)) {
+      middleware = events[Socket.middlewareFlag];
     }
 
     /* Omit the connect and middleware functions now */
     events = _.omit(events, [
-      CONNECT_FLAG,
-      MIDDLEWARE_FLAG,
+      Socket.connectFlag,
+      Socket.middlewareFlag,
     ]);
 
     this.strategy.connect(namespace, middleware)
@@ -132,3 +136,5 @@ export default class Socket extends Base {
   }
 
 }
+
+module.exports = Socket;

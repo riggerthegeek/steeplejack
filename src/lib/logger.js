@@ -11,7 +11,7 @@ import { Base } from '@steeplejack/core';
 
 /* Files */
 
-export default class Logger extends Base {
+class Logger extends Base {
 
    /**
      * Constructor
@@ -72,3 +72,5 @@ export default class Logger extends Base {
   }
 
 }
+
+module.exports = Logger;

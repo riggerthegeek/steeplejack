@@ -9,19 +9,19 @@ import { EventEmitter } from 'events';
 import { Base } from '@steeplejack/core';
 
 /* Files */
-import Socket, { CONNECT_FLAG, MIDDLEWARE_FLAG } from '../../../src/lib/socket';
+import Socket from '../../../src/lib/socket';
 import { expect, proxyquire, sinon } from '../../helpers/configure';
 
 describe('socket test', function () {
 
   describe('flags', function () {
 
-    it('should ensure the CONNECT_FLAG is set to connect', function () {
-      expect(CONNECT_FLAG).to.be.equal('connect');
+    it('should ensure the connectFlag is set to connect', function () {
+      expect(Socket.connectFlag).to.be.equal('connect');
     });
 
-    it('should ensure MIDDLEWARE_FLAG is set to __middleware', function () {
-      expect(MIDDLEWARE_FLAG).to.be.equal('__middleware');
+    it('should ensure middlewareFlag is set to __middleware', function () {
+      expect(Socket.middlewareFlag).to.be.equal('__middleware');
     });
 
   });
@@ -253,7 +253,7 @@ describe('socket test', function () {
 
         this.Stub = proxyquire('../../src/lib/socket', {
           './socketRequest': this.socketRequest,
-        }).default;
+        });
 
       });
 
