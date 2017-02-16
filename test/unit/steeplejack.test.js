@@ -21,6 +21,44 @@ describe('Steeplejack test', function () {
 
   describe('Methods', function () {
 
+    describe('#constructor', function () {
+
+      it('should add system components to the injector', function () {
+
+        const registerSystemComponents = sinon.spy();
+
+        const injectorInst = {
+          registerComponent: sinon.stub(),
+        };
+
+        injectorInst.registerComponent.returns(injectorInst);
+
+        const injector = sinon.stub()
+          .returns(injectorInst);
+
+        const SSteeplejack = proxyquire('../../src/steeplejack', {
+          '@steeplejack/injector': injector,
+          './helpers/registerSystemComponents': registerSystemComponents,
+        });
+
+        const app = new SSteeplejack({
+          config: 'configObj',
+        });
+
+        expect(app).to.be.instanceof(SSteeplejack)
+          .instanceof(Base);
+
+        expect(injector).to.be.calledOnce
+          .calledWithNew
+          .calledWithExactly();
+
+        expect(registerSystemComponents).to.be.calledOnce
+          .calledWithExactly(injectorInst, 'configObj');
+
+      });
+
+    });
+
     describe('#addModule', function () {
 
       beforeEach(function () {

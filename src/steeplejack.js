@@ -20,6 +20,7 @@ import yargs from 'yargs';
 /* Files */
 import cliParameters from './helpers/cliParameters';
 import processRoutes from './helpers/processRoutes';
+import registerSystemComponents from './helpers/registerSystemComponents';
 import replaceEnvVars from './helpers/replaceEnvVars';
 import Router from './lib/router';
 
@@ -95,13 +96,7 @@ class Steeplejack extends Base {
     this.injector = new Injector();
 
     /* Register system components */
-    this.injector.registerComponent({
-      name: '$injector',
-      instance: this.injector,
-    }).registerComponent({
-      name: '$config',
-      instance: this.config,
-    });
+    registerSystemComponents(this.injector, this.config);
 
     /* Add the plugins and modules */
     modules.forEach(module => this.addModule(module));
