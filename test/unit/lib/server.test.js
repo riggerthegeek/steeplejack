@@ -1317,6 +1317,50 @@ describe('Server tests', function () {
 
         });
 
+        it('should log View instance with template and data', function () {
+
+          const view = {
+            getRenderTemplate: sinon.stub()
+              .returns('render template result'),
+            getRenderData: sinon.stub()
+              .returns('render data result'),
+          };
+
+          this.stub.returns('output');
+
+          return obj.outputHandler(this.req, this.res, () => view)
+            .then((data) => {
+
+              expect(data).to.be.equal('output');
+
+              expect(this.stub).to.be.calledOnce
+                .calledWithExactly(200, view, this.req, this.res);
+
+              expect(this.log).to.be.calledOnce
+                .calledWith('debug', 'Returning response to client');
+
+              const output = this.log.args[0][2];
+
+              expect(output).to.have.keys([
+                'body',
+                'id',
+                'requestTime',
+                'statusCode',
+              ]);
+
+              expect(output.body).to.be.eql({
+                data: 'render data result',
+                template: 'render template result',
+              });
+
+              expect(output.id).to.be.equal(this.req.id);
+              expect(output.requestTime).to.be.a('number');
+              expect(output.statusCode).to.be.equal(200);
+
+            });
+
+        });
+
       });
 
       describe('failed response', function () {

@@ -316,8 +316,21 @@ class Server extends Base {
           /* Log the output */
           const requestTime = Date.now() - req.startTime;
 
+          /* A View object should be parsed to make logs easier to read */
+          let body = output;
+          if (
+            _.isObject(output) &&
+            _.isFunction(output.getRenderData) &&
+            _.isFunction(output.getRenderTemplate)
+          ) {
+            body = {
+              data: output.getRenderData(),
+              template: output.getRenderTemplate(),
+            };
+          }
+
           this.log('debug', 'Returning response to client', {
-            body: output,
+            body,
             id: req.id,
             requestTime,
             statusCode,
