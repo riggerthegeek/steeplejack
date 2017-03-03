@@ -3,6 +3,9 @@
   "version": "3.0.0-rc2",
   "description": "An easy way of making a Twelve Factor App in NodeJS",
   "main": "./steeplejack",
+  "bin": {
+    "steeplejack": "./bin/steeplejack"
+  },
   "nyc": {
     "all": true,
     "check-coverage": true,
@@ -29,11 +32,13 @@
     "clean": "rm -Rf ./build ./coverage",
     "clean:all": "npm run clean && rm -Rf .nyc_output npm-debug.log",
     "ci": "npm test -s && npm run coverage -s && npm run compile -s",
-    "compile": "npm run clean && npm run compile:js -s && npm run copy",
+    "compile": "npm run clean && npm run compile:js -s && npm run compile:shebang && npm run copy",
     "compile:js": "babel --source-maps=inline --out-dir ./build ./src",
+    "compile:shebang": "( echo '#!/usr/bin/env node'; cat ./build/bin/steeplejack.js ) > ./build/bin/steeplejack.js.new && mv ./build/bin/steeplejack.js{.new,} && chmod 755 ./build/bin/*",
     "copy": "cp package.json build; cp LICENSE build; cp README.md build",
     "coverage": "cross-env NODE_ENV=test nyc mocha --ui bdd --recursive test/unit",
     "postversion": "git push --tags && git push",
+    "serve:bin": "nodemon --exec babel-node ./src/bin/steeplejack",
     "test": "npm run test:lint -s && npm run test:unit -s && npm run test:e2e -s",
     "test:e2e": "npm run test:e2e:babel -s && npm run test:e2e:native -s",
     "test:e2e:babel": "STEEPLEJACK_TYPE=babel mocha --compilers js:babel-register --throw-deprecation --ui bdd --full-trace --recursive test/e2e/test",
