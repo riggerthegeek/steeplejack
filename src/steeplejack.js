@@ -96,7 +96,7 @@ class Steeplejack extends Base {
     this.injector = new Injector();
 
     /* Register system components */
-    registerSystemComponents(this.injector, this.config);
+    registerSystemComponents(this, this.injector, this.config);
 
     /* Add the plugins and modules */
     modules.forEach(module => this.addModule(module));

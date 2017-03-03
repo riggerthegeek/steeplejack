@@ -23,6 +23,8 @@ describe('registerSystemComponent tests', function () {
 
   it('should add injector, config and system components', function () {
 
+    const app = sinon.spy();
+
     const injector = {
       registerComponent: sinon.stub(),
     };
@@ -31,9 +33,13 @@ describe('registerSystemComponent tests', function () {
 
     const config = 'configObj';
 
-    expect(registerSystemComponent(injector, config)).to.be.undefined;
+    expect(registerSystemComponent(app, injector, config)).to.be.undefined;
 
-    expect(injector.registerComponent).to.be.callCount(12)
+    expect(injector.registerComponent).to.be.callCount(13)
+      .calledWithExactly({
+        name: '$steeplejack-app',
+        instance: app,
+      })
       .calledWithExactly({
         name: '$injector',
         instance: injector,

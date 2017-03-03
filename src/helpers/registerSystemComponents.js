@@ -21,9 +21,13 @@ import Socket from '../lib/socket';
 import SocketRequest from '../lib/socketRequest';
 import View from '../lib/view';
 
-export default (injector, config) => {
+export default (app, injector, config) => {
   /* Register the instance stuff */
   injector
+    .registerComponent({
+      name: '$steeplejack-app',
+      instance: app,
+    })
     .registerComponent({
       name: '$injector',
       instance: injector,

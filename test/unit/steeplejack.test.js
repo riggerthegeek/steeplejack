@@ -53,7 +53,7 @@ describe('Steeplejack test', function () {
           .calledWithExactly();
 
         expect(registerSystemComponents).to.be.calledOnce
-          .calledWithExactly(injectorInst, 'configObj');
+          .calledWithExactly(app, injectorInst, 'configObj');
 
       });
 
