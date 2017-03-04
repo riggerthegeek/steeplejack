@@ -34,7 +34,7 @@
     "ci": "npm test -s && npm run coverage -s && npm run compile -s",
     "compile": "npm run clean && npm run compile:js -s && npm run compile:shebang && npm run copy",
     "compile:js": "babel --source-maps=inline --out-dir ./build ./src",
-    "compile:shebang": "( echo '#!/usr/bin/env node'; cat ./build/bin/steeplejack.js ) > ./build/bin/steeplejack.js.new && mv ./build/bin/steeplejack.js{.new,} && chmod 755 ./build/bin/*",
+    "compile:shebang": "( echo '#!/usr/bin/env node'; cat ./build/bin/steeplejack.js ) > ./build/bin/steeplejack.js.new && mv ./build/bin/steeplejack.js.new ./build/bin/steeplejack.js && chmod 755 ./build/bin/*",
     "copy": "cp package.json build; cp LICENSE build; cp README.md build",
     "coverage": "cross-env NODE_ENV=test nyc mocha --ui bdd --recursive test/unit",
     "postversion": "git push --tags && git push",
