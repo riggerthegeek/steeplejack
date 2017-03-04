@@ -207,7 +207,7 @@ describe('Steeplejack binary tests', function () {
 
           expect(err).to.be.instanceof(Error);
           expect(err.message).to.be.equal('config file location is a required argument');
-        } finally  {
+        } finally {
           expect(fail).to.be.true;
         }
 
