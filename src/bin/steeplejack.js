@@ -31,20 +31,28 @@ try {
  * @param {object} argv
  */
 function displayConfig (argv) {
-  console.log(argv);
-  process.exit();
+  if (!argv.config) {
+    throw new Error('config file location is a required argument');
+  }
 
   /* Resolve the full path */
   const config = path.join(process.cwd(), argv.config);
-  const env = path.join(process.cwd(), argv.env);
+  let env;
+  if (argv.env) {
+    env = path.join(process.cwd(), argv.env);
+  }
 
   /* Get the files we're after */
   const obj = {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     config: require(config),
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    env: require(env),
+    env: undefined,
   };
+
+  if (env) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    obj.env = require(env);
+  }
 
   const args = _.tail(argv._);
 
@@ -54,7 +62,9 @@ function displayConfig (argv) {
   let output = obj.config;
 
   /* Merge config and envvars */
-  output = _.merge(output, replaceEnvVars(obj.env));
+  if (obj.env) {
+    output = _.merge(output, replaceEnvVars(obj.env));
+  }
 
   /* Get any command line args */
   output = _.merge(output, cliArgs);
