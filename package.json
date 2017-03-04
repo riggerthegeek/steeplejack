@@ -4,7 +4,7 @@
   "description": "An easy way of making a Twelve Factor App in NodeJS",
   "main": "./steeplejack",
   "bin": {
-    "steeplejack": "./bin/steeplejack"
+    "steeplejack": "./bin/steeplejack.js"
   },
   "nyc": {
     "all": true,
