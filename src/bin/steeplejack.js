@@ -70,12 +70,17 @@ function displayConfig (argv) {
   output = _.merge(output, cliArgs);
 
   /* Output the resolved config */
-  console.log(JSON.stringify(output, null, 2)); // eslint-disable-line no-console
+  console.log(JSON.stringify(output, null, argv.format ? 2 : 0)); // eslint-disable-line no-console
 }
 
 export default yargs
   .usage('$0 <cmd> [args]')
-  .command('config <config> [env]', 'Display the config JSON for the current environment', {}, displayConfig)
+  .command('config <config> [env] [format]', 'Display the config JSON for the current environment', {
+    format: {
+      default: true,
+      type: 'boolean',
+    },
+  }, displayConfig)
   .version(() => version)
   .help()
   .argv;
