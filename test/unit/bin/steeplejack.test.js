@@ -50,7 +50,7 @@ describe('Steeplejack binary tests', function () {
         .calledWithExactly();
 
       expect(this.yargs.command).to.be.calledOnce
-        .calledWith('config <config> <env>', 'Display the config JSON for the current environment', {});
+        .calledWith('config <config> [env]', 'Display the config JSON for the current environment', {});
 
       expect(this.yargs.version).to.be.calledOnce;
 
@@ -80,7 +80,7 @@ describe('Steeplejack binary tests', function () {
         .calledWithExactly();
 
       expect(this.yargs.command).to.be.calledOnce
-        .calledWith('config <config> <env>', 'Display the config JSON for the current environment', {});
+        .calledWith('config <config> [env]', 'Display the config JSON for the current environment', {});
 
       expect(this.yargs.version).to.be.calledOnce;
 

@@ -75,7 +75,7 @@ function displayConfig (argv) {
 
 export default yargs
   .usage('$0 <cmd> [args]')
-  .command('config <config> <env>', 'Display the config JSON for the current environment', {}, displayConfig)
+  .command('config <config> [env]', 'Display the config JSON for the current environment', {}, displayConfig)
   .version(() => version)
   .help()
   .argv;
