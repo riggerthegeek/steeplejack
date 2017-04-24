@@ -16,25 +16,6 @@ import uuid from 'uuid/v4';
 /* Files */
 import Socket from './socket';
 
-/**
- * Allowable Methods
- *
- * The HTTP methods that can be called. There is
- * a special 'all' type which, if called, will
- * specify all of these methods.
- *
- * @type {string[]}
- */
-const allowableMethods = [
-  'GET',
-  'POST',
-  'PUT',
-  'DELETE',
-  'HEAD',
-  'OPTIONS',
-  'PATCH',
-];
-
 class Server extends Base {
 
   constructor (options, strategy, socket = undefined) {
@@ -123,7 +104,7 @@ class Server extends Base {
     httpMethod = httpMethod.toUpperCase();
 
     if (httpMethod === 'ALL') {
-      _.each(allowableMethods, (method) => {
+      _.each(Server.allowableHTTPMethods, (method) => {
         this.addRoute(method, route, fn);
       });
       return this;
@@ -140,7 +121,7 @@ class Server extends Base {
         break;
 
       default:
-        if (allowableMethods.indexOf(httpMethod) === -1) {
+        if (Server.allowableHTTPMethods.indexOf(httpMethod) === -1) {
           /* An invalid method */
           throw new SyntaxError(`HTTP method is unknown: ${httpMethod}:${route}`);
         }
@@ -479,6 +460,27 @@ class Server extends Base {
     this.strategy.use(...args);
 
     return this;
+  }
+
+  /**
+   * Allowable HTTP Methods
+   *
+   * The HTTP methods that can be called. There is
+   * a special 'all' type which, if called, will
+   * specify all of these methods.
+   *
+   * @type {string[]}
+   */
+  static get allowableHTTPMethods () {
+    return [
+      'GET',
+      'POST',
+      'PUT',
+      'DELETE',
+      'HEAD',
+      'OPTIONS',
+      'PATCH',
+    ];
   }
 
   /**

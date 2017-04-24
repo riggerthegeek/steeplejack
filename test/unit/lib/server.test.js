@@ -1947,4 +1947,26 @@ describe('Server tests', function () {
 
   });
 
+  describe('Static method', function () {
+
+    describe('#allowableHTTPMethods', function () {
+
+      it('should returns all the allowable HTTP methods', function () {
+
+        expect(Server.allowableHTTPMethods).to.be.eql([
+          'GET',
+          'POST',
+          'PUT',
+          'DELETE',
+          'HEAD',
+          'OPTIONS',
+          'PATCH',
+        ]);
+
+      });
+
+    });
+
+  });
+
 });
