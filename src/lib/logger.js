@@ -13,15 +13,15 @@ import { Base } from '@steeplejack/core';
 
 class Logger extends Base {
 
-   /**
-     * Constructor
-     *
-     * Creates a new instance of the strategy
-     * class and ensures the concrete strategy
-     * object is set
-     *
-     * @param {*} strategy
-     */
+  /**
+   * Constructor
+   *
+   * Creates a new instance of the strategy
+   * class and ensures the concrete strategy
+   * object is set
+   *
+   * @param {*} strategy
+   */
   constructor (strategy) {
     super();
 
@@ -40,7 +40,7 @@ class Logger extends Base {
    * @param {*[]}additional
    * @returns {Logger}
    */
-  trigger (level, message, data, ...additional) {
+  trigger (level, message, data = {}, ...additional) {
     const trigger = level.toLowerCase();
 
     if (Logger.getLogLevels().indexOf(trigger) !== -1) {

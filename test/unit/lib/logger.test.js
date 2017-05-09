@@ -40,6 +40,15 @@ describe('Logger test', function () {
 
     describe('#trigger', function () {
 
+      it('should send a fatal message with no data', function () {
+
+        expect(obj.trigger('fatal', 'message')).to.be.equal(obj);
+
+        expect(strategy.fatal).to.be.calledOnce
+          .calledWithExactly('message', {});
+
+      });
+
       it('should send a fatal message', function () {
 
         const err = new Error('This is an error');
