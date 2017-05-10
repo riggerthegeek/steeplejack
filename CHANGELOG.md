@@ -31,7 +31,7 @@
  eg `var Base = require("steeplejack/lib/base");`.
  - Socket connections now supported by default.
  - Project is now capitalised, ie "Steeplejack" rather than "steeplejack".
- - Tested to run in ES6, ES6, TypeScript and CoffeeScript.
+ - Tested to run in ES5, ES6, TypeScript and CoffeeScript.
 
 ## Base
  - Removed the `.create` static method.
