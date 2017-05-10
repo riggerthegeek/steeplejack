@@ -4,6 +4,7 @@
 
 /* Node modules */
 import { EventEmitter } from 'events';
+import http from 'http';
 
 /* Third-party modules */
 import { Base } from '@steeplejack/core';
@@ -1473,17 +1474,42 @@ describe('Server tests', function () {
             this.stub.returns('output');
 
             return obj.outputHandler(this.req, this.res, () => Promise.reject(506))
-                            .then((data) => {
+              .then((data) => {
 
-                              expect(data).to.be.equal('output');
+                expect(data).to.be.equal('output');
 
-                              expect(this.stub).to.be.calledOnce
-                                    .calledWithExactly(506, undefined, this.req, this.res);
+                expect(this.stub).to.be.calledOnce
+                  .calledWithExactly(506, {
+                    statusCode: 506,
+                    message: http.STATUS_CODES[506],
+                  }, this.req, this.res);
 
-                              expect(this.emit).to.be.calledOnce
-                                    .calledWithExactly('error_log', 506);
+                expect(this.emit).to.be.calledOnce
+                  .calledWithExactly('error_log', 506);
 
-                            });
+              });
+
+          });
+
+          it('should return the status code and empty output - unknown status code', function () {
+
+            this.stub.returns('output');
+
+            return obj.outputHandler(this.req, this.res, () => Promise.reject(599))
+              .then((data) => {
+
+                expect(data).to.be.equal('output');
+
+                expect(this.stub).to.be.calledOnce
+                  .calledWithExactly(599, {
+                    statusCode: 599,
+                    message: 'Unknown error',
+                  }, this.req, this.res);
+
+                expect(this.emit).to.be.calledOnce
+                  .calledWithExactly('error_log', 599);
+
+              });
 
           });
 
