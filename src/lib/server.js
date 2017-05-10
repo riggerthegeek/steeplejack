@@ -6,6 +6,7 @@
  */
 
 /* Node modules */
+import http from 'http';
 
 /* Third-party modules */
 import { _ } from 'lodash';
@@ -551,6 +552,14 @@ class Server extends Base {
     } else {
       /* Could be anything - treat as uncaught exception */
       throw err;
+    }
+
+    /* If output is empty, add the default message */
+    if (!output) {
+      output = {
+        statusCode,
+        message: http.STATUS_CODES[statusCode] || 'Unknown error',
+      };
     }
 
     return {
