@@ -5,7 +5,7 @@
 /* Node modules */
 
 /* Third-party modules */
-import { Base } from '@steeplejack/core';
+import { Base, Exception, FatalException, ValidationException } from '@steeplejack/core';
 import { Collection, Model } from '@steeplejack/data';
 
 /* Files */
@@ -35,7 +35,7 @@ describe('registerSystemComponent tests', function () {
 
     expect(registerSystemComponent(app, injector, config)).to.be.undefined;
 
-    expect(injector.registerComponent).to.be.callCount(13)
+    expect(injector.registerComponent).to.be.callCount(16)
       .calledWithExactly({
         name: '$steeplejack-app',
         instance: app,
@@ -87,6 +87,18 @@ describe('registerSystemComponent tests', function () {
       .calledWithExactly({
         name: 'steeplejack-view',
         instance: View,
+      })
+      .calledWithExactly({
+        name: 'steeplejack-exception',
+        instance: Exception,
+      })
+      .calledWithExactly({
+        name: 'steeplejack-fatal-exception',
+        instance: FatalException,
+      })
+      .calledWithExactly({
+        name: 'steeplejack-validation-exception',
+        instance: ValidationException,
       });
 
   });

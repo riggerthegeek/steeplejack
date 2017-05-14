@@ -9,7 +9,7 @@
 /* Node modules */
 
 /* Third-party modules */
-import { Base } from '@steeplejack/core';
+import { Base, Exception, FatalException, ValidationException } from '@steeplejack/core';
 import { Collection, Model } from '@steeplejack/data';
 
 /* Files */
@@ -78,5 +78,17 @@ export default (app, injector, config) => {
     .registerComponent({
       name: 'steeplejack-view',
       instance: View,
+    })
+    .registerComponent({
+      name: 'steeplejack-exception',
+      instance: Exception,
+    })
+    .registerComponent({
+      name: 'steeplejack-fatal-exception',
+      instance: FatalException,
+    })
+    .registerComponent({
+      name: 'steeplejack-validation-exception',
+      instance: ValidationException,
     });
 };

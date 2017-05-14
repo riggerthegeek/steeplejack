@@ -1,3 +1,6 @@
+# v3.0.1
+ - Added the Exception, FatalException and ValidationException classes to the injector.
+
 # v3.0.0
  - Support for NodeJS versions below v4 discontinued. At the time of writing (Feb 2017), v4 is the oldest version of
  NodeJS to be supported. This means no `.extend` static method on each class and should now use the class-based
