@@ -2,6 +2,9 @@
  - Exposed the allowable HTTP methods as a static method on the Server class - `Server.allowableHTTPMethods()`
  - Allowed the data object on the `Logger.prototype.trigger()` method to be optional
  - If error status code is returned and no body, the HTTP error message will be returned
+ - If the logger in `Steeplejack.app` is set to `true`, the logger will use `console.log`. This is not really intended
+   for production use, but it's useful if demonstrating the capability or if haven't/aren't configuring a more
+   comprehensive logger.
 
 # v3.0.0
  - Support for NodeJS versions below v4 discontinued. At the time of writing (Feb 2017), v4 is the oldest version of
