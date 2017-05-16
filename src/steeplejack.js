@@ -105,7 +105,7 @@ class Steeplejack extends Base {
     this.modules.forEach(module => this.injector.register(module));
 
     /* Is there a logger set? */
-    if (logger) {
+    if (_.isString(logger)) {
       /* Yes - get the logger and set to here */
       this.injector.process((log) => {
         /* Create as a closure */
@@ -113,6 +113,10 @@ class Steeplejack extends Base {
       }, [
         logger,
       ]);
+    } else if (logger === true) {
+      /* Use console.log as the logger */
+      // eslint-disable-next-line no-console
+      this.logger = console.log;
     } else {
       /* No logger - use a noop */
       this.logger = _.noop;

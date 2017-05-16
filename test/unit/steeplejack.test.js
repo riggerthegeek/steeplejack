@@ -714,6 +714,28 @@ describe('Steeplejack test', function () {
 
       });
 
+      it('should use console.log if logger is true', function () {
+
+        const app = this.Steeplejack.app({
+          logger: true,
+          modules: [
+            'module1',
+            'module2',
+            'module3',
+          ],
+        });
+
+        expect(app).to.be.instanceof(this.Steeplejack);
+
+        expect(app.config).to.be.eql({});
+        expect(app.routing.routes).to.be.eql([]);
+        expect(app.routing.sockets).to.be.eql([]);
+
+        expect(app.logger).to.be.a('function')
+          .be.equal(console.log);
+
+      });
+
       it('should assign a logger', function () {
 
         const spy = sinon.spy(this.Steeplejack.prototype, 'addModule');
