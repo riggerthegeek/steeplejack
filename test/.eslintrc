@@ -1,0 +1,17 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "max-lines": 0,
+    "global-require": 0,
+    "padded-blocks": 0,
+    "prefer-arrow-callback": 0,
+    "no-underscore-dangle": 0,
+    "func-names": 0,
+    "no-unused-expressions": 0,
+    "no-console": 0,
+    "import/no-dynamic-require": 0,
+    "import/prefer-default-export": 0
+  }
+}
