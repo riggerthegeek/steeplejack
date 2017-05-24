@@ -1,13 +1,9 @@
 ---
 layout: sidebar
 title: Your First App
-permalink: /getting-started/your-first-app
-nav: /getting-started/
-prev:
-  name: Installation
-next:
-  name: Routing
-  url: routing
+docs: true
+section: /getting-started
+order: 1
 ---
 
 > Steeplejack allows you to write in any language that compiles to JavaScript.
@@ -75,7 +71,7 @@ you ought to see a running server, with a 404 header:
 ```
 
 ### A word on `modules`
-
+ 
 In the `Steeplejack.app` factory, there is a modules array. This is where you tell Steeplejack where to look for files
-to automatically load into the dependency injector. It can accept [globbed](https://en.wikipedia.org/wiki/Glob_(programming))
-paths as well [Plugins](/docs/plugins).
+to automatically load into the dependency injector. It can accept
+[globbed](https://en.wikipedia.org/wiki/Glob_(programming)) paths as well [Plugins](/docs/plugins).

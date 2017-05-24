@@ -1,9 +1,9 @@
 ---
 layout: sidebar
 title: Installation
-next:
-  name: Your First App
-  url: your-first-app
+docs: true
+section: /getting-started
+order: 0
 ---
 
 > This example app can be downloaded from [GitHub](https://github.com/steeplejack-js/example)
