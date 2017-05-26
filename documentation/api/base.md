@@ -4,16 +4,19 @@ title: Base
 docs: true
 section: /api
 action_buttons: false
-repo: core
+module: core
+source: https://github.com/steeplejack-js/core/blob/master/src/lib/base.js
 ---
+
+**Extends:** [EventEmitter](https://nodejs.org/api/events.html)
 
 The Base class exists to provide a consistent foundation for Steeplejack. All Steeplejack classes extend this method 
 
 ```javascript
 const { Base } = require('@steeplejack/core');
-```
 
-**Extends:** [EventEmitter](https://nodejs.org/api/events.html)
+const obj = new Base();
+```
 
 # Methods
 
@@ -56,7 +59,7 @@ _none_
 
 ### Returns
 
-Object.
+Object
 
 --
 
@@ -76,6 +79,6 @@ _none_
 
 ### Returns
 
-Object.
+Object
 
 --
