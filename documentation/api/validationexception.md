@@ -49,7 +49,7 @@ err.addError(key, value, message, [additional]);
 
 ### Returns
 
-ValidationException instance
+`ValidationException` instance
 
 ---
 
