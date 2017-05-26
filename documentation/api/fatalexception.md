@@ -6,6 +6,7 @@ section: /api
 action_buttons: false
 module: core
 source: https://github.com/steeplejack-js/core/blob/master/src/exception/fatal.js
+ioc: steeplejack-fatal-exception
 ---
 
 **Extends:** [Exception](../exception)

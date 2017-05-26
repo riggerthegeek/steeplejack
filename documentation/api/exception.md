@@ -6,6 +6,7 @@ section: /api
 action_buttons: false
 module: core
 source: https://github.com/steeplejack-js/core/blob/master/src/exception/index.js
+ioc: steeplejack-exception
 ---
 
 **Extends:** [Error](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Error)
