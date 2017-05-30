@@ -374,3 +374,64 @@ _none_
 _String[]_
 
 ---
+
+## parseData
+
+Parses the data output. What it does depends upon the data sent in:
+  - **Number >= 100 and < 600:** Sets the `statusCode` to that number
+  - **Object with a `getData()` function:** Sets the `output` to what the `getData()` returns
+  - **Set as `end`:** Sets `end` to `true`
+  - **Anything else:** Sets this to the `output`
+
+### Syntax
+
+```javascript
+Server.parseData(data);
+```
+
+### Parameters
+
+**data**
+  Any.
+
+### Returns
+
+```typescript
+interface ParsedData {
+  end: boolean;
+  statusCode: Number;
+  output: any;
+}
+```
+
+---
+
+## parseError
+
+Parses the error output. What it does depends upon the data sent in:
+  - **Number >= 100 and < 600:** Sets the `statusCode` to that number
+  - **Object with a `hasErrors()` function**. Sets the `output` to `{ code: string; message: string; error?: any }`
+  - **Object with `getHttpCode()` and `getDetail()` functions:** Sets status code to HTTP code and output to the detail
+  - **Anything else:** Throw an error and let it be handled as an uncaught exception
+
+### Syntax
+
+```javascript
+Server.parseError(err);
+```
+
+### Parameters
+
+**data**
+  Any.
+
+### Returns
+
+```typescript
+interface ParsedError {
+  statusCode: Number;
+  output: any;
+}
+```
+
+---
