@@ -627,3 +627,28 @@ obj.where(properties);
 _Collection_
 
 ---
+
+# Static Methods
+
+## toModels
+
+Creates an instance of the collection object and populates it with the result of the [Model.toModel](../model#tomodel) 
+method. This can be used to convert a data store result into a collection of models.
+
+### Syntax
+
+```javascript
+const obj = Users.toModels([data = null]);
+```
+
+### Parameters
+
+**data**
+  Object[]. The data we're converting to a collection. Each model will be created with the model's 
+  [toModel](../model#tomodel) method.
+  
+### Returns
+
+_Collection_
+
+---
