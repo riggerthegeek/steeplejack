@@ -14,7 +14,7 @@ ioc: steeplejack-server
 This is a strategy pattern for managing a server, it's routes and sockets.
 
 ```javascript
-const Server = require('steeplejack/lib/socket');
+const Server = require('steeplejack/lib/server');
 
 const obj = new Server(options, serverStrategy, socketStrategy);
 ```
@@ -39,20 +39,7 @@ interface ServerStrategy {
 # Socket Strategy
 
 Defines how the sockets work. This is optional - if you just want HTTP endpoints, there is no need to configure a 
-socket. The interface is...
-
-```typescript
-interface SocketStrategy {
-    broadcast(request: SocketRequest, broadcast: SocketBroadcast): void;
-    connect(nameSpace: string, middleware: Function[]): SocketStrategy;
-    createSocket(server: http.Server): void;
-    disconnect(socketConnection: any): void;
-    getSocketId(socketConnection: any): string;
-    joinChannel(socketConnection: any, channel: string): void;
-    leaveChannel(socketConnection: any, channel: string): void;
-    listen(socketConnection, any, event: string, iterator: Function): void;
-}
-```
+socket. See [Socket](../socket) for details of the interface.
 
 # Methods
 
