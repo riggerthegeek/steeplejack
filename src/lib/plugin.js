@@ -24,32 +24,32 @@ class Plugin extends Base {
 
     this.myModules = [];
 
-        /* Set the module files */
+    /* Set the module files */
     this.modules = files;
   }
 
-    /**
-     * Modules
-     *
-     * Gets the modules array
-     *
-     * @returns {*[]}
-     */
+  /**
+   * Modules
+   *
+   * Gets the modules array
+   *
+   * @returns {*[]}
+   */
   get modules () {
     return this.myModules;
   }
 
-    /**
-     * Modules
-     *
-     * Sets the modules to be included with this
-     * plugin
-     *
-     * @param {*} module
-     */
+  /**
+   * Modules
+   *
+   * Sets the modules to be included with this
+   * plugin
+   *
+   * @param {*} module
+   */
   set modules (module) {
     if (_.isArray(module)) {
-            /* Array of modules - cycle through */
+      /* Array of modules - cycle through */
       _.each(module, (mod) => {
         this.modules = mod;
       });
