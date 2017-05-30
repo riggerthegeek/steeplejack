@@ -353,7 +353,7 @@ _Server_
 
 ---
 
-# Static Method
+# Static Methods
 
 ## allowableHTTPMethods
 
