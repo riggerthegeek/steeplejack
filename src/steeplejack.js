@@ -4,7 +4,7 @@
  * An easy way of making a Twelve Factor App in NodeJS
  *
  * @license MIT
- * @link http://www.steeplejack.info
+ * @link http://getsteeplejack.com
  */
 
 /* Node modules */
