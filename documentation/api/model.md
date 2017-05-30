@@ -6,13 +6,15 @@ section: /api
 action_buttons: false
 module: data
 source: https://github.com/steeplejack-js/data/blob/master/src/lib/model.js
-ioc: steeplejack-module
+ioc: steeplejack-model
 ---
 
 **Extends:** [Base](../base)
 
 This is a piece of data. Typically, this would be a single line/document out of a database. This requires a schema to be
-defined. 
+defined.
+
+> See the [Model](../../concepts/model) concept section for details on how to use it. 
 
 ```javascript
 const { Model } = require('@steeplejack/data');
@@ -23,8 +25,8 @@ class User extends Model {
       name: {
         type: 'string',
         validation: [{
-          rule: 'required',
-        }],
+          rule: 'required'
+        }]
       },
       
       emailAddress: {
