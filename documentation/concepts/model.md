@@ -2,6 +2,6 @@
 layout: sidebar
 title: Model
 docs: true
-section: /docs
-order: 1
+section: /concepts
+action_buttons: false
 ---

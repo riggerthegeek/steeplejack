@@ -2,6 +2,6 @@
 layout: sidebar
 title: Plugins
 docs: true
-section: /docs
-order: 2
+section: /concepts
+action_buttons: false
 ---
