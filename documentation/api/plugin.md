@@ -9,7 +9,7 @@ source: https://github.com/steeplejack-js/steeplejack/blob/master/src/lib/plugin
 ioc: steeplejack-plugin
 ---
 
-**Extends:** [EventEmitter](https://nodejs.org/api/events.html)
+**Extends:** [Base](../base)
 
 Manages the registration and use of a Steeplejack plugin. This is so that whole sections of code, written in 
 Steeplejack-friendly syntax, can be exported as a separate package and reused.
