@@ -6,10 +6,9 @@ section: /docs
 order: 0
 ---
 
-{% for page in site.pages %}
-
-{% if page.docs %}
-1. {{ page.title }} {{ page.path }} {{ page.twat }}
+{% for pg in site.pages %}
+{% if pg.docs and pg.url contains '/concepts' %}
+ - [{{ pg.title }}]({{ pg.url | prepend: site.baseurl }})
 {% endif %}
-
 {% endfor %}
+
