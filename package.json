@@ -103,7 +103,7 @@
   "bugs": {
     "url": "https://github.com/riggerthegeek/steeplejack/issues"
   },
-  "homepage": "http://steeplejack.info",
+  "homepage": "http://getsteeplejack.com",
   "directories": {
     "doc": "docs",
     "test": "test"
