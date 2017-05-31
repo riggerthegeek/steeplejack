@@ -85,7 +85,7 @@ const logger = new Logger(bunyanStrategy);
 
 The strategy pattern gives us complete flexibility.
 
-# Resources
+## Resources
 
   - [DoFactory](http://www.dofactory.com/javascript/strategy-design-pattern)
   - [The Gang of Four's Book](https://www.amazon.co.uk/Design-patterns-elements-reusable-object-oriented-x/dp/0201633612)
