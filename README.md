@@ -104,5 +104,5 @@ MIT License
 [downloads-url]: https://npmjs.org/package/steeplejack
 [dependencies-url]: https://david-dm.org/steeplejack-js/steeplejack
 [dev-dependencies-url]: https://david-dm.org/steeplejack-js/steeplejack#info=devDependencies&view=table
-[gitter-url]: https://gitter.im/riggerthegeek/steeplejack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge
+[gitter-url]: https://gitter.im/steeplejack-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge
 [quality-url]: https://www.bithound.io/github/steeplejack-js/steeplejack
