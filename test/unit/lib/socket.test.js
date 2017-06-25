@@ -265,7 +265,12 @@ describe('socket test', function () {
             expect(event).to.be.equal('broadcast');
             expect(listener).to.be.a('function');
 
-            listener('broadcast');
+            listener({
+              data: 'myData',
+              event: 'myEvent',
+              target: 'someTarget',
+              ignore: 'ignored',
+            });
 
           },
         };
@@ -305,7 +310,11 @@ describe('socket test', function () {
                         .calledWithExactly('socketConnection', obj.strategy);
 
           expect(this.strategy.broadcast).to.be.calledOnce
-                        .calledWithExactly(socketRequestInst, 'broadcast');
+                        .calledWithExactly(socketRequestInst, {
+                          data: 'myData',
+                          event: 'myEvent',
+                          target: 'someTarget',
+                        });
 
           done();
 
@@ -328,7 +337,11 @@ describe('socket test', function () {
             expect(event).to.be.equal('broadcast');
             expect(listener).to.be.a('function');
 
-            listener('broadcast');
+            listener({
+              data: 'myData2',
+              event: 'myEvent2',
+              ignore: 'ignored2',
+            });
 
           },
         };
@@ -344,6 +357,8 @@ describe('socket test', function () {
         };
 
         this.socketRequest.returns(socketRequestInst);
+
+        this.strategy.getSocketId.returns('strategySocketId');
 
         this.strategy.connect = (nsp, mid) => {
 
@@ -378,10 +393,17 @@ describe('socket test', function () {
                         .calledWithExactly('socketConnection', obj.strategy);
 
           expect(this.strategy.broadcast).to.be.calledOnce
-                        .calledWithExactly(socketRequestInst, 'broadcast');
+                        .calledWithExactly(socketRequestInst, {
+                          data: 'myData2',
+                          event: 'myEvent2',
+                          target: 'strategySocketId',
+                        });
 
           expect(event.connect).to.be.calledOnce
                         .calledWithExactly(socketRequestInst);
+
+          expect(this.strategy.getSocketId).to.be.calledOnce
+            .calledWithExactly(this.socketRequest.socket);
 
           done();
 
