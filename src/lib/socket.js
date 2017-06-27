@@ -58,6 +58,32 @@ class Socket extends Base {
   }
 
   /**
+   * Broadcast
+   *
+   * Broadcast to the strategy.  If the target is
+   * set, it sends to that target. Otherwise, it
+   * broadcasts to all connected sockets.
+   *
+   * @param {*} request
+   * @param {*} broadcast
+   * @returns {Socket}
+   */
+  broadcast (request, broadcast) {
+    if (broadcast.target === undefined) {
+      /* Broadcast to all connected sockets */
+      broadcast.target = this.strategy.getSocketId(request.socket);
+    }
+
+    this.strategy.broadcast(request, {
+      data: broadcast.data,
+      event: broadcast.event,
+      target: broadcast.target,
+    });
+
+    return this;
+  }
+
+  /**
    * Listen
    *
    * Makes the socket server listen for socket
@@ -115,7 +141,7 @@ class Socket extends Base {
 
         /* Listen for a broadcast event */
         request.on('broadcast', (broadcast) => {
-          this.strategy.broadcast(request, broadcast);
+          this.broadcast(request, broadcast);
         });
 
         /* Fire the connection event */

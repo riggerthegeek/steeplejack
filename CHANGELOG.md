@@ -1,4 +1,13 @@
-# v3.0.1
+# v3.1.0
+ - Exposed the allowable HTTP methods as a static method on the Server class - `Server.allowableHTTPMethods()`
+ - Allowed the data object on the `Logger.prototype.trigger()` method to be optional
+ - If error status code is returned and no body, the HTTP error message will be returned
+ - If the logger in `Steeplejack.app` is set to `true`, the logger will use `console.log`. This is not really intended
+   for production use, but it's useful if demonstrating the capability or if haven't/aren't configuring a more
+   comprehensive logger.
+ - Added `package-lock.json` for npm 5 usage
+  
+ # v3.0.1
  - Added the Exception, FatalException and ValidationException classes to the injector.
 
 # v3.0.0
@@ -30,7 +39,7 @@
  eg `var Base = require("steeplejack/lib/base");`.
  - Socket connections now supported by default.
  - Project is now capitalised, ie "Steeplejack" rather than "steeplejack".
- - Tested to run in ES6, ES6, TypeScript and CoffeeScript.
+ - Tested to run in ES5, ES6, TypeScript and CoffeeScript.
 
 ## Base
  - Removed the `.create` static method.

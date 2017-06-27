@@ -50,7 +50,12 @@ describe('Steeplejack binary tests', function () {
         .calledWithExactly();
 
       expect(this.yargs.command).to.be.calledOnce
-        .calledWith('config <config> <env>', 'Display the config JSON for the current environment', {});
+        .calledWith('config <config> [env] [format]', 'Display the config JSON for the current environment', {
+          format: {
+            default: true,
+            type: 'boolean',
+          },
+        });
 
       expect(this.yargs.version).to.be.calledOnce;
 
@@ -80,7 +85,12 @@ describe('Steeplejack binary tests', function () {
         .calledWithExactly();
 
       expect(this.yargs.command).to.be.calledOnce
-        .calledWith('config <config> <env>', 'Display the config JSON for the current environment', {});
+        .calledWith('config <config> [env] [format]', 'Display the config JSON for the current environment', {
+          format: {
+            default: true,
+            type: 'boolean',
+          },
+        });
 
       expect(this.yargs.version).to.be.calledOnce;
 
@@ -132,7 +142,7 @@ describe('Steeplejack binary tests', function () {
           envvars: true,
         });
 
-        const spy = sinon.stub(console, 'log');
+        const spy = sinon.spy(console, 'log');
 
         expect(this.displayConfig({
           config: 'configFile',
@@ -142,6 +152,7 @@ describe('Steeplejack binary tests', function () {
             'arg1',
             'arg2',
           ],
+          format: true,
         })).to.be.undefined;
 
         expect(this.cliParams).to.be.calledOnce
@@ -173,13 +184,14 @@ describe('Steeplejack binary tests', function () {
           envvars: true,
         });
 
-        const spy = sinon.stub(console, 'log');
+        const spy = sinon.spy(console, 'log');
 
         expect(this.displayConfig({
           config: 'configFile',
           _: [
             'ignored',
           ],
+          format: false,
         })).to.be.undefined;
 
         expect(this.cliParams).to.be.calledOnce
@@ -191,7 +203,7 @@ describe('Steeplejack binary tests', function () {
           .calledWithExactly(JSON.stringify({
             config: true,
             cliArgs: true,
-          }, null, 2));
+          }, null, 0));
 
         spy.restore();
 

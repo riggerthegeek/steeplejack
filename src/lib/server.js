@@ -6,6 +6,7 @@
  */
 
 /* Node modules */
+import http from 'http';
 
 /* Third-party modules */
 import { _ } from 'lodash';
@@ -15,25 +16,6 @@ import uuid from 'uuid/v4';
 
 /* Files */
 import Socket from './socket';
-
-/**
- * Allowable Methods
- *
- * The HTTP methods that can be called. There is
- * a special 'all' type which, if called, will
- * specify all of these methods.
- *
- * @type {string[]}
- */
-const allowableMethods = [
-  'GET',
-  'POST',
-  'PUT',
-  'DELETE',
-  'HEAD',
-  'OPTIONS',
-  'PATCH',
-];
 
 class Server extends Base {
 
@@ -123,7 +105,7 @@ class Server extends Base {
     httpMethod = httpMethod.toUpperCase();
 
     if (httpMethod === 'ALL') {
-      _.each(allowableMethods, (method) => {
+      _.each(Server.allowableHTTPMethods, (method) => {
         this.addRoute(method, route, fn);
       });
       return this;
@@ -140,7 +122,7 @@ class Server extends Base {
         break;
 
       default:
-        if (allowableMethods.indexOf(httpMethod) === -1) {
+        if (Server.allowableHTTPMethods.indexOf(httpMethod) === -1) {
           /* An invalid method */
           throw new SyntaxError(`HTTP method is unknown: ${httpMethod}:${route}`);
         }
@@ -482,6 +464,27 @@ class Server extends Base {
   }
 
   /**
+   * Allowable HTTP Methods
+   *
+   * The HTTP methods that can be called. There is
+   * a special 'all' type which, if called, will
+   * specify all of these methods.
+   *
+   * @type {string[]}
+   */
+  static get allowableHTTPMethods () {
+    return [
+      'GET',
+      'POST',
+      'PUT',
+      'DELETE',
+      'HEAD',
+      'OPTIONS',
+      'PATCH',
+    ];
+  }
+
+  /**
    * Parse Data
    *
    * Parses the data output
@@ -549,6 +552,14 @@ class Server extends Base {
     } else {
       /* Could be anything - treat as uncaught exception */
       throw err;
+    }
+
+    /* If output is empty, add the default message */
+    if (!output) {
+      output = {
+        statusCode,
+        message: http.STATUS_CODES[statusCode] || 'Unknown error',
+      };
     }
 
     return {
