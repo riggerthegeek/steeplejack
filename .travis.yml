@@ -25,6 +25,7 @@ script:
 
 before_deploy:
 - npm run compile
+- cd build
 
 deploy:
   provider: npm
