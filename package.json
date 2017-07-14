@@ -1,6 +1,6 @@
 {
   "name": "steeplejack",
-  "version": "3.1.0",
+  "version": "3.0.1",
   "description": "An easy way of making a Twelve Factor App in NodeJS",
   "main": "./steeplejack",
   "bin": {
