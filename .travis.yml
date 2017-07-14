@@ -27,8 +27,10 @@ before_deploy:
 - npm run compile
 
 deploy:
-  provider: script
-  script: ./deploy.sh
+  provider: npm
+  email: simon@simonemms.com
+  api_key:
+    secure: GEZaXkGETbRGdmz7NPBykU9XPEvPVZvqQVTEuhidZrjB/CBa/7sdIl9TYEJ8Cd+APTs6qFXP6r7QoES0xYbtaIXHlZwRfzPS8r1VubHvKrnvBCtwcEKoXZOO9uus8phtHIOn4ad0l250ZhmCR5CpGnFZNIg0pT4edE7EOprVim8=
   skip_cleanup: true
   on:
     tags: true
