@@ -253,6 +253,8 @@ describe('Steeplejack test', function () {
               result,
             };
           }
+
+          use () {}
         }
 
         const server = new Server({
@@ -309,6 +311,8 @@ describe('Steeplejack test', function () {
               result,
             };
           }
+
+          use () {}
         }
 
         const server = new Server({
@@ -359,6 +363,8 @@ describe('Steeplejack test', function () {
               result,
             });
           }
+
+          use () {}
         }
 
         const server = new Server({
@@ -855,6 +861,7 @@ describe('Steeplejack test', function () {
               result,
             };
           }
+          use () {}
         }
 
         class SocketStrategy extends EventEmitter {

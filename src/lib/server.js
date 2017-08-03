@@ -34,6 +34,11 @@ class Server extends Base {
     this.strategy = strategy;
     this.socket = undefined;
 
+    /* Set the client IP on the request stack */
+    this.strategy.use(requestIp.mw({
+      attributeName: Server.clientIp,
+    }));
+
     /* Optional - create a socket server */
     if (socket) {
       socket.createSocket(this.strategy);
@@ -386,7 +391,7 @@ class Server extends Base {
         body: request.body,
         headers: request.headers,
         id: request.id,
-        ip: requestIp.getClientIp(request),
+        ip: request.clientIp,
         method: request.method,
         time: request.startTime,
         url: request.url,
@@ -482,6 +487,17 @@ class Server extends Base {
       'OPTIONS',
       'PATCH',
     ];
+  }
+
+  /**
+   * Client IP
+   *
+   * The attribute name for the client IP
+   *
+   * @returns {string}
+   */
+  static get clientIp () {
+    return 'clientIp';
   }
 
   /**

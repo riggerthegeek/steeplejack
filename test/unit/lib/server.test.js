@@ -17,10 +17,15 @@ describe('Server tests', function () {
 
   let Server;
   beforeEach(function () {
+    this.requestIp = {
+      mw: sinon.stub(),
+    };
+
     this.uuid = sinon.stub()
       .returns('some v4 uuid');
 
     Server = proxyquire('../../src/lib/server', {
+      'request-ip': this.requestIp,
       'uuid/v4': this.uuid,
     });
 
@@ -96,6 +101,11 @@ describe('Server tests', function () {
         expect(obj).to.be.instanceof(Server)
                     .instanceof(Base);
 
+        expect(this.requestIp.mw).to.be.calledOnce
+          .calledWithExactly({
+            attributeName: Server.clientIp,
+          });
+
       });
 
       it('should receive options, a strategy object and socket strategy', function () {
@@ -134,7 +144,9 @@ describe('Server tests', function () {
 
       it('should set the logger just to the server and strategy', function () {
 
-        const strategy = {};
+        const strategy = {
+          use: sinon.spy(),
+        };
         const logger = {};
 
         const obj = new Server('opts', strategy);
@@ -151,7 +163,9 @@ describe('Server tests', function () {
 
       it('should set the logger to a socket too', function () {
 
-        const strategy = {};
+        const strategy = {
+          use: sinon.spy(),
+        };
         const socket = {
           createSocket: () => {},
         };
@@ -182,9 +196,7 @@ describe('Server tests', function () {
 
         this.req = {
           body: 'reqBody',
-          connection: {
-            remoteAddress: 'remoteIP',
-          },
+          [Server.clientIp]: 'clientIpAddress',
           headers: 'some headers',
           method: 'HTTP Method',
           url: 'currentURL',
@@ -219,7 +231,7 @@ describe('Server tests', function () {
                 body: 'reqBody',
                 headers: 'some headers',
                 id: 'some v4 uuid',
-                ip: 'remoteIP',
+                ip: 'clientIpAddress',
                 method: 'HTTP Method',
                 time: Date.now(),
                 url: 'currentURL',
@@ -291,7 +303,7 @@ describe('Server tests', function () {
                 body: 'reqBody',
                 headers: 'some headers',
                 id: 'some v4 uuid',
-                ip: 'remoteIP',
+                ip: 'clientIpAddress',
                 method: 'HTTP Method',
                 time: Date.now(),
                 url: 'currentURL',
@@ -347,7 +359,7 @@ describe('Server tests', function () {
                 body: 'reqBody',
                 headers: 'some headers',
                 id: 'some v4 uuid',
-                ip: 'remoteIP',
+                ip: 'clientIpAddress',
                 method: 'HTTP Method',
                 time: Date.now(),
                 url: 'currentURL',
@@ -403,7 +415,7 @@ describe('Server tests', function () {
                 body: 'reqBody',
                 headers: 'some headers',
                 id: 'some v4 uuid',
-                ip: 'remoteIP',
+                ip: 'clientIpAddress',
                 method: 'HTTP Method',
                 time: Date.now(),
                 url: 'currentURL',
@@ -449,7 +461,7 @@ describe('Server tests', function () {
                 body: 'reqBody',
                 headers: 'some headers',
                 id: 'some v4 uuid',
-                ip: 'remoteIP',
+                ip: 'clientIpAddress',
                 method: 'HTTP Method',
                 time: Date.now(),
                 url: 'currentURL',
@@ -496,7 +508,7 @@ describe('Server tests', function () {
                 body: 'reqBody',
                 headers: 'some headers',
                 id: 'some v4 uuid',
-                ip: 'remoteIP',
+                ip: 'clientIpAddress',
                 method: 'HTTP Method',
                 time: Date.now(),
                 url: 'currentURL',
@@ -1938,7 +1950,7 @@ describe('Server tests', function () {
 
         expect(obj.use(fn)).to.be.equal(obj);
 
-        expect(this.spy).to.be.calledOnce
+        expect(this.spy).to.be.calledTwice
                     .calledWithExactly(fn);
 
       });
@@ -1949,7 +1961,7 @@ describe('Server tests', function () {
 
         expect(obj.use(fn, 2, 3, 'hello')).to.be.equal(obj);
 
-        expect(this.spy).to.be.calledOnce
+        expect(this.spy).to.be.calledTwice
                     .calledWithExactly(fn, 2, 3, 'hello');
 
       });
@@ -1961,7 +1973,7 @@ describe('Server tests', function () {
 
         expect(obj.use([fn1, fn2])).to.be.equal(obj);
 
-        expect(this.spy).to.be.calledOnce
+        expect(this.spy).to.be.calledTwice
                     .calledWithExactly([
                       fn1,
                       fn2,
