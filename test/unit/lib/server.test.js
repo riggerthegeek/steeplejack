@@ -2005,6 +2005,14 @@ describe('Server tests', function () {
 
     });
 
+    describe('#clientIp', function () {
+
+      it('should return clientip', function () {
+        expect(Server.clientIp).to.be.equal('clientIp');
+      });
+
+    });
+
   });
 
 });
