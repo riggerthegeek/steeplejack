@@ -54,7 +54,6 @@ function setRouteName (parent, route) {
 }
 
 class Router extends Base {
-
   constructor (routes, middleware) {
     super();
 
@@ -220,7 +219,7 @@ class Router extends Base {
       if (a.name.match(/index\./)) {
         return 1;
       }
-        /* Sort by filename */
+      /* Sort by filename */
       return a.name > b.name ? 1 : -1;
     });
   }
@@ -267,7 +266,6 @@ class Router extends Base {
       middleware: container.middleware || [],
     };
   }
-
 }
 
 module.exports = Router;

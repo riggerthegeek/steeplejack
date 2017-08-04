@@ -12,7 +12,6 @@ import { Base } from '@steeplejack/core';
 /* Files */
 
 class Logger extends Base {
-
   /**
    * Constructor
    *
@@ -70,7 +69,6 @@ class Logger extends Base {
       'trace',
     ];
   }
-
 }
 
 module.exports = Logger;

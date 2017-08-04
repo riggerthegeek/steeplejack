@@ -33,7 +33,7 @@ describe('socketRequest test', function () {
     this.obj = new SocketRequest(this.socket, this.strategy);
 
     expect(this.obj).to.be.instanceof(SocketRequest)
-            .instanceof(Base);
+      .instanceof(Base);
 
     expect(this.obj.socket).to.be.equal(this.socket);
     expect(this.obj.strategy).to.be.equal(this.strategy);
@@ -111,7 +111,7 @@ describe('socketRequest test', function () {
         expect(this.obj.disconnect()).to.be.undefined;
 
         expect(this.strategy.disconnect).to.be.calledOnce
-                    .calledWithExactly(this.obj.socket);
+          .calledWithExactly(this.obj.socket);
 
       });
 
@@ -126,7 +126,7 @@ describe('socketRequest test', function () {
         expect(this.obj.getId()).to.be.equal('1234567890');
 
         expect(this.strategy.getSocketId).to.be.calledOnce
-                    .calledWithExactly(this.obj.socket);
+          .calledWithExactly(this.obj.socket);
 
       });
 
@@ -139,7 +139,7 @@ describe('socketRequest test', function () {
         expect(this.obj.joinChannel('some channel')).to.be.equal(this.obj);
 
         expect(this.strategy.joinChannel).to.be.calledOnce
-                    .calledWithExactly(this.socket, 'some channel');
+          .calledWithExactly(this.socket, 'some channel');
 
       });
 
@@ -152,7 +152,7 @@ describe('socketRequest test', function () {
         expect(this.obj.leaveChannel('some other channel')).to.be.equal(this.obj);
 
         expect(this.strategy.leaveChannel).to.be.calledOnce
-                    .calledWithExactly(this.socket, 'some other channel');
+          .calledWithExactly(this.socket, 'some other channel');
 
       });
 

@@ -12,11 +12,4 @@
 /* Files */
 
 
-// module.exports = {
-  // inject: {
-  //   route: {
-  //     export: () => 'endpoint.js'
-  //   }
-  // }
-// };
 export class Hello {}

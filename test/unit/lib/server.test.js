@@ -99,7 +99,7 @@ describe('Server tests', function () {
         }, new this.DefaultStrategy());
 
         expect(obj).to.be.instanceof(Server)
-                    .instanceof(Base);
+          .instanceof(Base);
 
         expect(this.requestIp.mw).to.be.calledOnce
           .calledWithExactly({
@@ -117,7 +117,7 @@ describe('Server tests', function () {
         }, new this.DefaultStrategy(), new this.DefaultSocketStrategy());
 
         expect(obj).to.be.instanceof(Server)
-                    .instanceof(Base);
+          .instanceof(Base);
 
       });
 
@@ -248,7 +248,7 @@ describe('Server tests', function () {
             expect(result).to.be.equal('outputResult');
 
             expect(this.outputHandler).to.be.calledOnce
-                  .calledWithExactly(200, 'result1', this.req, 'res');
+              .calledWithExactly(200, 'result1', this.req, 'res');
 
           });
 
@@ -634,7 +634,7 @@ describe('Server tests', function () {
 
           let httpMethod = method.toUpperCase();
 
-                    /* Check delete and options have been shortened */
+          /* Check delete and options have been shortened */
           if (httpMethod === 'DEL') {
             httpMethod = 'DELETE';
           } else if (httpMethod === 'OPTS') {
@@ -657,7 +657,7 @@ describe('Server tests', function () {
           i += 1;
 
           expect(this.spy).to.be.callCount(i)
-                        .calledWith(httpMethod, '/route');
+            .calledWith(httpMethod, '/route');
 
         });
 
@@ -690,7 +690,7 @@ describe('Server tests', function () {
 
           let httpMethod = method.toUpperCase();
 
-                    /* Check delete and options have been shortened */
+          /* Check delete and options have been shortened */
           if (httpMethod === 'DEL') {
             httpMethod = 'DELETE';
           } else if (httpMethod === 'OPTS') {
@@ -711,7 +711,7 @@ describe('Server tests', function () {
           expect(emitted).to.be.true;
 
           expect(this.spy).to.be.callCount(i += 1)
-                        .calledWith(httpMethod, '/route');
+            .calledWith(httpMethod, '/route');
 
         });
 
@@ -976,8 +976,8 @@ describe('Server tests', function () {
         expect(obj.addSockets(this.sockets)).to.be.equal(obj);
 
         expect(this.socketInst.namespace).to.be.calledTwice
-                    .calledWithExactly('socket1', this.sockets.socket1)
-                    .calledWithExactly('socket2', this.sockets.socket2);
+          .calledWithExactly('socket1', this.sockets.socket1)
+          .calledWithExactly('socket2', this.sockets.socket2);
 
         expect(ons).to.have.length(3);
 
@@ -1012,12 +1012,12 @@ describe('Server tests', function () {
         const fn3 = function () { };
 
         expect(obj.middleware.afterUse).to.be.an('array')
-                    .to.have.length(0);
+          .to.have.length(0);
 
         expect(obj.after(fn)).to.be.equal(obj);
 
         expect(obj.middleware.afterUse).to.be.an('array')
-                    .to.have.length(1);
+          .to.have.length(1);
 
         expect(obj.middleware.afterUse[0]()).to.be.eql([
           fn,
@@ -1026,7 +1026,7 @@ describe('Server tests', function () {
         expect(obj.after(fn2, fn3)).to.be.equal(obj);
 
         expect(obj.middleware.afterUse).to.be.an('array')
-                    .to.have.length(2);
+          .to.have.length(2);
 
         expect(obj.middleware.afterUse[0]()).to.be.eql([
           fn,
@@ -1059,7 +1059,7 @@ describe('Server tests', function () {
         expect(obj.close()).to.be.equal(obj);
 
         expect(this.spy).to.be.calledOnce
-                    .calledWithExactly();
+          .calledWithExactly();
 
       });
 
@@ -1086,7 +1086,7 @@ describe('Server tests', function () {
         expect(obj.getServer()).to.be.equal('server');
 
         expect(this.stub).to.be.calledOnce
-                    .calledWithExactly();
+          .calledWithExactly();
 
       });
 
@@ -1144,7 +1144,7 @@ describe('Server tests', function () {
               expect(data).to.be.equal('output');
 
               expect(this.stub).to.be.calledOnce
-                    .calledWithExactly(200, 'result', this.req, this.res);
+                .calledWithExactly(200, 'result', this.req, this.res);
 
               expect(this.log).to.be.calledOnce
                 .calledWithExactly('debug', 'Returning response to client', {
@@ -1170,7 +1170,7 @@ describe('Server tests', function () {
               expect(data).to.be.equal('output');
 
               expect(this.stub).to.be.calledOnce
-                    .calledWithExactly(201, undefined, this.req, this.res);
+                .calledWithExactly(201, undefined, this.req, this.res);
 
             });
 
@@ -1183,14 +1183,14 @@ describe('Server tests', function () {
           return obj.outputHandler(this.req, this.res, () => ({
             getData: () => 'getDataOutput',
           }))
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(200, 'getDataOutput', this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                .calledWithExactly(200, 'getDataOutput', this.req, this.res);
 
-                        });
+            });
 
         });
 
@@ -1199,14 +1199,14 @@ describe('Server tests', function () {
           this.stub.returns('output');
 
           return obj.outputHandler(this.req, this.res, () => '')
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(204, undefined, this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                .calledWithExactly(204, undefined, this.req, this.res);
 
-                        });
+            });
 
         });
 
@@ -1215,14 +1215,14 @@ describe('Server tests', function () {
           this.stub.returns('output');
 
           return obj.outputHandler(this.req, this.res, () => ({}))
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(200, {}, this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                .calledWithExactly(200, {}, this.req, this.res);
 
-                        });
+            });
 
         });
 
@@ -1233,14 +1233,14 @@ describe('Server tests', function () {
           return obj.outputHandler(this.req, this.res, () => {
 
           })
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(204, undefined, this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                .calledWithExactly(204, undefined, this.req, this.res);
 
-                        });
+            });
 
         });
 
@@ -1249,14 +1249,14 @@ describe('Server tests', function () {
           this.stub.returns('output');
 
           return obj.outputHandler(this.req, this.res, () => null)
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(204, undefined, this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                .calledWithExactly(204, undefined, this.req, this.res);
 
-                        });
+            });
 
         });
 
@@ -1265,14 +1265,14 @@ describe('Server tests', function () {
           this.stub.returns('output');
 
           return obj.outputHandler(this.req, this.res, () => 2)
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.equal('output');
+              expect(data).to.be.equal('output');
 
-                          expect(this.stub).to.be.calledOnce
-                                .calledWithExactly(200, 2, this.req, this.res);
+              expect(this.stub).to.be.calledOnce
+                .calledWithExactly(200, 2, this.req, this.res);
 
-                        });
+            });
 
         });
 
@@ -1309,7 +1309,7 @@ describe('Server tests', function () {
             expect(calledPreSend).to.be.true;
 
             expect(this.stub).to.be.calledOnce
-                            .calledWithExactly(201, 'output', this.req, this.res);
+              .calledWithExactly(201, 'output', this.req, this.res);
 
           });
 
@@ -1320,13 +1320,13 @@ describe('Server tests', function () {
           this.stub.returns('output');
 
           return obj.outputHandler(this.req, this.res, () => 'end')
-                        .then((data) => {
+            .then((data) => {
 
-                          expect(data).to.be.undefined;
+              expect(data).to.be.undefined;
 
-                          expect(this.stub).to.not.be.called;
+              expect(this.stub).to.not.be.called;
 
-                        });
+            });
 
         });
 
@@ -1403,7 +1403,7 @@ describe('Server tests', function () {
 
           it('should handle an error in the strategy, emitting to uncaughtException listener after resolved promise', function () {
 
-            this.stub.rejects('output');
+            this.stub.rejects(new Error('output'));
 
             return obj.outputHandler(this.req, this.res, () => 'result')
               .then(() => {
@@ -1415,7 +1415,7 @@ describe('Server tests', function () {
                 expect(err.message).to.be.equal('output');
 
                 expect(this.stub).to.be.calledOnce
-                      .calledWithExactly(200, 'result', this.req, this.res);
+                  .calledWithExactly(200, 'result', this.req, this.res);
 
                 expect(this.emit).to.not.be.called;
 
@@ -1536,20 +1536,20 @@ describe('Server tests', function () {
             };
 
             return obj.outputHandler(this.req, this.res, () => Promise.reject(err))
-                            .then((data) => {
+              .then((data) => {
 
-                              expect(data).to.be.equal('output');
+                expect(data).to.be.equal('output');
 
-                              expect(this.stub).to.be.calledOnce
-                                    .calledWithExactly(400, {
-                                      code: 'errcode',
-                                      message: 'errmessage',
-                                    }, this.req, this.res);
+                expect(this.stub).to.be.calledOnce
+                  .calledWithExactly(400, {
+                    code: 'errcode',
+                    message: 'errmessage',
+                  }, this.req, this.res);
 
-                              expect(this.emit).to.be.calledOnce
-                                    .calledWithExactly('error_log', err);
+                expect(this.emit).to.be.calledOnce
+                  .calledWithExactly('error_log', err);
 
-                            });
+              });
 
           });
 
@@ -1565,21 +1565,21 @@ describe('Server tests', function () {
             };
 
             return obj.outputHandler(this.req, this.res, () => Promise.reject(err))
-                            .then((data) => {
+              .then((data) => {
 
-                              expect(data).to.be.equal('output');
+                expect(data).to.be.equal('output');
 
-                              expect(this.stub).to.be.calledOnce
-                                    .calledWithExactly(400, {
-                                      code: 'errcode2',
-                                      message: 'errmessage2',
-                                      error: 'err list',
-                                    }, this.req, this.res);
+                expect(this.stub).to.be.calledOnce
+                  .calledWithExactly(400, {
+                    code: 'errcode2',
+                    message: 'errmessage2',
+                    error: 'err list',
+                  }, this.req, this.res);
 
-                              expect(this.emit).to.be.calledOnce
-                                    .calledWithExactly('error_log', err);
+                expect(this.emit).to.be.calledOnce
+                  .calledWithExactly('error_log', err);
 
-                            });
+              });
 
           });
 
@@ -1595,20 +1595,20 @@ describe('Server tests', function () {
             this.stub.resolves('output');
 
             return obj.outputHandler(this.req, this.res, () => Promise.reject(err), false)
-                            .then((data) => {
+              .then((data) => {
 
-                              expect(data).to.be.equal('output');
+                expect(data).to.be.equal('output');
 
-                              expect(this.stub).to.be.calledOnce
-                                    .calledWithExactly(400, {
-                                      code: 'errcode2',
-                                      message: 'errmessage2',
-                                      error: 'err list',
-                                    }, this.req, this.res);
+                expect(this.stub).to.be.calledOnce
+                  .calledWithExactly(400, {
+                    code: 'errcode2',
+                    message: 'errmessage2',
+                    error: 'err list',
+                  }, this.req, this.res);
 
-                              expect(this.emit).to.not.be.called;
+                expect(this.emit).to.not.be.called;
 
-                            });
+              });
 
           });
 
@@ -1621,17 +1621,17 @@ describe('Server tests', function () {
             (err).getDetail = () => 'detail';
 
             return obj.outputHandler(this.req, this.res, () => Promise.reject(err))
-                            .then((data) => {
+              .then((data) => {
 
-                              expect(data).to.be.equal('output');
+                expect(data).to.be.equal('output');
 
-                              expect(this.stub).to.be.calledOnce
-                                    .calledWithExactly(401, 'detail', this.req, this.res);
+                expect(this.stub).to.be.calledOnce
+                  .calledWithExactly(401, 'detail', this.req, this.res);
 
-                              expect(this.emit).to.be.calledOnce
-                                    .calledWithExactly('error_log', err);
+                expect(this.emit).to.be.calledOnce
+                  .calledWithExactly('error_log', err);
 
-                            });
+              });
 
           });
 
@@ -1657,7 +1657,9 @@ describe('Server tests', function () {
 
             });
 
-            this.stub.rejects('output');
+            const err = new Error('output');
+
+            this.stub.rejects(err);
 
             this.req.id = 'hello';
 
@@ -1668,8 +1670,6 @@ describe('Server tests', function () {
 
                   expect(result).to.be.undefined;
 
-                  const err = new Error('output');
-
                   expect(this.log).to.be.calledTwice
                     .calledWithExactly('fatal', 'Uncaught exception', {
                       err,
@@ -1677,13 +1677,13 @@ describe('Server tests', function () {
                     });
 
                   expect(this.stub).to.be.calledOnce
-                          .calledWithExactly(200, 'result', this.req, this.res);
+                    .calledWithExactly(200, 'result', this.req, this.res);
 
                   expect(this.emit).to.be.calledOnce
-                          .calledWithExactly('uncaughtException', this.req, this.res, err);
+                    .calledWithExactly('uncaughtException', this.req, this.res, err);
 
-                } catch (err) {
-                  done(err);
+                } catch (err2) {
+                  done(err2);
                 }
 
               });
@@ -1711,7 +1711,7 @@ describe('Server tests', function () {
                 expect(this.stub).to.not.be.called;
 
                 expect(this.emit).to.be.calledOnce
-                      .calledWithExactly('uncaughtException', this.req, this.res, new Error('output'));
+                  .calledWithExactly('uncaughtException', this.req, this.res, new Error('output'));
 
               });
 
@@ -1752,7 +1752,7 @@ describe('Server tests', function () {
             });
           }
 
-                }
+        }
 
         const obj = new Server({
           port: 3200,
@@ -1809,17 +1809,17 @@ describe('Server tests', function () {
         }, new Strategy());
 
         return obj.start()
-                    .then((result) => {
+          .then((result) => {
 
-                      expect(result).to.be.eql({
-                        port: 8080,
-                        backlog: 1000,
-                        hostname: '192.168.0.100',
-                      });
+            expect(result).to.be.eql({
+              port: 8080,
+              backlog: 1000,
+              hostname: '192.168.0.100',
+            });
 
-                      return result;
+            return result;
 
-                    });
+          });
 
       });
 
@@ -1898,10 +1898,10 @@ describe('Server tests', function () {
         expect(obj.uncaughtException(fn)).to.be.equal(obj);
 
         expect(this.onSpy).to.be.calledOnce
-                    .calledWithExactly('uncaughtException', fn);
+          .calledWithExactly('uncaughtException', fn);
 
         expect(this.spy).to.be.calledOnce
-                    .calledWithExactly(fn);
+          .calledWithExactly(fn);
 
       });
 
@@ -1951,7 +1951,7 @@ describe('Server tests', function () {
         expect(obj.use(fn)).to.be.equal(obj);
 
         expect(this.spy).to.be.calledTwice
-                    .calledWithExactly(fn);
+          .calledWithExactly(fn);
 
       });
 
@@ -1962,7 +1962,7 @@ describe('Server tests', function () {
         expect(obj.use(fn, 2, 3, 'hello')).to.be.equal(obj);
 
         expect(this.spy).to.be.calledTwice
-                    .calledWithExactly(fn, 2, 3, 'hello');
+          .calledWithExactly(fn, 2, 3, 'hello');
 
       });
 
@@ -1974,10 +1974,10 @@ describe('Server tests', function () {
         expect(obj.use([fn1, fn2])).to.be.equal(obj);
 
         expect(this.spy).to.be.calledTwice
-                    .calledWithExactly([
-                      fn1,
-                      fn2,
-                    ]);
+          .calledWithExactly([
+            fn1,
+            fn2,
+          ]);
 
       });
 

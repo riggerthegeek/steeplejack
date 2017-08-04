@@ -386,12 +386,12 @@ describe('Steeplejack test', function () {
         }).then(() => {
           throw new Error('invalid');
         })
-        .catch((err) => {
+          .catch((err) => {
 
-          expect(err).to.be.instanceof(Error);
-          expect(err.message).to.be.equal('oh dear');
+            expect(err).to.be.instanceof(Error);
+            expect(err.message).to.be.equal('oh dear');
 
-        });
+          });
 
       });
 

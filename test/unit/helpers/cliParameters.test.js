@@ -170,8 +170,8 @@ describe('CLI Parameters test', function () {
   it('should ignore non-strings', function () {
 
     const input = [
-            [],
-            {},
+      [],
+      {},
       new Date(),
     ];
 

@@ -18,7 +18,6 @@ import { Base } from '@steeplejack/core';
 /* Files */
 
 class Plugin extends Base {
-
   constructor (files = null) {
     super();
 
@@ -57,7 +56,6 @@ class Plugin extends Base {
       this.myModules.push(module);
     }
   }
-
 }
 
 module.exports = Plugin;

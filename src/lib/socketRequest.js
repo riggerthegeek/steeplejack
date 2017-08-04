@@ -14,7 +14,6 @@ import { Base } from '@steeplejack/core';
 /* Files */
 
 class SocketRequest extends Base {
-
   /**
    * Params
    *
@@ -124,7 +123,6 @@ class SocketRequest extends Base {
 
     return this;
   }
-
 }
 
 module.exports = SocketRequest;

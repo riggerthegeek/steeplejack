@@ -22,7 +22,7 @@ describe('Plugin test', function () {
         const obj = new Plugin();
 
         expect(obj).to.be.instanceof(Plugin)
-                    .to.be.instanceof(Base);
+          .to.be.instanceof(Base);
 
         expect(obj.modules).to.be.eql([]);
 

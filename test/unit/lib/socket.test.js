@@ -49,7 +49,7 @@ describe('socket test', function () {
         const obj = new Socket(this.strategy);
 
         expect(obj).to.be.instanceof(Socket)
-                    .instanceof(Base);
+          .instanceof(Base);
 
         expect(obj.strategy).to.be.equal(this.strategy);
 
@@ -120,13 +120,13 @@ describe('socket test', function () {
           expect(iterator).to.be.a('function');
 
           iterator('arg1', 'arg2', 'arg3')
-                        .then((result) => {
-                          expect(result).to.be.equal('bumtitty');
-                          done();
-                        })
-                        .catch((err) => {
-                          done(err);
-                        });
+            .then((result) => {
+              expect(result).to.be.equal('bumtitty');
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
 
         };
 
@@ -167,15 +167,15 @@ describe('socket test', function () {
           expect(iterator).to.be.a('function');
 
           iterator('arg1', 'arg2')
-                        .then(() => {
-                          throw new Error('invalid error');
-                        })
-                        .catch((err) => {
-                          expect(err).to.be.instanceof(Error);
-                          expect(err.message).to.be.equal('some error');
+            .then(() => {
+              throw new Error('invalid error');
+            })
+            .catch((err) => {
+              expect(err).to.be.instanceof(Error);
+              expect(err.message).to.be.equal('some error');
 
-                          done();
-                        });
+              done();
+            });
 
         };
 
@@ -215,15 +215,15 @@ describe('socket test', function () {
           expect(iterator).to.be.a('function');
 
           iterator('arg1', 'arg2')
-                        .then(() => {
-                          throw new Error('invalid error');
-                        })
-                        .catch((err) => {
-                          expect(err).to.be.instanceof(Error);
-                          expect(err.message).to.be.equal('some thrown error');
+            .then(() => {
+              throw new Error('invalid error');
+            })
+            .catch((err) => {
+              expect(err).to.be.instanceof(Error);
+              expect(err.message).to.be.equal('some thrown error');
 
-                          done();
-                        });
+              done();
+            });
 
         };
 
@@ -302,19 +302,19 @@ describe('socket test', function () {
           expect(listener).to.be.calledTwice;
 
           expect(emitter).to.be.calledTwice
-                        .calledWithExactly('socketAdded', 'namespace', 'event1')
-                        .calledWithExactly('socketAdded', 'namespace', 'event2');
+            .calledWithExactly('socketAdded', 'namespace', 'event1')
+            .calledWithExactly('socketAdded', 'namespace', 'event2');
 
           expect(this.socketRequest).to.be.calledOnce
-                        .calledWithNew
-                        .calledWithExactly('socketConnection', obj.strategy);
+            .calledWithNew
+            .calledWithExactly('socketConnection', obj.strategy);
 
           expect(this.strategy.broadcast).to.be.calledOnce
-                        .calledWithExactly(socketRequestInst, {
-                          data: 'myData',
-                          event: 'myEvent',
-                          target: 'someTarget',
-                        });
+            .calledWithExactly(socketRequestInst, {
+              data: 'myData',
+              event: 'myEvent',
+              target: 'someTarget',
+            });
 
           done();
 
@@ -385,22 +385,22 @@ describe('socket test', function () {
           expect(listener).to.be.calledTwice;
 
           expect(emitter).to.be.calledTwice
-                        .calledWithExactly('socketAdded', 'namespace', 'event1')
-                        .calledWithExactly('socketAdded', 'namespace', 'event2');
+            .calledWithExactly('socketAdded', 'namespace', 'event1')
+            .calledWithExactly('socketAdded', 'namespace', 'event2');
 
           expect(this.socketRequest).to.be.calledOnce
-                        .calledWithNew
-                        .calledWithExactly('socketConnection', obj.strategy);
+            .calledWithNew
+            .calledWithExactly('socketConnection', obj.strategy);
 
           expect(this.strategy.broadcast).to.be.calledOnce
-                        .calledWithExactly(socketRequestInst, {
-                          data: 'myData2',
-                          event: 'myEvent2',
-                          target: 'strategySocketId',
-                        });
+            .calledWithExactly(socketRequestInst, {
+              data: 'myData2',
+              event: 'myEvent2',
+              target: 'strategySocketId',
+            });
 
           expect(event.connect).to.be.calledOnce
-                        .calledWithExactly(socketRequestInst);
+            .calledWithExactly(socketRequestInst);
 
           expect(this.strategy.getSocketId).to.be.calledOnce
             .calledWithExactly(this.socketRequest.socket);

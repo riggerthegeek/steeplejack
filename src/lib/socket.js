@@ -15,7 +15,6 @@ import { Base } from '@steeplejack/core';
 import SocketRequest from './socketRequest';
 
 class Socket extends Base {
-
   static get connectFlag () {
     return 'connect';
   }
@@ -160,7 +159,6 @@ class Socket extends Base {
 
     return this;
   }
-
 }
 
 module.exports = Socket;

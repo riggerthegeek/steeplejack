@@ -14,7 +14,6 @@ import { Base } from '@steeplejack/core';
 /* Files */
 
 class View extends Base {
-
   constructor ({ data, headers, statusCode, template } = {}) {
     super();
 
@@ -24,61 +23,61 @@ class View extends Base {
     this.template = template || null;
   }
 
-    /**
-     * Get Headers
-     *
-     * Returns the headers
-     *
-     * @returns {object}
-     */
+  /**
+   * Get Headers
+   *
+   * Returns the headers
+   *
+   * @returns {object}
+   */
   getHeaders () {
     return this.headers;
   }
 
-    /**
-     * Get Render Data
-     *
-     * Gets the render data
-     *
-     * @returns {object}
-     */
+  /**
+   * Get Render Data
+   *
+   * Gets the render data
+   *
+   * @returns {object}
+   */
   getRenderData () {
     return this.data;
   }
 
-    /**
-     * Get Status Code
-     *
-     * Gets the status code
-     *
-     * @returns {number}
-     */
+  /**
+   * Get Status Code
+   *
+   * Gets the status code
+   *
+   * @returns {number}
+   */
   getStatusCode () {
     return this.statusCode;
   }
 
-    /**
-     * Get Render Template
-     *
-     * Gets the template to render to
-     *
-     * @returns {string}
-     */
+  /**
+   * Get Render Template
+   *
+   * Gets the template to render to
+   *
+   * @returns {string}
+   */
   getRenderTemplate () {
     return this.template;
   }
 
-    /**
-     * Render
-     *
-     * Factory to create a View object
-     *
-     * @param {string} template
-     * @param {*} data
-     * @param {number} statusCode
-     * @param {*} headers
-     * @returns {View}
-     */
+  /**
+   * Render
+   *
+   * Factory to create a View object
+   *
+   * @param {string} template
+   * @param {*} data
+   * @param {number} statusCode
+   * @param {*} headers
+   * @returns {View}
+   */
   static render (template, data, statusCode = null, headers = {}) {
     return new View({
       data,
@@ -87,7 +86,6 @@ class View extends Base {
       template,
     });
   }
-
 }
 
 module.exports = View;

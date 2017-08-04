@@ -22,7 +22,7 @@ describe('view test', function () {
         const obj = new View();
 
         expect(obj).to.be.instanceof(View)
-              .instanceof(Base);
+          .instanceof(Base);
 
         expect(obj.getRenderTemplate()).to.be.null;
         expect(obj.getRenderData()).to.be.eql({});
@@ -46,7 +46,7 @@ describe('view test', function () {
         });
 
         expect(obj).to.be.instanceof(View)
-                    .instanceof(Base);
+          .instanceof(Base);
 
         expect(obj.getRenderTemplate()).to.be.equal('some template');
         expect(obj.getRenderData()).to.be.eql({

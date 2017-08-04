@@ -25,7 +25,6 @@ import replaceEnvVars from './helpers/replaceEnvVars';
 import Router from './lib/router';
 
 class Steeplejack extends Base {
-
   /**
    * Constructor
    *
@@ -323,7 +322,6 @@ class Steeplejack extends Base {
       routesGlob,
     });
   }
-
 }
 
 module.exports = Steeplejack;

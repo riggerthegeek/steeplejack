@@ -18,7 +18,6 @@ import uuid from 'uuid/v4';
 import Socket from './socket';
 
 class Server extends Base {
-
   constructor (options, strategy, socket = undefined) {
     super();
 
@@ -117,7 +116,6 @@ class Server extends Base {
     }
 
     switch (httpMethod) {
-
       case 'DEL':
         httpMethod = 'DELETE';
         break;
@@ -132,7 +130,6 @@ class Server extends Base {
           throw new SyntaxError(`HTTP method is unknown: ${httpMethod}:${route}`);
         }
         break;
-
     }
 
     /* Log the route */
@@ -583,7 +580,6 @@ class Server extends Base {
       output,
     };
   }
-
 }
 
 module.exports = Server;
