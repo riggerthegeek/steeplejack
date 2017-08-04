@@ -12,11 +12,9 @@ import coerce from '../../../src/helpers/coerce';
 
 describe('coerce test', function () {
 
-  this.timeout(5000);
-
   it('should typecast integers', function () {
 
-    for (let i = 1; i <= 100000; i += 1) {
+    for (let i = 1; i <= 10000; i += 1) {
       expect(coerce(String(i))).to.be.equal(i);
     }
 
@@ -24,7 +22,7 @@ describe('coerce test', function () {
 
   it('should typecast negative integers', function () {
 
-    for (let i = -1; i >= -100000; i -= 1) {
+    for (let i = -1; i >= -10000; i -= 1) {
       expect(coerce(String(i))).to.be.equal(i);
     }
 
