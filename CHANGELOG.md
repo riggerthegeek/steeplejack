@@ -1,3 +1,10 @@
+# v3.2.0
+ - Updated all the npm dependencies
+ - Added a `yarn.lock` file. This seems to make Travis quite a bit faster
+ - Added a `log` function to the Server's `request` object. This adds the UUID for the request and also the client
+   IP to the log. This is designed to save having to get developers to remember to add these to their logs and to
+   make trawling through logs less difficult.
+
 # v3.1.0
  - Exposed the allowable HTTP methods as a static method on the Server class - `Server.allowableHTTPMethods()`
  - Allowed the data object on the `Logger.prototype.trigger()` method to be optional
@@ -6,7 +13,7 @@
    for production use, but it's useful if demonstrating the capability or if haven't/aren't configuring a more
    comprehensive logger.
  - Added `package-lock.json` for npm 5 usage
-  
+
  # v3.0.1
  - Added the Exception, FatalException and ValidationException classes to the injector.
 
