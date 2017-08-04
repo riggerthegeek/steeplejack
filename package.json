@@ -88,7 +88,6 @@
     "proxyquire": "^1.7.11",
     "restify": "^4.3.0",
     "sinon": "^1.17.7",
-    "sinon-as-promised": "^4.0.2",
     "sinon-chai": "^2.8.0",
     "socket.io": "^1.7.2",
     "socket.io-client": "^1.7.2",
