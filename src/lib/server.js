@@ -383,12 +383,27 @@ class Server extends Base {
       request.id = uuid();
       request.startTime = Date.now();
 
+      /* Create a log function on the request */
+      request.log = (level, message, data = {}, ...additional) => {
+        try {
+          data.id = request.id;
+          data.ip = request.clientIp;
+        } catch (err) {
+          /* Cannot set ID or IP to the data */
+          this.log('trace', 'Logged server data is not an object', {
+            data,
+            id: request.id,
+            ip: request.clientIp,
+          });
+        }
+
+        return this.log(level, message, data, ...additional);
+      };
+
       /* Log the input */
-      this.log('info', 'New HTTP call', {
+      request.log('info', 'New HTTP call', {
         body: request.body,
         headers: request.headers,
-        id: request.id,
-        ip: request.clientIp,
         method: request.method,
         time: request.startTime,
         url: request.url,

@@ -522,6 +522,80 @@ describe('Server tests', function () {
 
       });
 
+      describe('#request log function', function () {
+
+        it('should register a log function on the request object - no data/additional', function () {
+
+          return this.obj.routeFactory(this.req, 'res', [
+            (req, res) => {
+              expect(this.req).to.be.equal(req);
+              expect(res).to.be.equal('res');
+
+              expect(req.log).to.be.a('function');
+
+              req.log('logLevel', 'logMessage');
+
+              expect(this.log).to.be.called
+                .calledWithExactly('logLevel', 'logMessage', {
+                  id: 'some v4 uuid',
+                  ip: 'clientIpAddress',
+                });
+            },
+          ]);
+
+        });
+
+        it('should register a log function on the request object - data not object', function () {
+
+          return this.obj.routeFactory(this.req, 'res', [
+            (req, res) => {
+              expect(this.req).to.be.equal(req);
+              expect(res).to.be.equal('res');
+
+              expect(req.log).to.be.a('function');
+
+              req.log('logLevel', 'logMessage', null);
+
+              expect(this.log).to.be.called
+                .calledWithExactly('logLevel', 'logMessage', null)
+                .calledWithExactly('trace', 'Logged server data is not an object', {
+                  data: null,
+                  id: 'some v4 uuid',
+                  ip: 'clientIpAddress',
+                });
+            },
+          ]);
+
+        });
+
+        it('should register a log function on the request object - some data/additional', function () {
+
+          return this.obj.routeFactory(this.req, 'res', [
+            (req, res) => {
+              expect(this.req).to.be.equal(req);
+              expect(res).to.be.equal('res');
+
+              expect(req.log).to.be.a('function');
+
+              req.log('logLevel', 'logMessage', {
+                hello: 'world',
+                id: 'ignoreId',
+                ip: 'ignoreIp',
+              }, 2, 3, 'hello');
+
+              expect(this.log).to.be.called
+                .calledWithExactly('logLevel', 'logMessage', {
+                  id: 'some v4 uuid',
+                  ip: 'clientIpAddress',
+                  hello: 'world',
+                }, 2, 3, 'hello');
+            },
+          ]);
+
+        });
+
+      });
+
     });
 
     describe('#addRoute', function () {
