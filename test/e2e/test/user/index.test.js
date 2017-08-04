@@ -56,7 +56,7 @@ describe('e2e tests', function () {
             return request
               .get('/user/error')
               .accept('text/plain')
-              .expect(500, 'some error');
+              .expect(500, new Error('some error'));
 
           });
 

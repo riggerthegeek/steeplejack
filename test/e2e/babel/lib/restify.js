@@ -28,7 +28,7 @@ export default () => {
     }
 
     bodyParser () {
-      this.use(restify.bodyParser());
+      this.use(restify.plugins.bodyParser());
     }
 
     close () {
@@ -44,7 +44,7 @@ export default () => {
     }
 
     gzipResponse () {
-      this.use(restify.gzipResponse());
+      this.use(restify.plugins.gzipResponse());
     }
 
     outputHandler (statusCode, data, req, res) {

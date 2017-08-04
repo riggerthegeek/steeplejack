@@ -1647,7 +1647,8 @@ describe('Server tests', function () {
 
                 expect(req).to.be.equal(this.req);
                 expect(res).to.be.equal(this.res);
-                expect(err).to.be.eql(new Error('output'));
+                expect(err).to.be.instanceof(Error);
+                expect(err.message).to.be.equal('output');
 
                 done();
 
@@ -1696,7 +1697,8 @@ describe('Server tests', function () {
 
               expect(req).to.be.equal(this.req);
               expect(res).to.be.equal(this.res);
-              expect(err).to.be.eql(new Error('output'));
+              expect(err).to.be.instanceof(Error);
+              expect(err.message).to.be.equal('output');
 
               done();
             });
