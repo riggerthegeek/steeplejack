@@ -13,14 +13,16 @@ import yargs from 'yargs';
 import cliParameters from '../helpers/cliParameters';
 import replaceEnvVars from '../helpers/replaceEnvVars';
 
-let version;
+let pkg = {};
 try {
   // eslint-disable-next-line global-require, import/no-unresolved
-  version = require('../package').version;
+  pkg = require('../package');
 } catch (err) {
   // eslint-disable-next-line global-require
-  version = require('../../package').version;
+  pkg = require('../../package');
 }
+
+const { version } = pkg;
 
 /**
  * Display Config

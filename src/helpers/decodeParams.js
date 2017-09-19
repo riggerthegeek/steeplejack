@@ -31,7 +31,8 @@ const decodeParams = (input) => {
     elements = elements.splice(0, 2);
 
     /* Set the parameter name */
-    param = elements[0];
+    const [tmpParam] = elements;
+    param = tmpParam;
 
     /* Decode further parameters */
     const parsedParams = decodeParams(elements[1]);
@@ -47,7 +48,9 @@ const decodeParams = (input) => {
     /* Equals sign present - treat as key/value pair */
     const tmp = input.split('=', 2);
 
-    param = tmp[0];
+    const [tmpParam] = tmp;
+    param = tmpParam;
+
     value = coerce(tmp[1].trim());
   }
 

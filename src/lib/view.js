@@ -14,7 +14,12 @@ import { Base } from '@steeplejack/core';
 /* Files */
 
 class View extends Base {
-  constructor ({ data, headers, statusCode, template } = {}) {
+  constructor ({
+    data,
+    headers,
+    statusCode,
+    template,
+  } = {}) {
     super();
 
     this.data = data || {};

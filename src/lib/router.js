@@ -153,7 +153,7 @@ class Router extends Base {
         let tmp = segments[3];
 
         if (tmp === 'index') {
-          tmp = segments[1];
+          tmp = segments[1]; // eslint-disable-line prefer-destructuring
           if (_.isUndefined(tmp)) {
             tmp = '';
           } else {
@@ -253,7 +253,7 @@ class Router extends Base {
     }
 
     if (_.has(container, 'deps')) {
-      deps = container.deps;
+      deps = container.deps; // eslint-disable-line prefer-destructuring
     }
 
     if (factory === null) {
