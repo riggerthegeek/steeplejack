@@ -531,9 +531,9 @@ describe('Server tests', function () {
               expect(this.req).to.be.equal(req);
               expect(res).to.be.equal('res');
 
-              expect(req.log).to.be.a('function');
+              expect(req.logFn).to.be.a('function');
 
-              req.log('logLevel', 'logMessage');
+              req.logFn('logLevel', 'logMessage');
 
               expect(this.log).to.be.called
                 .calledWithExactly('logLevel', 'logMessage', {
@@ -552,9 +552,9 @@ describe('Server tests', function () {
               expect(this.req).to.be.equal(req);
               expect(res).to.be.equal('res');
 
-              expect(req.log).to.be.a('function');
+              expect(req.logFn).to.be.a('function');
 
-              req.log('logLevel', 'logMessage', null);
+              req.logFn('logLevel', 'logMessage', null);
 
               expect(this.log).to.be.called
                 .calledWithExactly('logLevel', 'logMessage', null)
@@ -575,9 +575,9 @@ describe('Server tests', function () {
               expect(this.req).to.be.equal(req);
               expect(res).to.be.equal('res');
 
-              expect(req.log).to.be.a('function');
+              expect(req.logFn).to.be.a('function');
 
-              req.log('logLevel', 'logMessage', {
+              req.logFn('logLevel', 'logMessage', {
                 hello: 'world',
                 id: 'ignoreId',
                 ip: 'ignoreIp',

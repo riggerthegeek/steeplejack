@@ -384,7 +384,7 @@ class Server extends Base {
       request.startTime = Date.now();
 
       /* Create a log function on the request */
-      request.log = (level, message, data = {}, ...additional) => {
+      request.logFn = (level, message, data = {}, ...additional) => {
         try {
           data.id = request.id;
           data.ip = request.clientIp;
@@ -401,7 +401,7 @@ class Server extends Base {
       };
 
       /* Log the input */
-      request.log('info', 'New HTTP call', {
+      request.logFn('info', 'New HTTP call', {
         body: request.body,
         headers: request.headers,
         method: request.method,
