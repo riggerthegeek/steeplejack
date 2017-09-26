@@ -176,6 +176,23 @@ class Steeplejack extends Base {
   }
 
   /**
+   * Add System Routes
+   *
+   * Adds in system routes, designed to be
+   * helpful
+   *
+   * @returns {Server}
+   */
+  addSystemRoutes () {
+    return this.server
+      .addRoute('get', '/ping', (req, res) => {
+        /* Add a GET:/ping endpoint to prove we're up */
+        res.set('content-type', 'text/plain');
+        return 'pong';
+      });
+  }
+
+  /**
    * Create Output Handler
    *
    * Creates the output handler.  This is registered
@@ -234,10 +251,18 @@ class Steeplejack extends Base {
     /* Get list of routes */
     this.server
       .on('routeAdded', (httpMethod, route) => {
-        this.routing.routes.push(`${httpMethod}:${route}`);
+        const newRoute = `${httpMethod}:${route}`;
+
+        if (!this.routing.routes.includes(newRoute)) {
+          this.routing.routes.push(newRoute);
+        }
       })
       .on('socketAdded', (socketName, event) => {
-        this.routing.sockets.push(`${socketName}:${event}`);
+        const newSocket = `${socketName}:${event}`;
+
+        if (!this.routing.sockets.includes(newSocket)) {
+          this.routing.sockets.push(newSocket);
+        }
       });
 
     /* Add in the routes to the server */
@@ -248,6 +273,9 @@ class Steeplejack extends Base {
       .middleware
       .afterUse
       .forEach(fn => this.server.use(...fn()));
+
+    /* Add system routes last in case overriden */
+    this.addSystemRoutes();
 
     /* Listen for close events */
     this.on('close', () => {
