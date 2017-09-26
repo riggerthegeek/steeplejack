@@ -31,6 +31,22 @@ describe('e2e tests', function () {
 
   });
 
+  describe('/ping', function () {
+
+    describe('GET', function () {
+
+      it('should return pong', function () {
+
+        return request
+          .get('/ping')
+          .expect(200, 'pong');
+
+      });
+
+    });
+
+  });
+
   describe('/user', function () {
 
     describe('/empty', function () {

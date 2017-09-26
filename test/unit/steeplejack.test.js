@@ -238,6 +238,48 @@ describe('Steeplejack test', function () {
 
     });
 
+    describe('#addSystemRoutes', function () {
+
+      beforeEach(function () {
+
+        this.obj = new Steeplejack();
+
+        this.server = {
+          addRoute: sinon.stub(),
+        };
+
+        this.server.addRoute.returns(this.server);
+
+        this.obj.server = this.server;
+
+      });
+
+      it('should add a GET:/ping route', function () {
+
+        expect(this.obj.addSystemRoutes()).to.be.equal(this.server);
+
+        expect(this.server.addRoute).to.be.called
+          .calledWith('get', '/ping');
+
+        const args = this.server.addRoute.args.find(([method, route]) => method === 'get'
+          && route === '/ping');
+
+        expect(args[2]).to.be.a('function');
+
+        const req = {};
+        const res = {
+          set: sinon.spy(),
+        };
+
+        expect(args[2](req, res)).to.be.equal('pong');
+
+        expect(res.set).to.be.calledOnce
+          .calledWithExactly('content-type', 'text/plain');
+
+      });
+
+    });
+
     describe('#createOutputHandler', function () {
 
       it('should register the method to the IoC container - result and default error logging', function () {
@@ -445,6 +487,8 @@ describe('Steeplejack test', function () {
 
         const obj = new Steeplejack();
 
+        const addSystemRoutes = sinon.stub(obj, 'addSystemRoutes');
+
         const outputHandler = sinon.spy(obj, 'createOutputHandler');
 
         obj.injector = {
@@ -462,11 +506,16 @@ describe('Steeplejack test', function () {
 
         expect(outputHandler).to.not.be.called;
 
+        expect(addSystemRoutes).to.be.calledOnce
+          .calledWithExactly();
+
       });
 
       it('should listen for a start/close events', function () {
 
         const obj = new Steeplejack();
+
+        const addSystemRoutes = sinon.stub(obj, 'addSystemRoutes');
 
         obj.injector = {
           getComponent: sinon.stub().returns(),
@@ -490,6 +539,9 @@ describe('Steeplejack test', function () {
           expect(this.server.close).to.be.calledOnce
             .calledWithExactly();
 
+          expect(addSystemRoutes).to.be.calledOnce
+            .calledWithExactly();
+
         });
 
       });
@@ -505,6 +557,8 @@ describe('Steeplejack test', function () {
         ];
 
         const obj = new Steeplejack();
+
+        const addSystemRoutes = sinon.stub(obj, 'addSystemRoutes');
 
         obj.injector = {
           getComponent: sinon.stub().returns(),
@@ -522,6 +576,9 @@ describe('Steeplejack test', function () {
         expect(this.server.use).to.be.calledTwice
           .calledWithExactly('m1')
           .calledWithExactly('m2');
+
+        expect(addSystemRoutes).to.be.calledOnce
+          .calledWithExactly();
 
       });
 
@@ -914,6 +971,9 @@ describe('Steeplejack test', function () {
         }, {
           method: 'POST',
           route: '/hello/world',
+        }, {
+          method: 'POST',
+          route: '/hello/world',
         }];
 
         const sockets = [{
@@ -925,12 +985,16 @@ describe('Steeplejack test', function () {
         }, {
           socket: '/nsp/hello/world',
           event: 'event1',
+        }, {
+          socket: '/nsp/hello/world',
+          event: 'event1',
         }];
 
         routes.forEach(({ method, route }) => server.emit('routeAdded', method, route));
         sockets.forEach(({ socket, event }) => server.emit('socketAdded', socket, event));
 
         expect(app.routing.routes).to.be.eql([
+          'GET:/ping',
           'GET:/foo',
           'PUT:/foo',
           'GET:/foo/bar',
