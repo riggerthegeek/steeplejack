@@ -253,14 +253,14 @@ class Steeplejack extends Base {
       .on('routeAdded', (httpMethod, route) => {
         const newRoute = `${httpMethod}:${route}`;
 
-        if (!this.routing.routes.includes(newRoute)) {
+        if (this.routing.routes.indexOf(newRoute) === -1) {
           this.routing.routes.push(newRoute);
         }
       })
       .on('socketAdded', (socketName, event) => {
         const newSocket = `${socketName}:${event}`;
 
-        if (!this.routing.sockets.includes(newSocket)) {
+        if (this.routing.sockets.indexOf(newSocket) === -1) {
           this.routing.sockets.push(newSocket);
         }
       });
