@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+
+  haproxy:
+    build: ./haproxy
+    links:
+      - server-freddie
+      - server-brian
+      - server-john
+      - server-roger
+    ports:
+     - '9999:80'
+
+  server-freddie:
+    build: ./server
+    links:
+      - redis
+    environment:
+      - NAME=freddie
+    volumes:
+      - ../../build:/opt/node_modules/steeplejack
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9999/ping']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  server-brian:
+    build: ./server
+    links:
+      - redis
+    environment:
+      - NAME=brian
+    volumes:
+      - ../../build:/opt/node_modules/steeplejack
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9999/ping']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  server-john:
+    build: ./server
+    links:
+      - redis
+    environment:
+      - NAME=john
+    volumes:
+      - ../../build:/opt/node_modules/steeplejack
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9999/ping']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  server-roger:
+    build: ./server
+    links:
+      - redis
+    environment:
+      - NAME=roger
+    volumes:
+      - ../../build:/opt/node_modules/steeplejack
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9999/ping']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:alpine
